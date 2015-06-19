@@ -1,0 +1,47 @@
+@CHARSET "ISO-8859-1";
+
+.row div
+{
+	border:1px solid #ccc;
+	padding:5px;
+}
+.bgStyle1
+{
+	background-color:lavender;
+}
+.bgStyle2
+{
+	background-color:lavenderblush;
+}
+.bgStyle3
+{
+	background-color:lightgoldenrodyellow;
+}
+.bgStyle4
+{
+	background-color:lightgray;
+}
+.titleStyle
+{
+	background-color:#6f5499;
+	color:#fff;
+	padding: 0 10px 10px 10px;
+}
+.tblHdr
+{
+	background-color:#FCA605;
+	color:#fff;
+	font-weight:bold;
+}
+.teamHdr
+{
+	background-color:#FC030F;
+	color:#fff;
+	font-weight:bold;
+}
+.thickLine
+{
+	height:3px;
+	background:lavenderblush;
+	clear:both;
+}

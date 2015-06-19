@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<news>
+	<story>
+		<title>Avenue Junior A</title>
+		<description>Avenue take the points at Tulla</description>
+		<image>001.jpg</image>
+	</story>
+	<story>
+		<title>Avenue Junior B</title>
+		<description>B's take vital win in the Bridge</description>
+		<image>002.jpg</image>
+	</story>
+	<story>
+		<title>Avenue U16s</title>
+		<description>U16s make Cup Final</description>
+		<image>003.jpg</image>
+	</story>
+<!-- 	<story>
+		<title>Title of story 4</title>
+		<description>123456789012345678901234567890123</description>
+		<image>004.jpg</image>
+	</story>
+	<story>
+		<title>Title of story 5</title>
+		<description>This is the body text of the story for story 5.</description>
+		<image>005.jpg</image>
+	</story>
+	<story>
+		<title>Title of story 6</title>
+		<description>This is the body text of the story for story 6.</description>
+		<image>006.jpg</image>
+	</story> -->
+</news>

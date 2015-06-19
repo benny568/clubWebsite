@@ -1,0 +1,73 @@
+		<div id="wrap">
+			<div class="container t1">
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<div class="panel panel-default">
+				    			<div class="panel-heading panel-heading-custom" style="background-color:#D90404;color:#FAE900;">
+				    				Team Details:
+				    			</div>
+				    			<div class="panel-body" style="background-color:#303030;color:white;height:100%;">
+				    				<table class="table table-condensed">
+				    					<tr>
+				    						<th>Managers:</th>
+				    						<td>
+					    						<div ng-repeat="mem in Team">
+							    					<div ng-if="mem.position == 0"">
+							    						{{mem.name}}
+							    						<div style="float:right;">
+							    							<i class="fa fa-phone"></i> {{mem.phone}}
+							    						</div> 
+							    					</div>
+							    					
+							    				</div>
+				    						</td>
+				 						</tr>
+				 						<tr>
+				 							<th>Captian:</th>
+				 							<td>
+				 								<div ng-repeat="mem in Team">
+							    					<div ng-if="mem.position == 99">{{mem.name}}</div>
+							    				</div>
+				 							</td>
+				 						</tr>
+				 					</table>
+				    			</div>
+				    		</div>
+			    		</div> <!-- end col -->
+			    		<div class="col-md-6">
+			    			<div class="panel panel-default">
+				    			<div class="panel-heading panel-heading-custom" style="background-color:#D90404;color:#FAE900;">
+				    				Table:
+				    			</div>
+				    			<div class="panel-body" style="background-color:#303030;color:white;">
+				    			
+				    				<div id="lrep{{lrcode}}" style="width: auto;"></div>
+
+				    			</div>
+				    		</div>
+			    		</div> <!-- end col -->
+			    	</div> <!-- end row -->
+			    	
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<div class="panel panel-default">
+				    			<div class="panel-heading panel-heading-custom" style="background-color:#D90404;color:#FAE900;">
+				    				Squad Details:
+				    			</div>
+				    			<div class="panel-body" style="background-color:#303030;color:white;">
+				    				<div ng-repeat="mem in Team">
+				    					<div ng-if="mem.position != 0">
+											<font color="white">{{mem.id}}: {{mem.name}}</font>
+											<!-- <div style="float:right;">
+							    				<img alt="" src="resources/images/Players/{{teamName}}/{{mem.name}}">
+							    			</div> -->
+										</div>
+									</div>
+				    			</div> <!-- end panel body -->
+				    		</div> <!-- end panel -->
+			    		</div> <!-- end col -->
+			    		
+			    	</div> <!-- end row -->
+			    	
+			</div> <!--  End of container t1 -->
+		</div>
