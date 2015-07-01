@@ -45,16 +45,24 @@
 
 	<div id="wrap">
 		<div class="container t1">
-			<img src="resources/images/AvenueColours.png" height="50" width="200" alt="Club Colours" data-toggle="tooltip" data-placement="top" title="Club Colours"/>
+			<div class="row">
+				<div class="col-md-3">
+					<img src="resources/images/AvenueColours.png" height="50" width="200" alt="Club Colours" data-toggle="tooltip" data-placement="top" title="Club Colours"/>
+				</div>
+				<div class="col-md-4">
+					<img src="resources/images/adverts/enzos.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Enzos Takeaway" height="50" />
+				</div>
+				<div class="col-md-3">
+					<img src="resources/images/adverts/queens.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Queens Hotel Ennis" height="50" class="img-thumbnail"/>
+				</div>
+			</div> <!-- end row -->
+			
 			<div class="blankspace"></div>
 			
 			<!-- ***************************************************************** -->	
 			<% ArrayList<NewsStory> strys = (ArrayList<NewsStory>) session.getAttribute("stories");%>
 
 			<div class="row">
-				<div class="col-md-3">
-					<img src="resources/images/adverts/enzos.jpg" alt="Enzos Takeaway" class="img-thumbnail" height="190" width="100%"/>
-				</div>
 				<div class="col-md-9">
 				
 				    <!-- Jssor Slider Begin -->
