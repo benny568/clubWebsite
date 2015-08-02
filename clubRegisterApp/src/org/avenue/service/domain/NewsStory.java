@@ -2,10 +2,12 @@ package org.avenue.service.domain;
 
 public class NewsStory {
 	private int nsid;
+	private String category;
 	private String title;
 	private String description;
+	private String story;
 	private String image;
-
+	private String thumb;
 	
 	public int getNsid() {
 		return nsid;
@@ -30,6 +32,24 @@ public class NewsStory {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getStory() {
+		return story;
+	}
+	public void setStory(String story) {
+		this.story = story;
+	}
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
 	}
 
 }

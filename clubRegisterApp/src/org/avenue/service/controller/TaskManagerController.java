@@ -1,15 +1,24 @@
 package org.avenue.service.controller;
 
-import java.text.ParseException;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.Member;
+import org.avenue.service.domain.NewsStory;
+import org.avenue.service.domain.SessionPlan;
+import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 
 
 @RestController
@@ -18,67 +27,107 @@ public class TaskManagerController {
 	TaskManagerService taskmanagerservice=new TaskManagerService();
 	
 	 @RequestMapping(value="/admin/members",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<Member> getAllTasks() {	 
+	 public List<Member> getAllTasks() {
+		 System.out.println("## [TaskManagerController]->getAllTasks()..");
 	  List<Member> members=taskmanagerservice.getAllMembers();
 	  return members;
 	
 	 }
 
 	 @RequestMapping(value="/admin/team/{teamId}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<Member> getMembersByTeam(@PathVariable int teamId) {	 
-	  List<Member> members=taskmanagerservice.getMembersByTeam(teamId);
-	  return members;
+	 public List<Member> getMembersByTeam(@PathVariable int teamId) {
+		 System.out.println("## [TaskManagerController]->getMembersByTeam(" + teamId + ")");
+		 List<Member> members=taskmanagerservice.getMembersByTeam(teamId);
+		 return members;
 	
 	 }
 	 
 	 @RequestMapping(value="/admin/teams",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<Team> getTeams() {	 
-	  List<Team> teams=taskmanagerservice.getAllTeams();
-	  return teams;
+	 public List<Team> getTeams() {
+		 System.out.println("## [TaskManagerController]->getTeams()..");
+		 List<Team> teams=taskmanagerservice.getAllTeams();
+		 return teams;
 	
 	 }
 	 
 	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public Team getTeamDetails(@PathVariable String teamName) {	 
-	  Team team=taskmanagerservice.getTeamDetails(teamName);
-	  return team;
+	 public Team getTeamDetails(@PathVariable String teamName) {
+		 System.out.println("## [TaskManagerController]->getTeamDetails(" + teamName + ")..");
+		 Team team=taskmanagerservice.getTeamDetails(teamName);
+		 return team;
 	
 	 }
 	 
-/*	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public int getTeamId(@PathVariable String teamName) {	 
-	  int teamId=taskmanagerservice.getTeamId(teamName);
-	  return teamId;
-	
-	 }*/
-	 
-	 @RequestMapping(value="/admin/tasks/archive/{taskIds}",method = RequestMethod.POST,headers="Accept=application/json")
-	 public List<Member> archiveAllTasks(@PathVariable int[] taskIds) {	
-		 for(int i=0;i<taskIds.length;i++){
-			 //taskmanagerservice.archiveTask(taskIds[i]);	
-			 
-		 }
-	  List<Member> tasks=taskmanagerservice.getAllMembers();
-	  return tasks;
+	 @RequestMapping(value="/academy/news",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<NewsStory> getAcademyNews() {	 
+	  List<NewsStory> news=taskmanagerservice.getAcademyNews();
+	  return news;
 	
 	 }
 	 
-	 @RequestMapping(value="/admin/tasks/{taskId}/{taskStatus}",method = RequestMethod.POST,headers="Accept=application/json")
-	 public List<Member> changeTaskStatus(@PathVariable int taskId,@PathVariable String taskStatus) throws ParseException {	
-		 taskmanagerservice.changeTaskStatus(taskId,taskStatus);		 
-		 return taskmanagerservice.getAllMembers();
-		 
+	 @RequestMapping(value="/admin/submitNews",method = RequestMethod.POST)
+	 public void submitNewsStory(@RequestBody NewsStory newsStory) {	 
+		 taskmanagerservice.submitNewsStory( newsStory );	
 	 }
 	 
-	 @RequestMapping(value="/admin/tasks/insert/{name}/{taskDesc}/{team}/{taskStatus}",method = RequestMethod.POST,headers="Accept=application/json")
-	 public List<Member> addTask(@PathVariable String name,@PathVariable String taskDesc,@PathVariable int team,@PathVariable String taskStatus) throws ParseException {	
-		Member task = new Member();
-		task.setName(name);
-		task.setAddress(taskDesc);
-		task.setTeam(team);
-		task.setStatus(taskStatus);
-		taskmanagerservice.addTask(task);
-		return taskmanagerservice.getAllMembers();
-		 
-	 }	 	 	 	 
+	 @RequestMapping(value="/admin/member",method = RequestMethod.PUT)
+	 public void updateMemberDetails(@RequestBody Member member) {	 
+		 taskmanagerservice.updateMemberDetails( member );
+	 }
+	 
+	 @RequestMapping(value="/admin/member",method = RequestMethod.DELETE)
+	 public void deleteMemberDetails(@RequestBody int memberId) {	 
+		 taskmanagerservice.deleteMemberDetails( memberId );	
+	 }
+	 
+	 @RequestMapping(value="/admin/news",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<NewsStory> getNewsStories() {
+		 System.out.println("## [TaskManagerController]->getNewsStories()..");
+		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
+		 return stories;
+	 }
+	 
+	 @RequestMapping(value="/admin/member",method = RequestMethod.POST)
+	 public void addMember(@RequestBody Member member) {	 
+		 taskmanagerservice.addMember( member );	
+	 }
+	 
+	 @RequestMapping(value="/admin/upload",method = RequestMethod.POST)
+	 public void uploadNewsPic(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
+	 {
+		 taskmanagerservice.uploadNews(req, res);
+	 }
+	 
+	 @RequestMapping(value="/admin/team",method = RequestMethod.POST)
+	 public void addTeam(@RequestBody Team team) {	 
+		 taskmanagerservice.addTeam( team );
+	 }
+	 
+	 @RequestMapping(value="/admin/team",method = RequestMethod.PUT)
+	 public void updateTeam(@RequestBody Team team) {	 
+		 taskmanagerservice.updateTeam( team );
+	 }
+	 
+	 @RequestMapping(value="/admin/team",method = RequestMethod.DELETE)
+	 public void deleteTeam(@RequestBody int teamId) {	 
+		 taskmanagerservice.deleteTeam( teamId );
+	 }
+	 
+	 @RequestMapping(value="/admin/sessionplan/{teamId}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<SessionPlan> getTrainingSessions(@PathVariable int teamId) {	 
+	  List<SessionPlan> sessions=taskmanagerservice.getTrainingSessionsForTeam(teamId);
+	  return sessions;	
+	 }
+	 
+	 @RequestMapping(value="/admin/sessionrec",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<SessionRecord> getSessionRecords() {	 
+	  List<SessionRecord> sessions=taskmanagerservice.getSessionRecords();
+	  return sessions;	
+	 }
+	 
+	 @RequestMapping(value="/admin/sessionrec/{teamid}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  List<SessionRecord> getSessionRecordsForTeam(@PathVariable int teamid) {	 
+		 List<SessionRecord> sessions=taskmanagerservice.getSessionRecordsForTeam(teamid);
+	  return sessions;	
+	 }
 }

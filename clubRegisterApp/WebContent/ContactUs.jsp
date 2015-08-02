@@ -4,10 +4,10 @@
 	
 	<title>Contact Us</title>
 		
-		<script type="text/javascript" src="resources/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-		<script type="text/javascript" src="resources/js/angular.js"></script>
-		<script type="text/javascript" src="resources/js/angular-animate.js"></script>
+		<script type="text/javascript" src="resources/js/libs/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
@@ -25,23 +25,23 @@
 		<div class="row">
 			<div class="col-sm-6" style="padding-left:50px;">
 			
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom" style="background-color:#D90404;color:#FAE900;">
+			<div class="panel">
+				<div class="panel-heading avenue-heading">
 					<h3>Avenue United contact details</h3>
 				</div>
-				<div class="panel-body" style="background-color:#E6E3E3;">
+				<div class="panel-body avenue-body">
 					Avenue United current list of elected officers:
 					<div class="blankspace"></div>
 					<table class="table-condensed table-hover table-bordered" style="background-color:#E6E3E3;">
 					  <thead>
-						<tr class="bg-primary" style="background-color:#D90404;color:#FAE900;">
+						<tr class="bg-primary avenue-heading">
 						  <th><i class="fa fa-futbol-o"></i> Office</th>
 						  <th><i class="fa fa-user"></i> Name</th>
 						  <th><i class="fa fa-phone"></i> Phone</th>
 						  <th><i class="fa fa-envelope"></i> Email</th>
 						</tr>
 					  </thead>
-					  <tbody>
+					  <tbody class="avenue-body">
 						<tr>
 						  <th scope="row">Chairman</th>
 						  <td>Geroid Mannion</td>

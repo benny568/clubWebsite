@@ -2,41 +2,45 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="teamViewApp">
+<html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
 		<title>Team View</title>
 			
-		<script type="text/javascript" src="resources/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-		<script type="text/javascript" src="resources/js/angular.js"></script>
-		<script type="text/javascript" src="resources/js/angular-animate.js"></script>
-		<script type="text/javascript" src="resources/js/angular-resource.js"></script>
-		<script type="text/javascript" src="resources/js/angular-aria.js"></script>
-		<script type="text/javascript" src="resources/js/angular-cookies.js"></script>
-		<script type="text/javascript" src="resources/js/angular-loader.js"></script>
-		<script type="text/javascript" src="resources/js/angular-messages.js"></script>
-		<script type="text/javascript" src="resources/js/angular-route.js"></script>
-		<script type="text/javascript" src="resources/js/angular-sanitize.js"></script>
-		<script type="text/javascript" src="resources/js/angular-scenario.js"></script>
-		<script type="text/javascript" src="resources/js/angular-touch.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.slider.js"></script>
-		<script type="text/javascript" src="resources/js/smart-table.min.js"></script>
-		<script type="text/javascript" src="resources/js/app.js"></script>
-		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
+		<meta name="_csrf" content="${_csrf.token}"/>
+	    <!-- default header name is X-CSRF-TOKEN -->
+	    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+	    
+		<!-- jQuery (required) -->
+		<script src="resources/js/libs/jquery-2.1.4.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/css/animate.css" />
+		<!-- Bootstrap -->
+		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.css" />
-		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		<link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans' />
 		
-		<!-- <script data-require="angular.js@*" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular.js"></script>
-		<script data-require="angular-animate@*" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular-animate.js"></script> -->		
+		<!-- AngularJS -->
+		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
+		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
+		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
+		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
+		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
+		
+		<!-- Font Awsome -->
+		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
+		
+		<!-- My app -->
+		<script type="text/javascript" src="resources/js/app.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
+		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
+		
+		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
+		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="teamViewController" team="U18">
+	<body ng-controller="memberManagerController" mode="Team" team="U18">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>

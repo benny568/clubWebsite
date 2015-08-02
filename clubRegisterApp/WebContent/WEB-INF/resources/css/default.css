@@ -10,7 +10,7 @@ body
 }
 .header
 {
-	background-image: url('../images/smaller/banner.png');
+	background-image: url('../images/banner.png');
 	background-size: cover;
 	min-height:110px;
 	position:relative;
@@ -20,6 +20,10 @@ body
   height: 30px;
   background-color: #ff0000;
   vertical-align: middle;
+}
+
+.avenue-yellow-text{
+	color:#FAE900;
 }
 
 /* Wrapper for page content to push down footer */
@@ -66,60 +70,162 @@ body
 	min-height:50px;
 }
 
-.panel-heading-custom{
-	background-image:none;
-	background-color:red;
+.avenue-heading { background-color:#D90404;color:#FAE900;min-height:40px; }
+.avenue-body { background-color:#303030;color:white; }
+.a-adminMenu { position:fixed;}
+
+.a-panel-heading
+{
+	background-color:#D90404;color:#FAE900;
+}
+.a-panel-body
+{
+	background-color:#303030;
+	color:white;
+	height:100%;
+}
+
+.academyflag
+{
+	background-image: url('../images/academy/flag.gif');
+	background-size: cover;
+	height:226px;
+	width:318px;
+	position:relative;
+	margin-top:0px;
+	float:left;
+}
+
+.flagpole
+{
+	background-image: url('../images/academy/flagpole.png');
+	background-size: cover;
+	position:relative;
+	margin-top:0px;
+	float:left;
+}
+
+.academymenu{
+	background-color:#D90404;
+	color:#FFFF33;
+	width:200px;
+	text-align:left;
+}
+
+.academymenu a:link,
+.academymenu a:visited,
+.academymenu a:active {
+	text-decoration: none;
+	color:#FFFF33;
+}
+
+.academymenu a:hover {
+	color:#D90404;
+}
+
+.btn:hover,
+.btn:focus,
+.btn.focus {
+  background-color:#FFFF33;
+  color:#D90404;
+  font-weight:bold;
+  text-decoration: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color:#FFFF33;
+  color:#D90404;
+  border-color: #adadad;
+}
+
+.light-line { border-bottom: dotted 1px;}
+
+.loginbox {
+	position:relative;
+	margin-right:auto;
+	margin-left:auto;
+	width: 400px;
+}
+
+.loginbox .loginhead {
+/* 	background: url(../images/User-icon.png)no-repeat 10px 10px #D90404; */
+	background: #D90404;
+	height:40px;
+	outline: none;
+	color:#FFFF33;
+	min-height:30px;
+	text-align: center;
+	padding: 10px 0px 10px 0px;
+	font-size:20px;
+}
+.loginbox .loginbody {
+	padding: 10px 0px 0px 0px;
+	background: #2E2E2E;
+	padding: 37.5px 35px 30px 35px;
 	color:white;
 }
 
+.loginbox .loginbody input[type="text"] {
+    background: url(../images/sm-user.png)no-repeat 10px 10px #3B3B3B;
+	outline: none;
+	font-size: 14px;
+	font-weight: 600;
+	color: #7E7E7E;
+	padding: 12px 12px 12px 33px;
+	border: 1px solid #4B4A4A;
+	margin: 0px 0px 15px 0px;
+	width: 100%;
+	height: auto;
+	-webkit-appearance: none;
+}
 
+.loginbox .loginbody input[type="password"]{
+    background: url(../images/key.png) no-repeat 10px 11px #3F3F3F;
+	outline: none;
+	font-size: 14px;
+	font-weight: 600;
+	color: #7E7E7E;
+	padding: 12px 12px 12px 33px;
+	border: 1px solid #4B4A4A;
+	margin: 0px 0px 25px 0px;
+	width: 100%;
+	-webkit-appearance: none;
+}
 
+.loginbox .loginbody input[type="submit"] {
+  background: url(../images/lock.png)no-repeat 9px 8px #D90404;
+  color: #FAE900;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 19px 8px 30px;
+  width: 40%;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  cursor: pointer;
+}
 
-		<!-- Custom CSS -->
+.a-form input.ng-invalid.ng-touched
+{
+	background-color: #FA787E;
+}
 
-		.row div
-		{
-			border:1px solid #ccc;
-			padding:5px;
-		}
-		.bgStyle1
-		{
-			background-color:lavender;
-		}
-		.bgStyle2
-		{
-			background-color:lavenderblush;
-		}
-		.bgStyle3
-		{
-			background-color:lightgoldenrodyellow;
-		}
-		.bgStyle4
-		{
-			background-color:lightgray;
-		}
-		.titleStyle
-		{
-			background-color:#6f5499;
-			color:#fff;
-			padding: 0 10px 10px 10px;
-		}
-		.tblHdr
-		{
-			background-color:#FCA605;
-			color:#fff;
-			font-weight:bold;
-		}
-		.teamHdr
-		{
-			background-color:#FC030F;
-			color:#fff;
-			font-weight:bold;
-		}
-		.thickLine
-		{
-			height:3px;
-			background:lavenderblush;
-			clear:both;
-		}
+.a-form input.ng-valid.ng-touched 
+{
+    background-color: #78FA89;
+}
 
+/* CSS tricks AnythingSlider version 1.7+ */
+ /* #slider2 {
+  width: 600px;
+  height: 350px;
+  list-style: none;
+ }
+ 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; } */

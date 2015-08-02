@@ -1,0 +1,79 @@
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content avenue-body">
+              <div class="modal-header avenue-heading">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Club Member</h4>
+              </div>
+              <div class="modal-body">
+                <form name="editMemberForm" novalidate role="form">
+                	<div class="row">
+                		<div class="col-md-9">
+		                	<label for="name">Name:</label>
+		                	<input type="text" class="form-control" id="name" name="name" data-ng-model="thisMember.name" value="{{thisMember.name}}" required/>
+		                	<div ng-show="editMemberForm.$submitted || editMemberForm.name.$touched">
+						    	<div ng-show="editMemberForm.name.$error.required" style="color:red">You must enter the members name.</div>
+						    </div>
+		                	<label for="address">Address:</label>
+		                	<input type="text" class="form-control" id="address" data-ng-model="thisMember.address" value="{{thisMember.address}}"/>
+                		</div>
+                		<div class="col-md-3">
+		                	<label for="phone">Phone:</label>
+		                	<input type="text" class="form-control" id="phone" data-ng-model="thisMember.phone" value="{{thisMember.phone}}"/>
+		                	<label for="dob">Date of Birth:</label>
+		                	<input type="text" class="form-control" id="dob" data-ng-model="thisMember.dob" value="{{thisMember.dob}}"/>
+                		</div> <!-- end col -->
+                	</div> <!-- end row -->
+                	<div class="row">
+                		<div class="col-md-2">
+                			<label for="fees">Fees paid:</label>
+		                	<input type="text" class="form-control" id="amount" data-ng-model="thisMember.amount" value="{{thisMember.amount}}"/>
+		                	<label for="team">Team:</label>
+		                	<input type="text" class="form-control" id="team" data-ng-model="thisMember.team" value="{{thisMember.team}}"/>
+		                	<label for="position">Position:</label>
+		                	<input type="text" class="form-control" id="position" data-ng-model="thisMember.position" value="{{thisMember.position}}"/>
+                		</div>
+                		<div class="col-md-4">
+                			<label for="favteam">Favourite Team:</label>
+		                	<input type="text" class="form-control" id="favteam" data-ng-model="thisMember.favteam" value="{{thisMember.favteam}}"/>
+		                	<label for="favplayer">Favourite Player:</label>
+		                	<input type="text" class="form-control" id="favplayer" data-ng-model="thisMember.favplayer" value="{{thisMember.favplayer}}"/>
+                		</div>
+                		<div class="col-md-2">
+                			<label for="sappears">Appears:</label>
+		                	<input type="text" class="form-control" id="sappears" data-ng-model="thisMember.sappears" value="{{thisMember.sappears}}"/>
+		                	<label for="sassists">Assists:</label>
+		                	<input type="text" class="form-control" id="sassists" data-ng-model="thisMember.sassists" value="{{thisMember.sassists}}"/>
+		                	<label for="sgoals">Goals:</label>
+		                	<input type="text" class="form-control" id="sgoals" data-ng-model="thisMember.sgoals" value="{{thisMember.sgoals}}"/>
+                		</div>
+                	</div> <!-- end row -->
+                	<div class="row">
+                		<div class="col-md-2">
+                			<label for="lid">League Id:</label>
+		                	<input type="text" class="form-control" id="lid" data-ng-model="thisMember.lid" value="{{thisMember.lid}}"/>
+                		</div>
+                		<div class="col-md-10">
+                			<label for="photo">Photo Location:</label>
+		                	<input type="text" class="form-control" id="photo" data-ng-model="thisMember.photo" value="{{thisMember.photo}}"/>
+                		</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-md-4"><label for="photo">Personal Achievements:</label></div>
+                		<div class="col-md-8">
+                			<input type="text" class="form-control" id="achievements" data-ng-model="thisMember.achievements" value="{{thisMember.achievements}}"/>
+                		</div>
+                	</div>
+                </form>
+                
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close(true)" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false)" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    

@@ -4,76 +4,76 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
-		<title>Admin page</title>
-			
-		<script type="text/javascript" src="resources/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-		<script type="text/javascript" src="resources/js/angular.js"></script>
-		<script type="text/javascript" src="resources/js/angular-animate.js"></script>
-		<script type="text/javascript" src="resources/js/angular-resource.js"></script>
-		<script type="text/javascript" src="resources/js/angular-aria.js"></script>
-		<script type="text/javascript" src="resources/js/angular-cookies.js"></script>
-		<script type="text/javascript" src="resources/js/angular-loader.js"></script>
-		<script type="text/javascript" src="resources/js/angular-messages.js"></script>
-		<script type="text/javascript" src="resources/js/angular-route.js"></script>
-		<script type="text/javascript" src="resources/js/angular-sanitize.js"></script>
-		<script type="text/javascript" src="resources/js/angular-scenario.js"></script>
-		<script type="text/javascript" src="resources/js/angular-touch.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.slider.js"></script>
-		<script type="text/javascript" src="resources/js/smart-table.min.js"></script>
-		<script type="text/javascript" src="resources/js/app.js"></script>
+		<title>Admin Home</title>
 		
-		<link rel="stylesheet" type="text/css" href="resources/css/animate.css" />
+		<meta name="_csrf" content="${_csrf.token}"/>
+	    <!-- default header name is X-CSRF-TOKEN -->
+	    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+	    
+		<!-- jQuery (required) -->
+		<script src="resources/js/libs/jquery-2.1.4.min.js"></script>
+		
+		<!-- Bootstrap -->
+		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		<link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans' />
 		
-		<script data-require="angular.js@*" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular.js"></script>
-		<script data-require="angular-animate@*" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular-animate.js"></script>		
+		<!-- AngularJS -->
+		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
+		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
+		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
+		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
+		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
+		
+		<!-- Font Awsome -->
+		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
+		
+		<!-- My app -->
+		<script type="text/javascript" src="resources/js/app.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
+		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
+		
+		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
+		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
+		
 	</head>  <!-- HEAD END -->
-	<body>
+	<body ng-controller="memberManagerController" mode="None">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
-	
-		<div ng-controller="memberManagerController">
-			<div class="container">
-				<div class="titleStyle">
-					<h3>Club Register 2015 Season</h3>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2" style="height:100%;">
+					<!-- Add menu down left -->
+					<div ng-include="'resources/viewParts/adminMenu.html'"></div>			
+				</div> <!-- end col -->	
+				<div class="col-sm-10">
+					<div class="panel" style="marign-right:50px;">
+						<div class="panel-heading avenue-heading" style="min-height:35px;">
+							Avenue United Administration Home Page
+						</div>
+						<div class="panel-body avenue-body" style="height:100%;">
+							Welcome to the administration portal!<br><br>
+							From here you can add, edit, remove, various details of the club records such
+							 as member information, upload news stories and photos and manage your team. 
+							 Take a look at the tutorials section for more information on how to perform certain tasks.
+						</div>
 				</div>
-				<div ng-repeat="team in teams">
-					<div class="col-sm-12 teamHdr" ng-hide="showArray[team.id]"><span class="glyphicon glyphicon-triangle-bottom" ng-click="getMembers4team(team.id)"></span> {{team.name}}</div>
-					<div class="col-sm-12 teamHdr" ng-show="showArray[team.id]">
-					<span class="glyphicon glyphicon-triangle-top" ng-click="toggleView(team.id)"></span> {{team.name}}</div>
-					<div ng-show="showArray[team.id]">
-						<div class="col-sm-1 tblHdr">#</div>
-					    <div class="col-sm-3 tblHdr">Name</div>
-					    <div class="col-sm-4 tblHdr">Address</div>
-					    <div class="col-sm-2 tblHdr">Phone</div>
-					    <div class="col-sm-1 tblHdr">Id</div>
-					    <div class="col-sm-1 tblHdr">Paid</div>
-						<div ng-repeat="member in TeamMembers[team.id]">
-							<div class="col-sm-1" ng-if="$odd" style="background-color:#FAE60A">{{member.id}}</div>
-							<div class="col-sm-1" ng-if="$even" style="background-color:#FAFA0A">{{member.id}}</div>
-						    <div class="col-sm-3" ng-if="$odd" style="background-color:#FAE60A">{{member.name}}</div>
-						    <div class="col-sm-3" ng-if="$even" style="background-color:#FAFA0A">{{member.name}}</div>
-						    <div class="col-sm-4" ng-if="$odd" style="background-color:#FAE60A">{{member.address}}</div>
-						    <div class="col-sm-4" ng-if="$even" style="background-color:#FAFA0A">{{member.address}}</div>
-						    <div class="col-sm-2" ng-if="$odd" style="background-color:#FAE60A">{{member.phone}}</div>
-						    <div class="col-sm-2" ng-if="$even" style="background-color:#FAFA0A">{{member.phone}}</div>
-						    <div class="col-sm-1" ng-if="$odd" style="background-color:#FAE60A">{{member.team}}</div>
-						    <div class="col-sm-1" ng-if="$even" style="background-color:#FAFA0A">{{member.team}}</div>
-						    <div class="col-sm-1" ng-if="$odd" style="background-color:#FAE60A">{{member.amount}}</div>
-						    <div class="col-sm-1" ng-if="$even" style="background-color:#FAFA0A">{{member.amount}}</div>
-						 </div>
-					</div>
-					<div class="thickLine"></div>
-				</div> <!-- End of ng-repeat -->
-			</div>
-		</div>  <!-- End of memberManagerController -->
+			</div> <!-- end row -->
+			
+			<div ng-controller="userProfileController" ng-click="showUser()" class="avenue-body">Click Me</div>
+		</div> <!-- end of container -->
+		
+		
+		<div class="blankspace"></div>
+		
+		<!-- Footer across the bottom of the page -->
+		<div ng-include="'resources/viewParts/footer.html'"></div>
 		
 	</body>
 </html>

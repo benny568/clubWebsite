@@ -1,180 +1,95 @@
-var memberManagerModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource']);
-memberManagerModule.controller('memberManagerController', function ($scope,$http) 
-{	
-	var urlBase="http://localhost:8080/clubRegisterApp";
-	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-
-	$scope.showArray = [];
-	$scope.TeamMembers = [];
-	
-	console.log("## Controller initialized");
-	
-	$http.get(urlBase+'/admin/teams').success(function(data) 
-	{
-		var i = 0;
-		
-		$scope.teams = data;
-
-		// Initialise the array of visibility flags
-		for( i=0; i<$scope.teams.length; i++)
-			$scope.showArray[i] = 'false';
-		// Initialise the team member arrays
-		$scope.TeamMembers = new Array($scope.teams.length);
-		
-		console.log("## Read in [%d] teams", $scope.teams.length);
-		console.log("## Show array 3: ", $scope.showArray[3])
-
-	}); // End of get()
-	
-	 
-	 $scope.getMembers4team = function(teamId) 
-	 {
-		$http.get(urlBase+'/admin/team/' + teamId).success(function(data) 
-		{
-			$scope.TeamMembers[teamId] = data;
-		}); // End of get()
-		$scope.showArray[teamId] = 'true';
-		return;
-	 };
-	 $scope.getMembers4team();
-	 
-	 
-	$scope.toggleView = function(teamId) {
-		$scope.showArray[teamId] = 'false';
-	}
-	$scope.toggleView();
-	
-}); // End of memberManagerController
-
-var teamViewModule = angular.module('teamViewApp', ['ngAnimate', 'ngResource']);
 var lrcode; // Needed for API calls to LeagueRepublic site
-teamViewModule.controller('teamViewController', function ($scope, $attrs, $http) 
-{	
-	var urlBase="http://localhost:8080/clubRegisterApp";
-	var teamId;
-	$scope.Team;
-	$scope.teamId = 0;
-	$scope.lrcode = 0;
-	
-	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-	
-	$scope.teamName = $attrs.team; 
+//var site = 'localhost:8080';
+var site = 'www.avenueunited.ie';
+var urlBase="http://" + site + "/clubRegisterApp";
+var thisUser = {};
 
+var mmModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
+
+mmModule.config(function($httpProvider) {
+	  /**
+	   * make delete type json
+	   */
+	  $httpProvider.defaults.headers["delete"] = {
+	    'Content-Type': 'application/json;charset=utf-8'
+	  };
+	})
+
+mmModule.controller('ModalController', function($scope, member, close) {
 	
-	console.log("## teamViewController initialized for: ", $scope.teamName);
-	
-	$http.get(urlBase+'/team/' + $scope.teamName).success(function(tdetails) 
-	{
-		console.log("## Getting team details for: ", $scope.teamName);
-		$scope.teamId = tdetails.id;
-		$scope.lrcode = tdetails.lrcode;
-		console.log("## Team ID read: ", $scope.teamId, ":",$scope.lrcode);
-				
-		if( $scope.teamId != 0 )
-			$http.get(urlBase+'/admin/team/' + $scope.teamId).success(function(data) 
-			{
-				$scope.Team = data;
-			}); // End of get()
-		else
-			console.log("No team id found for team: ", $scope.teamName);
-		
-		lrcode = $scope.lrcode;
-		console.log("## defined lrcode as: ", lrcode);
-		require("http://api.leaguerepublic.com/l/client/api/cs1.js");
+	$scope.thisMember = jQuery.extend({},member);
+
+	 $scope.close = function(save) {
+		 if(save)
+			 close($scope.thisMember, 500); // close, but give 500ms for bootstrap to animate
+		 else
+			 close(member, 500);
+	 };
+
 	});
+
+mmModule.controller('AddMemberController', function($scope, close) {
 	
-	$scope.isManager = function(position)
-	{
-		if( position == 0 )
-			return true;
-		else
-			return false;
+	$scope.thisMember = {name: "", address: "", phone: "", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
+	var mem = $scope.thisMember;
+	
+	$scope.close = function(add, mem) {
+		close({op:add,member:mem}, 500); // close, but give 500ms for bootstrap to animate
+	 };
+});
+
+mmModule.controller('DelMemberController', function($scope, member, close) {
+	
+	$scope.thisMember = member;
+	
+	$scope.close = function(del) {
+		close(del, 500); // close, but give 500ms for bootstrap to animate
+	 };
+});
+
+mmModule.controller('newsController', function ($scope,$http, dbService,ModalService) {
+	
+	console.log("## [newsController]...");
+	$scope.stories = new Array();
+	
+	getNews();
+
+	function getNews(){		
+		dbService.getNewsStories()
+			.then( function(stories) {
+				$scope.stories = stories;
+		});
 	}
-	$scope.isManager();
-	
-	
-	$scope.initLR = function(lrId)
-	{
-		lrcode = lrId;
-		console.log("## defined lrcode as: ", lrcode);
-		require("http://api.leaguerepublic.com/l/client/api/cs1.js");
-	}
-	$scope.initLR();
+});
 
-	function require(script) 
-	{
-	    $.ajax({
-	        url: script,
-	        dataType: "script",
-	        async: false,           // <-- This is the key
-	        success: function () {
-	            // all good...
-	        },
-	        error: function () {
-	            throw new Error("Could not load script " + script);
-	        }
-	    });
-	}
+mmModule.controller('AddTeamController', function($scope, close) {
 	
+	$scope.thisTeam = {name: "", lrcode: 0};
+	var team = $scope.thisTeam;
 	
-}); // End of teamViewController
-
-
-var newsModule = angular.module('newsApp', []);
-
-newsModule.controller('newsController', function ($scope,$http) 
-{
-	$scope.files = 0;
-	
-	function getFiles()
-	{
-		var inputs = document.getElementById("_files"), len = inputs.length, i, pONumb;
-		if( inputs != null )
-			$scope.files = inputs;
-
-		return $scope.files;
-	}	
-	$scope.getFiles = getFiles;
-
-	function handleFileSelect(evt) {
-	    var files = evt.target.files; // FileList object
-	
-	    // Loop through the FileList and render image files as thumbnails.
-	    for (var i = 0, f; f = files[i]; i++) {
-	
-	      // Only process image files.
-	      if (!f.type.match('image.*')) {
-	        continue;
-	      }
-	
-	      var reader = new FileReader();
-	
-	      // Closure to capture the file information.
-	      reader.onload = (function(theFile) {
-	        return function(e) {
-	          // Render thumbnail.
-	          var span = document.createElement('span');
-	          span.innerHTML = ['<img class="thumb" src="', e.target.result,
-	                            '" title="', escape(theFile.name), '"/>'].join('');
-	          document.getElementById('list').insertBefore(span, null);
-	        };
-	      })(f);
-	
-	      // Read in the image file as a data URL.
-	      reader.readAsDataURL(f);
-	    }
-	  }
-	
-	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+	$scope.close = function(add, team) {
+		console.log("## [AddTeamController] team is: ", $scope.thisTeam);
+		close({op:add,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
+	 };
 });
 
 
-/**
- * AngularJS module to process a form.
- */
-var contactModule = angular.module('contactApp', []);
+mmModule.controller('EditTeamController', function($scope, team, close) {
+	$scope.thisTeam = team;
+	
+	$scope.close = function(update, team) {
+		console.log("## [EditTeamController] team is: ", $scope.thisTeam);
+		close({op:update,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
+	 };
+});
 
-contactModule.controller('contactController', function ($scope,$http) 
-{
+mmModule.controller('DeleteTeamController', function($scope, team, close) {
+	$scope.thisTeam = team;
+	
+	$scope.close = function(del, team) {
+		console.log("## [DeleteTeamController] team to delete is: ", $scope.thisTeam);
+		close({op:del,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
+	 };
+});
 
-  });
+

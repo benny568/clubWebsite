@@ -6,33 +6,29 @@
 	
 	<title>Avenue United</title>
 		
-		<script type="text/javascript" src="resources/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-		<script type="text/javascript" src="resources/js/angular.js"></script>
-		<script type="text/javascript" src="resources/js/angular-animate.js"></script>
-		<script type="text/javascript" src="resources/js/angular-resource.js"></script>
-		<script type="text/javascript" src="resources/js/angular-aria.js"></script>
-		<script type="text/javascript" src="resources/js/angular-cookies.js"></script>
-		<script type="text/javascript" src="resources/js/angular-loader.js"></script>
-		<script type="text/javascript" src="resources/js/angular-messages.js"></script>
-		<script type="text/javascript" src="resources/js/angular-route.js"></script>
-		<script type="text/javascript" src="resources/js/angular-sanitize.js"></script>
-		<script type="text/javascript" src="resources/js/angular-scenario.js"></script>
-		<script type="text/javascript" src="resources/js/angular-touch.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.js"></script>
-		<script type="text/javascript" src="resources/js/jssor.slider.js"></script>
-		<script type="text/javascript" src="resources/js/smart-table.min.js"></script>
-		<script type="text/javascript" src="resources/js/carousel.js"></script>
-		<script type="text/javascript" src="resources/js/news.js"></script>
-		
-		<link rel="stylesheet" type="text/css" href="resources/css/animate.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/carousel.css" />
-		<link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans' />
-		<link rel="stylesheet" type="text/css" href='resources/css/news.css' />
+	<!-- jQuery (required) -->
+	<script src="resources/js/libs/jquery-2.1.4.min.js"></script>
+	
+	<!-- Bootstrap -->
+	<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	
+	<!-- AngularJS -->
+	<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+	<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
+	<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
+	<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
+	<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
+	<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
+	<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
+	
+	<!-- Font Awsome -->
+	<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
+	
+	<!-- My app -->
+	<script type="text/javascript" src="resources/js/app.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
+	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 
 </head>  <!-- HEAD END -->
 
@@ -46,6 +42,9 @@
 		    	
 		</div> <!--  End of container t1 -->
 	</div>
+	
+	<div class="blankspace"></div>
+	<div class="blankspace"></div>
 	
 	<!-- Footer across the bottom of the page -->
 	<div ng-include="'resources/viewParts/footer.html'"></div>

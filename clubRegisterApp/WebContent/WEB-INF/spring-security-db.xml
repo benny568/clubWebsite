@@ -7,9 +7,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/register" />
-		<property name="username" value="root" />
-		<property name="password" value="password" />
+		<property name="url" value="jdbc:mysql://mysql1001.mochahost.com:3306/odalybr_register" />
+		<property name="username" value="odalybr_root" />
+		<property name="password" value="Merr10nAvenue83" />
 	</bean>
 
 </beans>

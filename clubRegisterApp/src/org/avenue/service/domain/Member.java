@@ -6,9 +6,18 @@ public class Member {
 	 private String name;
 	 private String address;
 	 private String phone;
+	 private String dob;
 	 private String amount;		// Amount paid to date
 	 private int team;
 	 private int position;
+	 private int lid;
+	 private String favteam;
+	 private String favplayer;
+	 private int sappears;
+	 private int sassists;
+	 private int sgoals;
+	 private String photo;
+	 private String achievements;
 	 private String status;
 	 
 	
@@ -62,6 +71,60 @@ public class Member {
 	}
 	public void setPosition(int position) {
 		this.position = position;
+	}
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public int getLid() {
+		return lid;
+	}
+	public void setLid(int lid) {
+		this.lid = lid;
+	}
+	public String getFavteam() {
+		return favteam;
+	}
+	public void setFavteam(String favteam) {
+		this.favteam = favteam;
+	}
+	public String getFavplayer() {
+		return favplayer;
+	}
+	public void setFavplayer(String favplayer) {
+		this.favplayer = favplayer;
+	}
+	public int getSappears() {
+		return sappears;
+	}
+	public void setSappears(int sappears) {
+		this.sappears = sappears;
+	}
+	public int getSassists() {
+		return sassists;
+	}
+	public void setSassists(int sassists) {
+		this.sassists = sassists;
+	}
+	public int getSgoals() {
+		return sgoals;
+	}
+	public void setSgoals(int sgoals) {
+		this.sgoals = sgoals;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getAchievements() {
+		return achievements;
+	}
+	public void setAchievements(String achievements) {
+		this.achievements = achievements;
 	} 
-
+	
 }

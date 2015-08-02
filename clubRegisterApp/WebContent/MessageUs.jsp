@@ -4,10 +4,10 @@
 	
 	<title>Message Us</title>
 		
-		<script type="text/javascript" src="resources/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-		<script type="text/javascript" src="resources/js/angular.js"></script>
-		<script type="text/javascript" src="resources/js/angular-animate.js"></script>
+		<script type="text/javascript" src="resources/js/libs/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
@@ -23,11 +23,12 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom" style="background-color:#D90404;color:#FAE900;">
+			<div class="container">
+			<div class="panel">
+				<div class="panel-heading avenue-heading">
 					<h3><i class="fa fa-envelope-o"></i> Email Avenue United:</h3>
 				</div>
-				<div class="panel-body" style="background-color:#E6E3E3;">
+				<div class="panel-body avenue-body">
 					If you wish to send Avenue United an email, please fill in your details and your message below.
 					<div class="blankspace"></div>
 					<form class="form-horizontal" method="post">
