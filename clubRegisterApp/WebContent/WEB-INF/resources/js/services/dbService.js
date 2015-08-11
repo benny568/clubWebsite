@@ -15,7 +15,9 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		getSessionsForTeam : getSessionsForTeam,
 		getSessionsRecords : getSessionsRecords,
 		getASessionRecord : getASessionRecord,
-		getSessionRecordsForTeam : getSessionRecordsForTeam
+		getSessionRecordsForTeam : getSessionRecordsForTeam,
+		getCurrentUser : getCurrentUser,
+		updateUser : updateUser
 		
 	});
 	
@@ -279,6 +281,45 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		// The request returns a promise, which has a built in
 		// 'then' function that takes the success and error callbacks
 		// as the two parameters.
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/***************************************************************
+	 * Get the user name from the db via a REST call.
+	 ***************************************************************/
+	function getCurrentUser() {
+		console.log("## [dbService] -> getCurrentUser");
+		
+		var request = $http({
+			method: "get",
+			url: urlBase + "/admin/user"
+		});
+		
+		// The request returns a promise, which has a built in
+		// 'then' function that takes the success and error callbacks
+		// as the two parameters.
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/*******************************************************
+	 * UPDATE USER
+	 *******************************************************/
+	function updateUser( user ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [updateUser] csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.put["Content-Type"] = "application/json";
+		$http.defaults.headers.put["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "put",
+			url: urlBase + "/admin/user",
+			data: user
+		});
+		
 		return( request.then( handleSuccess, handleError ) );
 	}
 	

@@ -25,10 +25,13 @@ import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
+import org.avenue.service.domain.User;
 import org.avenue.service.utility.DBUtility;
+
 public class TaskManagerService {
  
 	 private Connection connection;
+	 private int retries = 0;
 	
 	 public TaskManagerService() {
 	  connection = DBUtility.getConnection();
@@ -279,15 +282,18 @@ public class TaskManagerService {
 	 
 	 public ArrayList<NewsStory> getNewsStories()
 	 {
+		 Connection connection = DBUtility.getConnection();
 		 ArrayList<NewsStory> newsItems = new ArrayList<NewsStory>();
 		 
-		  try {
+		  try 
+		  {
 			   PreparedStatement preparedStatement = connection.
 			     prepareStatement("select * from newsstory where category=?");
 			   preparedStatement.setString(1, "G");
 			   ResultSet rs = preparedStatement.executeQuery();
 			   
-			   while(rs.next()) {
+			   while(rs.next()) 
+			   {
 				   NewsStory ns = new NewsStory();
 				   ns.setNsid(rs.getInt("nsid"));
 				   ns.setCategory(rs.getString("category"));
@@ -297,11 +303,23 @@ public class TaskManagerService {
 				   ns.setImage(rs.getString("image"));
 				   newsItems.add(ns);
 			   }	
-			  } catch (SQLException e) {
-			   e.printStackTrace();
+		  } 
+		  catch (SQLException e)
+		  {
+			  System.out.println("## CONNECTION CLOSED ?????????");
+			  System.err.println("## CONNECTION CLOSED ?????????");
+			  e.printStackTrace();
+			  
+			  DBUtility.reopenConnection();
+			  
+			  if( retries < 5)
+			  {
+				  retries++;
+				  getNewsStories();
 			  }
+		  }
 	
-			  return newsItems;
+		  return newsItems;
 	 }
 	 
 	 public void addMember(Member member)
@@ -594,6 +612,54 @@ public class TaskManagerService {
 	
 		  return records;
 	}
+	
+	public User getUserByName( String name )
+	{
+		User thisUser = new User();
+		try {
+			   PreparedStatement preparedStatement = connection.
+			     prepareStatement("select * from user where username = ?");
+			   preparedStatement.setString(1, name);
+			   ResultSet rs = preparedStatement.executeQuery();
+			   
+			   while(rs.next()) {
+				   thisUser.setUserId(rs.getInt("userId"));
+				   thisUser.setName(rs.getString("username"));
+				   thisUser.setPassword(rs.getString("password"));
+				   thisUser.setAddress(rs.getString("address"));
+				   thisUser.setEmail(rs.getString("email"));
+				   thisUser.setPhone(rs.getString("phone"));
+				   thisUser.setDob(rs.getDate("dob"));
+				   thisUser.setAvatar(rs.getString("avatar"));
+				   thisUser.setEnabled(rs.getInt("enabled"));
+			   }	
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  return thisUser;
+	}
+	
+	public void updateUser(User user)
+	 {
+		 
+		  try {
+			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user set username=?,password=?,address=?,phone=?,email=?,dob=?,avatar=?,enabled=? where userid = ?");
+			  	preparedStatement.setString(1, user.getName());
+			  	preparedStatement.setString(2, user.getPassword());
+			  	preparedStatement.setString(3, user.getAddress());
+			  	preparedStatement.setString(4, user.getPhone());
+			  	preparedStatement.setString(5, user.getEmail());
+			  	preparedStatement.setDate(6, user.getDob());
+			  	preparedStatement.setString(7, user.getAvatar());
+			  	preparedStatement.setInt(8, user.getEnabled());
+			  	preparedStatement.setInt(9, user.getUserId());
+			  	preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+		 return;
+	 }
 
- 
 }

@@ -2,7 +2,7 @@
 mmModule.controller('academyManagerController', function ($scope,$http, dbService) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-	$scope.home = "http://" + site + "/clubRegisterApp";
+	$scope.home = "http://" + site;
 	
 	$http.get(urlBase+'/academy/news').success(function(data) 
 	{

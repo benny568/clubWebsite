@@ -4,7 +4,7 @@
 var app = angular.module('fileUpload', ['ngFileUpload']);
 var version = '5.0.8';
 //var urlBase="http://localhost:8080/clubRegisterApp";
-var urlBase="http://www.avenueunited.ie/clubRegisterApp";
+var urlBase="http://www.avenueunited.ie";
 
 app.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 'Upload', function ($scope, $http, $timeout, $compile, Upload) {
     $scope.usingFlash = FileAPI && FileAPI.upload != null;

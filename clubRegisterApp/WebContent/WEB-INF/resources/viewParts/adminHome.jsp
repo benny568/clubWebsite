@@ -33,6 +33,7 @@
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
@@ -65,8 +66,7 @@
 						</div>
 				</div>
 			</div> <!-- end row -->
-			
-			<div ng-controller="userProfileController" ng-click="showUser()" class="avenue-body">Click Me</div>
+
 		</div> <!-- end of container -->
 		
 		

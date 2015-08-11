@@ -80,6 +80,7 @@ CREATE  TABLE user (
   userid int NOT NULL AUTO_INCREMENT,
   username VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
+  phone varchar(20),
   address varchar(100),
   email varchar(100),
   dob Date,
@@ -97,10 +98,10 @@ CREATE TABLE user_roles (
   KEY fk_username_idx (userid),
   CONSTRAINT fk_username FOREIGN KEY (userid) REFERENCES user (userid));
 
-INSERT INTO user(username,password,address,email,dob,avatar,enabled)
-VALUES ('guest','123', 'Reaskaun, Larchill, Ennis, Co. Clare', 'odalybr@hotmail.com', '1968/05/11', 'resources/images/users/Brendan.png',TRUE);
 INSERT INTO user(username,password,enabled)
-VALUES ('benny','corina', TRUE);
+VALUES ('guest','123', TRUE);
+INSERT INTO user(username,password,address,phone,email,dob,avatar,enabled)
+VALUES ('benny','corina', 'Reaskaun, Larchill, Ennis, Co. Clare', '0876470883', 'odalybr@hotmail.com', '1968/05/11', 'resources/images/users/Brendan.png',TRUE);
  
 INSERT INTO user_roles (userid, username, ROLE)
 VALUES (1, 'benny', 'ROLE_USER');

@@ -13,10 +13,9 @@
 	<context:component-scan base-package="org.avenue.service.controller" />
 	
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
-	
-	 <mvc:annotation-driven />
-	 <mvc:default-servlet-handler/>
-
+	 
+	<mvc:annotation-driven /> 	
+	<mvc:default-servlet-handler/>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

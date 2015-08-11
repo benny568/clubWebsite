@@ -1,6 +1,7 @@
 package org.avenue.service.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +87,7 @@ public class TaskManagerController {
 	 public List<NewsStory> getNewsStories() {
 		 System.out.println("## [TaskManagerController]->getNewsStories()..");
 		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
+		 System.out.println("## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
 		 return stories;
 	 }
 	 
@@ -128,6 +132,19 @@ public class TaskManagerController {
 	 @RequestMapping(value="/admin/sessionrec/{teamid}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public  List<SessionRecord> getSessionRecordsForTeam(@PathVariable int teamid) {	 
 		 List<SessionRecord> sessions=taskmanagerservice.getSessionRecordsForTeam(teamid);
-	  return sessions;	
+		 return sessions;	
+	 }
+	 
+	 @RequestMapping(value="/admin/user",method = RequestMethod.GET,headers="Accept=application/json")
+	 public org.avenue.service.domain.User getUserName(Principal principal) {
+		 User activeUser = (User) ((Authentication) principal).getPrincipal();
+		 String username = activeUser.getUsername();
+		 org.avenue.service.domain.User thisUser = taskmanagerservice.getUserByName(username);
+		 return thisUser;	
+	 }
+	 
+	 @RequestMapping(value="/admin/user",method = RequestMethod.PUT)
+	 public void updateUser(@RequestBody org.avenue.service.domain.User user) {	 
+		 taskmanagerservice.updateUser( user );
 	 }
 }

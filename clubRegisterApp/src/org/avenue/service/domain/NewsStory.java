@@ -1,6 +1,8 @@
 package org.avenue.service.domain;
 
-public class NewsStory {
+import java.io.Serializable;
+
+public class NewsStory implements Serializable {
 	private int nsid;
 	private String category;
 	private String title;

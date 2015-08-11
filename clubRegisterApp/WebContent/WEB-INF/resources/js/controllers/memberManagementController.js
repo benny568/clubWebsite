@@ -10,7 +10,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	$scope.editable = '';
 	$scope.teamName = $attrs.team;
 	$scope.mode = $attrs.mode;
-	$scope.home = "http://" + site + "/clubRegisterApp";
+	$scope.home = "http://" + site;
 	console.log("## [memberManagerController] Controller initialized, mode: ", $scope.mode);
 
 	/* (1) Get the members to display on the page*/
@@ -213,7 +213,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			}
 		}
 	}
-	
+
 	
 	function calculateAge(dob)
 	{
