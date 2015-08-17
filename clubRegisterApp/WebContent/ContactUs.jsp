@@ -45,14 +45,14 @@
 						<tr>
 						  <th scope="row">Chairman</th>
 						  <td>Geroid Mannion</td>
-						  <td>056 78932</td>
+						  <td>886 8120055</td>
 						  <td>gm@gmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">Secretary</th>
-						  <td>Jacob</td>
-						  <td>Thornton</td>
-						  <td>@fat</td>
+						  <td>Nigel Braddish</td>
+						  <td>087 2873996</td>
+						  <td>avenueunited@gmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">Treasurer</th>
@@ -172,7 +172,7 @@
 	
 	<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
 		<div class="container navbar-text pull-left" style="max-height:0px;">
-			<p>© Avenue United 2015</p>
+			<p>ï¿½ Avenue United 2015</p>
 		</div>
 	</div>			    
 	
