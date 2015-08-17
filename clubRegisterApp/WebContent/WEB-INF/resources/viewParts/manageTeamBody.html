@@ -137,9 +137,11 @@
 			    		</div> <!-- end col -->	
 			    	</div> <!-- end row -->
 			    	
-			    	<div class="row">
+			    	<div class="row" ng-controller="teamPlanController">
 			    		<div class="col-md-12">
-			    			<div class="panel">
+			    			<button type="button" class="btn btn-warning btn-xs" ng-show="!viewTeamPlan" ng-click="toggleTeamPlanView(teamId)">Show Team Plan</button>
+			    			<button type="button" class="btn btn-warning btn-xs" ng-show="viewTeamPlan" ng-click="toggleTeamPlanView(teamId)">Hide Team Plan</button>
+			    			<div class="panel" ng-show="viewTeamPlan">
 				    			<div class="panel-heading avenue-heading">
 				    				Team Planner:
 				    			</div>

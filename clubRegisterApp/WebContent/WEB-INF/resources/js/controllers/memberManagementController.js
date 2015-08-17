@@ -6,6 +6,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	$scope.TeamMembers = [];
 	$scope.teams = [];
 	$scope.viewTraining = false;
+	$scope.viewTeamPlan = false;
 	$scope.currentMember = {};
 	$scope.editable = '';
 	$scope.teamName = $attrs.team;

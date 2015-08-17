@@ -1,7 +1,7 @@
 var lrcode; // Needed for API calls to LeagueRepublic site
 //var site = 'localhost:8080';
 var site = 'www.avenueunited.ie';
-var urlBase="http://" + site + "/clubRegisterApp";
+var urlBase="http://" + site;
 var thisUser = {};
 
 var mmModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);

@@ -15,7 +15,9 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		getSessionsForTeam : getSessionsForTeam,
 		getSessionsRecords : getSessionsRecords,
 		getASessionRecord : getASessionRecord,
-		getSessionRecordsForTeam : getSessionRecordsForTeam
+		getSessionRecordsForTeam : getSessionRecordsForTeam,
+		getCurrentUser : getCurrentUser,
+		updateUser : updateUser
 		
 	});
 	
@@ -131,6 +133,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 *******************************************************/
 	function getNewsStories() {
 		$http.defaults.headers.common["Accept"] = "application/json, text/plain";
+		console.log("## [dbService]->getNewsStories()");
 		
 		var request = $http({
 			method: "get",

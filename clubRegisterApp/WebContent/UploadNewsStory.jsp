@@ -98,8 +98,6 @@
 			 	</div> <!-- end col -->
 			 </div> <!-- end row -->
  		</div> <!-- end container -->
-
-		<span style="color:white;font-weight:bold;">{{news}}</span>
 		
 	</body>
 </html>
