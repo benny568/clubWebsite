@@ -43,7 +43,7 @@
 
 </head>  <!-- HEAD END -->
 
-<body ng-controller="memberManagerController" mode="None">
+<body ng-controller="userProfileController" mode="None">
 
 	<!-- (1) Banner across the top & the menu -->
 	<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
@@ -60,35 +60,34 @@
 					<div class="col-md-6">
 		    			<div class="panel">
 			    			<div class="panel-heading avenue-heading">
-			    				My Profile: {{thisMember.name}}
+			    				My Profile: {{thisUser.name}}
 			    			</div>
 			    			<div class="panel-body avenue-body">
 			    				<div>
 									<img src="resources/images/Players/default.png" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
-									<span class="avenue-yellow-text" style="font-size:20px;">Johnny Dep {{thisMember.name}}</span>
+									<span class="avenue-yellow-text" style="font-size:20px;">{{thisUser.name}}</span>
 								</div>
 							    <form name="profileForm">
 							    	<div class="row">
 							    		<div class="col-md-12">
-									    	<label for="name">{{thisMember.name}}</label>
 						                	<label for="address" style="padding-top:10px;">Address:</label>
-						                	<input type="text" class="form-control" id="address" data-ng-model="thisMember.address" value="{{thisMember.address}}"/>
+						                	<input type="text" class="form-control" id="address" data-ng-model="thisUser.address" value="{{thisUser.address}}"/>
 						                	<label for="email" style="padding-top:10px;">email:</label>
-						                	<input type="email" class="form-control" id="email" data-ng-model="thisMember.email" value="{{thisMember.email}}"/>
+						                	<input type="email" class="form-control" id="email" data-ng-model="thisUser.email" value="{{thisUser.email}}"/>
 										</div>
 				                	</div>
 				                	<div class="row">
 				                		<div class="col-md-6">
 						                	<label for="phone" style="padding-top:10px;">Phone:</label>
-						                	<input type="text" class="form-control" id="phone" data-ng-model="thisMember.phone" value="{{thisMember.phone}}"/>
+						                	<input type="text" class="form-control" id="phone" data-ng-model="thisUser.phone" value="{{thisUser.phone}}"/>
 					                	</div>
 					                	<div class="col-md-6">
 						                	<label for="dob" style="padding-top:10px;">Date of Birth:</label>
-						                	<input type="text" class="form-control" id="dob" data-ng-model="thisMember.dob" value="{{thisMember.dob}}"/>
+						                	<input type="text" class="form-control" id="dob" data-ng-model="thisUser.dob" value="{{thisUser.dob}}"/>
 				                		</div>
 				                	</div>
 				                	<label for="photo" style="padding-top:10px;">Avatar:</label>
-			                		<input type="text" class="form-control" id="photo" data-ng-model="thisMember.photo" value="{{thisMember.photo}}"/>
+			                		<input type="text" class="form-control" id="avatar" data-ng-model="thisUser.avatar" value="{{thisUser.avatar}}"/>
 				                	
 				                	<div class="panel-footer avenue-body">
 						                <button type="button" ng-click="close(true)" class="btn btn-success">Save</button>

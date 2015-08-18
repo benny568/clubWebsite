@@ -66,8 +66,7 @@
 						</div>
 				</div>
 			</div> <!-- end row -->
-			
-			<div ng-controller="userProfileController" ng-click="showUser()" class="avenue-body">Click Me</div>
+
 		</div> <!-- end of container -->
 		
 		
