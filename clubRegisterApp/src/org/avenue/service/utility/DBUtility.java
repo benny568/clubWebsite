@@ -12,12 +12,11 @@ import java.util.Properties;
 public class DBUtility {
  private static Connection connection = null;
 
-    public static Connection getConnection() {
-        if (connection != null)
-            return connection;
-        else {
+    public static Connection getConnection() 
+    {
+
             try {
-             Properties prop = new Properties();
+                Properties prop = new Properties();
                 InputStream inputStream = DBUtility.class.getClassLoader().getResourceAsStream("/config.properties");
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
@@ -37,7 +36,14 @@ public class DBUtility {
             }
             return connection;
         }
-
+    
+    public static void closeConnection()
+    {
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
 }
