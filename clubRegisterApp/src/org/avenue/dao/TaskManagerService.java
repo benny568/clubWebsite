@@ -29,6 +29,8 @@ import org.avenue.service.domain.User;
 import org.avenue.service.utility.DBUtility;
 
 public class TaskManagerService {
+<<<<<<< HEAD
+=======
  
 	 private Connection connection;
 	 private int retries = 0;
@@ -36,6 +38,7 @@ public class TaskManagerService {
 	 public TaskManagerService() {
 	  connection = DBUtility.getConnection();
 	 }
+>>>>>>> branch 'master' of https://github.com/benny568/clubWebsite.git
 	 
 	 public List<Member> getAllMembers() {
 		  List<Member> members = new ArrayList<Member>();
