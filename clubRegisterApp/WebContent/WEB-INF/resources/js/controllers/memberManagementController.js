@@ -77,11 +77,12 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 * Params in:	ID of the team in question.
 	 * Return:		Sets $scope.showArray[teamId] to false.
 	 **********************************************************/
-	$scope.toggleView = function(teamId) {
+	$scope.toggleView = function(teamId) 
+	{
 		if( typeof teamId == 'undefined' )
-			return
+			return;
 		$scope.showArray[teamId] = !$scope.showArray[teamId];
-		console.log("## [memberManagerController] -> toggleView, value for team: ", teamId, " set to: ", $scope.showArray[teamId])
+		console.log("## [memberManagerController] -> toggleView, value for team: ", teamId, " set to: ", $scope.showArray[teamId]);
 	}
 	$scope.toggleView();
 	
@@ -214,7 +215,65 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			}
 		}
 	}
-	
+
+	/**********************************************************
+	 * Name:		toStringPosition()
+	 * Description:	Converts the int value to a string for 
+	 * 				position
+	 * Scope:		Internal
+	 * Params in:	Int version of the position
+	 * Return:		String version of the position
+	 **********************************************************/
+	function toStringPosition(iPos)
+	{
+		var sPos = "Not Defined";
+		
+		switch( iPos )
+		{
+		case 0:
+			sPos = "Manager";
+			break;
+		case 1:
+			sPos = "Goalkeeper";
+			break;
+		case 2:
+			sPos = "Full Back";
+			break;
+		case 3:
+			sPos = "Full Back";
+			break;
+		case 4:
+			sPos = "Center Half";
+			break;
+		case 5:
+			sPos = "Center Half";
+			break;
+		case 6:
+			sPos = "Mid Field";
+			break;
+		case 7:
+			sPos = "Winger";
+			break;
+		case 8:
+			sPos = "Winger";
+			break;
+		case 9:
+			sPos = "Striker";
+			break;
+		case 10:
+			sPos = "CAM";
+			break;
+		case 11:
+			sPos = "Striker";
+			break;
+		case 99:
+			sPos = "Captain";
+			break;
+		}
+		
+		return sPos;
+	}
+
 	
 	function calculateAge(dob)
 	{

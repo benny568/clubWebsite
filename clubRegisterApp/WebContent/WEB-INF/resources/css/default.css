@@ -70,6 +70,7 @@ body
 	min-height:50px;
 }
 
+.a-orange-text {color:#FAE900;}
 .avenue-heading { background-color:#D90404;color:#FAE900;min-height:40px; }
 .avenue-body { background-color:#303030;color:white; }
 .a-adminMenu { position:fixed;}

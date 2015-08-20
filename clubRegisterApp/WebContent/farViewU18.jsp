@@ -33,6 +33,7 @@
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/farController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
@@ -40,12 +41,12 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController" mode="Team" team="U11 Red">
+	<body ng-controller="fixturesAndResultsController" mode="Team" team="U18">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
 
 		<!-- (2) Load the body of the page -->
-		<div ng-include="'resources/viewParts/teamViewBody.html'"></div>
+		<div ng-include="'resources/viewParts/farBody.html'"></div>
 	</body>
 </html>

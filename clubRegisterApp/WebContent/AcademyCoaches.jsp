@@ -2,7 +2,7 @@
 <html ng-app="memberManagerApp">
 <head>  <!-- HEAD START -->
 	
-	<title>Avenue United Academy</title>
+	<title>Academy Overview</title>
 		
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
@@ -53,43 +53,60 @@
 					<!-- Add menu down left -->
 					<div ng-include="'resources/viewParts/academyMenu.html'"></div>
 				</div>
-				<div class="col-md-6">
-					<img src="resources/images/academy/avenue-academy-15.1.jpg" height="auto" width="100%" style="margin-left:100px;"/>
+				<div class="col-md-1">
 				</div>
-				<div class="col-md-5">
-					<div class="academyflag" style="margin-left:150px;margin-top:30px;"></div>
-				</div>
+				<div class="col-md-10">
+					<div class="panel">
+						<div class="panel-heading avenue-heading">
+							<strong>Avenue United Academy Coaches for 2015/2016</strong>
+						</div>
+						<div class="panel-body avenue-body">
+							<table class="table-condensed table-bordered" style="background-color:#E6E3E3;">
+					  <thead>
+						<tr class="bg-primary avenue-heading">
+						  <th><i class="fa fa-child"></i> Age Group</th>
+						  <th><i class="fa fa-calendar"></i> Year of Birth</th>
+						  <th><i class="fa fa-user"></i> Coaches</th>
+						</tr>
+					  </thead>
+					  <tbody class="avenue-body">
+						<tr>
+						  <th scope="row">4-5 years</th>
+						  <td>2009 / 2010</td>
+						  <td>Paul Cosgrove</td>
+						</tr>
+						<tr>
+						  <th scope="row">6 years</th>
+						  <td>2008's</td>
+						  <td>Ray Crowley, Parvin Chad</td>
+						</tr>
+						<tr>
+						  <th scope="row">7 years</th>
+						  <td>2007's</td>
+						  <td>Alan Ball, Paul Roche, Dermot Daly</td>
+						</tr>
+						<tr>
+						  <th scope="row">8 years</th>
+						  <td>2006's</td>
+						  <td>Brendan O'Daly, Killian O'Daly</td>
+						</tr>
+						<tr>
+						  <th scope="row">9 years</th>
+						  <td>2005's</td>
+						  <td>John O'Malley, Noel Purtill</td>
+						</tr>
+						<tr>
+						  <th scope="row">10 years</th>
+						  <td>2004</td>
+						  <td>David Herlihy, Brian Aherne, Leo Herbert</td>
+						</tr>
+					  </tbody>
+					</table>
+						</div>
+					</div>
+				</div> <!--  end col -->
 			</div> <!-- end row -->
 			
-			<div class="blankspace"></div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="panel">
-						<div class="panel-heading avenue-heading">
-		    				Latest News
-		    			</div>
-		    			<div class="panel-body avenue-body">
-		    				<div ng-repeat="story in news">
-			    				<div style="border-bottom: 1px solid #ccc;padding-bottom:5px;">
-				    				<img src="{{story.image}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="50%"/>
-				    				<h4 style="color:#FAE900;">{{story.description}}</h4><p>{{story.story}}</p>
-				    			</div>
-			    			</div>
-		    			</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="panel">
-						<div class="panel-heading avenue-heading">
-		    				Upcoming Events
-		    			</div>
-		    			<div class="panel-body avenue-body">
-		    				<img src="resources/images/academy/academyCrest.png" width="100%" />
-		    			</div>
-					</div>				
-				</div>
-			</div>
 		</div> <!--  End of container t1 -->
 	</div>
 

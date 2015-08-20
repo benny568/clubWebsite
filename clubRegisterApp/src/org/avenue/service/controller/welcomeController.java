@@ -77,15 +77,6 @@ public class welcomeController {
 	@RequestMapping(value = "/juniorBpage", method = RequestMethod.GET)
 	public String juniorBpage( ModelMap model ){return "teamViewJB";}
 	
-	@RequestMapping(value = "/u14page", method = RequestMethod.GET)
-	public String u14page( ModelMap model ){return "teamViewU14";}
-	
-	@RequestMapping(value = "/u11Rpage", method = RequestMethod.GET)
-	public String u11Rpage( ModelMap model ){return "teamViewU11Red";}
-	
-	@RequestMapping(value = "/u11Ypage", method = RequestMethod.GET)
-	public String u11Ypage( ModelMap model ){return "teamViewU11Yellow";}
-	
 	@RequestMapping(value = "/u18page", method = RequestMethod.GET)
 	public String u18page( ModelMap model ){return "teamViewU18";}
 	
@@ -95,8 +86,56 @@ public class welcomeController {
 	@RequestMapping(value = "/u16page", method = RequestMethod.GET)
 	public String u16page( ModelMap model ){return "teamViewU16";}
 	
+	@RequestMapping(value = "/u16Bpage", method = RequestMethod.GET)
+	public String u16Bpage( ModelMap model ){return "teamViewU16B";}
+	
+	@RequestMapping(value = "/u15page", method = RequestMethod.GET)
+	public String u15page( ModelMap model ){return "teamViewU15";}
+	
+	@RequestMapping(value = "/u15Bpage", method = RequestMethod.GET)
+	public String u15Bpage( ModelMap model ){return "teamViewU15B";}
+	
+	@RequestMapping(value = "/u14page", method = RequestMethod.GET)
+	public String u14page( ModelMap model ){return "teamViewU14";}
+	
+	@RequestMapping(value = "/u14Bpage", method = RequestMethod.GET)
+	public String u14Bpage( ModelMap model ){return "teamViewU14B";}
+	
+	@RequestMapping(value = "/u13page", method = RequestMethod.GET)
+	public String u13page( ModelMap model ){return "teamViewU13";}
+	
+	@RequestMapping(value = "/u13Bpage", method = RequestMethod.GET)
+	public String u13Bpage( ModelMap model ){return "teamViewU13B";}
+	
+	@RequestMapping(value = "/u12page", method = RequestMethod.GET)
+	public String u12page( ModelMap model ){return "teamViewU12";}
+	
+	@RequestMapping(value = "/u12Bpage", method = RequestMethod.GET)
+	public String u12Bpage( ModelMap model ){return "teamViewU12B";}
+
+	@RequestMapping(value = "/u11Rpage", method = RequestMethod.GET)
+	public String u11Rpage( ModelMap model ){return "teamViewU11Red";}
+	
+	@RequestMapping(value = "/u11Ypage", method = RequestMethod.GET)
+	public String u11Ypage( ModelMap model ){return "teamViewU11Yellow";}
+	
+	@RequestMapping(value = "/farViewJA", method = RequestMethod.GET)
+	public String farViewJA( ModelMap model ){return "farViewJA";}
+	
 	@RequestMapping(value = "/AcademyHome", method = RequestMethod.GET)
 	public String AcademyHome( ModelMap model ){return "AcademyHome";}
+	
+	@RequestMapping(value = "/AcademyOverview", method = RequestMethod.GET)
+	public String AcademyOverview( ModelMap model ){return "AcademyOverview";}
+	
+	@RequestMapping(value = "/AcademyRegistration", method = RequestMethod.GET)
+	public String AcademyRegistration( ModelMap model ){return "AcademyRegistration";}
+	
+	@RequestMapping(value = "/AcademyCoaches", method = RequestMethod.GET)
+	public String AcademyCoaches( ModelMap model ){return "AcademyCoaches";}
+	
+	@RequestMapping(value = "/AcademySchedule", method = RequestMethod.GET)
+	public String AcademySchedule( ModelMap model ){return "AcademySchedule";}
 	
 	@RequestMapping(value = "/MerchandiseHome", method = RequestMethod.GET)
 	public String MerchandiseHome( ModelMap model ){return "MerchandiseHome";}

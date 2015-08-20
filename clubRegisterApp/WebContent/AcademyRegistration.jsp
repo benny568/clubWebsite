@@ -2,7 +2,7 @@
 <html ng-app="memberManagerApp">
 <head>  <!-- HEAD START -->
 	
-	<title>Avenue United Academy</title>
+	<title>Academy Overview</title>
 		
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
@@ -49,47 +49,29 @@
 	<div id="wrap">
 		<div class="container t1">
 			<div class="row">
-				<div class="col-md-1" style="padding-top:50px;">
+				<div class="col-md-1" style="padding-top:50px; padding-right:10px;">
 					<!-- Add menu down left -->
 					<div ng-include="'resources/viewParts/academyMenu.html'"></div>
 				</div>
-				<div class="col-md-6">
-					<img src="resources/images/academy/avenue-academy-15.1.jpg" height="auto" width="100%" style="margin-left:100px;"/>
+				<div class="col-md-1">
 				</div>
-				<div class="col-md-5">
-					<div class="academyflag" style="margin-left:150px;margin-top:30px;"></div>
-				</div>
+				<div class="col-md-10">
+					<div class="panel">
+						<div class="panel-heading avenue-heading">
+							<strong>Registration Instructions for Avenue United Academy 2015/2016</strong>
+						</div>
+						<div class="panel-body avenue-body">
+							<a href="resources/docs/academy/Registration Form 2015 & 2016 Season.doc"><img src="resources/images/register.png" alt="Registration Form" align="left" HSPACE="5" VSPACE="5""/></a>
+							The 2015/2016 Avenue United Academy will begin in September. To secure a place for your child, you need to fill out the 
+							registration form to the left and return it to Helene Griffit our Academy Director. Alternatively, the form can be handed in on the first morning 
+							of the Academy or given in beforehand to a club officer.
+							<br/><br/>
+							<p><i class="fa fa-arrow-left small"></i><em> Click on the icon to the left to download the registration form.</em></p>
+						</div>
+					</div>
+				</div> <!--  end col -->
 			</div> <!-- end row -->
 			
-			<div class="blankspace"></div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="panel">
-						<div class="panel-heading avenue-heading">
-		    				Latest News
-		    			</div>
-		    			<div class="panel-body avenue-body">
-		    				<div ng-repeat="story in news">
-			    				<div style="border-bottom: 1px solid #ccc;padding-bottom:5px;">
-				    				<img src="{{story.image}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="50%"/>
-				    				<h4 style="color:#FAE900;">{{story.description}}</h4><p>{{story.story}}</p>
-				    			</div>
-			    			</div>
-		    			</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="panel">
-						<div class="panel-heading avenue-heading">
-		    				Upcoming Events
-		    			</div>
-		    			<div class="panel-body avenue-body">
-		    				<img src="resources/images/academy/academyCrest.png" width="100%" />
-		    			</div>
-					</div>				
-				</div>
-			</div>
 		</div> <!--  End of container t1 -->
 	</div>
 
