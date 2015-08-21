@@ -2,7 +2,7 @@
 <html ng-app="memberManagerApp">
 <head>  <!-- HEAD START -->
 	
-	<title>Academy Coaches</title>
+	<title>Documentation</title>
 		
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
@@ -49,56 +49,26 @@
 	<div id="wrap">
 		<div class="container t1">
 			<div class="row">
-				<div class="col-md-1" style="padding-top:50px;">
-					<!-- Add menu down left -->
-					<div ng-include="'resources/viewParts/academyMenu.html'"></div>
-				</div>
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-10">
+				<div class="col-md-1"></div>
+				<div class="col-md-8">
 					<div class="panel">
 						<div class="panel-heading avenue-heading">
-							<strong>Avenue United Academy Coaches for 2015/2016</strong>
+							<strong>Documentation Downloads 2015/2016</strong>
 						</div>
 						<div class="panel-body avenue-body">
 							<table class="table-condensed table-bordered" style="background-color:#E6E3E3;">
 					  <thead>
 						<tr class="bg-primary avenue-heading">
-						  <th><i class="fa fa-child"></i> Age Group</th>
-						  <th><i class="fa fa-calendar"></i> Year of Birth</th>
-						  <th><i class="fa fa-user"></i> Coaches</th>
+						  <th><i class="fa fa-list-ol"></i> Number</th>
+						  <th><i class="fa fa-file-text"></i> Document Title</th>
+						  <th><i class="fa fa-link"></i> Download Link</th>
 						</tr>
 					  </thead>
 					  <tbody class="avenue-body">
 						<tr>
-						  <th scope="row">4-5 years</th>
-						  <td>2009 / 2010</td>
-						  <td>Paul Cosgrove</td>
-						</tr>
-						<tr>
-						  <th scope="row">6 years</th>
-						  <td>2008's</td>
-						  <td>Ray Crowley, Parvin Chad</td>
-						</tr>
-						<tr>
-						  <th scope="row">7 years</th>
-						  <td>2007's</td>
-						  <td>Alan Ball, Paul Roche, Dermot Daly</td>
-						</tr>
-						<tr>
-						  <th scope="row">8 years</th>
-						  <td>2006's</td>
-						  <td>Brendan O'Daly, Killian O'Daly</td>
-						</tr>
-						<tr>
-						  <th scope="row">9 years</th>
-						  <td>2005's</td>
-						  <td>John O'Malley, Noel Purtill</td>
-						</tr>
-						<tr>
-						  <th scope="row">10 years</th>
-						  <td>2004</td>
-						  <td>David Herlihy, Brian Aherne, Leo Herbert</td>
+						  <th scope="row">1</th>
+						  <td>Coaches Code of Conduct</td>
+						  <td><a href="resources/docs/Coaches Code of Conduct.doc"><img src="resources/images/Sheet_of_paper.png" alt="Coches Code of Conduct" height="20px"/></a></td>
 						</tr>
 					  </tbody>
 					</table>

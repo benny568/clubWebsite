@@ -5,6 +5,8 @@ public class Team {
 	private int id;
 	private String name;
 	private int lrcode;
+	private int lrFixturesCode;
+	private int lrResultsCode;
 	
 	
 	public int getId() {
@@ -24,5 +26,17 @@ public class Team {
 	}
 	public void setLrcode(int lrcode) {
 		this.lrcode = lrcode;
+	}
+	public int getLrFixturesCode() {
+		return lrFixturesCode;
+	}
+	public void setLrFixturesCode(int lrFixturesCode) {
+		this.lrFixturesCode = lrFixturesCode;
+	}
+	public int getLrResultsCode() {
+		return lrResultsCode;
+	}
+	public void setLrResultsCode(int lrResultsCode) {
+		this.lrResultsCode = lrResultsCode;
 	}	
 }

@@ -158,6 +158,8 @@ public class TaskManagerService {
 				   team.setId(rs.getInt("id"));
 				   team.setName(rs.getString("name"));
 				   team.setLrcode(rs.getInt("lrcode"));
+				   team.setLrFixturesCode(rs.getInt("lrFixturesCode"));
+				   team.setLrResultsCode(rs.getInt("lrResultsCode"));
 			   }
 		  } catch (SQLException e) {
 			   e.printStackTrace();

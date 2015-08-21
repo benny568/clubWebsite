@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.NewsStory;
+import org.avenue.service.domain.Team;
 import org.avenue.service.utility.FileUtilities;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class welcomeController {
 
+	TaskManagerService taskmanagerservice=new TaskManagerService();
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();  	 
         FileUtilities fileUtilities = new FileUtilities();
         ArrayList<NewsStory> stories = new ArrayList<NewsStory>();
-        TaskManagerService taskmanagerservice=new TaskManagerService();
  
         //final String directoryLinuxMac ="/Users/loiane/test";
  
@@ -67,6 +69,12 @@ public class welcomeController {
 	
 	@RequestMapping(value = "/FindUs", method = RequestMethod.GET)
 	public String findus( ModelMap model ){return "FindUs";}
+	
+	@RequestMapping(value = "/DocsDownload", method = RequestMethod.GET)
+	public String DocsDownload( ModelMap model ){return "DocsDownload";}
+	
+	@RequestMapping(value = "/Links", method = RequestMethod.GET)
+	public String Links( ModelMap model ){return "Links";}
 
 	@RequestMapping(value = "/news", method = RequestMethod.GET)
 	public String news( ModelMap model ){return "LatestNews";}
@@ -112,6 +120,9 @@ public class welcomeController {
 	
 	@RequestMapping(value = "/u12Bpage", method = RequestMethod.GET)
 	public String u12Bpage( ModelMap model ){return "teamViewU12B";}
+	
+	@RequestMapping(value = "/u12Cpage", method = RequestMethod.GET)
+	public String u12Cpage( ModelMap model ){return "teamViewU12C";}
 
 	@RequestMapping(value = "/u11Rpage", method = RequestMethod.GET)
 	public String u11Rpage( ModelMap model ){return "teamViewU11Red";}
@@ -120,7 +131,126 @@ public class welcomeController {
 	public String u11Ypage( ModelMap model ){return "teamViewU11Yellow";}
 	
 	@RequestMapping(value = "/farViewJA", method = RequestMethod.GET)
-	public String farViewJA( ModelMap model ){return "farViewJA";}
+	public String farViewJA( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("Junior A");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewJB", method = RequestMethod.GET)
+	public String farViewJB( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("Junior B");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU18", method = RequestMethod.GET)
+	public String farViewU18( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U18");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU17", method = RequestMethod.GET)
+	public String farViewU17( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U17");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU16", method = RequestMethod.GET)
+	public String farViewU16( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U16A");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU15", method = RequestMethod.GET)
+	public String farViewU15( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U15A");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU15B", method = RequestMethod.GET)
+	public String farViewU15B( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U15B");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU14", method = RequestMethod.GET)
+	public String farViewU14( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U14A");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU13", method = RequestMethod.GET)
+	public String farViewU13( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U13 Red");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU13B", method = RequestMethod.GET)
+	public String farViewU13B( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U13 Yellow");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU12", method = RequestMethod.GET)
+	public String farViewU12( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U12 Yellow");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU12B", method = RequestMethod.GET)
+	public String farViewU12B( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U12 Red");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU12C", method = RequestMethod.GET)
+	public String farViewU12C( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U12 Black");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU11R", method = RequestMethod.GET)
+	public String farViewU11R( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U11 Red");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+	@RequestMapping(value = "/farViewU11Y", method = RequestMethod.GET)
+	public String farViewU11Y( HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Team team=taskmanagerservice.getTeamDetails("U11 Yellow");
+		session.setAttribute("team", team);
+		return "farView";
+	}
+
 	
 	@RequestMapping(value = "/AcademyHome", method = RequestMethod.GET)
 	public String AcademyHome( ModelMap model ){return "AcademyHome";}
