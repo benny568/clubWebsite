@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html ng-app="memberManagerApp">
-	<head>  <!-- HEAD START -->		
-		<title>Manage Team</title>
+<head>  <!-- HEAD START -->
+	
+	<title>Academy Photos</title>
 		
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
@@ -35,22 +33,36 @@
 		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/trainingViewController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/teamPlanController.js"></script>
-		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/academyController.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
 		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		
-	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController" mode="Team" team="U18">
-	
-		<!-- (1) Banner across the top & the menu -->
-		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
 
-		<!-- (2) Load the body of the page -->
-		<div ng-include="'resources/viewParts/manageTeamBody.html'"></div>
-	</body>
+</head>  <!-- HEAD END -->
+
+<body ng-controller="academyManagerController">
+
+	<!-- (1) Banner across the top -->
+	<div class="header2 img-rounded">
+			<div align="center" style="z-index:2"><img src="resources/images/banner-middle.png" alt="" /></div>
+			<div align="right" style="color:#FFFF33; font-weight:bold; font-size:24px; padding:30px 5px 0px 0px;">Avenue United</div>
+			<div align="right" style="color:#FFFF33; font-weight:bold; font-size:10px;padding-right:5px;"> EST. 1983&nbsp;&nbsp;
+				<i class="fa fa-futbol-o"></i> 14 Titles&nbsp;&nbsp;
+				<i class="fa fa-trophy"></i> 10 Cups
+			</div>
+		<img class="t2" src="resources/images/avenueCrest.png" alt="" />
+	</div>
+
+	<div id="wrap">
+		<div class="container t1">
+
+			
+		</div> <!--  End of container t1 -->
+	</div>
+
+	<!-- Footer across the bottom of the page -->
+	<div ng-include="'resources/viewParts/footer.html'"></div>
+
+</body>
 </html>

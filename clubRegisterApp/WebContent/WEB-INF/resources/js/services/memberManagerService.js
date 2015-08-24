@@ -19,14 +19,14 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	
 	function getFullTeamDetails( scope, lrcode, teamName )
 	{
-		$http.get(urlBase + '/team/' + teamName)
+		$http.get(_home + '/team/' + teamName)
 		.then( function(result){
 			self.teamName = teamName;
 			self.teamId = result.data.id;
 			self.lrcode = result.data.lrcode;
 			lrcode = result.data.lrcode;
 			console.log("## [mmService] - getFullTeamDetails(1): ", self.teamName, self.teamId, self.lrcode, lrcode);
-			return $http.get(urlBase + '/admin/team/' + self.teamId);
+			return $http.get(_home + '/admin/team/' + self.teamId);
 		})
 		.then( function(result){
 				self.Team = result.data;
@@ -42,7 +42,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	 *******************************************************/
 	function getTeamDetails(teamName, lrcode, teamId)
 	{
-		return $http.get(urlBase + '/team/' + teamName).success(function(tdetails)
+		return $http.get(_home + '/team/' + teamName).success(function(tdetails)
 		{
 			console.log("## [mmService] - getTeamDetails()..Got team details: ", tdetails);
 		});
@@ -56,7 +56,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	{
 		console.log("## [mmService] - getTeammembers()..");
 		
-		$http.get(urlBase + '/admin/team/' + self.teamId);/*.success(function(data) 
+		$http.get(_home + '/admin/team/' + self.teamId);/*.success(function(data) 
 		{
 			self.TeamMembers = data;
 			console.log("## [mmService] - getTeammembers()..Added Team to the cache: ", self.TeamMembers);

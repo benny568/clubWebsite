@@ -70,8 +70,8 @@ public class welcomeController {
 	@RequestMapping(value = "/FindUs", method = RequestMethod.GET)
 	public String findus( ModelMap model ){return "FindUs";}
 	
-	@RequestMapping(value = "/DocsDownload", method = RequestMethod.GET)
-	public String DocsDownload( ModelMap model ){return "DocsDownload";}
+	@RequestMapping(value = "/Downloads", method = RequestMethod.GET)
+	public String Downloads( ModelMap model ){return "Downloads";}
 	
 	@RequestMapping(value = "/Links", method = RequestMethod.GET)
 	public String Links( ModelMap model ){return "Links";}
@@ -266,6 +266,9 @@ public class welcomeController {
 	
 	@RequestMapping(value = "/AcademySchedule", method = RequestMethod.GET)
 	public String AcademySchedule( ModelMap model ){return "AcademySchedule";}
+	
+	@RequestMapping(value = "/AcademyPhotos", method = RequestMethod.GET)
+	public String AcademyPhotos( ModelMap model ){return "AcademyPhotos";}
 	
 	@RequestMapping(value = "/MerchandiseHome", method = RequestMethod.GET)
 	public String MerchandiseHome( ModelMap model ){return "MerchandiseHome";}

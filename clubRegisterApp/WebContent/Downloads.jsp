@@ -70,6 +70,11 @@
 						  <td>Coaches Code of Conduct</td>
 						  <td><a href="resources/docs/Coaches Code of Conduct.doc"><img src="resources/images/Sheet_of_paper.png" alt="Coches Code of Conduct" height="20px"/></a></td>
 						</tr>
+						<tr>
+						  <th scope="row">2</th>
+						  <td>Kicking for Killian fixtures and schedule</td>
+						  <td><a href="resources/docs/Kicking For Killain Updated Fixtures Schedule.doc"><img src="resources/images/Sheet_of_paper.png" alt="Kicking for Killian" height="20px"/></a></td>
+						</tr>
 					  </tbody>
 					</table>
 						</div>

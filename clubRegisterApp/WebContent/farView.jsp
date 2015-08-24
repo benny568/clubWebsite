@@ -53,10 +53,10 @@
 		<div id="wrap">
 			<div class="container t1">
 				<div class="row">
-					<div class="lead a-orange-text">Fixtures and Results for <em><%=team.getName()%></em> team.</div>
+					<div class="lead a-orange-text" style="margin-left:40px;">Fixtures and Results for <em><%=team.getName()%></em> team.</div>
 				</div>
-		    	<div class="row">
-			    	<div class="col-md-6">
+		    	<div class="row" style="margin-left:20px;">
+			    	<div class="col-md-5">
 		    			<div class="panel" ng-controller="fixturesAndResultsController" mode="Team" team="Junior A">
 			    			<div class="panel-heading avenue-heading">
 			    				Fixtures:
@@ -70,7 +70,7 @@
 			    			</div>
 			    		</div>
 		    		</div> <!-- end col -->
-		    		<div class="col-md-6">
+		    		<div class="col-md-5">
 		    			<div class="panel" ng-controller="resultsController" mode="Team" team="Junior A">
 			    			<div class="panel-heading avenue-heading">
 			    				Recent Results:

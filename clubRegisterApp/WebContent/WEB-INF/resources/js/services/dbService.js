@@ -28,7 +28,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function getTeams() {
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/teams"
+			url: _home + "/admin/teams"
 		});
 		
 		// The request returns a promise, which has a built in
@@ -43,7 +43,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function getMembers4team( teamId ) {
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/team/" + teamId
+			url: _home + "/admin/team/" + teamId
 		});
 		
 		return( request.then( handleSuccess, handleError ) );
@@ -55,7 +55,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function getAllMembers() {
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/members"
+			url: _home + "/admin/members"
 		});
 		
 		return( request.then( handleSuccess, handleError ) );
@@ -77,7 +77,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "put",
-			url: urlBase + "/admin/member",
+			url: _home + "/admin/member",
 			data: member
 		});
 		
@@ -100,7 +100,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "post",
-			url: urlBase + "/admin/member",
+			url: _home + "/admin/member",
 			data: member
 		});
 		
@@ -118,7 +118,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "delete",
-			url: urlBase + "/admin/member",
+			url: _home + "/admin/member",
 			data: member.id,
 			headers: {"X-CSRF-TOKEN": csrf},
 			xsrfHeaderName: 'X-CSRF-TOKEN',
@@ -137,7 +137,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/news"
+			url: _home + "/admin/news"
 		});
 		
 		return( request.then( handleSuccess, handleError ) );
@@ -159,7 +159,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "post",
-			url: urlBase + "/admin/team",
+			url: _home + "/admin/team",
 			data: team
 		});
 		
@@ -181,7 +181,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "put",
-			url: urlBase + "/admin/team",
+			url: _home + "/admin/team",
 			data: team
 		});
 		
@@ -203,7 +203,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "delete",
-			url: urlBase + "/admin/team",
+			url: _home + "/admin/team",
 			data: team.id,
 			headers: {"X-CSRF-TOKEN": csrf},
 			xsrfHeaderName: 'X-CSRF-TOKEN',
@@ -222,7 +222,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/sessionplan/" + teamId
+			url: _home + "/admin/sessionplan/" + teamId
 		});
 		
 		// The request returns a promise, which has a built in
@@ -240,7 +240,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/sessionrec"
+			url: _home + "/admin/sessionrec"
 		});
 		
 		// The request returns a promise, which has a built in
@@ -258,7 +258,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/sessionrec/" + teamId,
+			url: _home + "/admin/sessionrec/" + teamId,
 		});
 		
 		// The request returns a promise, which has a built in
@@ -275,7 +275,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/sessionrec",
+			url: _home + "/admin/sessionrec",
 			data: recId
 		});
 		
@@ -293,7 +293,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: urlBase + "/admin/user"
+			url: _home + "/admin/user"
 		});
 		
 		// The request returns a promise, which has a built in
@@ -317,7 +317,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "put",
-			url: urlBase + "/admin/user",
+			url: _home + "/admin/user",
 			data: user
 		});
 		

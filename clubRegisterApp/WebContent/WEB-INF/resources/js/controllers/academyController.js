@@ -2,9 +2,9 @@
 mmModule.controller('academyManagerController', function ($scope,$http, dbService) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-	$scope.home = "http://" + site;
+	$scope.home = _home;
 	
-	$http.get(urlBase+'/academy/news').success(function(data) 
+	$http.get(_home + '/academy/news').success(function(data) 
 	{
 		$scope.news = data;
 		console.log("## Got academy news items..");

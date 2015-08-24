@@ -3,8 +3,7 @@
 
 var app = angular.module('fileUpload', ['ngFileUpload']);
 var version = '5.0.8';
-//var urlBase="http://localhost:8080/clubRegisterApp";
-var urlBase="http://www.avenueunited.ie/clubRegisterApp";
+var urlBase = _home;
 
 app.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 'Upload', function ($scope, $http, $timeout, $compile, Upload) {
     $scope.usingFlash = FileAPI && FileAPI.upload != null;
@@ -51,7 +50,7 @@ app.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 'Upload', f
 
     function uploadUsingUpload(file) {
         file.upload = Upload.upload({
-        	url: urlBase + '/admin/upload' + $scope.getReqParams(),
+        	url: _home + '/admin/upload' + $scope.getReqParams(),
             method: 'POST',
             headers: {
                 'my-header': 'my-header-value'
@@ -89,7 +88,7 @@ app.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 'Upload', f
 		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
 		
         file.upload = Upload.http({
-            url: urlBase + '/admin/upload' + $scope.getReqParams(),
+            url: _home + '/admin/upload' + $scope.getReqParams(),
             method: 'POST',
             headers: {
                 'Content-Type': file.type
@@ -119,7 +118,7 @@ app.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 'Upload', f
 		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
 		
         file.upload = Upload.upload({
-            url: urlBase + '/admin/upload', //$scope.s3url,
+            url: _home + '/admin/upload', //$scope.s3url,
             method: 'POST',
             fields: {
                 key: file.name,

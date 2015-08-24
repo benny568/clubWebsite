@@ -1,7 +1,7 @@
 mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbService,ModalService, mmService) 
 {
 	$scope.teams = [];
-	$scope.home = "http://" + site;
+	$scope.home = _home;
 	
 	// (1) Get the teams from the server
 	getTeams();

@@ -1,19 +1,33 @@
 var lrcode; // Needed for API calls to LeagueRepublic site
-//var site = 'localhost:8080';
-var site = 'www.avenueunited.ie';
-var urlBase="http://" + site;
+var serverMode = {
+	LOCAL: 0, // Running locally
+	REMOTE: 1 // Running on Mochahost server
+};
+
+var thisServerMode = serverMode.REMOTE;
+var _home = '';
 var thisUser = {};
 
 var mmModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
 
 mmModule.config(function($httpProvider) {
-	  /**
-	   * make delete type json
-	   */
-	  $httpProvider.defaults.headers["delete"] = {
-	    'Content-Type': 'application/json;charset=utf-8'
-	  };
-	})
+	/**
+	* make delete type json
+	*/
+	$httpProvider.defaults.headers["delete"] = {
+	'Content-Type': 'application/json;charset=utf-8'
+	};
+	  
+	if( thisServerMode == serverMode.LOCAL )
+	{
+		_home = 'http://localhost:8080/clubRegisterApp';
+	}
+	else if( thisServerMode == serverMode.REMOTE )
+	{
+		_home = 'http://www.avenueunited.ie';
+	}
+
+});
 
 mmModule.controller('ModalController', function($scope, member, close) {
 	

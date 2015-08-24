@@ -42,7 +42,7 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController" team="U14A">
+	<body ng-controller="memberManagerController" mode="Team" team="U14A">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
