@@ -27,6 +27,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		.then( function(result){
 			$scope.teamId = result.data.id;
 			$scope.lrcode = result.data.lrcode;
+			$scope.team = result.data;
 			lrcode = $scope.lrcode;
 			require("http://api.leaguerepublic.com/l/client/api/cs1.js");
 			console.log("## [memberManagerController] -> getTeamDetails - returned: ", result);
@@ -195,6 +196,24 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		}
 	}
 	$scope.setCurrentMember();
+	
+	/**********************************************************
+	 * Name:		editTeamNB()
+	 * Description:	Set the member to display in the details box
+	 * Scope:		Externally accessible
+	 * Params in:	member: The member in question
+	 * Return:		
+	 **********************************************************/
+	$scope.editTeamNB = function(team)
+	{
+		if( typeof team == 'undefined' )
+			return
+			
+		console.log("[memberManagerController]->editTeamNB() called with: ", team);
+		mmService.editTeamNB($scope,team);
+		
+	}
+	$scope.editTeamNB();
 	
 	/**********************************************************
 	 * Name:		setTeamId()

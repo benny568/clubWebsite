@@ -42,6 +42,19 @@ mmModule.controller('ModalController', function($scope, member, close) {
 
 	});
 
+mmModule.controller('editTeamNBModalController', function($scope, team, close) {
+	
+	$scope.team = jQuery.extend({},team);
+
+	 $scope.close = function(save) {
+		 if(save)
+			 close($scope.team, 500); // close, but give 500ms for bootstrap to animate
+		 else
+			 close(team, 500);
+	 };
+
+	});
+
 mmModule.controller('AddMemberController', function($scope, close) {
 	
 	$scope.thisMember = {name: "", address: "", phone: "", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};

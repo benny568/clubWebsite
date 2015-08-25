@@ -1,0 +1,26 @@
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content avenue-body">
+              <div class="modal-header avenue-heading">
+              	<button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Notice Board</h4>
+              </div>
+              <div class="modal-body">
+                <form name="editTeamForm" novalidate role="form">
+                	<div class="row">
+                		<div class="col-md-9">
+		                	<label for="noticeboard">Notice Board: {{team.name}}</label>
+		                	<input type="text" class="form-control" id="noticeboard" name="noticeboard" data-ng-model="team.noticeboard" value="{{team.noticeboard}}"/>
+                		</div>
+                	</div> <!-- end row -->
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close(true)" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false)" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    

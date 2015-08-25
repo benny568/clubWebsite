@@ -13,7 +13,8 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 		editMember : editMember,
 		getTeamDetails : getTeamDetails,
 		getTeammembers : getTeammembers,
-		getFullTeamDetails : getFullTeamDetails
+		getFullTeamDetails : getFullTeamDetails,
+		editTeamNB : editTeamNB
 	});
 	
 	
@@ -196,17 +197,55 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	        });
 	      
     };
-	
+
+    
+	/**********************************************************
+	 * Name:		editTeamNB()
+	 * Description:	Edit a teams Notice Board, update to server
+	 * 				and update local in-memory copy
+	 * Scope:		Externally accessible via the service
+	 * Params in:	scope: The parents scope
+	 * 				thisTeam: the team to edit
+	 * Return:		Updates $scope.team
+	 **********************************************************/
+	function editTeamNB(scope,thisTeam) {
+		if(!thisTeam)
+			return;
+		
+		 ModalService.showModal({
+	            templateUrl: 'editTeamNBModal.html',
+	            controller: "editTeamNBModalController",
+	            inputs: { team : thisTeam}
+	        }).then(function(modal) {
+	            modal.element.modal();
+	            modal.close.then(function(result) {
+	            	var newTeam = result;
+	            	var diff = difference( newTeam, thisTeam);
+	            	if(diff)
+	            	{
+		                dbService.updateTeam( newTeam )
+		        		.then( function(result) {
+		        			//applyMemberChange(thisMember, newMem);
+		        			console.log("## [mmService] -> editTeamNB: after update: ", thisTeam);
+		        		});
+	            	}
+	        	});
+
+	        });
+	      
+    };
+
 	function difference(m1, m2) {
 	    var diff = false;
-	    for (var name in m1)
-	    {
-	    	if( m1[name] != m2[name] )
-	    		diff = true;
-	    }
+	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
+	    	  console.log(val + ' -> ' + m1[val]);
+	    	if( m1[val] != m2[val] )
+	    		  diff = true;
+	    });
 	        
 	    return diff;
 	}
+	
 	
 	/*******************************************************
 	 * Utilities to update the scope after db access

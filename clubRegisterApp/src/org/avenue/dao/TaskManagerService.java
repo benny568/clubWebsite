@@ -76,6 +76,7 @@ public class TaskManagerService {
 					    team.setId(rs.getInt("id"));
 					    team.setName(rs.getString("name"));
 					    team.setLrcode(rs.getInt("lrcode"));
+					    team.setNoticeboard(rs.getString("noticeboard"));
 					    teams.add(team);
 				   }
 		  } catch (SQLException e) {
@@ -160,6 +161,7 @@ public class TaskManagerService {
 				   team.setLrcode(rs.getInt("lrcode"));
 				   team.setLrFixturesCode(rs.getInt("lrFixturesCode"));
 				   team.setLrResultsCode(rs.getInt("lrResultsCode"));
+				   team.setNoticeboard(rs.getString("noticeboard"));
 			   }
 		  } catch (SQLException e) {
 			   e.printStackTrace();
@@ -491,10 +493,14 @@ public class TaskManagerService {
 		 
 		  try {
 			    Connection connection = DBUtility.getConnection();
-			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE team set name=?, lrcode=? where id = ?");
+			  	PreparedStatement preparedStatement 
+			  	= connection.prepareStatement("UPDATE team set name=?, lrcode=?, lrFixturesCode=?, lrResultsCode=?, noticeboard=? where id = ?");
 			  	preparedStatement.setString(1, team.getName());
 			  	preparedStatement.setInt(2, team.getLrcode());
-			  	preparedStatement.setInt(3, team.getId());
+			  	preparedStatement.setInt(3, team.getLrFixturesCode());
+			  	preparedStatement.setInt(4, team.getLrResultsCode());
+			  	preparedStatement.setString(5, team.getNoticeboard());
+			  	preparedStatement.setInt(6, team.getId());
 			  	preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {

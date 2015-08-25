@@ -7,6 +7,7 @@ public class Team {
 	private int lrcode;
 	private int lrFixturesCode;
 	private int lrResultsCode;
+	private String noticeboard;
 	
 	
 	public int getId() {
@@ -38,5 +39,11 @@ public class Team {
 	}
 	public void setLrResultsCode(int lrResultsCode) {
 		this.lrResultsCode = lrResultsCode;
-	}	
+	}
+	public String getNoticeboard() {
+		return noticeboard;
+	}
+	public void setNoticeboard(String noticeboard) {
+		this.noticeboard = noticeboard;
+	}
 }
