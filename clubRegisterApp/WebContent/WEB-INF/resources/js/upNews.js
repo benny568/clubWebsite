@@ -7,7 +7,7 @@ var serverMode = {
 var thisServerMode = serverMode.REMOTE;
 var _home = '';
 
-upNewsModule.config(function($httpProvider) {
+upNews.config(function($httpProvider) {
 	/**
 	* make delete type json
 	*/

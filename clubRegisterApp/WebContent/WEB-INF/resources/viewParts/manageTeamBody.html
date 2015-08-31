@@ -114,6 +114,7 @@
 			    			<div class="panel" ng-show="viewTraining">
 				    			<div class="panel-heading avenue-heading">
 				    				Squad Training Attendance:
+				    				<button type="button" class="btn btn-warning btn-xs" ng-click="addTrainingSession(teamId)" style="cursor:pointer;float:right;" data-toggle="tooltip" data-placement="right" title="Add a Training Session">Plan Training Session</button>
 				    			</div>
 				    			<div class="panel-body avenue-body">
 				    				<table st-table="rowCollection" class="table">
@@ -125,7 +126,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="mem in TeamMembers[teamId]">
+											<tr ng-repeat="mem in TeamMembers track by $index">
 												<td>{{$index+1}}</td>
 												<td>{{mem.name}}</td>
 												<td ng-repeat="rec in trainingPerMember[$index] track by $index">

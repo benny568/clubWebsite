@@ -12,14 +12,14 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	$scope.teamName = $attrs.team;
 	$scope.mode = $attrs.mode;
 	$scope.home = _home;
-	console.log("## [memberManagerController] Controller initialized, mode: ", $scope.mode);
+	$scope.itsPosition = itsPosition;
+	console.log("## [memberManagerController] Controller initialized, mode: " + $scope.mode + ", Team: " + $scope.teamName);
 
 	/* (1) Get the members to display on the page*/
+	getTeams();
 	
 	if( $scope.mode == "All" )
 		getAllMembers();
-	else if( $scope.mode == "Team" )
-		getTeams();
 	
 	if( $scope.mode != "None" )
 	{
@@ -28,6 +28,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			$scope.teamId = result.data.id;
 			$scope.lrcode = result.data.lrcode;
 			$scope.team = result.data;
+			gTeamId = $scope.teamId; // Set the global team id for use in other controllers
 			lrcode = $scope.lrcode;
 			require("http://api.leaguerepublic.com/l/client/api/cs1.js");
 			console.log("## [memberManagerController] -> getTeamDetails - returned: ", result);
@@ -62,6 +63,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		dbService.getTeams()
 			.then( function(teams) {
 				$scope.teams = teams;
+				gTeams = teams;
 				setTeamId();
 				console.log("[memberManagerController] -> getTeams() returned: ", $scope.teams);
 				getMembers4team($scope.teamId);
@@ -167,6 +169,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		dbService.getMembers4team( teamId )
 		.then( function(team) {
 			$scope.TeamMembers[teamId] = team;
+			gTeamMembers = team;
 			console.log("[memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.TeamMembers[teamId]);
 			
 		});
@@ -192,7 +195,8 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		{
 			$scope.displayMember = true;
 			$scope.currentMember.age = calculateAge($scope.currentMember.dob);
-			$scope.currentMember.position = toStringPosition($scope.currentMember.position);
+			if( typeof $scope.currentMember.position == 'number' )
+				$scope.currentMember.position = itsPosition[$scope.currentMember.position];
 		}
 	}
 	$scope.setCurrentMember();
@@ -215,6 +219,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	}
 	$scope.editTeamNB();
 	
+	
 	/**********************************************************
 	 * Name:		setTeamId()
 	 * Description:	Sets $scope.teamId for the current team
@@ -234,7 +239,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			}
 		}
 	}
-
+	
 	/**********************************************************
 	 * Name:		toStringPosition()
 	 * Description:	Converts the int value to a string for 

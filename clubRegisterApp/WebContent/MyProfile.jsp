@@ -64,7 +64,7 @@
 			    			</div>
 			    			<div class="panel-body avenue-body">
 			    				<div>
-									<img src="resources/images/Players/default.png" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
+									<img src="{{thisUser.avatar}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
 									<span class="avenue-yellow-text" style="font-size:20px;">{{thisUser.name}}</span>
 								</div>
 							    <form name="profileForm">

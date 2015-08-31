@@ -17,7 +17,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		getASessionRecord : getASessionRecord,
 		getSessionRecordsForTeam : getSessionRecordsForTeam,
 		getCurrentUser : getCurrentUser,
-		updateUser : updateUser
+		updateUser : updateUser,
+		addTrainingSession : addTrainingSession
 		
 	});
 	
@@ -323,6 +324,30 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		return( request.then( handleSuccess, handleError ) );
 	}
+	
+	/*******************************************************
+	 * ADD TRAINING SESSION
+	 *******************************************************/
+	function addTrainingSession( session ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [dbService] - (addTrainingSession) csrf token is: ",csrf);
+		console.log("## [dbService] - (addTrainingSession) record is: ",session);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.post["Content-Type"] = "application/json";
+		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "post",
+			url: _home + "/admin/session",
+			data: session
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+
 	
 	// Error handling
 	

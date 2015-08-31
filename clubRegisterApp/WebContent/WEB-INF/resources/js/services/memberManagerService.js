@@ -14,7 +14,8 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 		getTeamDetails : getTeamDetails,
 		getTeammembers : getTeammembers,
 		getFullTeamDetails : getFullTeamDetails,
-		editTeamNB : editTeamNB
+		editTeamNB : editTeamNB,
+		getUserDetails : getUserDetails
 	});
 	
 	
@@ -87,11 +88,13 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 			            modal.element.modal();
 			            modal.close.then(	function(result) 
 			            					{
-			            						if( result.op )
+			            						if( result.op == 'save')
 			            						{
 			            							scope.thisMember = result.member;
+			            							scope.thisMember.position = convertPosToInt(result.member.position);
+			            							scope.thisMember.team = convertTeamToInt(result.member.team);
 			            							dbService.addMember( result.member ).then( function(result){
-			            								console.log("[mmService] - addPlayer: ", scope.thisMember);
+			            								console.log("[mmService] - addPMember (reurned from dbService): ", scope.thisMember);
 			            								applyMemberAdd(scope);
 			            							} );
 			            						}
@@ -102,6 +105,20 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	} // End addMember()
 	
 	
+	function convertPosToInt( sPos )
+	{
+		return itsPosition.indexOf(sPos);
+	}
+	
+	function convertTeamToInt( sTeam )
+	{
+		for( var i=0; i<gTeams.length; i++ )
+		{
+			if( gTeams[i].name == sTeam )
+				return gTeams[i].id;
+		}
+		return 0;
+	}
 	
 	/*******************************************************
 	 * ADD PLAYER
@@ -184,6 +201,10 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	            	var diff = difference( newMem, thisMember);
 	            	if(diff)
 	            	{
+	            		if( typeof newMem.position != 'number' )
+	            			newMem.position = itsPosition.indexOf(newMem.position);
+	            		if( typeof newMem.team != 'number' )
+	            			newMem.team = getTeamIdFrmName(newMem.team);
 		                dbService.updateMember( newMem )
 		        		.then( function(result) {
 		        			applyMemberChange(thisMember, newMem);
@@ -197,7 +218,31 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	        });
 	      
     };
+    
 
+    /**********************************************************
+	 * Name:		getTeamIdFrmName()
+	 * Description:	Convert a team name to it's id
+	 * Scope:		Externally accessible via the service
+	 * Params in:	scope: The parents scope
+	 * 				
+	 * Return:		The team id
+	 **********************************************************/
+    function getTeamIdFrmName(sTeam)
+    {
+    	var iTeamId = 0;
+    	
+    	for( var i=0; i<gTeams.length; i++ )
+    	{
+    		if( gTeams[i].name == sTeam )
+    		{
+    			iTeamId = gTeams[i].id;
+    			return iTeamId;
+    		}
+    	}
+    	
+    	return iTeamId;
+    }
     
 	/**********************************************************
 	 * Name:		editTeamNB()
@@ -234,6 +279,25 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	        });
 	      
     };
+    
+    /**********************************************************
+	 * Name:		getUserDetails()
+	 * Description:	Get details of the currently logged in user
+	 * Scope:		Externally accessible via the service
+	 * Params in:	None
+	 * Return:		Updates $scope.thisUser
+	 **********************************************************/
+    function getUserDetails(scope)
+	{
+		dbService.getCurrentUser()
+		.then(function(user){
+			console.log("## [mmService]->getUserDetails: ", user );
+			scope.thisUser = user;
+			scope.orgUser = angular.copy(scope.thisUser);
+			if( scope.thisUser.avatar == "" )
+				scope.thisUser.avatar = "resources/images/avatars/default.png";
+		});
+	}
 
 	function difference(m1, m2) {
 	    var diff = false;

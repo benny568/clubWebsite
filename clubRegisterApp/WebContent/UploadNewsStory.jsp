@@ -72,12 +72,12 @@
 					 		<form id="newsForm" name="newsForm" novalidate>
 					 			<div class="form-group" ng-class="{ 'has-error' : newsForm.title.$invalid && !newsForm.title.$pristine }">
 					 				<label for="name">Title:</label>
-					 				<input type="text" class="form-control" name="title" placeholder="Enter the title" ng-model="news.title" ng-minlength="1" ng-maxlength="20" ng-required="true" required>
+					 				<input type="text" class="form-control" name="title" placeholder="Enter the title" ng-model="news.title" ng-minlength="1" ng-maxlength="50" ng-required="true" required>
 					 				<p ng-show="newsForm.title.$invalid && !newsForm.title.$pristine" class="ng-invalid-required">A title is required.</p>
 					 			</div>
 					 			<div class="form-group">
 					 				<label for="description">Description:</label>
-					 				<input type="text" class="form-control" id="name" placeholder="Enter a short headline" ng-model="news.description" ng-maxlength="34">
+					 				<input type="text" class="form-control" id="name" placeholder="Enter a short headline" ng-model="news.description" ng-maxlength="50">
 					 			</div>
 					 			<div class="form-group">
 					 				<label for="story">Story:</label>

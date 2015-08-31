@@ -7,7 +7,7 @@
               </div>
               <div class="modal-body">
                 <form name="editMemberForm" novalidate role="form">
-                	<div class="row">
+                	<div class="row a-modal-row">
                 		<div class="col-md-9">
 		                	<label for="name">Name:</label>
 		                	<input type="text" class="form-control" id="name" name="name" data-ng-model="thisMember.name" value="{{thisMember.name}}" required/>
@@ -24,20 +24,22 @@
 		                	<input type="text" class="form-control" id="dob" data-ng-model="thisMember.dob" value="{{thisMember.dob}}"/>
                 		</div> <!-- end col -->
                 	</div> <!-- end row -->
-                	<div class="row">
+                	<div class="row a-modal-row">
                 		<div class="col-md-2">
                 			<label for="fees">Fees paid:</label>
 		                	<input type="text" class="form-control" id="amount" data-ng-model="thisMember.amount" value="{{thisMember.amount}}"/>
-		                	<label for="team">Team:</label>
-		                	<input type="text" class="form-control" id="team" data-ng-model="thisMember.team" value="{{thisMember.team}}"/>
-		                	<label for="position">Position:</label>
-		                	<input type="text" class="form-control" id="position" data-ng-model="thisMember.position" value="{{thisMember.position}}"/>
+		                	<label for="lid">League Id:</label>
+		                	<input type="text" class="form-control" id="lid" data-ng-model="thisMember.lid" value="{{thisMember.lid}}"/>
                 		</div>
                 		<div class="col-md-4">
                 			<label for="favteam">Favourite Team:</label>
 		                	<input type="text" class="form-control" id="favteam" data-ng-model="thisMember.favteam" value="{{thisMember.favteam}}"/>
 		                	<label for="favplayer">Favourite Player:</label>
 		                	<input type="text" class="form-control" id="favplayer" data-ng-model="thisMember.favplayer" value="{{thisMember.favplayer}}"/>
+		                	<label for="position">Position:</label>
+		                	<select class="form-control" id="position" data-ng-model="thisMember.position" value="{{thisMember.position}}">
+		                		<option ng-repeat="opt in itsPosition track by $index">{{opt}}</option>
+							</select>
                 		</div>
                 		<div class="col-md-2">
                 			<label for="sappears">Appears:</label>
@@ -47,25 +49,26 @@
 		                	<label for="sgoals">Goals:</label>
 		                	<input type="text" class="form-control" id="sgoals" data-ng-model="thisMember.sgoals" value="{{thisMember.sgoals}}"/>
                 		</div>
-                	</div> <!-- end row -->
-                	<div class="row">
-                		<div class="col-md-2">
-                			<label for="lid">League Id:</label>
-		                	<input type="text" class="form-control" id="lid" data-ng-model="thisMember.lid" value="{{thisMember.lid}}"/>
+                		<div class="col-md-4">
+                			<label for="team">Team:</label>
+		                	<select class="form-control" id="team" data-ng-model="thisMember.team" value="{{thisMember.team}}">
+		                		<option ng-repeat="team in teams track by $index">{{team.name}}</option>
+							</select>
                 		</div>
-                		<div class="col-md-10">
-                			<label for="photo">Photo Location:</label>
+                	</div> <!-- end row -->
+                	<div class="row a-modal-row">
+						<div class="col-md-4"><label for="photo" style="float:right;">Photo Location:</label></div>
+                		<div class="col-md-8">
 		                	<input type="text" class="form-control" id="photo" data-ng-model="thisMember.photo" value="{{thisMember.photo}}"/>
                 		</div>
                 	</div>
-                	<div class="row">
-                		<div class="col-md-4"><label for="photo">Personal Achievements:</label></div>
+                	<div class="row a-modal-row">
+                		<div class="col-md-4"><label for="achievements" style="float:right;">Personal Achievements:</label></div>
                 		<div class="col-md-8">
                 			<input type="text" class="form-control" id="achievements" data-ng-model="thisMember.achievements" value="{{thisMember.achievements}}"/>
                 		</div>
                 	</div>
                 </form>
-                
 
               </div>
               <div class="modal-footer">

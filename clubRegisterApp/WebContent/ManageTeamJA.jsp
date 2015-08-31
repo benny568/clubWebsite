@@ -38,7 +38,6 @@
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/trainingViewController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamPlanController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/addTrainingSessionController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
@@ -46,7 +45,7 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController" mode="Team" team="U18">
+	<body ng-controller="memberManagerController" mode="Team" team="Junior A">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>

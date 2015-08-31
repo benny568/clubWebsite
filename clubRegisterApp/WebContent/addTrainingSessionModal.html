@@ -1,0 +1,29 @@
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content avenue-body">
+              <div class="modal-header avenue-heading">
+              	<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Training Session for {{teamName}}</h4>
+              </div>
+              <div class="modal-body">
+                <form name="form" novalidate>
+                	<div class="row">
+                		<div class="col-md-9">
+		                	<label for="name">Session Date</label>
+		                	<input type="text" class="form-control" id="date" name="date" data-ng-model="thisSession.date" placeholder="Enter Session Date" ng-minlength="1" ng-maxlength="30" required/>
+		                	<label for="details">Enter the details</label>
+		                	<input type="text" class="form-control" id="details" name="details" data-ng-model="thisSession.details" placeholder="Enter Details"/>
+		                	<div style="min-height:100px;"></div>
+                		</div>
+                	</div> <!-- end row -->
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close(true, thisSession)" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false)" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    

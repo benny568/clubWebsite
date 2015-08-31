@@ -40,7 +40,7 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController" mode="Team" team="U13B">
+	<body ng-controller="memberManagerController" mode="Team" team="U13 Yellow">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>

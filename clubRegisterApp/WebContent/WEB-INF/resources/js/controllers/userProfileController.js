@@ -1,10 +1,10 @@
-mmModule.controller('userProfileController', function ($scope,$http,dbService) 
+mmModule.controller('userProfileController', function ($scope,$http,dbService,mmService) 
 {
 	console.log("## [userProfileController] ** LOADING **");
 	
 	$scope.thisUser = {};
 	
-	getUserDetails();
+	getUserDetails($scope);
 	
 	function getUserDetails()
 	{
@@ -13,6 +13,8 @@ mmModule.controller('userProfileController', function ($scope,$http,dbService)
 			console.log("## [userProfileController] -> getUserDetails: ", user );
 			$scope.thisUser = user;
 			$scope.orgUser = angular.copy($scope.thisUser);
+			if( $scope.thisUser.avatar == "" )
+				$scope.thisUser.avatar = "resources/images/avatars/default.png";
 		});
 	}
 	

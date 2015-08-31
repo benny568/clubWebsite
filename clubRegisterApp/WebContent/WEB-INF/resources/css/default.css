@@ -83,6 +83,7 @@ body
 .avenue-heading { background-color:#D90404;color:#FAE900;min-height:40px; }
 .avenue-body { background-color:#303030;color:white; }
 .a-adminMenu { position:fixed;}
+.a-modal-row{ margin-top:4px; };
 
 .a-panel-heading
 {
@@ -134,8 +135,7 @@ body
 }
 
 .btn:hover,
-.btn:focus,
-.btn.focus {
+.btn:focus {
   background-color:#FFFF33;
   color:#D90404;
   font-weight:bold;
@@ -181,7 +181,7 @@ body
 }
 
 .loginbox .loginbody input[type="text"] {
-    background: url(../images/sm-user.png)no-repeat 10px 10px #3B3B3B;
+    background: no-repeat 10px 10px #3B3B3B;
 	outline: none;
 	font-size: 14px;
 	font-weight: 600;
@@ -195,7 +195,7 @@ body
 }
 
 .loginbox .loginbody input[type="password"]{
-    background: url(../images/key.png) no-repeat 10px 11px #3F3F3F;
+    background: no-repeat 10px 11px #3F3F3F;
 	outline: none;
 	font-size: 14px;
 	font-weight: 600;
@@ -208,7 +208,7 @@ body
 }
 
 .loginbox .loginbody input[type="submit"] {
-  background: url(../images/lock.png)no-repeat 9px 8px #D90404;
+  background: no-repeat 9px 8px #D90404;
   color: #FAE900;
   font-size: 15px;
   font-weight: 600;
@@ -230,12 +230,3 @@ body
 {
     background-color: #78FA89;
 }
-
-/* CSS tricks AnythingSlider version 1.7+ */
- /* #slider2 {
-  width: 600px;
-  height: 350px;
-  list-style: none;
- }
- 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; } */

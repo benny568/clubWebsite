@@ -4,7 +4,7 @@ upNews.controller('newsUploadController', ['$scope', 'multipartForm', function($
 	$scope.home = _home;
 	
 	$scope.Submit = function(isValid){
-		var uploadUrl = '/clubRegisterApp/admin/upload';
+		var uploadUrl = _home + '/admin/upload';
 		
 		if(!isValid) 
 		      alert('Data is invalid, try again...');

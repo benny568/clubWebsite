@@ -25,19 +25,21 @@
 		<div class="row">
 			<div class="col-sm-6" style="padding-left:50px;">
 			
-			<div class="panel">
+			<div class="panel" style="width:auto;">
 				<div class="panel-heading avenue-heading">
 					<h3>Avenue United contact details</h3>
 				</div>
-				<div class="panel-body avenue-body">
+			</div>
+<!-- 				<div class="panel-body avenue-body">
 					Avenue United current list of elected officers:
-					<div class="blankspace"></div>
-					<table class="table-condensed table-hover table-bordered" style="background-color:#E6E3E3;">
+					<div class="blankspace"></div> -->
+					<br/><br/>
+					<table class="table table-bordered" style="background-color:#E6E3E3;">
 					  <thead>
 						<tr class="bg-primary avenue-heading">
 						  <th><i class="fa fa-futbol-o"></i> Office</th>
-						  <th><i class="fa fa-user"></i> Name</th>
-						  <th><i class="fa fa-phone"></i> Phone</th>
+						  <th style="min-width:140px;"><i class="fa fa-user"></i> Name</th>
+						  <th style="min-width:120px;"><i class="fa fa-phone"></i> Phone</th>
 						  <th><i class="fa fa-envelope"></i> Email</th>
 						</tr>
 					  </thead>
@@ -56,15 +58,15 @@
 						</tr>
 						<tr>
 						  <th scope="row">Treasurer</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td>Damien Barrow</td>
+						  <td>000000</td>
+						  <td>Damian@curtinofriel.ie</td>
 						</tr>
 						<tr>
 						  <th scope="row">Comittee Member</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td>Pat McDaid</td>
+						  <td>085 8644954</td>
+						  <td>enniscarpets@eircom.net</td>
 						</tr>
 						<tr>
 						  <th scope="row">Comittee Member</th>
@@ -92,15 +94,15 @@
 						</tr>
 						<tr>
 						  <th scope="row">Junior B Manager</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td>Greg O'Neill, Richie O'Grady</td>
+						  <td>087 0622859, 089 4417679</td>
+						  <td>avenueunited@gmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">U18 Manager</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td>Brendan O'Daly, Nigel Braddish</td>
+						  <td>087 6470883, 087 2873996</td>
+						  <td>odalybr@hotmail.com, avenueunited@gmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">U17 Manager</th>
@@ -115,22 +117,28 @@
 						  <td>@twitter</td>
 						</tr>
 						<tr>
-						  <th scope="row">U15 Manager</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <th scope="row">U15A Manager</th>
+						  <td>Jarlet McCabe, Pat McDaid</td>
+						  <td>087 6520523, 085 8644954</td>
+						  <td>jarlath.mccabe@genworth.com, enniscarpets@eircom.net</td>
+						</tr>
+						<tr>
+						  <th scope="row">U15B Manager</th>
+						  <td>Joe O'Keeffe</td>
+						  <td></td>
+						  <td>jokeeffe62@gmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">U14 Manager</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td>Enda Meaney, Colin McDonough, Tony Downey, Brendan O'Daly</td>
+						  <td>087 2107407, , 085 8420330, 087 6470883</td>
+						  <td>endameaney@eircom.net, colinedmcdonough@gmail.com, tonypaulanthonydowney@gmail.com, odalybr@hotmail.com</td>
 						</tr>
 						<tr>
-						  <th scope="row">U13 Manager</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <th scope="row">U13A (Red) Manager</th>
+						  <td>Dave Barry</td>
+						  <td>087 9880069</td>
+						  <td>djamesbarry@hotmail.com</td>
 						</tr>
 						<tr>
 						  <th scope="row">U12 Manager</th>
@@ -152,8 +160,8 @@
 						</tr>
 					  </tbody>
 					</table>
-				</div> <!-- end panel body -->
-			</div> <!-- end panel -->
+<!-- 				</div> end panel body
+			</div> end panel -->
 
 			</div> <!-- end col -->
 			<div class="col-sm-6">

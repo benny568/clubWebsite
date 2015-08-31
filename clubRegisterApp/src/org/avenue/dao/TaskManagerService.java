@@ -386,8 +386,8 @@ public class TaskManagerService {
 		FileItemIterator iter;
 		NewsStory ns = new NewsStory();
 		String value = new String();
-		String savePath = "C:\\tools\\Apache Software Foundation\\apache-tomcat-8.0.24\\webapps\\ROOT\\WEB-INF\\resources\\news";
-		//String savePath = "jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
+		//String savePath = "C:\\avenue\\clubWebsite\\clubRegisterApp\\WebContent\\WEB-INF\\resources\\news";
+		String savePath = "jvm\\apache-tomcat-8.0.9\\domains\\avenueunited.ie\\ROOT\\WEB-INF\\resources\\news";
 		
 		try {
 			Connection connection = DBUtility.getConnection();
@@ -426,7 +426,7 @@ public class TaskManagerService {
 			             out.close();
 			         if (stream != null)
 			        	 stream.close();
-			         addParamToNS( ns, "image", savePath + File.separator + fileName );
+			         addParamToNS( ns, "image", "resources/news/" + fileName );
 			     }
 			 }
 		} catch (FileUploadException e) {
