@@ -18,7 +18,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		getSessionRecordsForTeam : getSessionRecordsForTeam,
 		getCurrentUser : getCurrentUser,
 		updateUser : updateUser,
-		addTrainingSession : addTrainingSession
+		addTrainingSession : addTrainingSession,
+		setMemberTrainingRecForSession : setMemberTrainingRecForSession
 		
 	});
 	
@@ -287,6 +288,79 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	}
 	
 	/***************************************************************
+	 * Get a taining record for a particular session for a particular
+	 * user from the db via a REST call.
+	 ***************************************************************/
+	function getMemberTrainingRecForSession(sessionId, teamid, userId) {
+		console.log("## [dbService] -> getMemberTrainingRecForSession - for user: " + userId + ", and session: " + sessionId + ", and team: " + teamid);
+		
+		var request = $http({
+			method: "get",
+			url: _home + "/admin/sessionrec/" + sessionId + "/" + teamId + "/" + userId 
+		});
+		
+		// The request returns a promise, which has a built in
+		// 'then' function that takes the success and error callbacks
+		// as the two parameters.
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/***************************************************************
+	 * Set a taining record for a particular session for a particular
+	 * user from the db via a REST call.
+	 ***************************************************************/
+	function setMemberTrainingRecForSession(sessionid, teamid, memberid, status) {
+		console.log("## [dbService] -> setMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
+		var sessionrec = {"sessionId": sessionid, "teamId": teamid, "memberId": memberid, "status": status };		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [updateUser] csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.put["Content-Type"] = "application/json";
+		$http.defaults.headers.put["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "put",
+			url: _home + "/admin/sessionrec",
+			data: sessionrec
+		});
+		
+		// The request returns a promise, which has a built in
+		// 'then' function that takes the success and error callbacks
+		// as the two parameters.
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/***************************************************************
+	 * Insert a taining record for a particular session for a particular
+	 * user from the db via a REST call.
+	 ***************************************************************/
+	function insertMemberTrainingRecForSession(sessionid, teamid, memberid, status) {
+		console.log("## [dbService] -> insertMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
+		var sessionrec = {"sessionid": sessionid, "teamid": teamid, "memberid": memberid, "status": status };		
+		var newStatus = !status;
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [updateUser] csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.put["Content-Type"] = "application/json";
+		$http.defaults.headers.put["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "post",
+			url: _home + "/admin/sessionrec",
+			data: sessionrec
+		});
+		
+		// The request returns a promise, which has a built in
+		// 'then' function that takes the success and error callbacks
+		// as the two parameters.
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/***************************************************************
 	 * Get the user name from the db via a REST call.
 	 ***************************************************************/
 	function getCurrentUser() {
@@ -329,24 +403,24 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * ADD TRAINING SESSION
 	 *******************************************************/
 	function addTrainingSession( session ) {
-		
-		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [dbService] - (addTrainingSession) csrf token is: ",csrf);
-		console.log("## [dbService] - (addTrainingSession) record is: ",session);
-		
-		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
-		$http.defaults.headers.post["Content-Type"] = "application/json";
-		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
-		
-		var request = $http({
-			method: "post",
-			url: _home + "/admin/session",
-			data: session
-		});
-		
-		return( request.then( handleSuccess, handleError ) );
-	}
+			
+			var csrf = $("meta[name='_csrf']").attr("content");
+			console.log("## [dbService] - (addTrainingSession) csrf token is: ",csrf);
+			console.log("## [dbService] - (addTrainingSession) session is: ",session);
+			
+			$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+			$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+			$http.defaults.headers.post["Content-Type"] = "application/json";
+			$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
+			
+			var request = $http({
+				method: "post",
+				url: _home + "/admin/session",
+				data: session
+			});
+			
+			return( request.then( handleSuccess, handleError ) );
+		}
 
 	
 	// Error handling
@@ -358,6 +432,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	
 	function handleError( response ) {
 		console.log("## http ERROR!!");
+		console.log(response);
 		if(
 			! angular.isObject( response.data ) ||
 			! response.data.message

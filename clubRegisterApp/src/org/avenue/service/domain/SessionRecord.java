@@ -34,7 +34,7 @@ public class SessionRecord {
 	public void setSessionId(int sessionId) {
 		this.sessionId = sessionId;
 	}
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 	public void setStatus(boolean status) {

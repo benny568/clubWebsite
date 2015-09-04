@@ -130,8 +130,8 @@
 												<td>{{$index+1}}</td>
 												<td>{{mem.name}}</td>
 												<td ng-repeat="rec in trainingPerMember[$index] track by $index">
-													<span ng-if="rec.status"><i class="fa fa-check" data-toggle="tooltip"title="Present" ng-click="changeTrainingAttendence()"></i></span>
-													<span ng-if="!rec.status"><i class="fa fa-times" data-toggle="tooltip"title="Absent" ng-click="changeTrainingAttendence()"></i></span>
+													<span ng-if="rec.status"><i class="fa fa-check" data-toggle="tooltip"title="Present" ng-click="changeTrainingAttendence(sessionPlans[$index].sessionId,mem.id,rec.status)"></i></span>
+													<span ng-if="!rec.status"><i class="fa fa-times" data-toggle="tooltip"title="Absent" ng-click="changeTrainingAttendence(sessionPlans[$index].sessionId,mem.id,rec.status)"></i></span>
 												</td>
 											</tr>
 										</tbody>

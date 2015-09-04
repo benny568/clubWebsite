@@ -9,6 +9,8 @@ public class Member {
 	 private String dob;
 	 private String amount;		// Amount paid to date
 	 private int team;
+	 private int team2;			// Can be a member of a second team
+	 private int team3;			// Can be a member of a third team
 	 private int position;
 	 private int lid;
 	 private String favteam;
@@ -125,6 +127,18 @@ public class Member {
 	}
 	public void setAchievements(String achievements) {
 		this.achievements = achievements;
+	}
+	public int getTeam2() {
+		return team2;
+	}
+	public void setTeam2(int team2) {
+		this.team2 = team2;
+	}
+	public int getTeam3() {
+		return team3;
+	}
+	public void setTeam3(int team3) {
+		this.team3 = team3;
 	} 
 	
 }

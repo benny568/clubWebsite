@@ -1,11 +1,9 @@
 package org.avenue.service.domain;
 
-import java.sql.Date;
-
 public class SessionPlan {
 	private int sessionId;
 	private int teamId;
-	private Date date;
+	private String date;
 	private String details;
 	
 	
@@ -27,10 +25,10 @@ public class SessionPlan {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	

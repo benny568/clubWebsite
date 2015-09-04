@@ -56,7 +56,7 @@
 				<img src="resources/images/adverts/enzos.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Enzos Takeaway" height="50" />
 			</div>
 			<div class="col-md-4">
-				<img src="resources/images/adverts/queens.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Queens Hotel Ennis" height="50" class="img-thumbnail"/>
+				<img src="resources/images/adverts/ec.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Ennis Cabs" height="100px" width="200px" class="img-thumbnail"/>
 			</div>
 		</div> <!-- end row -->
 			
@@ -78,12 +78,8 @@
 			      </slide>
 			    </carousel>
 
-			</div> <!-- end avenue-body -->
-		</div>
-		
-<!-- 		<div>
-			<img src="resources/news/scrapmetal.jpg" />
-		</div> -->
+			</div> <!-- end panel -->
+		</div> <!-- end row -->
 		
 	</div> <!-- end container -->
 	

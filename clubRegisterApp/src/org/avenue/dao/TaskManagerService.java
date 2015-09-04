@@ -45,6 +45,8 @@ public class TaskManagerService {
 					    member.setPhone(rs.getString("phone"));
 					    member.setAmount(rs.getString("amount"));
 					    member.setTeam(rs.getInt("team"));
+					    member.setTeam2(rs.getInt("team2"));
+					    member.setTeam3(rs.getInt("team3"));
 					    member.setPosition(rs.getInt("position"));
 					    member.setStatus(rs.getString("status"));
 					    member.setFavplayer(rs.getString("favplayer"));
@@ -91,8 +93,10 @@ public class TaskManagerService {
 		 List<Member> members = new ArrayList<Member>();
 		 try {
 			   Connection connection = DBUtility.getConnection();
-			   PreparedStatement preparedStatement = connection.prepareStatement("select * from member where team=?");
+			   PreparedStatement preparedStatement = connection.prepareStatement("select * from member where team=? or team2=? or team3=?");
 			   preparedStatement.setInt(1, teamId);
+			   preparedStatement.setInt(2, teamId);
+			   preparedStatement.setInt(3, teamId);
 			   ResultSet rs = preparedStatement.executeQuery();
 			   while (rs.next()) 
 			   {
@@ -104,6 +108,8 @@ public class TaskManagerService {
 				    member.setDob(rs.getString("dob"));
 				    member.setAmount(rs.getString("amount"));
 				    member.setTeam(rs.getInt("team"));
+				    member.setTeam2(rs.getInt("team2"));
+				    member.setTeam3(rs.getInt("team3"));
 				    member.setPosition(rs.getInt("position"));
 				    member.setLid(rs.getInt("lid"));
 				    member.setStatus(rs.getString("status"));
@@ -253,7 +259,7 @@ public class TaskManagerService {
 		  try {
 			   Connection connection = DBUtility.getConnection();
 			   PreparedStatement preparedStatement = connection.prepareStatement("update member set name=?, address=?, phone=?, dob=?,"
-			   																	+ "amount=?, team=?, position=?, lid=?, status=?, favteam=?,"
+			   																	+ "amount=?, team=?, team2=?, position=?, lid=?, status=?, favteam=?,"
 			   																	+ "favplayer=?, sappears=?, sassists=?, sgoals=?, photo=?,"
 			   																	+ "achievements=? where id=?");
 			   preparedStatement.setString(1, member.getName());
@@ -262,17 +268,19 @@ public class TaskManagerService {
 			   preparedStatement.setString(4, member.getDob());
 			   preparedStatement.setString(5, member.getAmount());
 			   preparedStatement.setInt(6, member.getTeam());
-			   preparedStatement.setInt(7, member.getPosition());
-			   preparedStatement.setInt(8, member.getLid());
-			   preparedStatement.setString(9, member.getStatus());
-			   preparedStatement.setString(10, member.getFavteam());
-			   preparedStatement.setString(11, member.getFavplayer());
-			   preparedStatement.setInt(12, member.getSappears());
-			   preparedStatement.setInt(13, member.getSassists());
-			   preparedStatement.setInt(14, member.getSgoals());
-			   preparedStatement.setString(15, member.getPhoto());
-			   preparedStatement.setString(16, member.getAchievements());
-			   preparedStatement.setInt(17, member.getId());
+			   preparedStatement.setInt(7, member.getTeam2());
+			   preparedStatement.setInt(8, member.getTeam2());
+			   preparedStatement.setInt(9, member.getPosition());
+			   preparedStatement.setInt(10, member.getLid());
+			   preparedStatement.setString(11, member.getStatus());
+			   preparedStatement.setString(12, member.getFavteam());
+			   preparedStatement.setString(13, member.getFavplayer());
+			   preparedStatement.setInt(14, member.getSappears());
+			   preparedStatement.setInt(15, member.getSassists());
+			   preparedStatement.setInt(16, member.getSgoals());
+			   preparedStatement.setString(17, member.getPhoto());
+			   preparedStatement.setString(18, member.getAchievements());
+			   preparedStatement.setInt(19, member.getId());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -341,25 +349,28 @@ public class TaskManagerService {
 		  try {
 			  Connection connection = DBUtility.getConnection();
 			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO member ( name, address, phone, "
-			   																	+ "amount, team, position, lid, favteam, favplayer, "
-			   																	+ "sappears, sassists, sgoals, photo, achievements, "
-			   																	+ "status ) VALUES 	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,"
-			   																	+ " ?, ?, ?, ?)");
-			   preparedStatement.setString(1, member.getName());
+			   																	+ "dob, amount, team, team2, team3, position, lid, favteam, "
+			   																	+ "favplayer, sappears, sassists, sgoals, photo, "
+			   																	+ "achievements, status ) VALUES (?, ?, ?, ?, "
+			   																	+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			  preparedStatement.setString(1, member.getName());
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
-			   preparedStatement.setString(4, member.getAmount());
-			   preparedStatement.setInt(5, member.getTeam());
-			   preparedStatement.setInt(6, member.getPosition());
-			   preparedStatement.setInt(7, member.getLid());
-			   preparedStatement.setString(8, member.getFavteam());
-			   preparedStatement.setString(9, member.getFavplayer());
-			   preparedStatement.setInt(10, member.getSappears());
-			   preparedStatement.setInt(11, member.getSassists());
-			   preparedStatement.setInt(12, member.getSgoals());
-			   preparedStatement.setString(13, member.getPhoto());
-			   preparedStatement.setString(14, member.getAchievements());
-			   preparedStatement.setString(15, member.getStatus());
+			   preparedStatement.setString(4, member.getDob());
+			   preparedStatement.setString(5, member.getAmount());
+			   preparedStatement.setInt(6, member.getTeam());
+			   preparedStatement.setInt(7, member.getTeam2());
+			   preparedStatement.setInt(8, member.getTeam3());
+			   preparedStatement.setInt(9, member.getPosition());
+			   preparedStatement.setInt(10, member.getLid());
+			   preparedStatement.setString(11, member.getFavteam());
+			   preparedStatement.setString(12, member.getFavplayer());
+			   preparedStatement.setInt(13, member.getSappears());
+			   preparedStatement.setInt(14, member.getSassists());
+			   preparedStatement.setInt(15, member.getSgoals());
+			   preparedStatement.setString(16, member.getPhoto());
+			   preparedStatement.setString(17, member.getAchievements());
+			   preparedStatement.setString(18, member.getStatus());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -534,7 +545,7 @@ public class TaskManagerService {
 		  try {
 			   Connection connection = DBUtility.getConnection();
 			   PreparedStatement preparedStatement = connection.
-			     prepareStatement("select * from SessionPlan where teamId = ?");
+			     prepareStatement("select * from sessionPlan where teamId = ?");
 			   preparedStatement.setInt(1, teamId);
 			   ResultSet rs = preparedStatement.executeQuery();
 			   
@@ -542,7 +553,7 @@ public class TaskManagerService {
 				   SessionPlan sp = new SessionPlan();
 				   sp.setSessionId(rs.getInt("sessionId"));
 				   sp.setTeamId(rs.getInt("teamId"));
-				   sp.setDate(rs.getDate("date"));
+				   sp.setDate(rs.getString("date"));
 				   sp.setDetails(rs.getString("details"));
 	
 				   sessions.add(sp);
@@ -568,7 +579,7 @@ public class TaskManagerService {
 			   while(rs.next()) {
 				   sp.setSessionId(rs.getInt("sessionId"));
 				   sp.setTeamId(rs.getInt("teamId"));
-				   sp.setDate(rs.getDate("date"));
+				   sp.setDate(rs.getString("date"));
 				   sp.setDetails(rs.getString("details"));
 	
 			   }	
@@ -579,6 +590,25 @@ public class TaskManagerService {
 		  DBUtility.closeConnection();
 		  return sp;
 	}
+	
+	 public void addTrainingSessionPlan(SessionPlan session)
+	 {
+		 
+		  try {
+			  Connection connection = DBUtility.getConnection();
+			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO sessionPlan ( teamId, date, details ) VALUES (?, ?, ?)");
+			  preparedStatement.setInt(1, session.getTeamId());
+			  preparedStatement.setString(2, session.getDate());
+			  preparedStatement.setString(3, session.getDetails());
+			  preparedStatement.executeUpdate();
+		
+		 	} catch (SQLException e) {
+				  e.printStackTrace();
+			}
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
 	
 	public List<SessionRecord> getSessionRecords() 
 	{
@@ -705,6 +735,116 @@ public class TaskManagerService {
 			  	preparedStatement.setString(7, user.getAvatar());
 			  	preparedStatement.setInt(8, user.getEnabled());
 			  	preparedStatement.setInt(9, user.getUserId());
+			  	preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+
+	public SessionRecord getSessionRecordForMember(int sessionid, int teamid, int memberid) 
+	{
+
+		SessionRecord sr = new SessionRecord();
+			 
+		try {
+			   Connection connection = DBUtility.getConnection();
+			   PreparedStatement preparedStatement = connection.
+			     prepareStatement("select * from sessionRecord where sessionid = ? and teamid = ? and memberid = ?");
+			   preparedStatement.setInt(1, sessionid);
+			   preparedStatement.setInt(2, teamid);
+			   preparedStatement.setInt(3, memberid);
+			   ResultSet rs = preparedStatement.executeQuery();
+			   
+			   while(rs.next()) {
+				   sr.setRecId(rs.getInt("recId"));
+				   sr.setTeamId(rs.getInt("teamId"));
+				   sr.setMemberId(rs.getInt("memberId"));
+				   sr.setSessionId(rs.getInt("sessionId"));
+				   sr.setStatus(rs.getBoolean("status"));
+		
+			   }	
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+		
+		  DBUtility.closeConnection();
+		  return sr;
+	}
+
+	public void setSessionRecordForMember(SessionRecord sr) 
+	{	
+		boolean bGotRec = false;
+		
+		try {
+			   Connection connection = DBUtility.getConnection();
+			   
+			   /* (1) First things first, check if the member already has a record for the particular session */
+			   PreparedStatement preparedStatement = connection.
+			     prepareStatement("select * from sessionRecord where sessionid = ? and teamid = ? and memberid = ?");
+			   preparedStatement.setInt(1, sr.getSessionId());
+			   preparedStatement.setInt(2, sr.getTeamId());
+			   preparedStatement.setInt(3, sr.getMemberId());
+			   ResultSet rs = preparedStatement.executeQuery();
+			   
+			   while(rs.next()) {
+				   /* OK, we have an existing record so we just need to update it. */
+				   sr.setRecId(rs.getInt("recId"));
+				   bGotRec = true;
+				   
+				   // Close the db connection as each method opens it's own
+				   DBUtility.closeConnection();
+				   
+				   // Update the record
+				   updateSessionRecForUser(sr);
+			   }
+
+			   if(!bGotRec)
+			   {
+				   System.out.println("## [TaskManagerService]->setSessionRecordForMember(): Record not found so need to add it...");
+				   insertSessionRecordForMember(sr);
+			   }
+		
+			   	
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+		
+		  DBUtility.closeConnection();
+	}
+	
+	public void updateSessionRecForUser(SessionRecord sr)
+	 {
+		 
+		  try {
+			    Connection connection = DBUtility.getConnection();
+			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE sessionrecord set status = ? where teamId = ? and memberId = ? and sessionid = ?");
+			  	preparedStatement.setBoolean(1, sr.getStatus());
+			  	preparedStatement.setInt(2, sr.getTeamId());
+			  	preparedStatement.setInt(3, sr.getMemberId());
+			  	preparedStatement.setInt(4, sr.getSessionId());
+			  	preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+
+	public void insertSessionRecordForMember(SessionRecord sr) 
+	{
+		  try {
+			    Connection connection = DBUtility.getConnection();
+			  	PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO sessionRecord (teamid, memberid, sessionid, status) VALUES (?,?,?,?)");
+			  	preparedStatement.setInt(1, sr.getTeamId());
+			  	preparedStatement.setInt(2, sr.getMemberId());
+			  	preparedStatement.setInt(3, sr.getSessionId());
+			  	preparedStatement.setBoolean(4, sr.getStatus());
 			  	preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {

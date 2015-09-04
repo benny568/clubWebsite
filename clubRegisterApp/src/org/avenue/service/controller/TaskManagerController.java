@@ -124,6 +124,13 @@ public class TaskManagerController {
 	  return sessions;	
 	 }
 	 
+	 @RequestMapping(value="/admin/session",method = RequestMethod.POST)
+	 public void addTrainingSession(@RequestBody SessionPlan session)
+	 {
+		 System.out.println("## [TaskManagerController]->addTrainingSession(): " + session);
+		 taskmanagerservice.addTrainingSessionPlan(session);
+	 }
+	 
 	 @RequestMapping(value="/admin/sessionrec",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<SessionRecord> getSessionRecords() {	 
 	  List<SessionRecord> sessions=taskmanagerservice.getSessionRecords();
@@ -135,6 +142,23 @@ public class TaskManagerController {
 		 List<SessionRecord> sessions=taskmanagerservice.getSessionRecordsForTeam(teamid);
 		 return sessions;	
 	 }
+	 
+	 @RequestMapping(value="/admin/sessionrec/{sessionid}/{teamid}/{userid}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  SessionRecord getSessionRecordsForTeam(@PathVariable int sessionid, @PathVariable int teamid, @PathVariable int memberid) {	 
+		 SessionRecord session=taskmanagerservice.getSessionRecordForMember(sessionid,teamid,memberid);
+		 return session;	
+	 }
+	 
+	 @RequestMapping(value="/admin/sessionrec",method = RequestMethod.PUT)
+	 public void setSessionRecord(@RequestBody SessionRecord sr) {	 
+		 taskmanagerservice.setSessionRecordForMember(sr);	
+	 }
+	 
+	 @RequestMapping(value="/admin/sessionrec",method = RequestMethod.POST,headers="Accept=application/json")
+	 public void insertSessionRecord(@RequestBody SessionRecord sr) {	 
+		 taskmanagerservice.insertSessionRecordForMember(sr);	
+	 }
+	 
 	 
 	 @RequestMapping(value="/admin/user",method = RequestMethod.GET,headers="Accept=application/json")
 	 public org.avenue.service.domain.User getUserName(Principal principal) {
