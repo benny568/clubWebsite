@@ -33,11 +33,15 @@
 		<!-- Smart Table -->
 		<script type="text/javascript" src="resources/js/libs/smart-table.min.js"></script>
 		
+		<!-- log4javasctipt -->
+		<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
+		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/trainingViewController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamPlanController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addTrainingSessionController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		

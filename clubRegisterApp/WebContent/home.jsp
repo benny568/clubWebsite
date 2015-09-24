@@ -5,6 +5,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
 	<title>Avenue United Home</title>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<meta name="author" content="Brendan O'Daly" />
+	<meta name="description" content="Avenue United FC website" />
 
 	<!-- jQuery (required) -->
 	<script src="resources/js/libs/jquery-2.1.4.min.js"></script>
@@ -25,6 +28,9 @@
 	
 	<!-- Font Awsome -->
 	<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
+	
+	<!-- log4javasctipt -->
+	<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
 	
 	<!-- My app -->
 	<script type="text/javascript" src="resources/js/app.js"></script>
@@ -47,20 +53,6 @@
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
-	
-		<div class="row">
-			<div class="col-md-4">
-				<img src="resources/images/AvenueColours.png" height="50" width="200" alt="Club Colours" data-toggle="tooltip" data-placement="top" title="Club Colours"/>
-			</div>
-			<div class="col-md-4">
-				<img src="resources/images/adverts/enzos.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Enzos Takeaway" height="50" />
-			</div>
-			<div class="col-md-4">
-				<img src="resources/images/adverts/ec.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Ennis Cabs" height="100px" width="200px" class="img-thumbnail"/>
-			</div>
-		</div> <!-- end row -->
-			
-		<div class="blankspace"></div>
 		
 		<div class="row avenue-body">
 			<div class="panel">
@@ -82,6 +74,19 @@
 		</div> <!-- end row -->
 		
 	</div> <!-- end container -->
+	
+	<div class="blankspace"></div>
+	<div class="row">
+		<div class="col-md-4">
+			<img src="resources/images/AvenueColours.png" height="50" width="200" alt="Club Colours" data-toggle="tooltip" data-placement="top" title="Club Colours"/>
+		</div>
+		<div class="col-md-4">
+			<img src="resources/images/adverts/enzos.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Enzos Takeaway" height="50" />
+		</div>
+		<div class="col-md-4">
+			<img src="resources/images/adverts/ec.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Ennis Cabs" height="100px" width="200px" class="img-thumbnail"/>
+		</div>
+	</div> <!-- end row -->
 	
 	<div class="blankspace"></div>
 	<div class="blankspace"></div>

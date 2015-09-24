@@ -30,10 +30,14 @@
 		<!-- Font Awsome -->
 		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
 		
+		<!-- log4javasctipt -->
+		<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
+		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamsManagerController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addTrainingSessionController.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/directives/validationDirectives.js"></script>
 		

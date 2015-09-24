@@ -132,7 +132,7 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	{
 		for( var i=0; i<$scope.sessionPlans.length; i++ )
 		{
-			if( $scope.sessionPlans[i].sessionid == sessionid )
+			if( $scope.sessionPlans[i].sessionId == sessionid )
 				return i;
 		}
 		return 0;

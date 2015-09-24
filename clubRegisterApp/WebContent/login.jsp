@@ -23,6 +23,10 @@
 	<!-- Font Awsome -->
 	<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
 	
+	<!-- log4javasctipt -->
+	<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
+	<script type="text/javascript" src="resources/js/libs/require.js"></script>
+	
 	<!-- My app -->
 	<script type="text/javascript" src="resources/js/app.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />

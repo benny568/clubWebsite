@@ -6,12 +6,17 @@ public class Member {
 	 private String name;
 	 private String address;
 	 private String phone;
+	 private String phone2;
+	 private String email;
 	 private String dob;
 	 private String amount;		// Amount paid to date
+	 private String receiptid;
 	 private int team;
 	 private int team2;			// Can be a member of a second team
 	 private int team3;			// Can be a member of a third team
 	 private int position;
+	 private int position2;
+	 private int position3;
 	 private int lid;
 	 private String favteam;
 	 private String favplayer;
@@ -139,6 +144,36 @@ public class Member {
 	}
 	public void setTeam3(int team3) {
 		this.team3 = team3;
+	}
+	public String getReceiptid() {
+		return receiptid;
+	}
+	public void setReceiptid(String receiptid) {
+		this.receiptid = receiptid;
+	}
+	public int getPosition2() {
+		return position2;
+	}
+	public void setPosition2(int position2) {
+		this.position2 = position2;
+	}
+	public int getPosition3() {
+		return position3;
+	}
+	public void setPosition3(int position3) {
+		this.position3 = position3;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone2() {
+		return phone2;
+	}
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
 	} 
 	
 }

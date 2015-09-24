@@ -1,3 +1,4 @@
+//require(['resources/js/libs/log4javascript.js'], function(){console.log("##[app.js] loaded log4javascipted.")});
 var lrcode; // Needed for API calls to LeagueRepublic site
 var serverMode = {
 	LOCAL: 0, // Running locally
@@ -13,9 +14,24 @@ var gThisUser = {};
 
 var thisServerMode = serverMode.REMOTE;
 
+/********************************************
+/* Setup the logger
+ * ********************************************/
+var log = log4javascript.getLogger("ClubRegisterApp");
+//Create an Appender with default options
+var bcAppender = new log4javascript.BrowserConsoleAppender();
+bcAppender.setThreshold(log4javascript.Level.TRACE);
+// Add the appender to the logger
+log.addAppender(bcAppender);
+// Test the logger
+log.debug("## Member Manager Module Loaded....");
+log.trace("## TRACE: Member Manager Module Loaded....");
+/********************************************/
+
 var mmModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
 
 mmModule.config(function($httpProvider) {
+	
 	/**
 	* make delete type json
 	*/
@@ -64,7 +80,7 @@ mmModule.controller('editTeamNBModalController', function($scope, team, close) {
 
 mmModule.controller('AddMemberController', function($scope, close) {
 	
-	$scope.thisMember = {name: "", address: "", phone: "", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
+	$scope.thisMember = {name: "", address: "", phone: "", phone2: "", email:"", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
 	var mem = $scope.thisMember;
 	$scope.itsPosition = itsPosition;
 	$scope.teams = gTeams;

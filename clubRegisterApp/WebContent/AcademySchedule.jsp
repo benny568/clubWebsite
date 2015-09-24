@@ -31,6 +31,9 @@
 		<!-- Smart Table -->
 		<script type="text/javascript" src="resources/js/libs/smart-table.min.js"></script>
 		
+		<!-- log4javasctipt -->
+		<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
+		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/academyController.js"></script>

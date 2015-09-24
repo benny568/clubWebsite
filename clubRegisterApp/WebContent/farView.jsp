@@ -6,7 +6,7 @@
 	<%@page import="org.avenue.service.domain.Team"%>
 	<head>  <!-- HEAD START -->		
 		<title>Team View</title>
-		
+			
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
 	    <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -28,24 +28,24 @@
 		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
 		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
 		
-		<!-- require.js -->
-		<script type="text/javascript" src="resources/js/libs/require.js"></script>
-		
 		<!-- Font Awsome -->
 		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
+		
+		<!-- log4javasctipt -->
+		<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
 		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/farController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
+		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >		
 	</head>  <!-- HEAD END -->
 	<% 	Team team = (Team) session.getAttribute("team");%>
-	<body>		
+	<body ng-controller="memberManagerController" mode="Team" team="U18">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
@@ -57,7 +57,7 @@
 				</div>
 		    	<div class="row" style="margin-left:20px;">
 			    	<div class="col-md-5">
-		    			<div class="panel" ng-controller="fixturesAndResultsController" mode="Team" team="Junior A">
+		    			<div class="panel">
 			    			<div class="panel-heading avenue-heading">
 			    				Fixtures:
 			    			</div>
@@ -71,7 +71,7 @@
 			    		</div>
 		    		</div> <!-- end col -->
 		    		<div class="col-md-5">
-		    			<div class="panel" ng-controller="resultsController" mode="Team" team="Junior A">
+		    			<div class="panel">
 			    			<div class="panel-heading avenue-heading">
 			    				Recent Results:
 			    			</div>
@@ -86,6 +86,5 @@
 			    	
 			</div> <!--  End of container t1 -->
 		</div>
-		
 	</body>
 </html>

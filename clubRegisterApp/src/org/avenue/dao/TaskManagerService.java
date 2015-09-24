@@ -15,6 +15,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -29,13 +31,17 @@ import org.avenue.service.domain.User;
 import org.avenue.service.utility.DBUtility;
 
 public class TaskManagerService {
-	 
+	//private Log log = LogFactory.getLog(TaskManagerService.class);
+	private final Logger log = LoggerFactory.getLogger(TaskManagerService.class);
+	
 	 public List<Member> getAllMembers() {
+		 log.debug("## -> getAllMembers()");
 		  List<Member> members = new ArrayList<Member>();
 		  try {
 			  	   Connection connection = DBUtility.getConnection();
 				   Statement statement = connection.createStatement();
 				   ResultSet rs = statement.executeQuery("select * from member");
+				   log.trace("##    Executed query[select * from member]");
 				   while (rs.next()) 
 				   {
 					    Member member = new Member();
@@ -43,11 +49,15 @@ public class TaskManagerService {
 					    member.setName(rs.getString("name"));
 					    member.setAddress(rs.getString("address")); 
 					    member.setPhone(rs.getString("phone"));
+					    member.setPhone(rs.getString("phone2"));
+					    member.setEmail(rs.getString("email"));
 					    member.setAmount(rs.getString("amount"));
 					    member.setTeam(rs.getInt("team"));
 					    member.setTeam2(rs.getInt("team2"));
 					    member.setTeam3(rs.getInt("team3"));
 					    member.setPosition(rs.getInt("position"));
+					    member.setPosition(rs.getInt("position2"));
+					    member.setPosition(rs.getInt("position3"));
 					    member.setStatus(rs.getString("status"));
 					    member.setFavplayer(rs.getString("favplayer"));
 					    member.setFavteam(rs.getString("favteam"));
@@ -57,16 +67,19 @@ public class TaskManagerService {
 					    member.setPhoto(rs.getString("photo"));
 					    member.setAchievements(rs.getString("achievements"));
 					    members.add(member);
+					    log.trace("##    Adding member to list: " + member);
 				   }
 		  } catch (SQLException e) {
 		   e.printStackTrace();
 		  }
 	
 		  DBUtility.closeConnection();
+		  log.debug("## <- getAllMembers()");
 		  return members;
 	}
 	
 	 public List<Team> getAllTeams() {
+		 log.debug("## -> getAllTeams");
 		  Connection connection = DBUtility.getConnection();
 		  List<Team> teams = new ArrayList<Team>();
 		  try {
@@ -79,6 +92,7 @@ public class TaskManagerService {
 					    team.setName(rs.getString("name"));
 					    team.setLrcode(rs.getInt("lrcode"));
 					    team.setNoticeboard(rs.getString("noticeboard"));
+					    log.trace("##    Adding team to list: " + team);
 					    teams.add(team);
 				   }
 		  } catch (SQLException e) {
@@ -86,10 +100,12 @@ public class TaskManagerService {
 		  }
 	
 		  DBUtility.closeConnection();
+		  log.debug("## <- getAllTeams");
 		  return teams;
 	}
 	 public List<Member> getMembersByTeam(int teamId)
 	 {
+		 log.debug("## -> getMembersByTeam");
 		 List<Member> members = new ArrayList<Member>();
 		 try {
 			   Connection connection = DBUtility.getConnection();
@@ -105,12 +121,16 @@ public class TaskManagerService {
 				    member.setName(rs.getString("name"));
 				    member.setAddress(rs.getString("address")); 
 				    member.setPhone(rs.getString("phone"));
+				    member.setPhone2(rs.getString("phone2"));
+				    member.setEmail(rs.getString("email"));
 				    member.setDob(rs.getString("dob"));
 				    member.setAmount(rs.getString("amount"));
 				    member.setTeam(rs.getInt("team"));
 				    member.setTeam2(rs.getInt("team2"));
 				    member.setTeam3(rs.getInt("team3"));
 				    member.setPosition(rs.getInt("position"));
+				    member.setPosition(rs.getInt("position2"));
+				    member.setPosition(rs.getInt("position3"));
 				    member.setLid(rs.getInt("lid"));
 				    member.setStatus(rs.getString("status"));
 				    member.setFavplayer(rs.getString("favplayer"));
@@ -120,6 +140,7 @@ public class TaskManagerService {
 				    member.setSgoals(rs.getInt("sgoals"));
 				    member.setPhoto(rs.getString("photo"));
 				    member.setAchievements(rs.getString("achievements"));
+				    log.trace("##    Adding member to list: " + member);
 				    members.add(member);
 			   }
 		  } catch (SQLException e) {
@@ -127,6 +148,7 @@ public class TaskManagerService {
 		  }
 	
 		 DBUtility.closeConnection();
+		 log.debug("## <- getMembersByTeam");
 		 return members;
 	 }
 	 
@@ -258,29 +280,33 @@ public class TaskManagerService {
 		 
 		  try {
 			   Connection connection = DBUtility.getConnection();
-			   PreparedStatement preparedStatement = connection.prepareStatement("update member set name=?, address=?, phone=?, dob=?,"
-			   																	+ "amount=?, team=?, team2=?, position=?, lid=?, status=?, favteam=?,"
-			   																	+ "favplayer=?, sappears=?, sassists=?, sgoals=?, photo=?,"
+			   PreparedStatement preparedStatement = connection.prepareStatement("update member set name=?, address=?, phone=?, phone2=?, email=?, dob=?,"
+			   																	+ "amount=?, team=?, team2=?, team3=?, position=?, position2=?, position3=?, lid=?, "
+			   																	+ "status=?, favteam=?, favplayer=?, sappears=?, sassists=?, sgoals=?, photo=?,"
 			   																	+ "achievements=? where id=?");
 			   preparedStatement.setString(1, member.getName());
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
-			   preparedStatement.setString(4, member.getDob());
-			   preparedStatement.setString(5, member.getAmount());
-			   preparedStatement.setInt(6, member.getTeam());
-			   preparedStatement.setInt(7, member.getTeam2());
-			   preparedStatement.setInt(8, member.getTeam2());
-			   preparedStatement.setInt(9, member.getPosition());
-			   preparedStatement.setInt(10, member.getLid());
-			   preparedStatement.setString(11, member.getStatus());
-			   preparedStatement.setString(12, member.getFavteam());
-			   preparedStatement.setString(13, member.getFavplayer());
-			   preparedStatement.setInt(14, member.getSappears());
-			   preparedStatement.setInt(15, member.getSassists());
-			   preparedStatement.setInt(16, member.getSgoals());
-			   preparedStatement.setString(17, member.getPhoto());
-			   preparedStatement.setString(18, member.getAchievements());
-			   preparedStatement.setInt(19, member.getId());
+			   preparedStatement.setString(4, member.getPhone2());
+			   preparedStatement.setString(5, member.getEmail());
+			   preparedStatement.setString(6, member.getDob());
+			   preparedStatement.setString(7, member.getAmount());
+			   preparedStatement.setInt(8, member.getTeam());
+			   preparedStatement.setInt(9, member.getTeam2());
+			   preparedStatement.setInt(10, member.getTeam3());
+			   preparedStatement.setInt(11, member.getPosition());
+			   preparedStatement.setInt(12, member.getPosition2());
+			   preparedStatement.setInt(13, member.getPosition3());
+			   preparedStatement.setInt(14, member.getLid());
+			   preparedStatement.setString(15, member.getStatus());
+			   preparedStatement.setString(16, member.getFavteam());
+			   preparedStatement.setString(17, member.getFavplayer());
+			   preparedStatement.setInt(18, member.getSappears());
+			   preparedStatement.setInt(19, member.getSassists());
+			   preparedStatement.setInt(20, member.getSgoals());
+			   preparedStatement.setString(21, member.getPhoto());
+			   preparedStatement.setString(22, member.getAchievements());
+			   preparedStatement.setInt(23, member.getId());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -311,6 +337,7 @@ public class TaskManagerService {
 	 public ArrayList<NewsStory> getNewsStories()
 	 {
 		 ArrayList<NewsStory> newsItems = new ArrayList<NewsStory>();
+		 log.trace("-> getNewsStories()");
 		 
 		  try 
 		  {
@@ -319,6 +346,7 @@ public class TaskManagerService {
 			     prepareStatement("select * from newsstory where category=?");
 			   preparedStatement.setString(1, "G");
 			   ResultSet rs = preparedStatement.executeQuery();
+			   log.trace("    running db select: select * from newsstory where category=G");
 			   
 			   while(rs.next()) 
 			   {
@@ -329,6 +357,7 @@ public class TaskManagerService {
 				   ns.setDescription(rs.getString("description"));
 				   ns.setStory(rs.getString("story"));
 				   ns.setImage(rs.getString("image"));
+				   log.trace("    Adding news story: " + ns);
 				   newsItems.add(ns);
 			   }	
 		  } 
@@ -340,6 +369,7 @@ public class TaskManagerService {
 		  }
 		  
 		  DBUtility.closeConnection();
+		  log.trace("<- getNewsStories()");
 		  return newsItems;
 	 }
 	 
@@ -348,29 +378,31 @@ public class TaskManagerService {
 		 
 		  try {
 			  Connection connection = DBUtility.getConnection();
-			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO member ( name, address, phone, "
+			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO member ( name, address, phone, phone2, email,"
 			   																	+ "dob, amount, team, team2, team3, position, lid, favteam, "
 			   																	+ "favplayer, sappears, sassists, sgoals, photo, "
-			   																	+ "achievements, status ) VALUES (?, ?, ?, ?, "
+			   																	+ "achievements, status ) VALUES (?, ?, ?, ?, ?, ?,"
 			   																	+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			  preparedStatement.setString(1, member.getName());
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
-			   preparedStatement.setString(4, member.getDob());
-			   preparedStatement.setString(5, member.getAmount());
-			   preparedStatement.setInt(6, member.getTeam());
-			   preparedStatement.setInt(7, member.getTeam2());
-			   preparedStatement.setInt(8, member.getTeam3());
-			   preparedStatement.setInt(9, member.getPosition());
-			   preparedStatement.setInt(10, member.getLid());
-			   preparedStatement.setString(11, member.getFavteam());
-			   preparedStatement.setString(12, member.getFavplayer());
-			   preparedStatement.setInt(13, member.getSappears());
-			   preparedStatement.setInt(14, member.getSassists());
-			   preparedStatement.setInt(15, member.getSgoals());
-			   preparedStatement.setString(16, member.getPhoto());
-			   preparedStatement.setString(17, member.getAchievements());
-			   preparedStatement.setString(18, member.getStatus());
+			   preparedStatement.setString(4, member.getPhone2());
+			   preparedStatement.setString(5, member.getEmail());
+			   preparedStatement.setString(6, member.getDob());
+			   preparedStatement.setString(7, member.getAmount());
+			   preparedStatement.setInt(8, member.getTeam());
+			   preparedStatement.setInt(9, member.getTeam2());
+			   preparedStatement.setInt(10, member.getTeam3());
+			   preparedStatement.setInt(11, member.getPosition());
+			   preparedStatement.setInt(12, member.getLid());
+			   preparedStatement.setString(13, member.getFavteam());
+			   preparedStatement.setString(14, member.getFavplayer());
+			   preparedStatement.setInt(15, member.getSappears());
+			   preparedStatement.setInt(16, member.getSassists());
+			   preparedStatement.setInt(17, member.getSgoals());
+			   preparedStatement.setString(18, member.getPhoto());
+			   preparedStatement.setString(19, member.getAchievements());
+			   preparedStatement.setString(20, member.getStatus());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -398,7 +430,7 @@ public class TaskManagerService {
 		NewsStory ns = new NewsStory();
 		String value = new String();
 		//String savePath = "C:\\avenue\\clubWebsite\\clubRegisterApp\\WebContent\\WEB-INF\\resources\\news";
-		String savePath = "jvm\\apache-tomcat-8.0.9\\domains\\avenueunited.ie\\ROOT\\WEB-INF\\resources\\news";
+		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
 		
 		try {
 			Connection connection = DBUtility.getConnection();

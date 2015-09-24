@@ -14,9 +14,10 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	$scope.mode = $attrs.mode;
 	$scope.home = _home;
 	$scope.itsPosition = itsPosition;
-	console.log("## [memberManagerController] Controller initialized, mode: " + $scope.mode + ", Team: " + $scope.teamName);
+	log.debug("## [memberManagerController] Controller initialized, mode: " + $scope.mode + ", Team: " + $scope.teamName);
 
 	/* (1) Get the members to display on the page*/
+	log.trace("## Calling getTeams()");
 	getTeams();
 	
 	if( $scope.mode == "All" )
@@ -24,6 +25,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	
 	if( $scope.mode != "None" )
 	{
+		log.trace("## mode is None, calling getTeamDetails..");
 		mmService.getTeamDetails($scope.teamName, lrcode, $scope.teamId)
 		.then( function(result){
 			$scope.teamId = result.data.id;
@@ -32,7 +34,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			gTeamId = $scope.teamId; // Set the global team id for use in other controllers
 			lrcode = $scope.lrcode;
 			require("http://api.leaguerepublic.com/l/client/api/cs1.js");
-			console.log("## [memberManagerController] -> getTeamDetails - returned: ", result);
+			log.trace("## [memberManagerController] -> getTeamDetails - returned: ", result);
 		});
 	}
 	
@@ -45,10 +47,14 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	function getAllMembers(){
 		
+		log.trace("## -> getAllMembers()");
+		log.trace("##    | calling dbService.getAllMembers()..")
 		dbService.getAllMembers()
 			.then( function(mems) {
 				$scope.members = mems;
+				log.trace("## getAllMembers() returned: ", $scope.members);
 			});
+		log.trace("## <- getAllMembers()");
 	}
 	
 	
@@ -60,16 +66,18 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 * Return:		Sets $scope.teams
 	 **********************************************************/
 	function getTeams(){
-		
+		log.trace("## -> getTeams()");
+		log.trace("##    | calling dbService.getTeams()..")
 		dbService.getTeams()
 			.then( function(teams) {
 				$scope.teams = teams;
 				gTeams = teams;
 				setTeamId();
-				console.log("[memberManagerController] -> getTeams() returned: ", $scope.teams);
+				log.trace("[memberManagerController] -> getTeams() returned: ", $scope.teams);
 				getMembers4team($scope.teamId);
 				$scope.viewTraining = false;
 		});
+		log.trace("## <- getTeams()");
 	}
 
 	
@@ -83,10 +91,12 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	$scope.toggleView = function(teamId) 
 	{
+		log.trace("## -> toggleView("+teamId+")");
 		if( typeof teamId == 'undefined' )
 			return;
 		$scope.showArray[teamId] = !$scope.showArray[teamId];
-		console.log("## [memberManagerController] -> toggleView, value for team: ", teamId, " set to: ", $scope.showArray[teamId]);
+		log.trace("##    showArray["+teamId+") set to: "+$scope.showArray[teamId]);
+		log.trace("## <- toggleView()");
 	}
 	$scope.toggleView();
 	
@@ -103,7 +113,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	{
 		if( typeof member == 'undefined' )
 			return
-		console.log("## [memberManagerController] -> editMember ");		
+		log.trace("## [memberManagerController] calling mmService.editMember()...");		
 		mmService.editMember($scope,member);
 	}
 	$scope.editMember();
@@ -125,7 +135,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 		if( typeof teamId == 'undefined')
 			return;
 		$scope.teamId = teamId;
-		console.log("[memberManagerController] -> addMember..", $scope.teamId);		
+		log.trace("[memberManagerController] calling mmServcice.addMember, teamId: ", $scope.teamId);		
 		mmService.addMember( $scope );
     };
 	$scope.addMember();
@@ -144,7 +154,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	{
 		if( typeof member == 'undefined' )
 			return;
-		console.log("[memberManagerController] -> deleteMember: ", $scope.mode, member);
+		log.trace("[memberManagerController] calling mmService.deleteMember with mode, member: ", $scope.mode, member);
 		mmService.deleteMember($scope, member);
 	}
 	$scope.deleteMember();
@@ -165,15 +175,18 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	
 	function getMembers4team(teamId)
 	{
+		log.trace("## -> getMembers4team("+teamId+")");
 		$scope.teamId = teamId;
 		$scope.showArray[teamId] = 'true';
+		log.trace("## Calling dbService.getMembers4team("+teamId+")");
 		dbService.getMembers4team( teamId )
 		.then( function(team) {
 			$scope.TeamMembers[teamId] = team;
 			gTeamMembers = team;
-			console.log("[memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.TeamMembers[teamId]);
+			log.trace("[memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.TeamMembers[teamId]);
 			
 		});
+		log.trace("## <- getMembers4team()");
 	}
 	
 	
@@ -186,10 +199,11 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	$scope.setCurrentMember = function(member)
 	{
+		log.trace("## -> setCurrentMember("+member+")");
 		if( typeof member == 'undefined' )
 			return
 			
-		console.log("[setCurrentMember] called with: ", member);
+		log.trace("[setCurrentMember] called with: ", member);
 		$scope.currentMember = member;
 		
 		if(typeof(member) != 'undefined')
@@ -199,6 +213,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			if( typeof $scope.currentMember.position == 'number' )
 				$scope.currentMember.position = itsPosition[$scope.currentMember.position];
 		}
+		log.trace("## <- setCurrentMember()");
 	}
 	$scope.setCurrentMember();
 	
@@ -211,12 +226,12 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	$scope.editTeamNB = function(team)
 	{
+		log.trace("## -> editTeamNB("+team+")");
 		if( typeof team == 'undefined' )
 			return
-			
-		console.log("[memberManagerController]->editTeamNB() called with: ", team);
+		log.trace("##    |- calling mmService.editTeamNB("+$scope.team+")");
 		mmService.editTeamNB($scope,team);
-		
+		log.trace("## <- editTeamNB()");
 	}
 	$scope.editTeamNB();
 	

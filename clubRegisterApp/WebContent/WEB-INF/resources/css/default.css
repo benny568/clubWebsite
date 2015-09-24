@@ -230,3 +230,43 @@ body
 {
     background-color: #78FA89;
 }
+
+/* ****************
+ * Merchandising
+ * ***************/
+ .merchandise-banner{
+ 	width: 100%;
+ 	height: 40px;
+ 	background-color: #FAE900;
+ 	color: #FFFFFF;
+ 	font-weight: bold;
+ 	font-size: 20px;
+ 	text-align: center;
+ }
+ 
+ .merchandise-background{
+ 	background-color: #FFFFFF;
+ 	min-height: 300px;
+ }
+ 
+ .merchandise-image{
+ 	position:relative;
+ 	margin-top: 20px;
+ 	margin-bottom: 0;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ }
+
+/***************
+ * Date picker *
+ ***************/
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}

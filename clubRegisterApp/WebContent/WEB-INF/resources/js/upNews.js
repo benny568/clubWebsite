@@ -7,6 +7,18 @@ var serverMode = {
 var thisServerMode = serverMode.REMOTE;
 var _home = '';
 
+/********************************************
+/* Setup the logger
+ * ********************************************/
+var log = log4javascript.getDefaultLogger();
+//Create an Appender with default options
+var bcAppender = new log4javascript.BrowserConsoleAppender();
+// Add the appender to the logger
+log.addAppender(bcAppender);
+// Test the logger
+log.debug("## News Upload Module Loaded....");
+/********************************************/
+
 upNews.config(function($httpProvider) {
 	/**
 	* make delete type json

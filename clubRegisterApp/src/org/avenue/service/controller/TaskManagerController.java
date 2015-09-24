@@ -2,18 +2,30 @@ package org.avenue.service.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.avenue.dao.TaskManagerService;
+import org.avenue.service.domain.EmailMessage;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +38,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TaskManagerController {
+	java.sql.Timestamp currentTimestamp = null;
+	private final Logger log = LoggerFactory.getLogger(TaskManagerController.class);
+	
+	public TaskManagerController(){}
 	
 	TaskManagerService taskmanagerservice=new TaskManagerService();
 	
 	 @RequestMapping(value="/admin/members",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<Member> getAllTasks() {
-		 System.out.println("## [TaskManagerController]->getAllTasks()..");
+		 log.debug("## [TaskManagerController]->getAllTasks()..");
 	  List<Member> members=taskmanagerservice.getAllMembers();
 	  return members;
 	
@@ -39,7 +55,7 @@ public class TaskManagerController {
 
 	 @RequestMapping(value="/admin/team/{teamId}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<Member> getMembersByTeam(@PathVariable int teamId) {
-		 System.out.println("## [TaskManagerController]->getMembersByTeam(" + teamId + ")");
+		 log.debug("## [TaskManagerController]->getMembersByTeam(" + teamId + ")");
 		 List<Member> members=taskmanagerservice.getMembersByTeam(teamId);
 		 return members;
 	
@@ -47,7 +63,7 @@ public class TaskManagerController {
 	 
 	 @RequestMapping(value="/admin/teams",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<Team> getTeams() {
-		 System.out.println("## [TaskManagerController]->getTeams()..");
+		 log.debug("## [TaskManagerController]->getTeams()..");
 		 List<Team> teams=taskmanagerservice.getAllTeams();
 		 return teams;
 	
@@ -55,7 +71,7 @@ public class TaskManagerController {
 	 
 	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public Team getTeamDetails(@PathVariable String teamName) {
-		 System.out.println("## [TaskManagerController]->getTeamDetails(" + teamName + ")..");
+		 log.debug("## [TaskManagerController]->getTeamDetails(" + teamName + ")..");
 		 Team team=taskmanagerservice.getTeamDetails(teamName);
 		 return team;
 	
@@ -85,9 +101,12 @@ public class TaskManagerController {
 	 
 	 @RequestMapping(value="/admin/news",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<NewsStory> getNewsStories() {
-		 System.out.println("## [TaskManagerController]->getNewsStories()..");
+		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
+		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
 		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
-		 System.out.println("## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
 		 return stories;
 	 }
 	 
@@ -99,7 +118,8 @@ public class TaskManagerController {
 	 @RequestMapping(value="/admin/upload",method = RequestMethod.POST)
 	 public void uploadNewsPic(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	 {
-		 System.out.println("## [TaskManagerController]->uploadNewsPic()");
+		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+		 System.out.println(currentTimestamp + ": ## [TaskManagerController]->uploadNewsPic()");
 		 taskmanagerservice.uploadNews(req, res);
 	 }
 	 
@@ -171,5 +191,56 @@ public class TaskManagerController {
 	 @RequestMapping(value="/admin/user",method = RequestMethod.PUT)
 	 public void updateUser(@RequestBody org.avenue.service.domain.User user) {	 
 		 taskmanagerservice.updateUser( user );
+	 }
+	 
+	 @RequestMapping(value="/mail",method = RequestMethod.POST)
+	 public void messageUs(@RequestBody EmailMessage msg) 
+	 {	 
+	      String destination = "secretary@avenueunited.ie";
+
+	      final String username = "secretary@avenueunited.ie";
+	      final String password = "UpThe@venue83";
+
+	      Properties props = new Properties();
+	      props.put("mail.smtp.auth", "true");
+	      props.put("mail.smtp.starttls.enable", "true");
+	      props.put("mail.smtp.host", "mail.avenueunited.ie");//"mocha6004.mochahost.com");
+	      props.put("mail.smtp.port", "25");
+			
+	      //props.setProperty("mail.pop3.host","mocha6004.mochahost.com");//"mail.avenueunited.ie");
+	     // props.setProperty("mail.pop3.port", "110");
+	      //properties.setProperty("mail.smpt.port", "25");
+	      //properties.setProperty("mail.imap.port", "143");
+
+	      // Get the default Session object.
+	      Session session = Session.getInstance(props,
+	    		  new javax.mail.Authenticator() {
+	    			protected PasswordAuthentication getPasswordAuthentication() {
+	    				return new PasswordAuthentication(username, password);
+	    			}
+	    		  });
+	      
+		 try{
+	         // Create a default MimeMessage object.
+	         MimeMessage message = new MimeMessage(session);
+
+	         // Set From: header field of the header.
+	         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+	         // Set To: header field of the header.
+	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+	         // Set Subject: header field
+	         message.setSubject(msg.getSubject());
+
+	         // Now set the actual message
+	         message.setText(msg.getMessage());
+
+	         // Send message
+	         Transport.send(message);
+	         System.out.println("Sent message successfully....");
+	      }catch (MessagingException mex) {
+	         mex.printStackTrace();
+	      }
 	 }
 }

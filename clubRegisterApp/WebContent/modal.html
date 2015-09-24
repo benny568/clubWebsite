@@ -50,10 +50,14 @@
 		                	<input type="text" class="form-control" id="sgoals" data-ng-model="thisMember.sgoals" value="{{thisMember.sgoals}}"/>
                 		</div>
                 		<div class="col-md-4">
+                			<label for="phone">Phone2:</label>
+		                	<input type="text" class="form-control" id="phone2" data-ng-model="thisMember.phone2" value="{{thisMember.phone2}}"/>
                 			<label for="team">Team:</label>
 		                	<select class="form-control" id="team" data-ng-model="thisMember.team" value="{{thisMember.team}}">
 		                		<option ng-repeat="team in teams track by $index">{{team.name}}</option>
 							</select>
+							<label for="email">email:</label>
+		                	<input type="text" class="form-control" id="email" data-ng-model="thisMember.email" value="{{thisMember.email}}"/>
                 		</div>
                 	</div> <!-- end row -->
                 	<div class="row a-modal-row">

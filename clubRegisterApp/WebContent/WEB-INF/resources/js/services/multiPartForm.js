@@ -10,7 +10,7 @@ upNews.service('multipartForm', function($http){
 		// CSRF stuff
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
-		$http.defaults.headers.post["Content-Type"] = "application/json";
+		//$http.defaults.headers.post["Content-Type"] = "application/json";
 		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
 		
 		$http.post(uploadUrl, fd, {

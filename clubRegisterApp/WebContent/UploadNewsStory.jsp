@@ -30,20 +30,14 @@
 		<!-- Font Awsome -->
 		<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
 		
-		<!-- My app module -->
-		<script type="text/javascript" src="resources/js/upNews.js"></script>
-		
-		<!-- My App Controllers -->
-		<script type="text/javascript" src="resources/js/controllers/newsUploadController.js"></script>
-		
-		<!-- My App Services -->
-		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
+		<!-- My app -->
+		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
-		
-		<!-- My App Directives -->
+		<script type="text/javascript" src="resources/js/upNews.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/newsUploadController.js"></script>
+		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
 		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		
-		<!-- Other -->
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 	
