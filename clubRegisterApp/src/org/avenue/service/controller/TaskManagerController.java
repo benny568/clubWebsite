@@ -99,7 +99,7 @@ public class TaskManagerController {
 		 taskmanagerservice.deleteMemberDetails( memberId );	
 	 }
 	 
-	 @RequestMapping(value="/admin/news",method = RequestMethod.GET,headers="Accept=application/json")
+	 @RequestMapping(value="/news",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<NewsStory> getNewsStories() {
 		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");

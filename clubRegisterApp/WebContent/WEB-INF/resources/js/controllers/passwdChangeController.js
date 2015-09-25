@@ -1,4 +1,4 @@
-mmModule.controller('passwdChangeController', function ($scope,$http,$attrs, mmService, dbService) 
+mmModule.controller('passwdChangeController', function ($scope,$http,dbService,mmService)
 {	
 	console.log("## [passwdChangeController] Loading....");
 	

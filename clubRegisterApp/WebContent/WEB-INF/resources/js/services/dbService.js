@@ -139,7 +139,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: _home + "/admin/news"
+			url: _home + "/news"
 		});
 		
 		return( request.then( handleSuccess, handleError ) );
