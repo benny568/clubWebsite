@@ -34,6 +34,7 @@
 	
 	<!-- My app -->
 	<script type="text/javascript" src="resources/js/app.js"></script>
+	<script type="text/javascript" src="resources/js/controllers/sponsorController.js"></script>
 	<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
@@ -58,35 +59,39 @@
 			<div class="panel">
 				<div class="panel-heading avenue-heading">
 					Latest News:
-				</div>
-		
-			    <carousel interval="5000" style="float:left;width:100%;height:auto;">
-			      <slide ng-repeat="story in stories">
-			        <img ng-src="{{story.image}}" style="float:left;padding-left:100px;padding-top:40px;padding-right:5px;padding-bottom:40px;max-width:40%;">
-			        <div style="float:left;width:50%;">
-			          <div class="avenue-heading" style="font-weight:bold;font-size:20px;border-right:solid 1px white;border-left:solid 1px white;">{{story.title}}</div>
-			          <div class="avenue-heading" style="border-bottom:solid 1px white;border-right:solid 1px white;border-left:solid 1px white;">{{story.description}}</div>
-			          <p style="padding-bottom:20px;padding-top:10px;">{{story.story}}</p>
-			      </slide>
+				</div>		
+				<carousel interval="5000" style="float:left;width:100%;height:auto;">
+					<slide ng-repeat="story in stories">
+						<img ng-src="{{story.image}}" style="float:left;padding-left:100px;padding-top:40px;padding-right:5px;padding-bottom:40px;max-width:40%;"/>
+							<div style="float:left;width:50%;">
+								<div class="avenue-heading" style="font-weight:bold;font-size:20px;border-right:solid 1px white;border-left:solid 1px white;">{{story.title}}</div>
+								<div class="avenue-heading" style="border-bottom:solid 1px white;border-right:solid 1px white;border-left:solid 1px white;">{{story.description}}</div>
+								<p style="padding-bottom:20px;padding-top:10px;">{{story.story}}</p>
+							</div>
+					</slide>
 			    </carousel>
 
 			</div> <!-- end panel -->
 		</div> <!-- end row -->
-		
-	</div> <!-- end container -->
+
+	<div class="panel" style="margin-top:5px;">
+		<div class="panel-heading avenue-heading">
+			Our Sponsors:
+		</div>
+		<div class="panel-body avenue-body" ng-controller="sponsorController">
+			<carousel interval="5000" style="float:left;width:100%;height:auto;">
+				<slide ng-repeat="sponsor in sponsors">
+			      	<div style="position:relative;margin-left:auto;margin-right:auto">
+			        	<img ng-src="{{sponsor.image}}" width="80%" height="150px"/>
+			        </div>
+				</slide>
+			</carousel>
+		</div> <!-- end panel-body -->
+		<div class="panel-heading avenue-heading"></div>
+	</div> <!-- end panel -->
 	
-	<div class="blankspace"></div>
-	<div class="row">
-		<div class="col-md-4">
-			<img src="resources/images/AvenueColours.png" height="50" width="200" alt="Club Colours" data-toggle="tooltip" data-placement="top" title="Club Colours"/>
-		</div>
-		<div class="col-md-4">
-			<img src="resources/images/adverts/enzos.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Enzos Takeaway" height="50" />
-		</div>
-		<div class="col-md-4">
-			<img src="resources/images/adverts/ec.png" data-toggle="tooltip" data-placement="top" title="Sponsor: Ennis Cabs" height="100px" width="200px" class="img-thumbnail"/>
-		</div>
-	</div> <!-- end row -->
+	</div> <!-- end container -->
+		
 	
 	<div class="blankspace"></div>
 	<div class="blankspace"></div>

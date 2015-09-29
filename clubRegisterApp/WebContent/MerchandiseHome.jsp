@@ -46,7 +46,7 @@
 			<div class="row avenue-body">
 				<div class="panel">
 					<div class="panel-heading avenue-heading">
-						2015/2016 Merchandise range:
+						2015/2016 Merchandise range: <div style="float:right;">Available from <strong>Rochfords Pharmacy</strong>, Parnell St., Ennis</div>
 					</div>
 					<div class="panel-body avenue-body">
 			

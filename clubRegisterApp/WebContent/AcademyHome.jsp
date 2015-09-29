@@ -85,10 +85,37 @@
 				<div class="col-md-6">
 					<div class="panel">
 						<div class="panel-heading avenue-heading">
-		    				Upcoming Events
+		    				Drill of the week:
 		    			</div>
 		    			<div class="panel-body avenue-body">
-		    				<img src="resources/images/academy/academyCrest.png" width="100%" />
+		    				
+							<div class="panel">
+								<div class="panel-heading avenue-heading">THEME</div>
+								<div class="panel-body avenue-body">Dribbling and Passing through Cones (U6-9 Technical)</div>
+								<div class="panel-heading avenue-heading">DESCRIPTION OF PRACTISE</div>
+								<div class="panel-body avenue-body">A Practise designed to encourage players dribbling and passing</div>
+								<div class="panel-heading avenue-heading">ORGANISATION</div>
+								<div class="panel-body avenue-body">4 to 5 cones setup to dribble through<br />
+																	3 cones with a ball on top of the middle cone<br />
+																	3-4 players per group – Setup as many groups are required<br />
+																	Players dribble through cones and try knock their football off the middle cone.<br />
+																	Players must strike ball before they pass the end cone<br />
+																	Player must retrieve their football and bring back to the team mate<br />
+																	</div>
+								<div class="panel-heading avenue-heading">KEY FACTORS</div>
+								<div class="panel-body avenue-body">Dribbling, soft touches, keep ball close, head up<br />
+																	Passing, pace and accuracy
+																	</div>
+								<div class="panel-heading avenue-heading">NOTES</div>
+								<div class="panel-body avenue-body">Progress the competition between teams, change distance of passing depending on ability of players.
+																	Create a competition between teams by awarding 2 points to anyone who dribbles through the cones without
+																	 the ball hitting the cones.  Award 2 points if they pass the ball through the cones. Award 5 points if 
+																	 they knock the ball off the middle cone.
+																	</div>
+								<div class="panel-body avenue-body">
+									<img src="resources/images/academy/drilloftheweek.png" alt="" width="100%"/>
+								</div>
+							</div>
 		    			</div>
 					</div>				
 				</div>

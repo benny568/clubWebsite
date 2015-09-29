@@ -12,7 +12,7 @@ var gTeamId = 0;
 var gTeamMembers={};
 var gThisUser = {};
 
-var thisServerMode = serverMode.REMOTE;
+var thisServerMode = serverMode.LOCAL;
 
 /********************************************
 /* Setup the logger
