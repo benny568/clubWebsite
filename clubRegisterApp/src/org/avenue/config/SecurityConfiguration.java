@@ -26,9 +26,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Autowired
     public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception
     {
-        // This example shows how you can override the default queries in order
-        // to use your own tables rather than Spring Security's default tables
-        // The SQL is relatively simple and should be easy to figure out and map to your needs
       auth
           .jdbcAuthentication()
           .dataSource( dataSource )

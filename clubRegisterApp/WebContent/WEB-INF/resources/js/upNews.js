@@ -4,7 +4,7 @@ var serverMode = {
 		REMOTE: 1 // Running on Mochahost server
 	};
 
-var thisServerMode = serverMode.LOCAL;
+var thisServerMode = serverMode.REMOTE;
 var _home = '';
 
 /********************************************

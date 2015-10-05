@@ -8,6 +8,10 @@
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 	<meta name="author" content="Brendan O'Daly" />
 	<meta name="description" content="Avenue United FC website" />
+	
+	<meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 	<!-- jQuery (required) -->
 	<script src="resources/js/libs/jquery-2.1.4.min.js"></script>

@@ -134,8 +134,16 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * Get the news stories from the db.
 	 *******************************************************/
 	function getNewsStories() {
-		$http.defaults.headers.common["Accept"] = "application/json, text/plain";
+		//$http.defaults.headers.common["Accept"] = "application/json, text/plain";
 		console.log("## [dbService]->getNewsStories()");
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [dbService]->getNewsStories() csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.post["Content-Type"] = "application/json";
+		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
 		
 		var request = $http({
 			method: "get",
@@ -370,10 +378,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 			method: "get",
 			url: _home + "/admin/user"
 		});
-		
-		// The request returns a promise, which has a built in
-		// 'then' function that takes the success and error callbacks
-		// as the two parameters.
+
 		return( request.then( handleSuccess, handleError ) );
 	}
 	
@@ -422,6 +427,26 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 			return( request.then( handleSuccess, handleError ) );
 		}
 
+	/**********************************************************
+	 * Name:		isAuthorised()
+	 * Description:	Given a user, is the user authorised for
+	 * 				this operation.
+	 * Scope:		Externally accessible
+	 * Params in:	user: the user logged in
+	 * 				op:	the operation being performed
+	 * Return:		True if authorised, false if not.
+	 **********************************************************/
+	function isAuthorised( user, op ) 
+	{
+		console.log("[dbService] -> isAuthorised, user[" + user + "], op[" + op +"]");
+		
+		var request = $http({
+			method: "get",
+			url: _home + "/user/authorise/user=" + user + "&op=" + op
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
 	
 	// Error handling
 	

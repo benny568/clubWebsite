@@ -60,7 +60,7 @@
 				<div class="panel" style="max-width:500px;margin-left:10%;">
 					<div class="panel-heading avenue-heading">
 						Teams:
-						<div  style="float:right; align:bottom;">
+						<div  ng-if="hasPermission('ADD_TEAM')" style="float:right; align:bottom;">
 							<button type="button" class="btn btn-warning btn-xs" ng-click="addTeam('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Team</button>
 						</div>
 					</div>
@@ -80,8 +80,8 @@
 								<div class="col-md-4">{{team.name}}</div>
 								<div class="col-md-4">{{team.lrcode}}</div>
 								<div class="col-md-3">
-							    	<i ng-click="editTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;&nbsp;
-							    	<i ng-click="deleteTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
+							    	<i ng-if="hasPermission('EDIT_TEAM')" ng-click="editTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;&nbsp;
+							    	<i ng-if="hasPermission('DEL_TEAM')" ng-click="deleteTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
 							    </div>
 							</div>
 						</div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
@@ -46,6 +47,12 @@
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
 	</head>  <!-- HEAD END -->
+	<%String userName = (String) session.getAttribute("user");
+	if (null == userName) {
+		   /* request.setAttribute("message", "Session has ended.  Please login.");
+		   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+		   rd.forward(request, response); */
+		} %>
 	<body ng-controller="memberManagerController" mode="None">
 	
 		<!-- (1) Banner across the top & the menu -->
@@ -63,7 +70,7 @@
 							Avenue United Administration Home Page
 						</div>
 						<div class="panel-body avenue-body" style="height:100%;">
-							Welcome to the administration portal!<br><br>
+							Welcome <strong>{{thisUser.name}}</strong> to the administration portal!<br><br>
 							From here you can add, edit, remove, various details of the club records such
 							 as member information, upload news stories and photos and manage your team. 
 							 Take a look at the tutorials section for more information on how to perform certain tasks.

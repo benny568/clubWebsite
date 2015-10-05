@@ -19,13 +19,14 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	/* (1) Get the members to display on the page*/
 	log.trace("## Calling getTeams()");
 	getTeams();
+	getUserDetails();
 	
 	if( $scope.mode == "All" )
 		getAllMembers();
 	
 	if( $scope.mode != "None" )
 	{
-		log.trace("## mode is None, calling getTeamDetails..");
+		log.debug("## mode is None, calling getTeamDetails..");
 		mmService.getTeamDetails($scope.teamName, lrcode, $scope.teamId)
 		.then( function(result){
 			$scope.teamId = result.data.id;
@@ -34,7 +35,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			gTeamId = $scope.teamId; // Set the global team id for use in other controllers
 			lrcode = $scope.lrcode;
 			require("http://api.leaguerepublic.com/l/client/api/cs1.js");
-			log.trace("## [memberManagerController] -> getTeamDetails - returned: ", result);
+			log.debug("## [memberManagerController] <- getTeamDetails - returned: ", result);
 		});
 	}
 	
@@ -66,7 +67,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 * Return:		Sets $scope.teams
 	 **********************************************************/
 	function getTeams(){
-		log.trace("## -> getTeams()");
+		log.debug("## -> getTeams()");
 		log.trace("##    | calling dbService.getTeams()..")
 		dbService.getTeams()
 			.then( function(teams) {
@@ -77,7 +78,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 				getMembers4team($scope.teamId);
 				$scope.viewTraining = false;
 		});
-		log.trace("## <- getTeams()");
+		log.debug("## <- getTeams()");
 	}
 
 	
@@ -235,6 +236,104 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	}
 	$scope.editTeamNB();
 	
+	/**********************************************************
+	 * Name:		hasPermission()
+	 * Description:	Check the user's permission to perform the
+	 * 				given action
+	 * Scope:		Externally accessible
+	 * Params in:	action: the action being requested
+	 * Return:		true or false depending on the permissions
+	 **********************************************************/
+	$scope.hasPermission = function(action, params)
+	{
+		var team = '';
+		var allow = false;
+		var index = 0;
+
+		if( typeof action == 'undefined' )
+			return;
+		
+		log.trace("## -> hasPermission("+action+")");
+		for( var r=0; r<gThisUser.roles.length; r++ )
+		{
+			if( gThisUser.roles[r] === "ROLE_ADMIN" )
+			{
+				// Admin has permissions to do anything
+				return true;
+			}
+		}
+		switch(action)
+		{
+			case 'MANAGE_TEAM':
+				team = params;
+				log.trace("## -> checking if you have permissions for team ["+team+"]");
+				// Check if the user is a manager of this team
+				for( var i=0; i<gThisUser.permissions.teams.length; i++ )
+				{
+					for( var t=0; t<gTeams.length; t++ )
+					{
+						if( gTeams[t].id === gThisUser.permissions.teams[i] )
+						{
+							index = t;
+							break;
+						}
+					}
+
+					log.trace("## -> checking team ["+gTeams[index].name+"]");
+					if( gTeams[index].name === team )
+					{
+						log.trace("## -> checking if user is manager for ["+gTeams[index].name+"]");
+						if( gThisUser.permissions.positions[i] == 0 )
+						{
+							allow = true;
+							break;
+						}
+					}
+				}
+				break;
+				
+			case 'ADD_TEAM':
+			case 'EDIT_TEAM':
+			case 'DEL_TEAM':
+				for( var r=0; r<gThisUser.roles.length; r++ )
+				{
+					log.debug("##     Checking ["+gThisUser.roles[r]+"]");
+					if( gThisUser.roles[r] === "ROLE_ADMIN" )
+					{
+						log.debug("##     User has ADMIN role")
+						// Admin has permissions to do anything
+						allow = true;
+						break;
+					}
+				}
+				break;
+		}
+
+		log.trace("## <- hasPermission("+allow+")");
+		return allow;
+	}
+	$scope.hasPermission();
+	
+	/**********************************************************
+	 * Name:		getUserDetails()
+	 * Description:	Get the currently logged in user details
+	 * Scope:		Internally accessible
+	 * Params in:	None
+	 * Return:		user details
+	 **********************************************************/
+	function getUserDetails()
+	{
+		log.debug("## [memberManagerController] -> getUserDetails()");
+		dbService.getCurrentUser()
+		.then(function(user){
+			console.log("## [memberManagerController] -> getUserDetails: ", user );
+			$scope.thisUser = user;
+			gThisUser = user
+			if( $scope.thisUser.avatar == "" )
+				$scope.thisUser.avatar = "resources/images/avatars/default.png";
+			log.debug("## [memberManagerController] <- getUserDetails()");
+		});
+	}
 	
 	/**********************************************************
 	 * Name:		setTeamId()

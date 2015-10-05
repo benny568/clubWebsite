@@ -11,20 +11,20 @@
 					      <button type="button" class="btn btn-primary dropdown-toggle academymenu" data-toggle="dropdown">
 					      <i class="fa fa-futbol-o"></i> Your Team <span class="caret"></span></button>
 					      <ul class="dropdown-menu academymenu" role="menu">
-					        <li><a href="ManageTeamJA">Junior A</a></li>
-							<li><a href="ManageTeamJB">Junior B</a></li>
-							<li><a href="ManageTeamU18">U18</a></li>
-							<li><a href="ManageTeamU17">U17</a></li>
-							<li><a href="ManageTeamU16">U16</a></li>
-							<li><a href="ManageTeamU15">U15A</a></li>
-							<li><a href="ManageTeamU15B">U15B</a></li>
-							<li><a href="ManageTeamU14">U14</a></li>
-							<li><a href="ManageTeamU13">U13 Red</a></li>
-							<li><a href="ManageTeamU13B">U13 Yellow</a></li>
-							<li><a href="ManageTeamU12">U12A</a></li>
-							<li><a href="ManageTeamU12B">U12 Black</a></li>
-							<li><a href="ManageTeamU11">U11 Red</a></li>
-							<li><a href="ManageTeamU11B">U11 Yellow</a></li>
+					        <li ng-if="hasPermission('MANAGE_TEAM', 'Junior A')"><a href="ManageTeamJA">Junior A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'Junior B')"><a href="ManageTeamJB">Junior B</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U18')"><a href="ManageTeamU18">U18</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U17')"><a href="ManageTeamU17">U17</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U16')"><a href="ManageTeamU16">U16</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U15')"><a href="ManageTeamU15">U15A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U15B')"><a href="ManageTeamU15B">U15B</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U14A')"><a href="ManageTeamU14">U14</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Red')"><a href="ManageTeamU13">U13 Red</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Yellow')"><a href="ManageTeamU13B">U13 Yellow</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U12A')"><a href="ManageTeamU12">U12A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U12 Black')"><a href="ManageTeamU12B">U12 Black</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Red')"><a href="ManageTeamU11">U11 Red</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Yellow')"><a href="ManageTeamU11B">U11 Yellow</a></li>
 					      </ul>
 					    </div>
 					    <div class="btn-group">

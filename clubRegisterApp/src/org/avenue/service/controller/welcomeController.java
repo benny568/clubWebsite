@@ -1,5 +1,6 @@
 package org.avenue.service.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,12 @@ public class welcomeController {
 	public String home( ModelMap model ){return "home";}
 	
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public String adminPage(){return "/WEB-INF/resources/viewParts/adminHome";}
+	public String adminPage( ModelMap model, Principal principal )
+	{
+		String name = principal.getName();
+		model.addAttribute("user", name);
+		return "/WEB-INF/resources/viewParts/adminHome";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login( ModelMap model ){return "login";}

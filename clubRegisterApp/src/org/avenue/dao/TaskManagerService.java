@@ -15,20 +15,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.avenue.service.domain.Member;
+import org.avenue.service.domain.MyTeams;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
 import org.avenue.service.domain.User;
 import org.avenue.service.utility.DBUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
@@ -726,6 +727,9 @@ public class TaskManagerService {
 	public User getUserByName( String name )
 	{
 		User thisUser = new User();
+		MyTeams myteams = new MyTeams();
+		ArrayList<String> roles = new ArrayList<String>();
+		
 		try {
 			Connection connection = DBUtility.getConnection();   
 			PreparedStatement preparedStatement = connection.
@@ -743,7 +747,33 @@ public class TaskManagerService {
 				   thisUser.setDob(rs.getDate("dob"));
 				   thisUser.setAvatar(rs.getString("avatar"));
 				   thisUser.setEnabled(rs.getInt("enabled"));
-			   }	
+			   }
+			   
+			   // (2) Get the user's roles from the user_roles table
+			   preparedStatement = connection.prepareStatement("select * from user_roles where username = ?");
+			   preparedStatement.setString(1, name);
+			   rs = preparedStatement.executeQuery();
+			   
+			   while(rs.next()){
+				   roles.add(rs.getString("ROLE"));
+			   }
+			   thisUser.setRoles(roles);
+			   
+			   // (3) Get the user's permissions for the teams from the members table
+			   preparedStatement = connection.prepareStatement("select team, team2, team3, position, position2, position3 from member where email = ?");
+			   preparedStatement.setString(1, name);
+			   rs = preparedStatement.executeQuery();
+			   
+			   while(rs.next()){
+				  myteams.addTeam(rs.getInt("team"));
+				  myteams.addTeam(rs.getInt("team2"));
+				  myteams.addTeam(rs.getInt("team3"));
+				  myteams.addPosition(rs.getInt("position"));
+				  myteams.addPosition(rs.getInt("position2"));
+				  myteams.addPosition(rs.getInt("position3"));
+			   }
+			   thisUser.setPermissions(myteams);
+			   
 		  } catch (SQLException e) {
 		   e.printStackTrace();
 		  }

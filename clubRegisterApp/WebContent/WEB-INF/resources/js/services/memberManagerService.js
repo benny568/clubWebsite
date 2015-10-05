@@ -298,6 +298,26 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 				scope.thisUser.avatar = "resources/images/avatars/default.png";
 		});
 	}
+    
+	/**********************************************************
+	 * Name:		isAuthorised()
+	 * Description:	Given a user, is the user authorised for
+	 * 				this operation.
+	 * Scope:		Externally accessible
+	 * Params in:	user: the user logged in
+	 * 				op:	the operation being performed
+	 * Return:		True if authorised, false if not.
+	 **********************************************************/
+	function isAuthorised( user, op ) 
+	{
+		console.log("[mmService] -> isAuthorised, user[" + user + "], op[" + op +"]");
+		
+		dbService.isAuthorised(user,op)
+		.then(function(authorisation){
+			console.log("[mmService] ,<- isAuthorised returning [" + authorisation + "]");
+			return authorisation;
+		});
+	}
 
 	function difference(m1, m2) {
 	    var diff = false;

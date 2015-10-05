@@ -1,6 +1,7 @@
 package org.avenue.service.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 // REM: User is someone with admin rights to the site as opposed to
 // a member who is just a club member, e.g. a player.
@@ -15,6 +16,8 @@ public class User {
 	private Date dob;
 	private String avatar;
 	private int enabled;
+	private ArrayList<String> roles;
+	private MyTeams permissions;
 	
 	
 	public int getUserId() {
@@ -70,6 +73,25 @@ public class User {
 	}
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public ArrayList<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(ArrayList<String> roles) {
+		this.roles = roles;
+	}
+	
+	public MyTeams getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(MyTeams permissions) {
+		this.permissions = permissions;
 	}
 	
 }

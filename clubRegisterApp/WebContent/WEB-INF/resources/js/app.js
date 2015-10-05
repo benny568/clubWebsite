@@ -12,7 +12,7 @@ var gTeamId = 0;
 var gTeamMembers={};
 var gThisUser = {};
 
-var thisServerMode = serverMode.LOCAL;
+var thisServerMode = serverMode.REMOTE;
 
 /********************************************
 /* Setup the logger
@@ -47,6 +47,8 @@ mmModule.config(function($httpProvider) {
 	{
 		_home = 'http://www.avenueunited.ie';
 	}
+	
+	
 
 });
 
@@ -63,7 +65,7 @@ mmModule.controller('ModalController', function($scope, member, close) {
 			 close(member, 500);
 	 };
 
-	});
+});
 
 mmModule.controller('editTeamNBModalController', function($scope, team, close) {
 	
