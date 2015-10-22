@@ -15,7 +15,9 @@
 		
 		<!-- Bootstrap -->
 		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
+		<script type="text/javascript" src="resources/js/libs/bootstrap-datepicker.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/datepicker.css" />
 		
 		<!-- AngularJS -->
 		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
@@ -36,11 +38,10 @@
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/DatePickerController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/datePickerController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		
-		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		

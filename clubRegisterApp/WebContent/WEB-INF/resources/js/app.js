@@ -9,10 +9,11 @@ var _home = '';
 var thisUser = {};
 var gTeams = [];
 var gTeamId = 0;
+var gTeamName = '';
 var gTeamMembers={};
 var gThisUser = {};
 
-var thisServerMode = serverMode.REMOTE;
+var thisServerMode = serverMode.LOCAL;
 
 /********************************************
 /* Setup the logger
@@ -24,13 +25,14 @@ bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
 // Test the logger
-log.debug("## Member Manager Module Loaded....");
-log.trace("## TRACE: Member Manager Module Loaded....");
+log.debug("** Member Manager Module Loaded....");
+log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
-var mmModule = angular.module('memberManagerApp', ['ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
 
-mmModule.config(function($httpProvider) {
+var mmModule = angular.module('memberManagerApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
+
+mmModule.config(function($routeProvider,$httpProvider) {
 	
 	/**
 	* make delete type json
@@ -48,9 +50,88 @@ mmModule.config(function($httpProvider) {
 		_home = 'http://www.avenueunited.ie';
 	}
 	
-	
+	$routeProvider
+    // route for the admin home page
+    .when('/', {
+        templateUrl : 'resources/viewParts/adminHomeBody.html',
+        controller  : 'adminHomeController'
+    })
+
+    // route for the AdminOverview page
+    .when('/AdminOverview', {
+        templateUrl : 'resources/viewParts/adminOverviewBody.html',
+        controller  : 'adminOverviewController'
+    })
+
+    // route for the AdminTutorials page
+    .when('/AdminTutorials', {
+        templateUrl : 'resources/viewParts/adminTutorialsBody.html',
+        controller  : 'adminOverviewController'
+    })
+
+    // route for the MemberRegister page
+    .when('/MemberRegister', {
+        templateUrl : 'resources/viewParts/memberRegisterBody.html',
+        controller  : 'adminOverviewController'
+    })
+
+    // route for the ManageTeams page
+    .when('/ManageTeams', {
+        templateUrl : 'resources/viewParts/manageTeamsBody.html',
+        controller  : 'adminOverviewController'
+    })
+
+    // route for the UploadNewsStory page
+    .when('/UploadNewsStory', {
+        templateUrl : 'resources/viewParts/newsUploadBody.html',
+        controller  : 'newsUploadController'
+    })
+
+    // route for the UploadNewsStory page
+    .when('/UploadNewsStory', {
+        templateUrl : 'resources/viewParts/newsUploadBody.html',
+        controller  : 'newsUploadController'        	
+    })
+
+    // route for the AllMembersAdmin page
+    .when('/AllMembersAdmin/:mode', {
+        templateUrl : 'resources/viewParts/allMembersAdminBody.html',
+        controller  : 'memberManagerController'
+    })
+    // route for the ManageTeam page
+    .when('/ManageTeam/:mode/:team', {
+        templateUrl : 'resources/viewParts/manageTeamBody.html',
+        controller  : 'memberManagerController'
+    })
+    .otherwise({
+        redirectTo: '/'
+    });
 
 });
+
+mmModule.controller('adminHomeController', function($scope, $routeParams) {
+	console.log("===== mode is: " + $routeParams.mode);
+});
+
+mmModule.controller('adminOverviewController', function($scope) {
+
+});
+
+mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
+	$scope.news = {};
+	var pristineFormTemplate = $('#newsForm').html();
+	$scope.home = _home;
+	
+	$scope.Submit = function(isValid){
+		var uploadUrl = _home + '/admin/upload';
+		
+		if(!isValid) 
+		      alert('Data is invalid, try again...');
+		else
+			multipartForm.post( uploadUrl, $scope.news );
+	};
+
+}]);
 
 mmModule.controller('ModalController', function($scope, member, close) {
 	
@@ -59,11 +140,21 @@ mmModule.controller('ModalController', function($scope, member, close) {
 	$scope.teams = gTeams;
 
 	 $scope.close = function(save) {
-		 if(save)
+		if(save)
+		{
+			 // The datepicker is sending in a string that's too long so cut it
+			 $scope.thisMember.dob = truncateDate($scope.thisMember.dob);
 			 close($scope.thisMember, 500); // close, but give 500ms for bootstrap to animate
+		}
 		 else
 			 close(member, 500);
 	 };
+	 
+	 function truncateDate( date )
+	 {
+		 if( date.length > 10 )
+			 return date.slice(0,10);
+	 }
 
 });
 

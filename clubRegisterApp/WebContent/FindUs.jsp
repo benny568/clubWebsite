@@ -7,6 +7,7 @@
 		<script type="text/javascript" src="resources/js/libs/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />

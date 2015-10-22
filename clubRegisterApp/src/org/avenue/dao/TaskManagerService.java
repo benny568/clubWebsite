@@ -51,6 +51,7 @@ public class TaskManagerService {
 					    member.setAddress(rs.getString("address")); 
 					    member.setPhone(rs.getString("phone"));
 					    member.setPhone(rs.getString("phone2"));
+					    member.setDob(rs.getString("dob"));
 					    member.setEmail(rs.getString("email"));
 					    member.setAmount(rs.getString("amount"));
 					    member.setTeam(rs.getInt("team"));
@@ -290,7 +291,7 @@ public class TaskManagerService {
 			   preparedStatement.setString(3, member.getPhone());
 			   preparedStatement.setString(4, member.getPhone2());
 			   preparedStatement.setString(5, member.getEmail());
-			   preparedStatement.setString(6, member.getDob());
+			   preparedStatement.setString(6, truncateDate(member.getDob()));
 			   preparedStatement.setString(7, member.getAmount());
 			   preparedStatement.setInt(8, member.getTeam());
 			   preparedStatement.setInt(9, member.getTeam2());
@@ -316,6 +317,17 @@ public class TaskManagerService {
 		  
 		  DBUtility.closeConnection();
 		  return;
+	 }
+	 
+	 public String truncateDate(String date)
+	 {
+		 String newDate = null;
+		 if(date.length() > 10)
+		 {
+			 newDate = date.substring(0,10);
+		 }
+			
+		 return newDate;
 	 }
 	 
 	 public void deleteMemberDetails(int memberId)
@@ -761,7 +773,7 @@ public class TaskManagerService {
 			   
 			   // (3) Get the user's permissions for the teams from the members table
 			   preparedStatement = connection.prepareStatement("select team, team2, team3, position, position2, position3 from member where email = ?");
-			   preparedStatement.setString(1, name);
+			   preparedStatement.setString(1, thisUser.getEmail());
 			   rs = preparedStatement.executeQuery();
 			   
 			   while(rs.next()){

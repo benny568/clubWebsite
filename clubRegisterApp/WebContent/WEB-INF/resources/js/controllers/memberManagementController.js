@@ -1,4 +1,4 @@
-mmModule.controller('memberManagerController', function ($scope,$http,$attrs, dbService,ModalService, mmService) 
+mmModule.controller('memberManagerController', function ($scope,$http,$routeParams, dbService,ModalService, mmService) 
 {	
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -10,24 +10,37 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	$scope.currentMember = {};
 	$scope.teamId = 0;
 	$scope.editable = '';
-	$scope.teamName = $attrs.team;
-	$scope.mode = $attrs.mode;
+	//$scope.teamName = $attrs.team;
+	//$scope.mode = $attrs.mode;
 	$scope.home = _home;
 	$scope.itsPosition = itsPosition;
-	log.debug("## [memberManagerController] Controller initialized, mode: " + $scope.mode + ", Team: " + $scope.teamName);
+	$scope.thisUser = gThisUser;
+	var logdepth = '';
+	var loghdr = logdepth + '# memberManagerController: ';
+	log.debug(loghdr + "Controller initialized, mode: " + $scope.mode + ", Team: " + $scope.teamName);
 
 	/* (1) Get the members to display on the page*/
 	log.trace("## Calling getTeams()");
+	
+	log.debug(loghdr + "THE USER IS:", $scope.thisUser);
+	
+	log.debug(loghdr + "The mode is: " + $routeParams.mode);
+	log.debug(loghdr + "The team is: " + $routeParams.team);
+	
+	$scope.mode = $routeParams.mode;
+	$scope.teamName = $routeParams.team;
+	gTeamName = $routeParams.team;
+	
+	//getUserDetails();
 	getTeams();
-	getUserDetails();
 	
 	if( $scope.mode == "All" )
 		getAllMembers();
 	
 	if( $scope.mode != "None" )
 	{
-		log.debug("## mode is None, calling getTeamDetails..");
-		mmService.getTeamDetails($scope.teamName, lrcode, $scope.teamId)
+		log.debug("## mode is:" + $scope.mode + ", calling getTeamDetails..");
+		mmService.getTeamDetails(gTeamName, lrcode, $scope.teamId)
 		.then( function(result){
 			$scope.teamId = result.data.id;
 			$scope.lrcode = result.data.lrcode;
@@ -38,6 +51,25 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			log.debug("## [memberManagerController] <- getTeamDetails - returned: ", result);
 		});
 	}
+	
+	/**********************************************************
+	 * Name:		switchPage()
+	 * Description:	Switch body of SPA page
+	 * Scope:		External
+	 * Params in:	None
+	 * Return:		Sets $scope.members
+	 **********************************************************/
+	$scope.switchPage = function( page )
+	{
+		if( page === undefined )
+			return;
+		log.debug(loghdr + "|->switchPage(): ", page);
+		
+		$scope.whereami = 'Overview';
+		log.debug(loghdr + "whereami is now:" + $scope.whereami );
+		/*window.location = "http://localhost:8080/clubRegisterApp/" + page;*/
+	}
+	$scope.switchPage();
 	
 	/**********************************************************
 	 * Name:		getAllMembers()
@@ -73,9 +105,13 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 			.then( function(teams) {
 				$scope.teams = teams;
 				gTeams = teams;
-				setTeamId();
+				
+				if( gTeamName !== undefined )
+				{
+					setTeamId();
+					getMembers4team($scope.teamId);
+				}
 				log.trace("[memberManagerController] -> getTeams() returned: ", $scope.teams);
-				getMembers4team($scope.teamId);
 				$scope.viewTraining = false;
 		});
 		log.debug("## <- getTeams()");
@@ -168,26 +204,28 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 * Params in:	teamId: ID of the team in question
 	 * Return:		
 	 **********************************************************/
-	$scope.getMembers4team = function( teamId ) {
-		
+	$scope.getMembers4team = function( teamId ) 
+	{
+		if( teamId === undefined )
+			return;
 		getMembers4team(teamId);
 	}
 	$scope.getMembers4team();
 	
 	function getMembers4team(teamId)
 	{
-		log.trace("## -> getMembers4team("+teamId+")");
+		log.debug("##    |-> getMembers4team("+teamId+")");
 		$scope.teamId = teamId;
 		$scope.showArray[teamId] = 'true';
-		log.trace("## Calling dbService.getMembers4team("+teamId+")");
+		log.trace("##    |-- Calling dbService.getMembers4team("+teamId+")");
 		dbService.getMembers4team( teamId )
 		.then( function(team) {
 			$scope.TeamMembers[teamId] = team;
 			gTeamMembers = team;
-			log.trace("[memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.TeamMembers[teamId]);
+			log.trace("   |-- [memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.TeamMembers[teamId]);
 			
 		});
-		log.trace("## <- getMembers4team()");
+		log.debug("##    |<-getMembers4team()");
 	}
 	
 	
@@ -246,71 +284,10 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	$scope.hasPermission = function(action, params)
 	{
-		var team = '';
-		var allow = false;
-		var index = 0;
-
-		if( typeof action == 'undefined' )
+		if( typeof action === undefined || params === undefined )
 			return;
-		
-		log.trace("## -> hasPermission("+action+")");
-		for( var r=0; r<gThisUser.roles.length; r++ )
-		{
-			if( gThisUser.roles[r] === "ROLE_ADMIN" )
-			{
-				// Admin has permissions to do anything
-				return true;
-			}
-		}
-		switch(action)
-		{
-			case 'MANAGE_TEAM':
-				team = params;
-				log.trace("## -> checking if you have permissions for team ["+team+"]");
-				// Check if the user is a manager of this team
-				for( var i=0; i<gThisUser.permissions.teams.length; i++ )
-				{
-					for( var t=0; t<gTeams.length; t++ )
-					{
-						if( gTeams[t].id === gThisUser.permissions.teams[i] )
-						{
-							index = t;
-							break;
-						}
-					}
-
-					log.trace("## -> checking team ["+gTeams[index].name+"]");
-					if( gTeams[index].name === team )
-					{
-						log.trace("## -> checking if user is manager for ["+gTeams[index].name+"]");
-						if( gThisUser.permissions.positions[i] == 0 )
-						{
-							allow = true;
-							break;
-						}
-					}
-				}
-				break;
-				
-			case 'ADD_TEAM':
-			case 'EDIT_TEAM':
-			case 'DEL_TEAM':
-				for( var r=0; r<gThisUser.roles.length; r++ )
-				{
-					log.debug("##     Checking ["+gThisUser.roles[r]+"]");
-					if( gThisUser.roles[r] === "ROLE_ADMIN" )
-					{
-						log.debug("##     User has ADMIN role")
-						// Admin has permissions to do anything
-						allow = true;
-						break;
-					}
-				}
-				break;
-		}
-
-		log.trace("## <- hasPermission("+allow+")");
-		return allow;
+		log.debug("## [memberManagementController]->hasPermission("+action+","+params+")");
+		return mmService.hasPermission(action, params);
 	}
 	$scope.hasPermission();
 	
@@ -344,15 +321,18 @@ mmModule.controller('memberManagerController', function ($scope,$http,$attrs, db
 	 **********************************************************/
 	function setTeamId()
 	{
+		log.debug("##    |->setTeamId()");
 		for( var i=0; i<$scope.teams.length; i++ )
 		{
-			if( $scope.teamName == $scope.teams[i].name )
+			if( gTeamName == $scope.teams[i].name )
 			{
 				$scope.teamId = $scope.teams[i].id;
 				//$scope.lrcode = $scope.teams[i].lrcode;
+				log.trace("##    -- teamId set to: "+$scope.teamId);
 				break;
 			}
 		}
+		log.debug("##    |<-setTeamId()");
 	}
 	
 	/**********************************************************

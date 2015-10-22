@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="com.google.gson.Gson" %>
+<%@page import="com.google.gson.GsonBuilder" %>
+<%@page import="org.avenue.service.domain.User" %>
 <html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
 		<title>Admin Home</title>
@@ -21,6 +24,7 @@
 		<!-- AngularJS -->
 		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
@@ -39,47 +43,46 @@
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/trainingViewController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/teamPlanController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addTrainingSessionController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
+		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
+		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		
 		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
+		<script>
+			<%User user = (User) session.getAttribute("user");
+			  Gson gson = new GsonBuilder().create();
+			if (null == user) {
+			   /* request.setAttribute("message", "Session has ended.  Please login.");
+			   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			   rd.forward(request, response); */
+			} 
+			%>
+			(function setUser(){ gThisUser = <%=gson.toJson(user)%> })();
+		</script>
+		
 	</head>  <!-- HEAD END -->
-	<%String userName = (String) session.getAttribute("user");
-	if (null == userName) {
-		   /* request.setAttribute("message", "Session has ended.  Please login.");
-		   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-		   rd.forward(request, response); */
-		} %>
-	<body ng-controller="memberManagerController" mode="None">
+	<body ng-controller="memberManagerController">
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
 		
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-2" style="height:100%;">
-					<!-- Add menu down left -->
-					<div ng-include="'resources/viewParts/adminMenu.html'"></div>			
-				</div> <!-- end col -->	
-				<div class="col-sm-10">
-					<div class="panel" style="marign-right:50px;">
-						<div class="panel-heading avenue-heading" style="min-height:35px;">
-							Avenue United Administration Home Page
-						</div>
-						<div class="panel-body avenue-body" style="height:100%;">
-							Welcome <strong>{{thisUser.name}}</strong> to the administration portal!<br><br>
-							From here you can add, edit, remove, various details of the club records such
-							 as member information, upload news stories and photos and manage your team. 
-							 Take a look at the tutorials section for more information on how to perform certain tasks.
-						</div>
-				</div>
-			</div> <!-- end row -->
+		<!-- (2) Load the body of the page -->
 
-		</div> <!-- end of container -->
-		
+		<!-- MAIN CONTENT AND INJECTED VIEWS -->
+	    <div id="main">
+	
+	        <!-- angular templating -->
+	        <!-- this is where content will be injected -->
+	        <div ng-view></div>
+	
+	    </div>
 		
 		<div class="blankspace"></div>
 		

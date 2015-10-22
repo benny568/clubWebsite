@@ -66,6 +66,8 @@ body
 	padding-top:10px;	
 }
 
+.tblHdr {font-weight:bold;}
+
 .centered {
   margin: auto;  
   position: absolute;
@@ -154,6 +156,7 @@ body
 }
 
 .light-line { border-bottom: dotted 1px;}
+.solid-line { border-bottom: solid 1px; padding-bottom:2px; }
 
 .loginbox {
 	position:relative;

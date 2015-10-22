@@ -1,30 +1,30 @@
 		
 					<div class="btn-group-vertical">
-						<a href="adminHome" class="btn btn-primary academymenu" id="academyHome"><i class="fa fa-home"></i> Admin Home</a>
-					    <a href="AdminOverview" class="btn btn-primary academymenu"><i class="fa fa-sun-o"></i> Overview</a>
-					    <button type="button" class="btn btn-primary academymenu" onclick="window.location.href='AdminTutorials'"><i class="fa fa-book"></i> Tutorials</button>
-					    <button type="button" class="btn btn-primary academymenu" onclick="window.location.href='MemberRegister'"><i class="fa fa-child"></i> Members</button>
-					    <button type="button" class="btn btn-primary academymenu" onclick="window.location.href='ManageTeams'"><i class="fa fa-users"></i> Teams</button>
-					    <button type="button" class="btn btn-primary academymenu" onclick="window.location.href='UploadNewsStory'"><i class="fa fa-newspaper-o"></i> News</button>		    
-					    <button type="button" class="btn btn-primary academymenu"><i class="fa fa-camera"></i> Photos</button>
+						<a href="#/" class="btn btn-primary academymenu" id="academyHome"><i class="fa fa-home"></i> Admin Home</a>
+					    <a href="#AdminOverview" class="btn btn-primary academymenu"><i class="fa fa-sun-o"></i> Overview</a>
+					    <a href="#AdminTutorials" class="btn btn-primary academymenu"><i class="fa fa-book"></i> Tutorials</a>
+					    <a href="#MemberRegister" class="btn btn-primary academymenu"><i class="fa fa-child"></i> Members</a>
+					    <a href="#ManageTeams" class="btn btn-primary academymenu"><i class="fa fa-users"></i> Teams</a>
+					    <a href="#UploadNewsStory" class="btn btn-primary academymenu"><i class="fa fa-newspaper-o"></i> News</a>
+					    <a href="#Photos" class="btn btn-primary academymenu"><i class="fa fa-camera"></i> Photos</a>
 					    <div class="btn-group">
 					      <button type="button" class="btn btn-primary dropdown-toggle academymenu" data-toggle="dropdown">
 					      <i class="fa fa-futbol-o"></i> Your Team <span class="caret"></span></button>
 					      <ul class="dropdown-menu academymenu" role="menu">
-					        <li ng-if="hasPermission('MANAGE_TEAM', 'Junior A')"><a href="ManageTeamJA">Junior A</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'Junior B')"><a href="ManageTeamJB">Junior B</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U18')"><a href="ManageTeamU18">U18</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U17')"><a href="ManageTeamU17">U17</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U16')"><a href="ManageTeamU16">U16</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U15')"><a href="ManageTeamU15">U15A</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U15B')"><a href="ManageTeamU15B">U15B</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U14A')"><a href="ManageTeamU14">U14</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Red')"><a href="ManageTeamU13">U13 Red</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Yellow')"><a href="ManageTeamU13B">U13 Yellow</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U12A')"><a href="ManageTeamU12">U12A</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U12 Black')"><a href="ManageTeamU12B">U12 Black</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Red')"><a href="ManageTeamU11">U11 Red</a></li>
-							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Yellow')"><a href="ManageTeamU11B">U11 Yellow</a></li>
+					        <li ng-if="hasPermission('MANAGE_TEAM', 'Junior A')"><a href="#ManageTeam/team/Junior A">Junior A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'Junior B')"><a href="#ManageTeam/team/Junior B">Junior B</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U18')"><a href="#ManageTeam/team/U18">U18</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U17')"><a href="#ManageTeam/team/U17">U17</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U16')"><a href="#ManageTeam/team/U16">U16</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U15')"><a href="#ManageTeam/team/U15">U15A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U15B')"><a href="#ManageTeam/team/U15B">U15B</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U14A')"><a href="#ManageTeam/team/U14A">U14</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Red')"><a href="#ManageTeam/team/U13">U13 Red</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U13 Yellow')"><a href="#ManageTeam/team/U13B">U13 Yellow</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U12A')"><a href="#ManageTeam/team/U12">U12A</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U12 Black')"><a href="#ManageTeam/team/U12B">U12 Black</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Red')"><a href="#ManageTeam/team/U11">U11 Red</a></li>
+							<li ng-if="hasPermission('MANAGE_TEAM', 'U11 Yellow')"><a href="#ManageTeam/team/U11B">U11 Yellow</a></li>
 					      </ul>
 					    </div>
 					    <div class="btn-group">

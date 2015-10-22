@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.Team;
+import org.avenue.service.domain.User;
 import org.avenue.service.utility.FileUtilities;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -45,10 +46,15 @@ public class welcomeController {
 	public String home( ModelMap model ){return "home";}
 	
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public String adminPage( ModelMap model, Principal principal )
+	public String adminPage( HttpServletRequest request, ModelMap model, Principal principal )
 	{
 		String name = principal.getName();
-		model.addAttribute("user", name);
+		User user = new User();
+		HttpSession session = request.getSession();
+		
+		user = taskmanagerservice.getUserByName(name);
+		session.setAttribute("user", user);
+		
 		return "/WEB-INF/resources/viewParts/adminHome";
 	}
 

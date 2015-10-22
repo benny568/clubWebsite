@@ -1,4 +1,4 @@
-upNews.service('multipartForm', function($http){
+mmModule.service('multipartForm', function($http){
 	this.post = function(uploadUrl, data){
 		var fd = new FormData();
 		for(var key in data)

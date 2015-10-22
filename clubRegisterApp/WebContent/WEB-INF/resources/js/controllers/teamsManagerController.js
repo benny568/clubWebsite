@@ -6,6 +6,9 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 	// (1) Get the teams from the server
 	getTeams();
 	
+	// (2) Get the currently logged in user details
+	getUserDetails();
+	
 	
 	/**********************************************************
 	 * Name:		getTeams()
@@ -20,6 +23,27 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 			.then( function(teams) {
 				$scope.teams = teams;
 				setTeamId();
+		});
+	}
+	
+	/**********************************************************
+	 * Name:		getUserDetails()
+	 * Description:	Get the currently logged in user details
+	 * Scope:		Internally accessible
+	 * Params in:	None
+	 * Return:		user details
+	 **********************************************************/
+	function getUserDetails()
+	{
+		log.debug("## [teamsManagerController] -> getUserDetails()");
+		dbService.getCurrentUser()
+		.then(function(user){
+			console.log("## [teamsManagerController] -> getUserDetails: ", user );
+			$scope.thisUser = user;
+			gThisUser = user
+			if( $scope.thisUser.avatar == "" )
+				$scope.thisUser.avatar = "resources/images/avatars/default.png";
+			log.debug("## [teamsManagerController] <- getUserDetails()");
 		});
 	}
 	
@@ -199,4 +223,20 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 			}
 		}
 	}
+	
+	/**********************************************************
+	 * Name:		hasPermission()
+	 * Description:	Check the user's permission to perform the
+	 * 				given action
+	 * Scope:		Externally accessible
+	 * Params in:	action: the action being requested
+	 * Return:		true or false depending on the permissions
+	 **********************************************************/
+	$scope.hasPermission = function(action, params)
+	{
+		log.debug("## [teamsManagerController]->hasPermission("+action+","+params+")");
+		return mmService.hasPermission(action, params);
+	}
+	$scope.hasPermission();
+
 });

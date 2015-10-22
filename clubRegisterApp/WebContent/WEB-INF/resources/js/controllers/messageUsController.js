@@ -1,4 +1,4 @@
-mmModule.controller('MessageUsController', function ($scope, $http) {
+mmModule.controller('MessageUsController', function ($scope, $http,mailService) {
     $scope.result = 'hidden'
     $scope.resultMessage;
     $scope.formData; //formData is an object holding the name, email, subject, and message
@@ -22,11 +22,13 @@ mmModule.controller('MessageUsController', function ($scope, $http) {
     		$http.defaults.headers.post["Content-Type"] = "application/json";
     		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
     		
-    		var request = $http({
+    		/*var request = $http({
     			method: "post",
     			url: _home + "/mail",
     			data: $scope.formData
-    		});
+    		});*/
+    		
+    		mailService.sendMail($scope.formData);
         }
     }
 });

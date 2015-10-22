@@ -17,6 +17,7 @@
 		
 		<!-- AngularJS -->
 		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>

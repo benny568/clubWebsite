@@ -194,7 +194,7 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/mail",method = RequestMethod.POST)
-	 public void messageUs(@RequestBody EmailMessage msg) 
+	 public boolean messageUs(@RequestBody EmailMessage msg) 
 	 {	 
 	      String destination = "secretary@avenueunited.ie";
 
@@ -239,8 +239,19 @@ public class TaskManagerController {
 	         // Send message
 	         Transport.send(message);
 	         System.out.println("Sent message successfully....");
+	         return true;
 	      }catch (MessagingException mex) {
 	         mex.printStackTrace();
+	         return false;
 	      }
+	 }
+	 
+	 @RequestMapping(value="/admin/manager/{name}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  org.avenue.service.domain.User getManagerDetails(@PathVariable String name) 
+	 {
+		 log.debug("## ->getManagerDetails()");
+		 org.avenue.service.domain.User user = taskmanagerservice.getUserByName(name);
+		 log.debug("## <-getManagerDetails(): " + user);
+		 return user;	
 	 }
 }

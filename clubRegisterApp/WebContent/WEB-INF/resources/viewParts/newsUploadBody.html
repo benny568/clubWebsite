@@ -1,0 +1,43 @@
+		<div class="container">
+			<div class="row">
+			
+				<div class="col-md-2" style="height:100%;">
+					<!-- Add menu down left -->
+					<div ng-include="'resources/viewParts/adminMenu.html'"></div>			
+				</div> <!-- end col -->		
+				
+				<div class="col-sm-10">
+			 		<div class="panel" style="max-width:50%;marign-right:30%;margin-left:20%;">
+			 			<div class="panel-heading avenue-heading">
+			 				Enter the story details and press submit to upload
+			 			</div>
+			 			<div class="panel-body avenue-body">
+					 		<form id="newsForm" name="newsForm" novalidate>
+					 			<div class="form-group" ng-class="{ 'has-error' : newsForm.title.$invalid && !newsForm.title.$pristine }">
+					 				<label for="name">Title:</label>
+					 				<input type="text" class="form-control" name="title" placeholder="Enter the title" ng-model="news.title" ng-minlength="1" ng-maxlength="50" ng-required="true" required>
+					 				<p ng-show="newsForm.title.$invalid && !newsForm.title.$pristine" class="ng-invalid-required">A title is required.</p>
+					 			</div>
+					 			<div class="form-group">
+					 				<label for="description">Description:</label>
+					 				<input type="text" class="form-control" id="name" placeholder="Enter a short headline" ng-model="news.description" ng-maxlength="50">
+					 			</div>
+					 			<div class="form-group">
+					 				<label for="story">Story:</label>
+					 				<input type="text-area" class="form-control" id="story" placeholder="Enter the full story" ng-model="news.story">
+					 			</div>
+					 			<div class="form-group">
+									<label>General News:</label> <input type="radio" name="category" ng-model="news.category" value="G" ng-required="true" required>
+									<label>Academy News:</label> <input type="radio" name="category" ng-model="news.category" value="A" ng-required="true" required>
+								</div>
+								<div class="form-group">
+									<label for="file">Image:</label>
+									<input type="file" id="exampleInputFile" file-model="news.image">
+								</div>
+								<button type="submit" class="btn btn-warning" ng-click="Submit(newsForm.$valid)">Submit</button> <!-- ng-disabled="newsForm.$invalid" -->
+					 		</form>
+					 	</div> <!-- end panel body -->
+			 		</div> <!-- end panel -->
+			 	</div> <!-- end col -->
+			 </div> <!-- end row -->
+ 		</div> <!-- end container -->

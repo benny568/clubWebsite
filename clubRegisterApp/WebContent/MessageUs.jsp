@@ -22,6 +22,7 @@
 		
 		<!-- AngularJS -->
 		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
+		<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
@@ -40,6 +41,7 @@
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/messageUsController.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
+		<script type="text/javascript" src="resources/js/services/mailService.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
