@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
+		<script type="text/javascript" src="resources/js/libs/jcs-auto-validate.min.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
 		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>

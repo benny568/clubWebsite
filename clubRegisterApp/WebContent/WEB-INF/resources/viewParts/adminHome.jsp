@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="com.google.gson.Gson" %>
 <%@page import="com.google.gson.GsonBuilder" %>
-<%@page import="org.avenue.service.domain.User" %>
+<%@page import="org.avenue.service.domain.Worker" %>
 <html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
 		<title>Admin Home</title>
@@ -28,6 +28,7 @@
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
+		<script type="text/javascript" src="resources/js/libs/jcs-auto-validate.min.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
 		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
@@ -43,20 +44,27 @@
 		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/passwdChangeController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/trainingViewController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamPlanController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/addTrainingSessionController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/usersController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addUserController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/editUserController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/deleteUserController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/datePickerController.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
+		<script type="text/javascript" src="resources/js/services/userManagementService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
 		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		
-		<script type="text/javascript" src="resources/js/leagueRepublic.js"></script>
+		<!-- <script type="text/javascript" src="resources/js/leagueRepublic.js"></script> -->
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
 		<script>
-			<%User user = (User) session.getAttribute("user");
+			<%Worker user = (Worker) session.getAttribute("user");
 			  Gson gson = new GsonBuilder().create();
 			if (null == user) {
 			   /* request.setAttribute("message", "Session has ended.  Please login.");

@@ -53,25 +53,6 @@ mmModule.controller('memberManagerController', function ($scope,$http,$routePara
 	}
 	
 	/**********************************************************
-	 * Name:		switchPage()
-	 * Description:	Switch body of SPA page
-	 * Scope:		External
-	 * Params in:	None
-	 * Return:		Sets $scope.members
-	 **********************************************************/
-	$scope.switchPage = function( page )
-	{
-		if( page === undefined )
-			return;
-		log.debug(loghdr + "|->switchPage(): ", page);
-		
-		$scope.whereami = 'Overview';
-		log.debug(loghdr + "whereami is now:" + $scope.whereami );
-		/*window.location = "http://localhost:8080/clubRegisterApp/" + page;*/
-	}
-	$scope.switchPage();
-	
-	/**********************************************************
 	 * Name:		getAllMembers()
 	 * Description:	Retrieves all club members from the server
 	 * Scope:		Internal
@@ -286,7 +267,7 @@ mmModule.controller('memberManagerController', function ($scope,$http,$routePara
 	{
 		if( typeof action === undefined || params === undefined )
 			return;
-		log.debug("## [memberManagementController]->hasPermission("+action+","+params+")");
+		log.trace("## [memberManagementController]->hasPermission("+action+","+params+")");
 		return mmService.hasPermission(action, params);
 	}
 	$scope.hasPermission();

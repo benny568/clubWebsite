@@ -1,0 +1,53 @@
+		<div id="wrap">
+			<div class="container t1">
+				<div class="row">
+					<div class="col-sm-2" style="height:100%;">
+						<!-- Add menu down left -->
+						<div ng-include="'resources/viewParts/adminMenu.html'"></div>			
+					</div> <!-- end col -->	
+					<div class="col-sm-10">
+					
+						<div class="col-md-6">
+			    			<div class="panel">
+				    			<div class="panel-heading avenue-heading">
+				    				My Profile: {{thisUser.name}}
+				    			</div>
+				    			<div class="panel-body avenue-body">
+				    				<div>
+										<img src="{{thisUser.avatar}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
+										<span class="avenue-yellow-text" style="font-size:20px;">{{thisUser.name}}</span>
+									</div>
+								    <form name="profileForm">
+								    	<div class="row">
+								    		<div class="col-md-12">
+							                	<label for="address" style="padding-top:10px;">Address:</label>
+							                	<input type="text" class="form-control" id="address" data-ng-model="thisUser.address" value="{{thisUser.address}}"/>
+							                	<label for="email" style="padding-top:10px;">email:</label>
+							                	<input type="email" class="form-control" id="email" data-ng-model="thisUser.email" value="{{thisUser.email}}"/>
+											</div>
+					                	</div>
+					                	<div class="row">
+					                		<div class="col-md-6">
+							                	<label for="phone" style="padding-top:10px;">Phone:</label>
+							                	<input type="text" class="form-control" id="phone" data-ng-model="thisUser.phone" value="{{thisUser.phone}}"/>
+						                	</div>
+						                	<div class="col-md-6">
+							                	<label for="dob" style="padding-top:10px;">Date of Birth:</label>
+							                	<input type="text" class="form-control" id="dob" data-ng-model="thisUser.dob" value="{{thisUser.dob}}"/>
+					                		</div>
+					                	</div>
+					                	<label for="photo" style="padding-top:10px;">Avatar:</label>
+				                		<input type="text" class="form-control" id="avatar" data-ng-model="thisUser.avatar" value="{{thisUser.avatar}}"/>
+					                	
+					                	<div class="panel-footer avenue-body">
+							                <button type="button" ng-click="close(true)" class="btn btn-success">Save</button>
+							                <button type="button" ng-click="close(false)" class="btn btn-danger" style="margin-left:20px;">Cancel</button>					
+							            </div>
+								    </form>					    
+					    		</div> <!-- end panel-body -->
+							</div> <!-- end panel -->
+						</div> <!-- end col -->
+					</div> <!-- end col -->
+				</div> <!-- end row -->
+			</div> <!--  End of container t1 -->
+		</div>

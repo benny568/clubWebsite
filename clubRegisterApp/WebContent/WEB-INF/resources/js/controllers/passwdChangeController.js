@@ -2,12 +2,14 @@ mmModule.controller('passwdChangeController', function ($scope,$http,dbService,m
 {	
 	console.log("## [passwdChangeController] Loading....");
 	
-	$scope.Submit = function(newPasswd)
-	{
-		if( newPasswd == undefined )
+	$scope.onSubmit = function(proceed)
+	{	
+		if(proceed === undefined)
 			return;
+		if(proceed === false)
+			window.location.href='adminHome'; // Cancelled
 		
-		console.log("## [passwdChangeController]->Submit, password is: ", $scope.pw1 );
+		console.log("## [passwdChangeController]->Submit, password is: ", $scope.formModel );
 		
 		getUserDetails($scope);
 		
@@ -18,21 +20,25 @@ mmModule.controller('passwdChangeController', function ($scope,$http,dbService,m
 				console.log("## [passwdChangeController] -> getUserDetails: ", user );
 				$scope.thisUser = user;
 				$scope.orgUser = angular.copy($scope.thisUser);
-				$scope.thisUser.password = $scope.pw1;
+				$scope.thisUser.password = $scope.formModel.pw1;
 				if( $scope.thisUser.avatar == "" )
 					$scope.thisUser.avatar = "resources/images/avatars/default.png";
-				dbService.updateUser($scope.thisUser)
+				dbService.updateUserPassword($scope.thisUser)
 				.then(function(user){
 					console.log("## [passwdChangeController] -> after db update: ", $scope.thisUser );
+					window.location.href='adminHome';
 				});
 			});
 		}
 	}
-	$scope.Submit();
+	$scope.onSubmit();
 	
-	$scope.cancel = function()
+	$scope.cancel = function(proceed)
 	{
+		if(proceed === undefined)
+			return;
 		console.log("## [passwdChangeController]->cancel, operation canceled." );
+		window.location.href='adminHome';
 	}
 	$scope.cancel();
 	

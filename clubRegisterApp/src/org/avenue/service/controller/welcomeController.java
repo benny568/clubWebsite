@@ -9,8 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.Team;
-import org.avenue.service.domain.User;
+import org.avenue.service.domain.Worker;
 import org.avenue.service.utility.FileUtilities;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +50,19 @@ public class welcomeController {
 	public String adminPage( HttpServletRequest request, ModelMap model, Principal principal )
 	{
 		String name = principal.getName();
-		User user = new User();
+		Worker user = new Worker();
 		HttpSession session = request.getSession();
 		
 		user = taskmanagerservice.getUserByName(name);
 		session.setAttribute("user", user);
+		
+		String password = "corina";
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(password);
+
+		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
+		System.out.println("@@@ THE ENCRYPTED PASSWORD IS: [" + hashedPassword + "] @@@");
+		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
 		
 		return "/WEB-INF/resources/viewParts/adminHome";
 	}
@@ -86,7 +95,17 @@ public class welcomeController {
 	public String Downloads( ModelMap model ){return "Downloads";}
 	
 	@RequestMapping(value = "/Links", method = RequestMethod.GET)
-	public String Links( ModelMap model ){return "Links";}
+	public String Links( ModelMap model ){
+		
+		String password = "corina";
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(password);
+
+		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
+		System.out.println("@@@ THE ENCRYPTED PASSWORD IS: [" + hashedPassword + "] @@@");
+		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
+		
+		return "Links";}
 
 	@RequestMapping(value = "/news", method = RequestMethod.GET)
 	public String news( ModelMap model ){return "LatestNews";}

@@ -1,7 +1,8 @@
 html,
 body
 {
-	background:url('../images/stadium1.jpg');
+	//background:url('../images/stadium1.jpg');
+	background:url('../images/bg.jpg');
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center;

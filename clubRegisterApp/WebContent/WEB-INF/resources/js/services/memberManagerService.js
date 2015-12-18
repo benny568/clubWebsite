@@ -16,7 +16,9 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 		getFullTeamDetails : getFullTeamDetails,
 		editTeamNB : editTeamNB,
 		getUserDetails : getUserDetails,
-		hasPermission : hasPermission
+		hasPermission : hasPermission,
+		addUser : addUser,
+		deleteUser : deleteUser
 	});
 	
 	
@@ -122,7 +124,42 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 		            }
 				); // End .then()
 	} // End addMember()
-	
+
+	/**********************************************************
+	 * Name:		addUser()
+	 * Description:	Add new user, update local memory and send
+	 * 				to the server.
+	 * Scope:		Externally accessible
+	 * Params in:	goNogo: avoids it being called when the
+	 * 				script is loaded
+	 * Return:		Adds the member on to the end of the members
+	 * 				array for the team specified when adding,
+	 * 				$scope.TeamMembers[member.team]
+	 **********************************************************/
+	function addUser( scope ) 
+	{
+		console.log("[mmService] -> addUser", scope.newUser);
+			
+		ModalService.showModal({templateUrl: 'addUserModal.html',controller: "AddUserController"})
+			.then(	function(modal) 
+					{
+			            modal.element.modal();
+			            modal.close.then(	function(result) 
+			            					{
+			            						if( result.op == 'save')
+			            						{
+			            							scope.newUser = result.user;
+			            							dbService.addUser( result.user ).then( function(result){
+			            								console.log("[mmService] - addUser (reurned from dbService): ", scope.newUser);
+			            								applyUserAdd(scope);
+			            							} );
+			            						}
+			            					}
+			            				);
+		            }
+				); // End .then()
+	} // End addUser()
+
 	
 	function convertPosToInt( sPos )
 	{
@@ -177,7 +214,9 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 		 ModalService.showModal({
 	            templateUrl: 'delConfirmModal.html',
 	            controller: "DelMemberController",
-	            inputs: { member : thisMember}
+	            inputs: { member : thisMember,
+	                	  modalHeader: 'member'
+	                	}
 	        }).then(function(modal) {
 	            modal.element.modal();
 	            modal.close.then(function(del) {
@@ -205,14 +244,21 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	 * 				thisMember: the member to edit
 	 * Return:		Updates $scope.TeamMembers[team].<this member>
 	 **********************************************************/
-	function editMember(scope,thisMember) {
+	function editMember($scope,thisMember) {
 		if(!thisMember)
 			return;
 		
+		thisMember.position = itsPosition[thisMember.position];
+		thisMember.team != 0 ? thisMember.team = getTeamNameFrmId(thisMember.team) : thisMember.team = "None";
+		thisMember.position2 = itsPosition[thisMember.position2];
+		thisMember.team2 != 0 ? thisMember.team2 = getTeamNameFrmId(thisMember.team2) : thisMember.team2 = "None";
+		thisMember.position3 = itsPosition[thisMember.position3];
+		thisMember.team3 != 0 ? thisMember.team3 = getTeamNameFrmId(thisMember.team3) : thisMember.team3 = "None";
+		
 		 ModalService.showModal({
-	            templateUrl: 'modal.html',
+	            templateUrl: 'memberModal.html',
 	            controller: "ModalController",
-	            inputs: { member : thisMember}
+	            inputs: { member : thisMember, modalType: "Edit" }
 	        }).then(function(modal) {
 	            modal.element.modal();
 	            modal.close.then(function(result) {
@@ -224,6 +270,17 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	            			newMem.position = itsPosition.indexOf(newMem.position);
 	            		if( typeof newMem.team != 'number' )
 	            			newMem.team = getTeamIdFrmName(newMem.team);
+	            		
+	            		if( typeof newMem.position2 != 'number' )
+	            			newMem.position2 = itsPosition.indexOf(newMem.position2);
+	            		if( typeof newMem.team2 != 'number' )
+	            			newMem.team2 = getTeamIdFrmName(newMem.team2);
+	            		
+	            		if( typeof newMem.position3 != 'number' )
+	            			newMem.position3 = itsPosition.indexOf(newMem.position3);
+	            		if( typeof newMem.team3 != 'number' )
+	            			newMem.team3 = getTeamIdFrmName(newMem.team3);
+	            		
 		                dbService.updateMember( newMem )
 		        		.then( function(result) {
 		        			applyMemberChange(thisMember, newMem);
@@ -261,6 +318,31 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
     	}
     	
     	return iTeamId;
+    }
+    
+    
+    /**********************************************************
+	 * Name:		getTeamNameFrmId()
+	 * Description:	Convert a team name to it's id
+	 * Scope:		Externally accessible via the service
+	 * Params in:	scope: The parents scope
+	 * 				
+	 * Return:		The team id
+	 **********************************************************/
+    function getTeamNameFrmId(iTeam)
+    {
+    	var sTeamId = "";
+    	
+    	for( var i=0; i<gTeams.length; i++ )
+    	{
+    		if( iTeam == i )
+    		{
+    			sTeamId = gTeams[i - 1].name;
+    			return sTeamId;
+    		}
+    	}
+    	
+    	return sTeamId;
     }
     
 	/**********************************************************
@@ -399,10 +481,27 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 			case 'DEL_TEAM':
 				for( var r=0; r<gThisUser.roles.length; r++ )
 				{
-					log.debug("##     Checking ["+gThisUser.roles[r]+"]");
+					log.trace("##     Checking ["+gThisUser.roles[r]+"]");
 					if( gThisUser.roles[r] === "ROLE_SUPER" )
 					{
 						log.debug("##     User has SUPER role")
+						// Super user has permissions to do anything
+						allow = true;
+						break;
+					}
+				}
+				break;
+				
+			case 'ADD_USER':
+			case 'EDIT_USER':
+			case 'DELETE_USER':
+			case 'VIEW_USERS':
+				for( var r=0; r<gThisUser.roles.length; r++ )
+				{
+					log.trace("##     Checking ["+gThisUser.roles[r]+"]");
+					if( gThisUser.roles[r] === "ROLE_SUPER" )
+					{
+						log.trace("##     User has SUPER role")
 						// Super user has permissions to do anything
 						allow = true;
 						break;
@@ -426,6 +525,40 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 	        
 	    return diff;
 	}
+	
+	/*******************************************************
+	 * DELETE USER
+	 *******************************************************/
+	function deleteUser(scope, user)
+	{
+		if(user === undefined)
+			return;
+		
+		 ModalService.showModal({
+	            templateUrl: 'delConfirmModal.html',
+	            controller: "DeleteUserController",
+	            inputs: {
+	                user: user,
+	                modalHeader: 'user'
+	              }
+	        }).then(function(modal) {
+	            modal.element.modal();
+	            modal.close.then(function(del) {
+	            	if(del)
+	            	{
+		                dbService.deleteUser( user )
+		        		.then( function(result) {
+		        			applyUserDel(scope, user);
+		        		});
+	            	}
+	        	});
+            }).catch(function(error) {
+            	  // error contains a detailed error message.
+            	  console.log(error);
+	        });
+	      
+	}
+
 	
 	
 	/*******************************************************
@@ -492,6 +625,13 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Mod
 				}
 				break;
 		}
+	}
+	
+	function applyUserAdd(scope)
+	{
+		console.log("## [mmService] -> applyUserAdd");
+
+		scope.users.push(scope.newUser);
 	}
 
 });

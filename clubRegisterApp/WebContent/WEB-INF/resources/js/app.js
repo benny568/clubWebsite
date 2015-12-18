@@ -12,8 +12,9 @@ var gTeamId = 0;
 var gTeamName = '';
 var gTeamMembers={};
 var gThisUser = {};
+var gOpUser = {};
 
-var thisServerMode = serverMode.LOCAL;
+var thisServerMode = serverMode.REMOTE;
 
 /********************************************
 /* Setup the logger
@@ -30,7 +31,7 @@ log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
 
-var mmModule = angular.module('memberManagerApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain']);
+var mmModule = angular.module('memberManagerApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
 
 mmModule.config(function($routeProvider,$httpProvider) {
 	
@@ -103,10 +104,36 @@ mmModule.config(function($routeProvider,$httpProvider) {
         templateUrl : 'resources/viewParts/manageTeamBody.html',
         controller  : 'memberManagerController'
     })
+    // route for the UsersAdmin page
+    .when('/UsersAdmin', {
+        templateUrl : 'resources/viewParts/usersAdmin.html',
+        controller  : 'usersController'
+    })
+    // route for the MyProfile page
+    .when('/MyProfile', {
+        templateUrl : 'resources/viewParts/myProfileBody.html',
+        controller  : 'userProfileController'
+    })
+        // route for the ChangePassword page
+    .when('/ChangePassword', {
+        templateUrl : 'resources/viewParts/changePasswordBody.html',
+        controller  : 'passwdChangeController'
+    })
     .otherwise({
         redirectTo: '/'
     });
+	
+	// Add an object to the scope to hold any data input in a form
+	formModel = {};
+	newUser = {};
 
+});
+
+mmModule.run(function(defaultErrorMessageResolver) {
+	defaultErrorMessageResolver.getErrorMessages().then(function(errorMessages) {
+		errorMessages['invalidPassword'] = 'A password must contain 8 characters made up of letters, numbers and _ only.';
+		errorMessages['minPasswordLength'] = 'A password must be a least 8 characters long.';
+	});
 });
 
 mmModule.controller('adminHomeController', function($scope, $routeParams) {
@@ -114,7 +141,7 @@ mmModule.controller('adminHomeController', function($scope, $routeParams) {
 });
 
 mmModule.controller('adminOverviewController', function($scope) {
-
+	console.log("######## adminOverviewController() ###########");
 });
 
 mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
@@ -133,17 +160,18 @@ mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function
 
 }]);
 
-mmModule.controller('ModalController', function($scope, member, close) {
+mmModule.controller('ModalController', function($scope, member, modalType, close) {
 	
 	$scope.thisMember = jQuery.extend({},member);
 	$scope.itsPosition = itsPosition;
 	$scope.teams = gTeams;
+	$scope.modalHeader = modalType;
 
 	 $scope.close = function(save) {
 		if(save)
 		{
 			 // The datepicker is sending in a string that's too long so cut it
-			 $scope.thisMember.dob = truncateDate($scope.thisMember.dob);
+			 //$scope.thisMember.dob = truncateDate($scope.thisMember.dob);
 			 close($scope.thisMember, 500); // close, but give 500ms for bootstrap to animate
 		}
 		 else
@@ -183,9 +211,10 @@ mmModule.controller('AddMemberController', function($scope, close) {
 	 };
 });
 
-mmModule.controller('DelMemberController', function($scope, member, close) {
+mmModule.controller('DelMemberController', function($scope, member, modalHeader, close) {
 	
 	$scope.thisMember = member;
+	$scope.modalHeader = modalHeader;
 	
 	$scope.close = function(del) {
 		close(del, 500); // close, but give 500ms for bootstrap to animate

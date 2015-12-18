@@ -9,8 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +31,19 @@ import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
 import org.avenue.service.domain.Team;
-import org.avenue.service.domain.User;
+import org.avenue.service.domain.Worker;
 import org.avenue.service.utility.DBUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
 	private final Logger log = LoggerFactory.getLogger(TaskManagerService.class);
+	@Autowired
+	 private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	 public List<Member> getAllMembers() {
 		 log.debug("## -> getAllMembers()");
@@ -282,25 +292,25 @@ public class TaskManagerService {
 		 
 		  try {
 			   Connection connection = DBUtility.getConnection();
-			   PreparedStatement preparedStatement = connection.prepareStatement("update member set name=?, address=?, phone=?, phone2=?, email=?, dob=?,"
-			   																	+ "amount=?, team=?, team2=?, team3=?, position=?, position2=?, position3=?, lid=?, "
-			   																	+ "status=?, favteam=?, favplayer=?, sappears=?, sassists=?, sgoals=?, photo=?,"
-			   																	+ "achievements=? where id=?");
+			   PreparedStatement preparedStatement = connection.prepareStatement("update member set name=?, address=?, phone=?, phone2=?, dob=?, email=?,"
+			   																	+ "amount=?, receiptid=?, team=?, team2=?, team3=?, position=?, position2=?, "
+			   																	+ "position3=?, lid=?, favteam=?, favplayer=?, sappears=?, sassists=?, sgoals=?, "
+			   																	+ "photo=?, achievements=?, status=? where id=?");
 			   preparedStatement.setString(1, member.getName());
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
 			   preparedStatement.setString(4, member.getPhone2());
-			   preparedStatement.setString(5, member.getEmail());
-			   preparedStatement.setString(6, truncateDate(member.getDob()));
+			   preparedStatement.setString(5, member.getDob());
+			   preparedStatement.setString(6, member.getEmail());
 			   preparedStatement.setString(7, member.getAmount());
-			   preparedStatement.setInt(8, member.getTeam());
-			   preparedStatement.setInt(9, member.getTeam2());
-			   preparedStatement.setInt(10, member.getTeam3());
-			   preparedStatement.setInt(11, member.getPosition());
-			   preparedStatement.setInt(12, member.getPosition2());
-			   preparedStatement.setInt(13, member.getPosition3());
-			   preparedStatement.setInt(14, member.getLid());
-			   preparedStatement.setString(15, member.getStatus());
+			   preparedStatement.setString(8, member.getReceiptid());
+			   preparedStatement.setInt(9, member.getTeam());
+			   preparedStatement.setInt(10, member.getTeam2());
+			   preparedStatement.setInt(11, member.getTeam3());
+			   preparedStatement.setInt(12, member.getPosition());
+			   preparedStatement.setInt(13, member.getPosition2());
+			   preparedStatement.setInt(14, member.getPosition3());
+			   preparedStatement.setInt(15, member.getLid());			   
 			   preparedStatement.setString(16, member.getFavteam());
 			   preparedStatement.setString(17, member.getFavplayer());
 			   preparedStatement.setInt(18, member.getSappears());
@@ -308,7 +318,8 @@ public class TaskManagerService {
 			   preparedStatement.setInt(20, member.getSgoals());
 			   preparedStatement.setString(21, member.getPhoto());
 			   preparedStatement.setString(22, member.getAchievements());
-			   preparedStatement.setInt(23, member.getId());
+			   preparedStatement.setString(23, member.getStatus());
+			   preparedStatement.setInt(24, member.getId());			   			   
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -736,33 +747,35 @@ public class TaskManagerService {
 		  return records;
 	}
 	
-	public User getUserByName( String name )
+	public Worker getUserByName( String name )
 	{
-		User thisUser = new User();
+		Worker thisUser = new Worker();
 		MyTeams myteams = new MyTeams();
 		ArrayList<String> roles = new ArrayList<String>();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
 		
 		try {
 			Connection connection = DBUtility.getConnection();   
 			PreparedStatement preparedStatement = connection.
-			     prepareStatement("select * from user where username = ?");
+			     prepareStatement("select * from user where name = ?");
 			   preparedStatement.setString(1, name);
 			   ResultSet rs = preparedStatement.executeQuery();
 			   
 			   while(rs.next()) {
 				   thisUser.setUserId(rs.getInt("userId"));
-				   thisUser.setName(rs.getString("username"));
+				   thisUser.setName(rs.getString("name"));
 				   thisUser.setPassword(rs.getString("password"));
 				   thisUser.setAddress(rs.getString("address"));
 				   thisUser.setEmail(rs.getString("email"));
 				   thisUser.setPhone(rs.getString("phone"));
-				   thisUser.setDob(rs.getDate("dob"));
+				   thisUser.setDob(df.format(rs.getDate("dob")));
 				   thisUser.setAvatar(rs.getString("avatar"));
 				   thisUser.setEnabled(rs.getInt("enabled"));
 			   }
 			   
 			   // (2) Get the user's roles from the user_roles table
-			   preparedStatement = connection.prepareStatement("select * from user_roles where username = ?");
+			   preparedStatement = connection.prepareStatement("select * from user_roles where name = ?");
 			   preparedStatement.setString(1, name);
 			   rs = preparedStatement.executeQuery();
 			   
@@ -794,21 +807,130 @@ public class TaskManagerService {
 		return thisUser;
 	}
 	
-	public void updateUser(User user)
+	public void updateUser(Worker user)
+	 {
+        java.sql.Date sqlDate = null;
+        SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+			sqlDate = new java.sql.Date(dateFormater.parse(user.getDob()).getTime());
+		 } catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+		 }
+		 
+		  try {
+			    Connection connection = DBUtility.getConnection();
+			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user set name=?,address=?,phone=?,email=?,dob=?,avatar=?,enabled=? where userid = ?");
+			  	preparedStatement.setString(1, user.getName());
+			  	//preparedStatement.setString(2, user.getPassword());
+			  	preparedStatement.setString(2, user.getAddress());
+			  	preparedStatement.setString(3, user.getPhone());
+			  	preparedStatement.setString(4, user.getEmail());
+			  	preparedStatement.setDate(5, sqlDate);
+			  	preparedStatement.setString(6, user.getAvatar());
+			  	preparedStatement.setInt(7, user.getEnabled());
+			  	preparedStatement.setInt(8, user.getUserId());
+			  	preparedStatement.executeUpdate();
+			  	
+			  	// (2) Update the user_roles table
+				   
+			  	// (2.1) We need to read the current roles to compare them
+			  	ArrayList<Role> roles = new ArrayList<Role>();
+			  	preparedStatement = connection.prepareStatement("select * from user_roles where userid=?");
+			  	preparedStatement.setInt(1, user.getUserId());
+			  	ResultSet rs = preparedStatement.executeQuery();
+				   
+			  	while(rs.next()) {
+					Role role = new Role();
+					role.setRoleid(rs.getInt("user_role_id"));
+					role.setUserid(rs.getInt("userid"));
+					role.setName(rs.getString("name"));
+					role.setRole(rs.getString("role"));
+					roles.add(role);
+				}
+			  	
+			  	// (3) Compare the existing roles with the passed in ones to see if there are updates
+			  	ArrayList<String> rolesToAdd = new ArrayList<String>();
+			  	boolean found = false;
+			  	for( int i=0; i<user.getRoles().size(); i++ )
+			  	{
+			  		for( int n=0; n<roles.size(); n++ )
+			  		{
+			  			if( user.getRoles().get(i).contentEquals(roles.get(n).getRole()) )
+			  			{
+			  				found = true;
+			  				continue;
+			  			}
+			  		}
+			  		if( !found )
+			  		{
+			  			rolesToAdd.add(user.getRoles().get(i));
+			  			System.out.println("#### GOT ONE #######: " + user.getRoles().get(i));
+			  		}
+			  		found = false;
+			  	}
+			   
+			   // (2.2) Prep the SQL statement
+			  preparedStatement = connection.prepareStatement("INSERT INTO user_roles ( userid, name, role ) VALUES (?, ?, ? )");
+			   
+			   // (2.3) For each role, add a row to the user_roles table
+			   for( int i=0; i<rolesToAdd.size(); i++ )
+			   {
+				   preparedStatement.setInt(1, user.getUserId());
+				   preparedStatement.setString(2, user.getName());
+				   preparedStatement.setString(3, rolesToAdd.get(i));
+				   preparedStatement.executeUpdate();
+			   }
+		
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+
+	public void updateUserPassword(Worker user)
 	 {
 		 
 		  try {
 			    Connection connection = DBUtility.getConnection();
-			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user set username=?,password=?,address=?,phone=?,email=?,dob=?,avatar=?,enabled=? where userid = ?");
-			  	preparedStatement.setString(1, user.getName());
-			  	preparedStatement.setString(2, user.getPassword());
-			  	preparedStatement.setString(3, user.getAddress());
-			  	preparedStatement.setString(4, user.getPhone());
-			  	preparedStatement.setString(5, user.getEmail());
-			  	preparedStatement.setDate(6, user.getDob());
-			  	preparedStatement.setString(7, user.getAvatar());
-			  	preparedStatement.setInt(8, user.getEnabled());
-			  	preparedStatement.setInt(9, user.getUserId());
+			  	PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user set password=? where userid = ?");
+			  	preparedStatement.setString(1, passwordEncoder.encode(user.getPassword()));
+			  	preparedStatement.setInt(2, user.getUserId());
+			  	preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+	
+	public void deleteUser(Worker user)
+	 {
+		 
+		  try {
+			  	// (1) Open the db connection
+			    Connection connection = DBUtility.getConnection();
+			    
+			    // (2) Start the transaction
+			    PreparedStatement preparedStatement = connection.prepareStatement("BEGIN WORK");
+			  	preparedStatement.executeUpdate();
+			    
+			    // (3) Need to delete the user roles first from the user_roles table
+			  	preparedStatement = connection.prepareStatement("DELETE from user_roles where userid = ?");
+			  	preparedStatement.setInt(1, user.getUserId());
+			  	preparedStatement.executeUpdate();
+			  	
+			  	// (4) Delete the user from the user table
+			  	preparedStatement = connection.prepareStatement("DELETE from user where userid = ?");
+			  	preparedStatement.setInt(1, user.getUserId());
+			  	preparedStatement.executeUpdate();
+			  	
+			  	// (5) Commit the transaction
+			  	preparedStatement = connection.prepareStatement("COMMIT");
 			  	preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -928,5 +1050,160 @@ public class TaskManagerService {
 		  DBUtility.closeConnection();
 		  return;
 	 }
+	
+	 public List<Worker> getAllUsers() {
+		  log.debug("## -> getAllUsers()");
+		  List<Worker> users = new ArrayList<Worker>();
+		  DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		  
+		  try {
+			  	   Connection connection = DBUtility.getConnection();
+				   Statement statement = connection.createStatement();
+				   //ResultSet rs = statement.executeQuery("select * from user");
+				   ResultSet rs = statement.executeQuery("select * from user");
+				   log.trace("##    Executed query[select * from user]");
+				   while (rs.next()) 
+				   {
+					    Worker user = new Worker();
+					    user.setUserId(rs.getInt("userid"));
+					    user.setName(rs.getString("name"));
+					    user.setPassword(rs.getString("password"));
+					    user.setAddress(rs.getString("address")); 
+					    user.setPhone(rs.getString("phone"));
+					    user.setEmail(rs.getString("email"));
+					    //Object s = rs.getDate("dob")!=null ? rs.getDate("dob") : "01/01/1900";
+					    user.setDob(df.format(rs.getDate("dob")));
+					    user.setAvatar(rs.getString("avatar"));
+					    users.add(user);
+					    log.trace("##    Adding user to list: " + user);
+				   }
+				   
+				   rs = statement.executeQuery("select * from user_roles");
+				   log.trace("##    Executed query[select * from user_roles]");
+				   List<Role> roles = new ArrayList<Role>();
+				   while (rs.next()) 
+				   {
+					    Role role = new Role();
+					    role.setRoleid(rs.getInt("user_role_id"));
+					    role.setUserid(rs.getInt("userid"));
+					    role.setName(rs.getString("name"));
+					    role.setRole(rs.getString("role"));
+					    roles.add(role);
+					    log.trace("##    Adding role to list: " + role);
+				   }
+				   // Add the roles to the user
+				   for( int i=0; i<users.size(); i++ )
+				   {
+					   for( int a=0; a<roles.size(); a++ )
+					   {
+						   if( users.get(i).getUserId() == roles.get(a).userid )
+						   {
+							   users.get(i).getRoles().add(roles.get(a).role);
+							   log.trace("##    Added role to user: " + users.get(i).getName() + ": " + roles.get(a).role);
+						   }
+					   }
+				   }
+				   
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  DBUtility.closeConnection();
+		  log.debug("## <- getAllUsers()");
+		  return users;
+	}
+
+	 public void addUser(Worker user)
+	 {
+		 java.sql.Date sqlDate = null;
+         SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
+         try {
+			Date juDate = dateFormater.parse(user.getDob());
+			sqlDate = new java.sql.Date(juDate.getTime());
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+
+		  try {
+			  Connection connection = DBUtility.getConnection();
+			  
+			  
+			// (1) Add the entry in the users table
+			  
+			// (1.1) Prep the SQL statement
+			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user ( name, password, address, phone, email,"
+			   																	+ "dob, avatar ) VALUES (?, ?, ?, ?, ?, ?, ? )");
+			   preparedStatement.setString(1, user.getName());
+			   preparedStatement.setString(2, passwordEncoder.encode(user.getPassword()));
+			   preparedStatement.setString(3, user.getAddress());
+			   preparedStatement.setString(4, user.getPhone());
+			   preparedStatement.setString(5, user.getEmail());
+			   preparedStatement.setDate(6, sqlDate);
+			   preparedStatement.setString(7, user.getAvatar());
+			   preparedStatement.executeUpdate();
+			   
+			   
+			   // (2) Add the entry to the user_roles table
+			   
+			   // (2.1) We need the user id to write the roles
+			   Worker u = getUserByName(user.getName());
+			   
+			   // (2.2) Prep the SQL statement
+			   preparedStatement = connection.prepareStatement("INSERT INTO user_roles ( userid, name, role ) VALUES (?, ?, ? )");
+			   
+			   // (2.3) For each role, add a row to the user_roles table
+			   for( int i=0; i<user.getRoles().size(); i++ )
+			   {
+				   preparedStatement.setInt(1, u.getUserId());
+				   preparedStatement.setString(2, user.getName());
+				   preparedStatement.setString(3, user.getRoles().get(i));
+				   preparedStatement.executeUpdate();
+			   }
+			   
+		
+			  } catch (SQLException e) {
+			   e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+	 
+	 class Role
+	 {
+		 int roleid;
+		 int userid;
+		 String name;
+		 String role;
+		 
+		public int getRoleid() {
+			return roleid;
+		}
+		public void setRoleid(int roleid) {
+			this.roleid = roleid;
+		}
+		public int getUserid() {
+			return userid;
+		}
+		public void setUserid(int userid) {
+			this.userid = userid;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getRole() {
+			return role;
+		}
+		public void setRole(String role) {
+			this.role = role;
+		}
+		 
+	 }
+
 
 }

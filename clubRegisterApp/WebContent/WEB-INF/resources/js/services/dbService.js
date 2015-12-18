@@ -17,7 +17,10 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		getASessionRecord : getASessionRecord,
 		getSessionRecordsForTeam : getSessionRecordsForTeam,
 		getCurrentUser : getCurrentUser,
+		addUser : addUser,
 		updateUser : updateUser,
+		updateUserPassword : updateUserPassword,
+		deleteUser : deleteUser,
 		addTrainingSession : addTrainingSession,
 		setMemberTrainingRecForSession : setMemberTrainingRecForSession
 		
@@ -152,6 +155,30 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		return( request.then( handleSuccess, handleError ) );
 	}
+	
+	/*******************************************************
+	 * ADD USER
+	 *******************************************************/
+	function addUser( user ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [dbService] - (addUser) csrf token is: ",csrf);
+		console.log("## [dbService] - (addUser) user is: ",user);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.post["Content-Type"] = "application/json";
+		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "post",
+			url: _home + "/admin/user",
+			data: user
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+
 	
 	/*******************************************************
 	 * ADD TEAM
@@ -321,7 +348,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		console.log("## [dbService] -> setMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
 		var sessionrec = {"sessionId": sessionid, "teamId": teamid, "memberId": memberid, "status": status };		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateUser] csrf token is: ",csrf);
+		console.log("## [setMemberTrainingRecForSession] csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -349,7 +376,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		var sessionrec = {"sessionid": sessionid, "teamid": teamid, "memberid": memberid, "status": status };		
 		var newStatus = !status;
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateUser] csrf token is: ",csrf);
+		console.log("## [insertMemberTrainingRecForSession] csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -403,6 +430,51 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		return( request.then( handleSuccess, handleError ) );
 	}
+	
+	/*******************************************************
+	 * UPDATE USER PASSWORD
+	 *******************************************************/
+	function updateUserPassword( user ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [updateUserPassword] csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.put["Content-Type"] = "application/json";
+		$http.defaults.headers.put["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "put",
+			url: _home + "/admin/password",
+			data: user
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+
+	/*******************************************************
+	 * DELETE USER
+	 *******************************************************/
+	function deleteUser( user ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		console.log("## [deleteUser] csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.common["Content-Type"] = "application/json";
+		$http.defaults.headers.common["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "delete",
+			url: _home + "/admin/user",
+			data: user
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+
 	
 	/*******************************************************
 	 * ADD TRAINING SESSION

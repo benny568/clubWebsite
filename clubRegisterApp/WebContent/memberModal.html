@@ -3,7 +3,7 @@
             <div class="modal-content avenue-body">
               <div class="modal-header avenue-heading">
                 <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">XXX Club Member</h4>
+                <h4 class="modal-title">{{ modalHeader }} Club Member</h4>
               </div>
               <div class="modal-body">
                  <form name="editMemberForm" novalidate role="form">
@@ -92,7 +92,7 @@
                 	<br><span class="avenue-yellow-text">Team Details:</span>
                 	<div class="row a-modal-row">
                 		<div class="col-md-3">
-                			<label for="team">Team:</label>
+                			<label for="team">Team 1:</label>
 		                	<select class="form-control" id="team" data-ng-model="thisMember.team" value="{{thisMember.team}}">
 		                		<option ng-repeat="team in teams track by $index">{{team.name}}</option>
 							</select>
@@ -116,13 +116,42 @@
 		                	<input type="text" class="form-control" id="sgoals" data-ng-model="thisMember.sgoals" value="{{thisMember.sgoals}}"/>
                 		</div> <!-- end col --> 
                 	</div> <!-- end row -->
+                	
+                	<div class="row a-modal-row">
+                		<div class="col-md-3">
+                			<label for="team">Team 2:</label>
+		                	<select class="form-control" id="team" data-ng-model="thisMember.team2" value="{{thisMember.team2}}">
+		                		<option ng-repeat="team in teams track by $index">{{team.name}}</option>
+							</select>
+                		</div>
+                		<div class="col-md-3">
+		                	<label for="position">Position:</label>
+		                	<select class="form-control" id="position" data-ng-model="thisMember.position2" value="{{thisMember.position2}}">
+		                		<option ng-repeat="opt in itsPosition track by $index">{{opt}}</option>
+							</select>
+                		</div> <!-- end col -->
+                	</div> <!-- end row -->
+                	
+                	<div class="row a-modal-row">
+                		<div class="col-md-3">
+                			<label for="team">Team 3:</label>
+		                	<select class="form-control" id="team" data-ng-model="thisMember.team3" value="{{thisMember.team3}}">
+		                		<option ng-repeat="team in teams track by $index">{{team.name}}</option>
+							</select>
+                		</div>
+                		<div class="col-md-3">
+		                	<label for="position">Position:</label>
+		                	<select class="form-control" id="position" data-ng-model="thisMember.position3" value="{{thisMember.position3}}">
+		                		<option ng-repeat="opt in itsPosition track by $index">{{opt}}</option>
+							</select>
+                		</div> <!-- end col -->
+                	</div> <!-- end row -->	
                 </form>                
 
               </div>
               <div class="modal-footer">
                 <button type="button" ng-click="close('save', thisMember)" class="btn btn-success" data-dismiss="modal">Save</button>
                 <button type="button" ng-click="close('cancel', thisMember)" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-
               </div>
             </div>
           </div>

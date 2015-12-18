@@ -95,8 +95,8 @@ values ("U6", 0, 0, 0), ("U7", 0, 0, 0), ("U8", 0, 0, 0), ("U9", 0, 0, 0), ("U10
             
 CREATE  TABLE user (
   userid int NOT NULL AUTO_INCREMENT,
-  username VARCHAR(45) NOT NULL,
-  password VARCHAR(45) NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  password VARCHAR(70) NOT NULL,
   address varchar(100),
   phone varchar(20),
   email varchar(100),
@@ -108,23 +108,23 @@ CREATE  TABLE user (
 CREATE TABLE user_roles (
   user_role_id INT(11) NOT NULL AUTO_INCREMENT,
   userid int NOT NULL,
-  username VARCHAR(45) NOT NULL,
+  name VARCHAR(45) NOT NULL,
   ROLE VARCHAR(45) NOT NULL,
   PRIMARY KEY (user_role_id),
   UNIQUE KEY uni_userid_role (ROLE,userid),
-  KEY fk_username_idx (userid),
-  CONSTRAINT fk_username FOREIGN KEY (userid) REFERENCES user (userid));
+  KEY fk_name_idx (userid),
+  CONSTRAINT fk_name FOREIGN KEY (userid) REFERENCES user (userid));
 
-INSERT INTO user(username,password,address,email,dob,avatar,enabled)
+INSERT INTO user(name,password,address,email,dob,avatar,enabled)
 VALUES ('guest','123', 'Reaskaun, Larchill, Ennis, Co. Clare', 'odalybr@hotmail.com', '1968/05/11', 'resources/images/users/Brendan.png',TRUE);
-INSERT INTO user(username,password,address,phone,email,dob,avatar,enabled)
+INSERT INTO user(name,password,address,phone,email,dob,avatar,enabled)
 VALUES ('benny','corina', 'Reaskaun, Larchill, Ennis, Co. Clare', '0876470883', 'odalybr@hotmail.com', '1968/05/11', 'resources/images/users/Brendan.png',TRUE);
  
-INSERT INTO user_roles (userid, username, ROLE)
+INSERT INTO user_roles (userid, name, ROLE)
 VALUES (1, 'benny', 'ROLE_USER');
-INSERT INTO user_roles (userid, username, ROLE)
+INSERT INTO user_roles (userid, name, ROLE)
 VALUES (1, 'benny', 'ROLE_ADMIN');
-INSERT INTO user_roles (userid, username, ROLE)
+INSERT INTO user_roles (userid, name, ROLE)
 VALUES (2,'guest', 'ROLE_USER');
 
 create table newsstory (	nsid INT(11) NOT NULL AUTO_INCREMENT,

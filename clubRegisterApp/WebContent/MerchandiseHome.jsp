@@ -21,6 +21,7 @@
 		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
 		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
+		<script type="text/javascript" src="resources/js/libs/jcs-auto-validate.min.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
 		<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
@@ -47,7 +48,7 @@
 			<div class="row avenue-body">
 				<div class="panel">
 					<div class="panel-heading avenue-heading">
-						2015/2016 Merchandise range: <div style="float:right;">Available from <strong>Rochfords Pharmacy</strong>, Parnell St., Ennis</div>
+						2015/2016 Merchandise range: <div style="float:right;">Available from <strong>Rochfords Pharmacy</strong>, 21 Parnell Street, Ennis Phone: 065 68 20099</div>
 					</div>
 					<div class="panel-body avenue-body">
 			

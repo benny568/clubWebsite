@@ -4,6 +4,7 @@
 					    <a href="#AdminOverview" class="btn btn-primary academymenu"><i class="fa fa-sun-o"></i> Overview</a>
 					    <a href="#AdminTutorials" class="btn btn-primary academymenu"><i class="fa fa-book"></i> Tutorials</a>
 					    <a href="#MemberRegister" class="btn btn-primary academymenu"><i class="fa fa-child"></i> Members</a>
+					    <a ng-if="hasPermission('VIEW_USERS', '*')" href="#UsersAdmin" class="btn btn-primary academymenu"><i class="fa fa-child"></i> Users</a>
 					    <a href="#ManageTeams" class="btn btn-primary academymenu"><i class="fa fa-users"></i> Teams</a>
 					    <a href="#UploadNewsStory" class="btn btn-primary academymenu"><i class="fa fa-newspaper-o"></i> News</a>
 					    <a href="#Photos" class="btn btn-primary academymenu"><i class="fa fa-camera"></i> Photos</a>
@@ -32,8 +33,8 @@
 					      		<i class="fa fa-user"></i> My Profile <span class="caret"></span>
 					      	</button>
 					      	<ul class="dropdown-menu academymenu" role="menu">
-					        	<li><a href="MyProfile">Edit My Profile</a></li>
-					        	<li><a href="ChangePassword">Password Change</a></li>
+					        	<li><a href="#MyProfile">Edit My Profile</a></li>
+					        	<li><a href="#ChangePassword">Password Change</a></li>
 					        </ul>
 					    </div>
 					    <div class="btn-group">

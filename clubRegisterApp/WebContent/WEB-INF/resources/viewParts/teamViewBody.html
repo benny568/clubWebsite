@@ -26,7 +26,7 @@
 				    						<th>Managers:</th>
 				    						<td>
 					    						<div ng-repeat="mem in TeamMembers[teamId]">
-							    					<div ng-if="mem.position == 0"">
+							    					<div ng-if="mem.position == 0">
 							    						{{mem.name}}
 							    						<div style="float:right;">
 							    							<i class="fa fa-phone"></i> {{mem.phone}}
@@ -72,9 +72,6 @@
 				    				<div ng-repeat="mem in TeamMembers[teamId]">
 				    					<div ng-if="mem.position != 0">
 											<span ng-click="setCurrentMember(mem)" style="cursor:pointer;"><font color="white">{{$index+1}}: {{mem.name}}</font></span>
-											<!-- <div style="float:right;">
-							    				<img alt="" src="resources/images/Players/{{teamName}}/{{mem.name}}">
-							    			</div> -->
 										</div>
 									</div>
 				    			</div> <!-- end panel body -->

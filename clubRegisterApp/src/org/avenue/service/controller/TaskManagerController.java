@@ -23,6 +23,7 @@ import org.avenue.service.domain.Member;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
+import org.avenue.service.domain.Worker;
 import org.avenue.service.domain.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+/**
+ * @author odalybr
+ *
+ */
 @RestController
 public class TaskManagerController {
 	java.sql.Timestamp currentTimestamp = null;
@@ -181,16 +186,40 @@ public class TaskManagerController {
 	 
 	 
 	 @RequestMapping(value="/admin/user",method = RequestMethod.GET,headers="Accept=application/json")
-	 public org.avenue.service.domain.User getUserName(Principal principal) {
+	 public Worker getUserName(Principal principal) {
 		 User activeUser = (User) ((Authentication) principal).getPrincipal();
 		 String username = activeUser.getUsername();
-		 org.avenue.service.domain.User thisUser = taskmanagerservice.getUserByName(username);
+		 Worker thisUser = taskmanagerservice.getUserByName(username);
 		 return thisUser;	
 	 }
 	 
 	 @RequestMapping(value="/admin/user",method = RequestMethod.PUT)
-	 public void updateUser(@RequestBody org.avenue.service.domain.User user) {	 
+	 public void updateUser(@RequestBody Worker user) {	 
 		 taskmanagerservice.updateUser( user );
+	 }
+	 
+	 @RequestMapping(value="/admin/user",method = RequestMethod.POST)
+	 public void addUser(@RequestBody Worker user) {	 
+		 taskmanagerservice.addUser( user );
+	 }
+	 
+	 @RequestMapping(value="/admin/password",method = RequestMethod.PUT)
+	 public void updateUserPassword(@RequestBody Worker user) {	 
+		 taskmanagerservice.updateUserPassword( user );
+	 }
+	 
+	 @RequestMapping(value="/admin/user",method = RequestMethod.DELETE)
+	 public void deleteUser(@RequestBody Worker user) {	 
+		 taskmanagerservice.deleteUser( user );
+	 }
+	 
+	 @RequestMapping(value="/admin/users",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  List<Worker> getAllUsers() 
+	 {
+		 log.debug("## ->getAllUsers()");
+		 List<Worker> users = taskmanagerservice.getAllUsers();
+		 log.debug("## <-getAllUsers(): " + users);
+		 return users;	
 	 }
 	 
 	 @RequestMapping(value="/mail",method = RequestMethod.POST)
@@ -247,11 +276,12 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/admin/manager/{name}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public  org.avenue.service.domain.User getManagerDetails(@PathVariable String name) 
+	 public  org.avenue.service.domain.Worker getManagerDetails(@PathVariable String name) 
 	 {
 		 log.debug("## ->getManagerDetails()");
-		 org.avenue.service.domain.User user = taskmanagerservice.getUserByName(name);
+		 org.avenue.service.domain.Worker user = taskmanagerservice.getUserByName(name);
 		 log.debug("## <-getManagerDetails(): " + user);
 		 return user;	
 	 }
+	 
 }

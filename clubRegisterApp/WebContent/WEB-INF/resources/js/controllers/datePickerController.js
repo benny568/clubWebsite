@@ -1,15 +1,15 @@
 mmModule.controller('DatePickerController', function ($scope) {
-/*  	$scope.today = function() {
+  	$scope.today = function() {
 	    $scope.dt = new Date();
 	  };
 	  $scope.today();
 
 	  $scope.clear = function () {
 	    $scope.dt = null;
-	  };*/
+	  };
 
 	  // Disable weekend selection
-/*	  $scope.disabled = function(date, mode) {
+	  $scope.disabled = function(date, mode) {
 	    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
 	  };
 
@@ -66,4 +66,4 @@ mmModule.controller('DatePickerController', function ($scope) {
 
 	    return '';
 	  };
-*/	});
+	});

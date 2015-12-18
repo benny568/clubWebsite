@@ -43,7 +43,7 @@ mmModule.controller('userProfileController', function ($scope,$http,dbService,mm
 	
 	$scope.showUser = function()
 	{
-		console.log("## [] -> showUser, user is: ", thisUser.username );
+		console.log("## [] -> showUser, user is: ", thisUser.name );
 	}
 	$scope.showUser();
 	

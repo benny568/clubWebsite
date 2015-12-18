@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // REM: User is someone with admin rights to the site as opposed to
 // a member who is just a club member, e.g. a player.
 
-public class User {
+public class SiteUser2 {
 	private int userId;
 	private String username;
 	private String password;
