@@ -1,4 +1,4 @@
-mmModule.controller('sponsorController', function ($scope) 
+pubModule.controller('sponsorController', function ($scope) 
 {
 	log.debug("## Loading sponsorController...");
 	

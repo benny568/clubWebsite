@@ -25,7 +25,7 @@
 				    					<tr>
 				    						<th>Managers:</th>
 				    						<td>
-					    						<div ng-repeat="mem in TeamMembers[teamId]">
+					    						<div ng-repeat="mem in data.dsTeamMembers">
 							    					<div ng-if="mem.position == 0">
 							    						{{mem.name}}
 							    						<div style="float:right;">
@@ -39,7 +39,7 @@
 				 						<tr>
 				 							<th>Captian:</th>
 				 							<td>
-				 								<div ng-repeat="mem in TeamMembers[teamId]">
+				 								<div ng-repeat="mem in data.dsTeamMembers">
 							    					<div ng-if="mem.position == 99">{{mem.name}}</div>
 							    				</div>
 				 							</td>
@@ -69,7 +69,7 @@
 				    				Squad Details:
 				    			</div>
 				    			<div class="panel-body avenue-body">
-				    				<div ng-repeat="mem in TeamMembers[teamId]">
+				    				<div ng-repeat="mem in data.dsTeamMembers">
 				    					<div ng-if="mem.position != 0">
 											<span ng-click="setCurrentMember(mem)" style="cursor:pointer;"><font color="white">{{$index+1}}: {{mem.name}}</font></span>
 										</div>

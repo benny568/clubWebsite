@@ -1,4 +1,3 @@
-//require(['resources/js/libs/log4javascript.js'], function(){console.log("##[app.js] loaded log4javascipted.")});
 var lrcode; // Needed for API calls to LeagueRepublic site
 var serverMode = {
 	LOCAL: 0, // Running locally
@@ -14,7 +13,7 @@ var gTeamMembers={};
 var gThisUser = {};
 var gOpUser = {};
 
-var thisServerMode = serverMode.REMOTE;
+var thisServerMode = serverMode.LOCAL;
 
 /********************************************
 /* Setup the logger
@@ -26,14 +25,14 @@ bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
 // Test the logger
-log.debug("** Public Module Loaded....");
-log.trace("** TRACE: Public Module Loaded....");
+log.debug("** Member Manager Module Loaded....");
+log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
 
-var mmModule = angular.module('memberManagerApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
+var pubModule = angular.module('publicApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
 
-mmModule.config(function($routeProvider,$httpProvider) {
+pubModule.config(function($routeProvider,$httpProvider) {
 	
 	/**
 	* make delete type json
@@ -52,73 +51,66 @@ mmModule.config(function($routeProvider,$httpProvider) {
 	}
 	
 	$routeProvider
-    // route for the admin home page
+    // route for the home page
     .when('/', {
-        templateUrl : 'resources/viewParts/adminHomeBody.html',
-        controller  : 'adminHomeController'
+        templateUrl : 'resources/viewParts/homeBody.html',
+        controller  : 'newsController'
     })
 
-    // route for the AdminOverview page
-    .when('/AdminOverview', {
-        templateUrl : 'resources/viewParts/adminOverviewBody.html',
-        controller  : 'adminOverviewController'
+    // route for the Merchandise page
+    .when('/Merchandise', {
+        templateUrl : 'resources/viewParts/merchandiseBody.html',
+        controller  : 'MerchandiseController'
     })
 
-    // route for the AdminTutorials page
-    .when('/AdminTutorials', {
-        templateUrl : 'resources/viewParts/adminTutorialsBody.html',
-        controller  : 'adminOverviewController'
+    // route for the ClubHistory page
+    .when('/ClubHistory', {
+        templateUrl : 'resources/viewParts/clubHistoryBody.html',
+        controller  : 'ClubHistoryController'
     })
 
-    // route for the MemberRegister page
-    .when('/MemberRegister', {
-        templateUrl : 'resources/viewParts/memberRegisterBody.html',
-        controller  : 'adminOverviewController'
+    // route for the AcademyHome page
+    .when('/AcademyHome', {
+        templateUrl : 'resources/viewParts/academyHomeBody.html',
+        controller  : 'academyController'
     })
 
-    // route for the ManageTeams page
-    .when('/ManageTeams', {
-        templateUrl : 'resources/viewParts/manageTeamsBody.html',
-        controller  : 'adminOverviewController'
+    // route for the AcademyOverview page
+    .when('/AcademyOverview', {
+        templateUrl : 'resources/viewParts/academyOverviewBody.html',
+        controller  : 'academyController'
     })
 
-    // route for the UploadNewsStory page
-    .when('/UploadNewsStory', {
-        templateUrl : 'resources/viewParts/newsUploadBody.html',
-        controller  : 'newsUploadController'
+    // route for the AcademyCoaches page
+    .when('/AcademyCoaches', {
+        templateUrl : 'resources/viewParts/academyCoachesBody.html',
+        controller  : 'academyController'
     })
 
-    // route for the UploadNewsStory page
-    .when('/UploadNewsStory', {
-        templateUrl : 'resources/viewParts/newsUploadBody.html',
-        controller  : 'newsUploadController'        	
+    // route for the AcademySchedule page
+    .when('/AcademySchedule', {
+        templateUrl : 'resources/viewParts/academyScheduleBody.html',
+        controller  : 'academyController'        	
     })
 
-    // route for the AllMembersAdmin page
-    .when('/AllMembersAdmin/:mode', {
-        templateUrl : 'resources/viewParts/allMembersAdminBody.html',
-        controller  : 'memberManagerController'
+    // route for the AcademyRegistration page
+    .when('/AcademyRegistration', {
+        templateUrl : 'resources/viewParts/academyRegistrationBody.html',
+        controller  : 'academyController'
     })
-    // route for the ManageTeam page
-    .when('/ManageTeam/:mode/:team', {
-        templateUrl : 'resources/viewParts/manageTeamBody.html',
-        controller  : 'memberManagerController'
+    
+    // route for the AcademyPhotos page
+    .when('/AcademyPhotos', {
+        templateUrl : 'resources/viewParts/AcademyPhotosBody.html',
+        controller  : 'academyController'
     })
-    // route for the UsersAdmin page
-    .when('/UsersAdmin', {
-        templateUrl : 'resources/viewParts/usersAdmin.html',
-        controller  : 'usersController'
+    
+    // route for the U18 Team page
+    .when('/ViewTeam/:team', {
+        templateUrl : 'resources/viewParts/teamViewBody.html',
+        controller  : 'teamViewController'
     })
-    // route for the MyProfile page
-    .when('/MyProfile', {
-        templateUrl : 'resources/viewParts/myProfileBody.html',
-        controller  : 'userProfileController'
-    })
-        // route for the ChangePassword page
-    .when('/ChangePassword', {
-        templateUrl : 'resources/viewParts/changePasswordBody.html',
-        controller  : 'passwdChangeController'
-    })
+    
     .otherwise({
         redirectTo: '/'
     });
@@ -129,22 +121,22 @@ mmModule.config(function($routeProvider,$httpProvider) {
 
 });
 
-mmModule.run(function(defaultErrorMessageResolver) {
+pubModule.run(function(defaultErrorMessageResolver) {
 	defaultErrorMessageResolver.getErrorMessages().then(function(errorMessages) {
 		errorMessages['invalidPassword'] = 'A password must contain 8 characters made up of letters, numbers and _ only.';
 		errorMessages['minPasswordLength'] = 'A password must be a least 8 characters long.';
 	});
 });
 
-mmModule.controller('adminHomeController', function($scope, $routeParams) {
+pubModule.controller('adminHomeController', function($scope, $routeParams) {
 	console.log("===== mode is: " + $routeParams.mode);
 });
 
-mmModule.controller('adminOverviewController', function($scope) {
+pubModule.controller('adminOverviewController', function($scope) {
 	console.log("######## adminOverviewController() ###########");
 });
 
-mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
+pubModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
 	$scope.news = {};
 	var pristineFormTemplate = $('#newsForm').html();
 	$scope.home = _home;
@@ -160,7 +152,7 @@ mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function
 
 }]);
 
-mmModule.controller('ModalController', function($scope, member, modalType, close) {
+pubModule.controller('ModalController', function($scope, member, modalType, close) {
 	
 	$scope.thisMember = jQuery.extend({},member);
 	$scope.itsPosition = itsPosition;
@@ -186,7 +178,7 @@ mmModule.controller('ModalController', function($scope, member, modalType, close
 
 });
 
-mmModule.controller('editTeamNBModalController', function($scope, team, close) {
+pubModule.controller('editTeamNBModalController', function($scope, team, close) {
 	
 	$scope.team = jQuery.extend({},team);
 
@@ -199,7 +191,7 @@ mmModule.controller('editTeamNBModalController', function($scope, team, close) {
 
 	});
 
-mmModule.controller('AddMemberController', function($scope, close) {
+pubModule.controller('AddMemberController', function($scope, close) {
 	
 	$scope.thisMember = {name: "", address: "", phone: "", phone2: "", email:"", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
 	var mem = $scope.thisMember;
@@ -211,7 +203,7 @@ mmModule.controller('AddMemberController', function($scope, close) {
 	 };
 });
 
-mmModule.controller('DelMemberController', function($scope, member, modalHeader, close) {
+pubModule.controller('DelMemberController', function($scope, member, modalHeader, close) {
 	
 	$scope.thisMember = member;
 	$scope.modalHeader = modalHeader;
@@ -221,7 +213,7 @@ mmModule.controller('DelMemberController', function($scope, member, modalHeader,
 	 };
 });
 
-mmModule.controller('newsController', function ($scope,$http, dbService,ModalService) {
+pubModule.controller('newsController', function ($scope,$http, dbService,ModalService) {
 	
 	console.log("## [newsController]...");
 	$scope.stories = new Array();
@@ -236,7 +228,7 @@ mmModule.controller('newsController', function ($scope,$http, dbService,ModalSer
 	}
 });
 
-mmModule.controller('AddTeamController', function($scope, close) {
+pubModule.controller('AddTeamController', function($scope, close) {
 	
 	$scope.thisTeam = {name: "", lrcode: 0};
 	var team = $scope.thisTeam;
@@ -248,7 +240,7 @@ mmModule.controller('AddTeamController', function($scope, close) {
 });
 
 
-mmModule.controller('EditTeamController', function($scope, team, close) {
+pubModule.controller('EditTeamController', function($scope, team, close) {
 	$scope.thisTeam = team;
 	
 	$scope.close = function(update, team) {
@@ -257,7 +249,7 @@ mmModule.controller('EditTeamController', function($scope, team, close) {
 	 };
 });
 
-mmModule.controller('DeleteTeamController', function($scope, team, close) {
+pubModule.controller('DeleteTeamController', function($scope, team, close) {
 	$scope.thisTeam = team;
 	
 	$scope.close = function(del, team) {

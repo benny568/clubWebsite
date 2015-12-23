@@ -26,18 +26,9 @@ public class welcomeController {
 	public String homePage(HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();  	 
-        FileUtilities fileUtilities = new FileUtilities();
         ArrayList<NewsStory> stories = new ArrayList<NewsStory>();
- 
-        //final String directoryLinuxMac ="/Users/loiane/test";
- 
-        //Windows directory example
-        final String directoryWindows ="C://Brendan O'Daly//prj//clubRegisterApp//WebContent//WEB-INF//resources//news";
- 
-        // Need to read in the news details and pass them to the page for display
-        //stories = fileUtilities.readXMLFile("C://Brendan O'Daly//prj//clubRegisterApp//WebContent//WEB-INF//resources//news2/news.xml");
-        stories = taskmanagerservice.getNewsItems();
 
+        stories = taskmanagerservice.getNewsItems();
         session.setAttribute("stories", stories);
 
 		return "home";
@@ -56,15 +47,7 @@ public class welcomeController {
 		user = taskmanagerservice.getUserByName(name);
 		session.setAttribute("user", user);
 		
-		String password = "corina";
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-
-		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
-		System.out.println("@@@ THE ENCRYPTED PASSWORD IS: [" + hashedPassword + "] @@@");
-		System.out.println("@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@");
-		
-		return "/WEB-INF/resources/viewParts/adminHome";
+		return "home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

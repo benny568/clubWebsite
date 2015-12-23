@@ -1,4 +1,4 @@
-mmModule.controller('merchandiseController', function ($scope) 
+pubModule.controller('MerchandiseController', function ($scope) 
 {
 	log.debug("## Loading merchandiseController...");
 	

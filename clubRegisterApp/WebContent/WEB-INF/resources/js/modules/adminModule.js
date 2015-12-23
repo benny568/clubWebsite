@@ -1,4 +1,3 @@
-//require(['resources/js/libs/log4javascript.js'], function(){console.log("##[app.js] loaded log4javascipted.")});
 var lrcode; // Needed for API calls to LeagueRepublic site
 var serverMode = {
 	LOCAL: 0, // Running locally
@@ -13,8 +12,9 @@ var gTeamName = '';
 var gTeamMembers={};
 var gThisUser = {};
 var gOpUser = {};
+var gNewsStories = [];
 
-var thisServerMode = serverMode.REMOTE;
+var thisServerMode = serverMode.LOCAL;
 
 /********************************************
 /* Setup the logger
@@ -26,8 +26,8 @@ bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
 // Test the logger
-log.debug("** Public Module Loaded....");
-log.trace("** TRACE: Public Module Loaded....");
+log.debug("** Member Manager Module Loaded....");
+log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
 
@@ -52,8 +52,13 @@ mmModule.config(function($routeProvider,$httpProvider) {
 	}
 	
 	$routeProvider
-    // route for the admin home page
+	// route for the home page
     .when('/', {
+        templateUrl : 'resources/viewParts/homeBody.html',
+        controller  : 'memberManagerController'
+    })
+    // route for the admin home page
+    .when('/adminHome', {
         templateUrl : 'resources/viewParts/adminHomeBody.html',
         controller  : 'adminHomeController'
     })
@@ -102,6 +107,11 @@ mmModule.config(function($routeProvider,$httpProvider) {
     // route for the ManageTeam page
     .when('/ManageTeam/:mode/:team', {
         templateUrl : 'resources/viewParts/manageTeamBody.html',
+        controller  : 'memberManagerController'
+    })
+    // route for the ManageTeam page
+    .when('/TeamView/:mode/:team', {
+        templateUrl : 'resources/viewParts/teamViewBody.html',
         controller  : 'memberManagerController'
     })
     // route for the UsersAdmin page

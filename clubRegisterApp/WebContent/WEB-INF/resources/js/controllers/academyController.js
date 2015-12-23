@@ -1,5 +1,5 @@
 
-mmModule.controller('academyManagerController', function ($scope,$http, dbService) 
+pubModule.controller('academyController', function ($scope,$http, dbService) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;

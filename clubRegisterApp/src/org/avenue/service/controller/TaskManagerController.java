@@ -74,11 +74,27 @@ public class TaskManagerController {
 	
 	 }
 	 
+	 @RequestMapping(value="/teams",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<Team> getAllTeams() {
+		 log.debug("## [TaskManagerController]->getTeams()..");
+		 List<Team> teams=taskmanagerservice.getAllTeams();
+		 return teams;
+	
+	 }
+	 
 	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public Team getTeamDetails(@PathVariable String teamName) {
 		 log.debug("## [TaskManagerController]->getTeamDetails(" + teamName + ")..");
 		 Team team=taskmanagerservice.getTeamDetails(teamName);
 		 return team;
+	
+	 }
+	 
+	 @RequestMapping(value="/teammembers/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<Member> getMembersByTeam(@PathVariable String teamName) {
+		 log.debug("## [TaskManagerController]->getMembersByTeam(" + teamName + ")");
+		 List<Member> members=taskmanagerservice.getMembersByTeam(taskmanagerservice.getTeamId(teamName));
+		 return members;
 	
 	 }
 	 
