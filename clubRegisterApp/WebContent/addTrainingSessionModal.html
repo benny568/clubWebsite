@@ -3,24 +3,45 @@
             <div class="modal-content avenue-body">
               <div class="modal-header avenue-heading">
               	<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add Training Session for {{teamName}}</h4>
+                <h4 class="modal-title">Add Training Session for {{team.name}}</h4>
               </div>
               <div class="modal-body">
-                <form name="form" novalidate>
-                	<div class="row">
-                		<div class="col-md-9">
-		                	<label for="name">Session Date</label>
-		                	<input type="text" class="form-control" id="date" name="date" data-ng-model="thisSession.date" placeholder="Enter Session Date" ng-minlength="1" ng-maxlength="30" required/>
-		                	<label for="details">Enter the details</label>
-		                	<input type="text" class="form-control" id="details" name="details" data-ng-model="thisSession.details" placeholder="Enter Details"/>
-		                	<div style="min-height:100px;"></div>
-                		</div>
+              	<form nvalidate="novalidate">
+							
+						<div class="row a-modal-row">
+							
+							<!-- DATE -->	
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="date">Session Date</label>
+									<input 	type="text"
+											class="form-control"
+											ng-model="thisSession.date"
+											id="date"
+											required="required"
+											placeholder="Enter Session Date" >
+								</div>
+							</div> <!-- end col -->
+							
+							<!-- Description -->	
+							<div class="col-md-7">
+								<div class="form-group">
+									<label for="details">Enter the details:</label>
+									<input 	type="text"
+											class="form-control"
+											ng-model="thisSession.details"
+											id="details"
+											required="required"
+											placeholder="Enter a brief summary" >
+								</div>
+							</div> <!-- end col -->
+
                 	</div> <!-- end row -->
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" ng-click="close(true, thisSession)" class="btn btn-default" data-dismiss="modal">Save</button>
-                <button type="button" ng-click="close(false)" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" ng-click="close(true, thisSession)" class="btn btn-success" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false)" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 
               </div>
             </div>

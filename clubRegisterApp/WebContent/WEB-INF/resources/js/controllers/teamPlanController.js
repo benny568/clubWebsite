@@ -1,4 +1,4 @@
-mmModule.controller('teamPlanController', function ($scope,$http,dbService) 
+mmModule.controller('teamPlanController', ['$scope', function ($scope) 
 {
 	console.log("## [teamPlanController] ** LOADING **");
 	
@@ -19,4 +19,4 @@ mmModule.controller('teamPlanController', function ($scope,$http,dbService)
 	}
 	$scope.toggleTeamPlanView();
 
-});
+}]);

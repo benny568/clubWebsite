@@ -1,28 +1,29 @@
-mmModule.controller('trainingViewController', function ($scope,$http,dbService,ModalService,$attrs) 
+mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbService', 'privateDataService', function ($scope,ModalService,dbService,privateDataService) 
 {
 	console.log("## [trainingViewController] ** LOADING **");
 	
 	// Training records cache
+	$scope.data = privateDataService;
 	$scope.trainingRecords = [];
 	$scope.trainingPerMember = null;
-	$scope.teamId = gTeamId;
+	$scope.teamId = $scope.data.dsCurrentTeam.id;
 	$scope.thisSession = { sessionId:'', teamId:0, date:'', details:'' };
 	$scope.sessionPlans = [];
 	
 	
 	function getSessionsForTeam()
 	{
-		dbService.getSessionsForTeam(gTeamId)
+		dbService.getSessionsForTeam($scope.data.dsCurrentTeam.id)
 		.then( function(result){
 			$scope.sessionPlans = result;
-			console.log("## [trainingViewController] -> getSessionsForTeam(", gTeamId, " - returned: ", $scope.sessionPlans);
+			console.log("## [trainingViewController] -> getSessionsForTeam(", $scope.data.dsCurrentTeam.id, " - returned: ", $scope.sessionPlans);
 			getSessionRecordsForTeam();
 		});
 	}
 	
 	function getSessionRecordsForTeam()
 	{
-		dbService.getSessionRecordsForTeam(gTeamId)
+		dbService.getSessionRecordsForTeam($scope.data.dsCurrentTeam.id)
 		.then( function(result){
 			$scope.sessionRecs = result;
 			console.log("## [trainingViewController] -> getSessionRecordsForTeam - returned: ", $scope.sessionRecs);
@@ -35,38 +36,38 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	
 	function setAllToAbsent()
 	{
-		var teamId = gTeamId;
-		$scope.trainingPerMember = new Array(gTeamMembers.length);
+		var teamId = $scope.data.dsCurrentTeam.id;
+		$scope.trainingPerMember = new Array($scope.data.dsTeamMembers.length);
 		
-		for( var m=0; m<gTeamMembers.length; m++ )
+		for( var m=0; m<$scope.data.dsTeamMembers.length; m++ )
 		{
 			$scope.trainingPerMember[m] = new Array($scope.sessionPlans.length);
 			for( var i=0; i<$scope.sessionPlans.length; i++ )
 			{
-				$scope.trainingPerMember[m][i]= {"teamid" : gTeamId, "memberid" : gTeamMembers[m].id, "status": false};
+				$scope.trainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "status": false};
 			}
 		}
 	}
 	
 	function sortTeamSessionsByMember()
 	{
-		var teamId = gTeamId;
-		$scope.trainingPerMember = new Array(gTeamMembers.length);
+		var teamId = $scope.data.dsCurrentTeam.id;
+		$scope.trainingPerMember = new Array($scope.data.dsTeamMembers.length);
 		
-		for( var m=0; m<gTeamMembers.length; m++ ) // for each member in the team
+		for( var m=0; m<$scope.data.dsTeamMembers.length; m++ ) // for each member in the team
 		{
 			$scope.trainingPerMember[m] = new Array($scope.sessionPlans.length);
 			for( var i=0; i<$scope.sessionPlans.length; i++ ) // for each session
 			{
-				$scope.trainingPerMember[m][i]= {"teamid" : gTeamId, "memberid" : gTeamMembers[m].id, "sessionId" : $scope.sessionPlans[i].sessionId, "status" : false};
+				$scope.trainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "sessionId" : $scope.sessionPlans[i].sessionId, "status" : false};
 				
 				for( var s=0; s<$scope.sessionRecs.length; s++ ) // Check through all the records for that member for that session
 				{
-					if( ($scope.sessionRecs[s].memberId == gTeamMembers[m].id) && 
-						($scope.sessionRecs[s].teamId == gTeamMembers[m].team) && 
+					if( ($scope.sessionRecs[s].memberId == $scope.data.dsTeamMembers[m].id) && 
+						($scope.sessionRecs[s].teamId == $scope.data.dsTeamMembers[m].team) && 
 						($scope.sessionPlans[i].sessionId == $scope.sessionRecs[s].sessionId) )
 					{
-						console.log("## [trainingViewController] -> sortTeamSessionsByMember - found match: ", gTeamMembers[m].name, " : ", $scope.sessionRecs[s] );
+						console.log("## [trainingViewController] -> sortTeamSessionsByMember - found match: ", $scope.data.dsTeamMembers[m].name, " : ", $scope.sessionRecs[s] );
 						$scope.trainingPerMember[m][i] = $scope.sessionRecs[s];
 						break;
 					}
@@ -93,7 +94,7 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 		{
 			getSessionsForTeam();			
 			//getSessionRecordsForTeam();
-			$scope.TeamMembers = gTeamMembers;
+			$scope.TeamMembers = $scope.data.dsTeamMembers;
 		}
 		/*if( $scope.trainingPerMember == null )
 			sortTeamSessionsByMember();*/
@@ -106,8 +107,8 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	{
 		if(loaded == undefined)
 			return;
-		console.log("## [trainingViewController] -> changeTrainingAttendence, currently: " + status + ", for session["+sessionid+"], Team["+gTeamId+"], member["+memberid+"].");
-		dbService.setMemberTrainingRecForSession(sessionid, gTeamId, memberid, !status)
+		console.log("## [trainingViewController] -> changeTrainingAttendence, currently: " + status + ", for session["+sessionid+"], Team["+$scope.data.dsCurrentTeam.id+"], member["+memberid+"].");
+		dbService.setMemberTrainingRecForSession(sessionid, $scope.data.dsCurrentTeam.id, memberid, !status)
 		.then(function(result){
 			console.log("## [trainingViewController] -> changeTrainingAttendence, Status updated to: ", !status);
 			var memindex = getMemIndex(memberid);
@@ -120,9 +121,9 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	
 	function getMemIndex( memberid )
 	{
-		for( var i=0; i<gTeamMembers.length; i++ )
+		for( var i=0; i<$scope.data.dsTeamMembers.length; i++ )
 		{
-			if( gTeamMembers[i].id == memberid )
+			if( $scope.data.dsTeamMembers[i].id == memberid )
 				return i;
 		}
 		return 0;
@@ -150,19 +151,23 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	{
 		if( typeof teamId == 'undefined')
 			return;
-		console.log("## [trainingViewController] -> addTrainingSession");
+		console.log("## [trainingViewController] -> addTrainingSession(" + teamId + ")");
 		$scope.teamId = teamId;
 		
-		ModalService.showModal({templateUrl: 'addTrainingSessionModal.html',controller: "AddTrainingSessionController"})
+		ModalService.showModal({
+			templateUrl: 'addTrainingSessionModal.html',
+			controller: "AddTrainingSessionController",
+			input: {team: $scope.data.dsCurrentTeam}
+		})
 		.then(	function(modal) 
 				{
 		            modal.element.modal();
 		            modal.close.then(	function(result) 
 		            					{
-		            						if( result.op )
+		            						if( result.op == 'save' )
 		            						{
 		            							$scope.thisSession = result.session;
-		            							$scope.thisSession.teamId = gTeamId;
+		            							$scope.thisSession.teamId = $scope.data.dsCurrentTeam.id;
 		            							//$scope.thisSession.sessionId = '';
 		            							dbService.addTrainingSession( $scope.thisSession ).then( function(result){
 		            								console.log("[trainingViewController] - addTrainingSession: ", $scope.thisSession);
@@ -177,4 +182,4 @@ mmModule.controller('trainingViewController', function ($scope,$http,dbService,M
 	$scope.addTrainingSession();
 	
 	var loaded = true;
-});
+}]);

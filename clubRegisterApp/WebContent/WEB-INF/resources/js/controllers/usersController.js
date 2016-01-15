@@ -1,9 +1,10 @@
-mmModule.controller('usersController', function ($scope, $http, umService, ModalService, dbService) 
+mmModule.controller('usersController', ['$scope', '$http', 'umService', 'privateDataService', function ($scope, $http, umService, privateDataService) 
 {	
 	log.debug("## Loading usersController...");
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
+	$scope.data = privateDataService;
 	
 	$scope.dateOptions = {
 			formatYear: 'yy',
@@ -67,4 +68,4 @@ mmModule.controller('usersController', function ($scope, $http, umService, Modal
 		umService.deleteUser( $scope, user );
 	}
 	$scope.deleteUser();
-});
+}]);

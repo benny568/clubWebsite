@@ -1,5 +1,7 @@
 package org.avenue.service.domain;
 
+import java.sql.Date;
+
 public class Member {
 	
 	 private int id;
@@ -82,8 +84,9 @@ public class Member {
 	public String getDob() {
 		return dob;
 	}
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setDob(String date) {
+		
+		this.dob = date;
 	}
 	public int getLid() {
 		return lid;
@@ -174,6 +177,6 @@ public class Member {
 	}
 	public void setPhone2(String phone2) {
 		this.phone2 = phone2;
-	} 
+	}
 	
 }

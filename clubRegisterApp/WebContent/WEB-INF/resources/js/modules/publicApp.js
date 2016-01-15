@@ -1,17 +1,8 @@
-var lrcode; // Needed for API calls to LeagueRepublic site
 var serverMode = {
 	LOCAL: 0, // Running locally
 	REMOTE: 1 // Running on Mochahost server
 };
-var itsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
 var _home = '';
-var thisUser = {};
-var gTeams = [];
-var gTeamId = 0;
-var gTeamName = '';
-var gTeamMembers={};
-var gThisUser = {};
-var gOpUser = {};
 
 var thisServerMode = serverMode.LOCAL;
 
@@ -25,14 +16,14 @@ bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
 // Test the logger
-log.debug("** Member Manager Module Loaded....");
+log.debug("** Public Module Loaded....");
 log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
 
-var pubModule = angular.module('publicApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
+var pubModule = angular.module('publicApp', ['memberManagerApp','ngRoute','angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
 
-pubModule.config(function($routeProvider,$httpProvider) {
+pubModule.config(['$routeProvider', '$httpProvider', function($routeProvider,$httpProvider) {
 	
 	/**
 	* make delete type json
@@ -110,7 +101,41 @@ pubModule.config(function($routeProvider,$httpProvider) {
         templateUrl : 'resources/viewParts/teamViewBody.html',
         controller  : 'teamViewController'
     })
-    
+    // route for the U18 Fixtures & Results page
+    .when('/farView/:team', {
+        templateUrl : 'resources/viewParts/farViewBody.html',
+        controller  : 'farViewController'
+    })
+    // route for the findUs page
+    .when('/FindUs', {
+        templateUrl : 'resources/viewParts/findUsBody.html',
+        controller  : 'findUsController'
+    })
+    // route for the Message Us page
+    .when('/MessageUs', {
+        templateUrl : 'resources/viewParts/messageUsBody.html',
+        controller  : 'MessageUsController'
+    })
+    // route for the Downloads page
+    .when('/ContactUs', {
+        templateUrl : 'resources/viewParts/contactUsBody.html',
+        controller  : 'BlankController'
+    })
+    // route for the Downloads page
+    .when('/Downloads', {
+        templateUrl : 'resources/viewParts/downloadsBody.html',
+        controller  : 'BlankController'
+    })
+    // route for the Links page
+    .when('/Links', {
+        templateUrl : 'resources/viewParts/linksBody.html',
+        controller  : 'BlankController'
+    })
+    // route for the Admin home page
+    .when('/admin', {
+        templateUrl : 'resources/viewParts/adminHomeBody.html',
+        controller  : 'newsController'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -119,143 +144,13 @@ pubModule.config(function($routeProvider,$httpProvider) {
 	formModel = {};
 	newUser = {};
 
-});
+}]);
 
 pubModule.run(function(defaultErrorMessageResolver) {
 	defaultErrorMessageResolver.getErrorMessages().then(function(errorMessages) {
 		errorMessages['invalidPassword'] = 'A password must contain 8 characters made up of letters, numbers and _ only.';
 		errorMessages['minPasswordLength'] = 'A password must be a least 8 characters long.';
 	});
-});
-
-pubModule.controller('adminHomeController', function($scope, $routeParams) {
-	console.log("===== mode is: " + $routeParams.mode);
-});
-
-pubModule.controller('adminOverviewController', function($scope) {
-	console.log("######## adminOverviewController() ###########");
-});
-
-pubModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
-	$scope.news = {};
-	var pristineFormTemplate = $('#newsForm').html();
-	$scope.home = _home;
-	
-	$scope.Submit = function(isValid){
-		var uploadUrl = _home + '/admin/upload';
-		
-		if(!isValid) 
-		      alert('Data is invalid, try again...');
-		else
-			multipartForm.post( uploadUrl, $scope.news );
-	};
-
-}]);
-
-pubModule.controller('ModalController', function($scope, member, modalType, close) {
-	
-	$scope.thisMember = jQuery.extend({},member);
-	$scope.itsPosition = itsPosition;
-	$scope.teams = gTeams;
-	$scope.modalHeader = modalType;
-
-	 $scope.close = function(save) {
-		if(save)
-		{
-			 // The datepicker is sending in a string that's too long so cut it
-			 //$scope.thisMember.dob = truncateDate($scope.thisMember.dob);
-			 close($scope.thisMember, 500); // close, but give 500ms for bootstrap to animate
-		}
-		 else
-			 close(member, 500);
-	 };
-	 
-	 function truncateDate( date )
-	 {
-		 if( date.length > 10 )
-			 return date.slice(0,10);
-	 }
-
-});
-
-pubModule.controller('editTeamNBModalController', function($scope, team, close) {
-	
-	$scope.team = jQuery.extend({},team);
-
-	 $scope.close = function(save) {
-		 if(save)
-			 close($scope.team, 500); // close, but give 500ms for bootstrap to animate
-		 else
-			 close(team, 500);
-	 };
-
-	});
-
-pubModule.controller('AddMemberController', function($scope, close) {
-	
-	$scope.thisMember = {name: "", address: "", phone: "", phone2: "", email:"", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
-	var mem = $scope.thisMember;
-	$scope.itsPosition = itsPosition;
-	$scope.teams = gTeams;
-	
-	$scope.close = function(add, mem) {
-		close({op:add,member:mem}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-pubModule.controller('DelMemberController', function($scope, member, modalHeader, close) {
-	
-	$scope.thisMember = member;
-	$scope.modalHeader = modalHeader;
-	
-	$scope.close = function(del) {
-		close(del, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-pubModule.controller('newsController', function ($scope,$http, dbService,ModalService) {
-	
-	console.log("## [newsController]...");
-	$scope.stories = new Array();
-	
-	getNews();
-
-	function getNews(){		
-		dbService.getNewsStories()
-			.then( function(stories) {
-				$scope.stories = stories;
-		});
-	}
-});
-
-pubModule.controller('AddTeamController', function($scope, close) {
-	
-	$scope.thisTeam = {name: "", lrcode: 0};
-	var team = $scope.thisTeam;
-	
-	$scope.close = function(add, team) {
-		console.log("## [AddTeamController] team is: ", $scope.thisTeam);
-		close({op:add,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-
-pubModule.controller('EditTeamController', function($scope, team, close) {
-	$scope.thisTeam = team;
-	
-	$scope.close = function(update, team) {
-		console.log("## [EditTeamController] team is: ", $scope.thisTeam);
-		close({op:update,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-pubModule.controller('DeleteTeamController', function($scope, team, close) {
-	$scope.thisTeam = team;
-	
-	$scope.close = function(del, team) {
-		console.log("## [DeleteTeamController] team to delete is: ", $scope.thisTeam);
-		close({op:del,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
 });
 
 

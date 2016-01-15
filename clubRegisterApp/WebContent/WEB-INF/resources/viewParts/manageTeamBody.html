@@ -1,20 +1,17 @@
 	<div id="wrap">
 			<div class="container t1">
 			    	<div class="row">
-			    		<div class="col-md-6">
+			    		<div class="col-md-5">
 			    			<div class="panel">
-				    			<div class="panel-heading avenue-heading"">
-				    				Team Details:  
-				    				<div style="float:right;">
-				    					<button type="button" class="btn btn-warning btn-xs" ng-click="editTeamNB(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Add a notice">Edit Notice Board</button>
-				    				</div>
+				    			<div class="panel-heading avenue-heading">
+				    				Team Details:
 				    			</div>
 				    			<div class="panel-body avenue-body">
 				    				<table class="table table-condensed">
 				    					<tr>
 				    						<th>Managers:</th>
 				    						<td>
-					    						<div ng-repeat="mem in TeamMembers[teamId]">
+					    						<div ng-repeat="mem in data.dsTeamMembers">
 							    					<div ng-if="mem.position == 0">
 							    						{{mem.name}}
 							    						<div style="float:right;">
@@ -28,7 +25,7 @@
 				 						<tr>
 				 							<th>Captian:</th>
 				 							<td>
-				 								<div ng-repeat="mem in TeamMembers[teamId]">
+				 								<div ng-repeat="mem in data.dsTeamMembers">
 							    					<div ng-if="mem.position == 99">{{mem.name}}</div>
 							    				</div>
 				 							</td>
@@ -37,14 +34,14 @@
 				    			</div>
 				    		</div>
 			    		</div> <!-- end col -->
-			    		<div class="col-md-6">
+			    		<div class="col-md-7" style="">
 			    			<div class="panel">
 				    			<div class="panel-heading avenue-heading">
 				    				Table:
 				    			</div>
 				    			<div class="panel-body avenue-body">
 				    			
-				    				<div id="lrep{{lrcode}}" style="width: auto;"></div>
+				    				<lr-display></lr-display>
 
 				    			</div>
 				    		</div>
@@ -52,69 +49,51 @@
 			    	</div> <!-- end row -->
 			    	
 			    	<div class="row">
-			    		<div class="col-md-6">
+			    		<div class="col-md-5">
 			    			<div class="panel">
 				    			<div class="panel-heading avenue-heading">
 				    				Squad Details:
-				    				<div style="float:right; align:bottom;">
-										<button type="button" class="btn btn-warning btn-xs" ng-click="addMember(teamId)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Add a Player">Add Player</button>
-									</div>
 				    			</div>
 				    			<div class="panel-body avenue-body">
-				    				<div class="row">
-				    					<div class="col-md-1 tblHdr">#</div>
-									    <div class="col-md-7 tblHdr">Name</div>
-									    <div class="col-md-4 tblHdr">Operations</div>
-									</div> <!-- end of row -->
-									<div class="light-line"></div>
-				    				<div ng-repeat="mem in TeamMembers[teamId]">
-				    					<div ng-if="mem.position != 0"> <!-- Skip managers -->
-					    					<div class="row">
-					    						<div class="col-md-1 tblHdr">{{$index+1}}:</div>
-										    	<div class="col-md-7 tblHdr"><span ng-click="setCurrentMember(mem)" style="cursor:pointer;"><font color="white"> {{mem.name}}</font></span></div>
-										    	<div class="col-md-4 tblHdr">
-													<i ng-show="mem.amount" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
-											    	<i ng-hide="mem.amount" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
-											    	<i ng-click="editMember(mem)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
-											    	<i ng-click="deleteMember(mem)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
-												</div>
-											</div> <!-- end row -->
-										</div> <!-- end ng-if -->
-									</div> <!-- end ng-repeat -->
+				    				<div ng-repeat="mem in data.dsTeamMembers">
+				    					<div ng-if="mem.position != 0">
+											<span ng-click="setCurrentMember(mem)" style="cursor:pointer;"><font color="white">{{$index+1}}: {{mem.name}}</font></span>
+										</div>
+									</div>
 				    			</div> <!-- end panel body -->
 				    		</div> <!-- end panel -->
 			    		</div> <!-- end col -->
 			    		
-			    		<div class="col-md-6">
+			    		<div class="col-md-7">
 			    			<div class="panel" ng-show="displayMember">
 			    				<div class="panel-heading avenue-heading">
-			    					<span style="font-weight:bold">{{currentMember.name}}</span>
+			    					<span style="font-weight:bold">{{data.dsCurrentMember.name}}</span>
 			    				</div>
 			    				<div class="panel-body avenue-body">
-			    					<img ng-show="displayMember" ng-src='{{currentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
+			    					<img ng-show="displayMember" ng-src='{{data.dsCurrentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
 			    					<div ng-show="displayMember">
-			    						<br/><span class="avenue-yellow-text">Age: </span><span style="color:#D1CDCD">{{currentMember.age}}</span> <br/>
-				    					<span class="avenue-yellow-text">Position: </span><span style="color:#D1CDCD">{{currentMember.position}}</span> <br/>
-				    					<span class="avenue-yellow-text">Favourite Team: </span><span style="color:#D1CDCD">{{currentMember.favteam}}</span> <br/>
-				    					<span class="avenue-yellow-text">Favourite Player: </span><span style="color:#D1CDCD">{{currentMember.favplayer}}</span><br/><br/>
+			    						<br/><span class="avenue-yellow-text">Age: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.age}}</span> <br/>
+				    					<span class="avenue-yellow-text">Position: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.position}}</span> <br/>
+				    					<span class="avenue-yellow-text">Favourite Team: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.favteam}}</span> <br/>
+				    					<span class="avenue-yellow-text">Favourite Player: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.favplayer}}</span><br/><br/>
 				    					<span class="avenue-yellow-text">Personal Achievements:</span><br/>
-				    						{{currentMember.achievements}}
+				    						{{data.dsCurrentMember.achievements}}
 			    					</div>
 
-			    				</div> <!-- end panel-body -->
-			    			</div> <!-- end panel -->
-			    		</div> <!-- end col -->
+			    				</div>
+			    			</div>
+			    		</div>
 			    		
 			    	</div> <!-- end row -->
 			    	
 			    	<div class="row" ng-controller="trainingViewController">
 			    		<div class="col-md-12">
-		    				<button type="button" class="btn btn-warning btn-xs" ng-show="!viewTraining" ng-click="toggleTrainingView(teamId)">Show Training Records</button>
-			    			<button type="button" class="btn btn-warning btn-xs" ng-show="viewTraining" ng-click="toggleTrainingView(teamId)">Hide Training Records</button>
+		    				<button type="button" class="btn btn-warning btn-xs" ng-show="!viewTraining" ng-click="toggleTrainingView(data.dsCurrentTeam.id)">Show Training Records</button>
+			    			<button type="button" class="btn btn-warning btn-xs" ng-show="viewTraining" ng-click="toggleTrainingView(data.dsCurrentTeam.id)">Hide Training Records</button>
 			    			<div class="panel" ng-show="viewTraining">
 				    			<div class="panel-heading avenue-heading">
 				    				Squad Training Attendance:
-				    				<button type="button" class="btn btn-warning btn-xs" ng-click="addTrainingSession(teamId)" style="cursor:pointer;float:right;" data-toggle="tooltip" data-placement="right" title="Add a Training Session">Plan Training Session</button>
+				    				<button type="button" class="btn btn-warning btn-xs" ng-click="addTrainingSession(data.dsCurrentTeam.id)" style="cursor:pointer;float:right;" data-toggle="tooltip" data-placement="right" title="Add a Training Session">Plan Training Session</button>
 				    			</div>
 				    			<div class="panel-body avenue-body">
 				    				<table st-table="rowCollection" class="table">
@@ -126,7 +105,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="mem in TeamMembers track by $index">
+											<tr ng-repeat="mem in data.dsTeamMembers track by $index">
 												<td>{{$index+1}}</td>
 												<td>{{mem.name}}</td>
 												<td ng-repeat="rec in trainingPerMember[$index] track by $index">

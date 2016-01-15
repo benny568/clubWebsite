@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
             .formLogin()
                 .loginPage( "/login" )
                 .loginProcessingUrl( "/j_spring_security_check" )
-                .defaultSuccessUrl( "/admin" )
+                .defaultSuccessUrl( "/#admin" )
                 .failureUrl( "/login?err=1" )
                 .usernameParameter( "j_username" )
                 .passwordParameter( "j_password" )

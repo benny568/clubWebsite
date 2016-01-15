@@ -1,4 +1,4 @@
-mmModule.service('mailService', function($http, $q, promiseTracker) 
+pubModule.service('mailService', function($http, $q, promiseTracker) 
 {
 	
 	return({

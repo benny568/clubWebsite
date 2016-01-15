@@ -1,7 +1,11 @@
-mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbService,ModalService, mmService) 
+mmModule.controller('teamsManagerController', ['$scope', 'ModalService', 'dbService', 'privateDataService', function ($scope, ModalService, dbService, privateDataService) 
 {
-	$scope.teams = [];
 	$scope.home = _home;
+	var logdepth = '----';
+	var loghdr = logdepth + '# teamsViewController: ';
+	log.debug(loghdr + "Controller initialized");
+	$scope.data = privateDataService;
+	var thisTeam = {};
 	
 	// (1) Get the teams from the server
 	getTeams();
@@ -18,11 +22,12 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 	 * Return:		Sets $scope.teams
 	 **********************************************************/
 	function getTeams(){
-		
+		log.debug(loghdr + "-> getTeams()");
+		log.trace(loghdr + "   | calling dbService.getTeams()..")
 		dbService.getTeams()
 			.then( function(teams) {
-				$scope.teams = teams;
-				setTeamId();
+				log.debug(loghdr + " <- getTeams() returned: ", teams);
+				$scope.data.dsTeams = teams;
 		});
 	}
 	
@@ -71,17 +76,16 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 		            					{
 		            						if( result.op )
 		            						{
-		            							$scope.thisTeam = result.team;
-		            							dbService.addTeam( result.team ).then( function(result){
-		            								console.log("[teamsManagerController] - addTeam: ", $scope.thisTeam);
-		            								$scope.teams.push($scope.thisTeam);
+		            							$scope.data.dsCurrentTeam = result.team;
+		            							dbService.addTeam( $scope.data.dsCurrentTeam ).then( function(result){
+		            								console.log("[teamsManagerController] - addTeam: ", $scope.data.dsCurrentTeam);
+		            								$scope.data.dsTeams.push($scope.data.dsCurrentTeam);
 		            							} );
 		            						}
 		            					}
 		            				);
 	            }
 			); // End .then()
-		//dbService.addTeam();
 	}
 	$scope.addTeam();
 	
@@ -110,9 +114,10 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 		            					{
 		            						if( result.op )
 		            						{
-		            							$scope.team = result.team;
+		            							thisTeam = result.team;
 		            							dbService.updateTeam( result.team ).then( function(result){
-		            								console.log("[teamsManagerController] - editTeam - updates: ", $scope.thisTeam);
+		            								updateTeamInMemory(thisTeam);
+		            								console.log("[teamsManagerController] - editTeam - updates: ", thisTeam);
 		            							});
 		            						}
 		            					}
@@ -134,13 +139,14 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 	{
 		if( typeof team == 'undefined')
 			return;
-		$scope.thisTeam = team;
-		console.log("## [teamsManagerController] -> (deleteTeam) Requested to delete team: ", $scope.thisTeam);
+
+		$scope.data.dsCurrentTeam = team;
+		console.log("## [teamsManagerController] -> (deleteTeam) Requested to delete team: ", $scope.data.dsCurrentTeam);
 		
 		ModalService.showModal({
 			templateUrl: 'delTeamConfirmModal.html',
 			controller: "DeleteTeamController",
-            inputs: { team : team}
+            inputs: { team : $scope.data.dsCurrentTeam }
 		}).then(	function(modal) 
 				{
 		            modal.element.modal();
@@ -148,9 +154,9 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 		            					{
 		            						if( result.op )
 		            						{
-		            							dbService.deleteTeam( $scope.thisTeam ).then( function(result){
-		            								console.log("[teamsManagerController] - deleteTeam - deleted: ", $scope.thisTeam);
-		            								delTeamFrmMemory($scope.thisTeam);
+		            							dbService.deleteTeam( $scope.data.dsCurrentTeam ).then( function(result){
+		            								console.log("[teamsManagerController] - deleteTeam - deleted: ", $scope.data.dsCurrentTeam);
+		            								delTeamFrmMemory($scope.data.dsCurrentTeam);
 		            							});
 		            						}
 		            					}
@@ -189,18 +195,18 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 	 * Params in:	team: Updated team info
 	 * Return:		
 	 **********************************************************/
-/*	function updateTeamInMemory(team)
+	function updateTeamInMemory(team)
 	{
-		for( var i=0; i<$scope.teams.length; i++ )
+		for( var i=0; i<$scope.data.dsTeams.length; i++ )
 		{
-			if( team.id == $scope.teams[i].id )
+			if( team.id == $scope.data.dsTeams[i].id )
 			{
-				$scope.teams[i].name = team.name;
-				$scope.teams[i].lrcode = team.lrcode;
+				$scope.data.dsTeams[i].name = team.name;
+				$scope.data.dsTeams[i].lrcode = team.lrcode;
 				break;
 			}
 		}
-	}*/
+	}
 	
 	/**********************************************************
 	 * Name:		delTeamFrmMemory()
@@ -212,31 +218,15 @@ mmModule.controller('teamsManagerController', function ($scope,$http,$attrs, dbS
 	 **********************************************************/
 	function delTeamFrmMemory(team)
 	{
-		for( var i=0; i<$scope.teams.length; i++ )
+		for( var i=0; i<$scope.data.dsTeams.length; i++ )
 		{
-			if( team.id == $scope.teams[i].id )
+			if( team.id == $scope.data.dsTeams[i].id )
 			{
 				// Found the team, remove it from the array
-				$scope.teams.splice(i,1);
-				$scope.thisTeam = null;
+				$scope.data.dsTeams.splice(i,1);
 				break;
 			}
 		}
 	}
-	
-	/**********************************************************
-	 * Name:		hasPermission()
-	 * Description:	Check the user's permission to perform the
-	 * 				given action
-	 * Scope:		Externally accessible
-	 * Params in:	action: the action being requested
-	 * Return:		true or false depending on the permissions
-	 **********************************************************/
-	$scope.hasPermission = function(action, params)
-	{
-		log.debug("## [teamsManagerController]->hasPermission("+action+","+params+")");
-		return mmService.hasPermission(action, params);
-	}
-	$scope.hasPermission();
 
-});
+}]);

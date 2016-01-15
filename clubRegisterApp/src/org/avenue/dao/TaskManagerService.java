@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
@@ -61,7 +59,7 @@ public class TaskManagerService {
 					    member.setAddress(rs.getString("address")); 
 					    member.setPhone(rs.getString("phone"));
 					    member.setPhone(rs.getString("phone2"));
-					    member.setDob(rs.getString("dob"));
+					    member.setDob(convertSqlDateToString((rs.getDate("dob"))));
 					    member.setEmail(rs.getString("email"));
 					    member.setAmount(rs.getString("amount"));
 					    member.setTeam(rs.getInt("team"));
@@ -135,7 +133,7 @@ public class TaskManagerService {
 				    member.setPhone(rs.getString("phone"));
 				    member.setPhone2(rs.getString("phone2"));
 				    member.setEmail(rs.getString("email"));
-				    member.setDob(rs.getString("dob"));
+				    member.setDob(convertSqlDateToString(rs.getDate("dob")));
 				    member.setAmount(rs.getString("amount"));
 				    member.setTeam(rs.getInt("team"));
 				    member.setTeam2(rs.getInt("team2"));
@@ -289,6 +287,8 @@ public class TaskManagerService {
 	 
 	 public void updateMemberDetails(Member member)
 	 {
+		 java.sql.Date sqlDate = null;
+		 sqlDate = convertStringToSqlDate(member.getDob());
 		 
 		  try {
 			   Connection connection = DBUtility.getConnection();
@@ -300,7 +300,7 @@ public class TaskManagerService {
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
 			   preparedStatement.setString(4, member.getPhone2());
-			   preparedStatement.setString(5, member.getDob());
+			   preparedStatement.setDate(5, sqlDate);
 			   preparedStatement.setString(6, member.getEmail());
 			   preparedStatement.setString(7, member.getAmount());
 			   preparedStatement.setString(8, member.getReceiptid());
@@ -399,6 +399,8 @@ public class TaskManagerService {
 	 
 	 public void addMember(Member member)
 	 {
+		 java.sql.Date sqlDate = null;
+		 sqlDate = convertStringToSqlDate(member.getDob());
 		 
 		  try {
 			  Connection connection = DBUtility.getConnection();
@@ -412,7 +414,7 @@ public class TaskManagerService {
 			   preparedStatement.setString(3, member.getPhone());
 			   preparedStatement.setString(4, member.getPhone2());
 			   preparedStatement.setString(5, member.getEmail());
-			   preparedStatement.setString(6, member.getDob());
+			   preparedStatement.setDate(6, sqlDate);
 			   preparedStatement.setString(7, member.getAmount());
 			   preparedStatement.setInt(8, member.getTeam());
 			   preparedStatement.setInt(9, member.getTeam2());
@@ -457,7 +459,6 @@ public class TaskManagerService {
 		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
 		
 		try {
-			Connection connection = DBUtility.getConnection();
 			iter = upload.getItemIterator(request);
 		
 			 while (iter.hasNext()) 
@@ -505,7 +506,6 @@ public class TaskManagerService {
 		}
 		
 		submitNewsStory(ns);
-		DBUtility.closeConnection();
 	 }
 	 
 	 public void addParamToNS( NewsStory ns, String paramName, String paramValue )
@@ -609,7 +609,7 @@ public class TaskManagerService {
 				   SessionPlan sp = new SessionPlan();
 				   sp.setSessionId(rs.getInt("sessionId"));
 				   sp.setTeamId(rs.getInt("teamId"));
-				   sp.setDate(rs.getString("date"));
+				   sp.setDate(convertSqlDateToString(rs.getDate("date")));
 				   sp.setDetails(rs.getString("details"));
 	
 				   sessions.add(sp);
@@ -654,7 +654,7 @@ public class TaskManagerService {
 			  Connection connection = DBUtility.getConnection();
 			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO sessionPlan ( teamId, date, details ) VALUES (?, ?, ?)");
 			  preparedStatement.setInt(1, session.getTeamId());
-			  preparedStatement.setString(2, session.getDate());
+			  preparedStatement.setDate(2, convertStringToSqlDate(session.getDate()));
 			  preparedStatement.setString(3, session.getDetails());
 			  preparedStatement.executeUpdate();
 		
@@ -1054,7 +1054,6 @@ public class TaskManagerService {
 	 public List<Worker> getAllUsers() {
 		  log.debug("## -> getAllUsers()");
 		  List<Worker> users = new ArrayList<Worker>();
-		  DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		  
 		  try {
 			  	   Connection connection = DBUtility.getConnection();
@@ -1071,8 +1070,8 @@ public class TaskManagerService {
 					    user.setAddress(rs.getString("address")); 
 					    user.setPhone(rs.getString("phone"));
 					    user.setEmail(rs.getString("email"));
-					    //Object s = rs.getDate("dob")!=null ? rs.getDate("dob") : "01/01/1900";
-					    user.setDob(df.format(rs.getDate("dob")));
+					    //user.setDob(df.format(rs.getDate("dob")));
+					    user.setDob(convertSqlDateToString(rs.getDate("dob")));
 					    user.setAvatar(rs.getString("avatar"));
 					    users.add(user);
 					    log.trace("##    Adding user to list: " + user);
@@ -1115,16 +1114,7 @@ public class TaskManagerService {
 
 	 public void addUser(Worker user)
 	 {
-		 java.sql.Date sqlDate = null;
-         SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
-         try {
-			Date juDate = dateFormater.parse(user.getDob());
-			sqlDate = new java.sql.Date(juDate.getTime());
-		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
+		 java.sql.Date sqlDate = convertStringToSqlDate(user.getDob());
 
 		  try {
 			  Connection connection = DBUtility.getConnection();
@@ -1169,6 +1159,39 @@ public class TaskManagerService {
 		  
 		  DBUtility.closeConnection();
 		  return;
+	 }
+	 
+	 public java.sql.Date convertStringToSqlDate( String sDate )
+	 {
+		 java.sql.Date sqlDate = null;
+		 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		 
+		 Date parsed = null;
+		try {
+			if( sDate != null && !sDate.isEmpty() )
+				parsed = df.parse(sDate);
+			else
+				parsed = df.parse("01/01/1900");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sqlDate = new java.sql.Date(parsed.getTime());
+		 
+		 return sqlDate;
+	 }
+	 
+	 public String convertSqlDateToString( java.sql.Date sqlDate )
+	 {
+		 String sDate = null;
+		 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		 
+		 if( sqlDate == null )
+			 sDate = "";
+		 else
+			 sDate = df.format(sqlDate);
+		 
+		 return sDate;
 	 }
 	 
 	 class Role

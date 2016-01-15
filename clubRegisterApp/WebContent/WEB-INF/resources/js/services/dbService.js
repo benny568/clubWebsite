@@ -1,4 +1,4 @@
-pubModule.service('dbService', function($http, $q, promiseTracker) 
+mmModule.service('dbService', function($http, $q, promiseTracker) 
 {
 	
 	return({

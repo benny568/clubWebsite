@@ -1,4 +1,4 @@
-mmModule.controller('EditUserController', function($scope, close) {
+mmModule.controller('EditUserController', ['$scope', 'close', function($scope, close) {
 	
 	$scope.modalHeader = "Edit Admin User";
 	$scope.newUser = {};
@@ -64,4 +64,4 @@ mmModule.controller('EditUserController', function($scope, close) {
 		if( u.super )
 			r.roles.push("ROLE_SUPER");
 	 }
-});
+}]);

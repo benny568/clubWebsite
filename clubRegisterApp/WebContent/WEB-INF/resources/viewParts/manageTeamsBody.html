@@ -8,7 +8,7 @@
 				<div class="panel" style="max-width:500px;margin-left:10%;">
 					<div class="panel-heading avenue-heading">
 						Teams:
-						<div  ng-if="hasPermission('ADD_TEAM','')" style="float:right; align:bottom;">
+						<div  ng-if="data.hasPermission('ADD_TEAM','')" style="float:right; align:bottom;">
 							<button type="button" class="btn btn-warning btn-xs" ng-click="addTeam('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Team</button>
 						</div>
 					</div>
@@ -22,7 +22,7 @@
 						<div class="row">
 							<div class="light-line"></div>
 						</div>
-						<div ng-repeat="team in teams">
+						<div ng-repeat="team in data.dsTeams">
 							<div class="row">
 								<div class="col-md-1">{{$index+1}}</div>
 								<div class="col-md-4">{{team.name}}</div>

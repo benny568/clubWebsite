@@ -1,4 +1,4 @@
-mmModule.controller('AddUserController', function($scope, close) {
+mmModule.controller('AddUserController', ['$scope', 'close', function($scope, close) {
 	
 	$scope.newUser = {name: "", password: "", address: "", phone: "", email:"", avatar: "", enabled:1, roles: [""], permissions: {}};
 	$scope.modalHeader = "Add Admin User";
@@ -32,4 +32,4 @@ mmModule.controller('AddUserController', function($scope, close) {
 		if( u.super )
 			r.roles.push("ROLE_SUPER");
 	 }
-});
+}]);

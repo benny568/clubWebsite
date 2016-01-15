@@ -41,7 +41,8 @@
 		<script type="text/javascript" src="resources/js/libs/require.js"></script>
 		
 		<!-- My app -->
-		<script type="text/javascript" src="resources/js/app.js"></script>
+		<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/datePickerController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/passwdChangeController.js"></script>
@@ -52,11 +53,19 @@
 		<script type="text/javascript" src="resources/js/controllers/addUserController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/editUserController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/deleteUserController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/datePickerController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addMemberController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/deleteMemberController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/teamsManagerController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/addTeamController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/deleteTeamController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/teamManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/userManagementService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
+		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayPrivate.js"></script>
+		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResultsPrivate.js"></script>
 		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		
 		<!-- <script type="text/javascript" src="resources/js/leagueRepublic.js"></script> -->
@@ -76,7 +85,7 @@
 		</script>
 		
 	</head>  <!-- HEAD END -->
-	<body ng-controller="memberManagerController">
+	<body>
 	
 		<!-- (1) Banner across the top & the menu -->
 		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>

@@ -1,18 +1,8 @@
-var lrcode; // Needed for API calls to LeagueRepublic site
 var serverMode = {
 	LOCAL: 0, // Running locally
 	REMOTE: 1 // Running on Mochahost server
 };
-var itsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
 var _home = '';
-var thisUser = {};
-var gTeams = [];
-var gTeamId = 0;
-var gTeamName = '';
-var gTeamMembers={};
-var gThisUser = {};
-var gOpUser = {};
-var gNewsStories = [];
 
 var thisServerMode = serverMode.LOCAL;
 
@@ -25,13 +15,23 @@ var bcAppender = new log4javascript.BrowserConsoleAppender();
 bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
+
+/*log4javascript.Level.ALL
+log4javascript.Level.TRACE
+log4javascript.Level.DEBUG
+log4javascript.Level.INFO
+log4javascript.Level.WARN
+log4javascript.Level.ERROR
+log4javascript.Level.FATAL
+log4javascript.Level.OFF*/
+log.setLevel(log4javascript.Level.ALL);
+
 // Test the logger
-log.debug("** Member Manager Module Loaded....");
-log.trace("** TRACE: Member Manager Module Loaded....");
+log.debug("** Private Module Loaded....");
 /********************************************/
 
 
-var mmModule = angular.module('memberManagerApp', ['ngRoute','ngAnimate', 'ngResource', 'ngCookies', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
+var mmModule = angular.module('memberManagerApp', ['ngRoute', 'angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
 
 mmModule.config(function($routeProvider,$httpProvider) {
 	
@@ -52,39 +52,40 @@ mmModule.config(function($routeProvider,$httpProvider) {
 	}
 	
 	$routeProvider
-	// route for the home page
-    .when('/', {
-        templateUrl : 'resources/viewParts/homeBody.html',
-        controller  : 'memberManagerController'
-    })
     // route for the admin home page
-    .when('/adminHome', {
+    .when('/', {
         templateUrl : 'resources/viewParts/adminHomeBody.html',
-        controller  : 'adminHomeController'
+        controller  : 'dummyController'
     })
 
     // route for the AdminOverview page
     .when('/AdminOverview', {
         templateUrl : 'resources/viewParts/adminOverviewBody.html',
-        controller  : 'adminOverviewController'
+        controller  : 'dummyController'
     })
 
     // route for the AdminTutorials page
     .when('/AdminTutorials', {
         templateUrl : 'resources/viewParts/adminTutorialsBody.html',
-        controller  : 'adminOverviewController'
+        controller  : 'dummyController'
     })
 
     // route for the MemberRegister page
     .when('/MemberRegister', {
         templateUrl : 'resources/viewParts/memberRegisterBody.html',
-        controller  : 'adminOverviewController'
+        controller  : 'memberManagerController'
+    })
+    
+    // route for the MemberRegister page
+    .when('/AllMembersAdmin', {
+        templateUrl : 'resources/viewParts/allMembersAdminBody.html',
+        controller  : 'memberManagerController'
     })
 
     // route for the ManageTeams page
     .when('/ManageTeams', {
         templateUrl : 'resources/viewParts/manageTeamsBody.html',
-        controller  : 'adminOverviewController'
+        controller  : 'teamsManagerController'
     })
 
     // route for the UploadNewsStory page
@@ -107,12 +108,7 @@ mmModule.config(function($routeProvider,$httpProvider) {
     // route for the ManageTeam page
     .when('/ManageTeam/:mode/:team', {
         templateUrl : 'resources/viewParts/manageTeamBody.html',
-        controller  : 'memberManagerController'
-    })
-    // route for the ManageTeam page
-    .when('/TeamView/:mode/:team', {
-        templateUrl : 'resources/viewParts/teamViewBody.html',
-        controller  : 'memberManagerController'
+        controller  : 'teamManagementController'
     })
     // route for the UsersAdmin page
     .when('/UsersAdmin', {
@@ -146,13 +142,21 @@ mmModule.run(function(defaultErrorMessageResolver) {
 	});
 });
 
-mmModule.controller('adminHomeController', function($scope, $routeParams) {
-	console.log("===== mode is: " + $routeParams.mode);
-});
+mmModule.controller('dummyController', ['$scope', '$log', 'privateDataService', function($scope, $log, privateDataService) {
+	$log.info("->dummyController..");
+	$scope.data = privateDataService;
 
-mmModule.controller('adminOverviewController', function($scope) {
-	console.log("######## adminOverviewController() ###########");
-});
+}]);
+
+mmModule.controller('adminHomeController', ['$scope', '$log', 'privateDataService', function($scope, $log, privateDataService) {
+	$log.info("->adminHomeController..");
+	$scope.data = privateDataService;
+}]);
+
+mmModule.controller('adminOverviewController', ['$scope', '$log', 'privateDataService', function($scope, $log, privateDataService) {
+	$log.info("->adminOverviewController..");
+	$scope.data = privateDataService;
+}]);
 
 mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
 	$scope.news = {};
@@ -170,23 +174,21 @@ mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function
 
 }]);
 
-mmModule.controller('ModalController', function($scope, member, modalType, close) {
+mmModule.controller('ModalController', ['$scope', 'privateDataService', 'member', 'modalType', 'close', function($scope,privateDataService, member, modalType, close) {
 	
-	$scope.thisMember = jQuery.extend({},member);
-	$scope.itsPosition = itsPosition;
-	$scope.teams = gTeams;
+	$scope.data = privateDataService;
 	$scope.modalHeader = modalType;
+	
+	$scope.data.dsCurrentMember = jQuery.extend({},member);
 
-	 $scope.close = function(save) {
-		if(save)
-		{
-			 // The datepicker is sending in a string that's too long so cut it
-			 //$scope.thisMember.dob = truncateDate($scope.thisMember.dob);
-			 close($scope.thisMember, 500); // close, but give 500ms for bootstrap to animate
-		}
-		 else
-			 close(member, 500);
-	 };
+	$scope.close = function(save) {
+    if(save)
+	{
+		close($scope.data.dsCurrentMember, 500); // close, but give 500ms for bootstrap to animate
+	}
+	else
+		close(member, 500);
+	};
 	 
 	 function truncateDate( date )
 	 {
@@ -194,10 +196,11 @@ mmModule.controller('ModalController', function($scope, member, modalType, close
 			 return date.slice(0,10);
 	 }
 
-});
+}]);
 
-mmModule.controller('editTeamNBModalController', function($scope, team, close) {
-	
+mmModule.controller('editTeamNBModalController', ['$scope', 'team', 'close', 'privateDataService', function($scope, team, close, privateDataService) {
+	$log.info("->editTeamNBModalController..");
+	$scope.data = privateDataService;
 	$scope.team = jQuery.extend({},team);
 
 	 $scope.close = function(save) {
@@ -207,31 +210,9 @@ mmModule.controller('editTeamNBModalController', function($scope, team, close) {
 			 close(team, 500);
 	 };
 
-	});
+}]);
 
-mmModule.controller('AddMemberController', function($scope, close) {
-	
-	$scope.thisMember = {name: "", address: "", phone: "", phone2: "", email:"", amount: 0, team: 0, position: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
-	var mem = $scope.thisMember;
-	$scope.itsPosition = itsPosition;
-	$scope.teams = gTeams;
-	
-	$scope.close = function(add, mem) {
-		close({op:add,member:mem}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-mmModule.controller('DelMemberController', function($scope, member, modalHeader, close) {
-	
-	$scope.thisMember = member;
-	$scope.modalHeader = modalHeader;
-	
-	$scope.close = function(del) {
-		close(del, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
-
-mmModule.controller('newsController', function ($scope,$http, dbService,ModalService) {
+mmModule.controller('newsController', ['$scope', '$http', 'ModalService', 'dbService', function ($scope,$http, ModalService, dbService) {
 	
 	console.log("## [newsController]...");
 	$scope.stories = new Array();
@@ -244,36 +225,19 @@ mmModule.controller('newsController', function ($scope,$http, dbService,ModalSer
 				$scope.stories = stories;
 		});
 	}
-});
-
-mmModule.controller('AddTeamController', function($scope, close) {
-	
-	$scope.thisTeam = {name: "", lrcode: 0};
-	var team = $scope.thisTeam;
-	
-	$scope.close = function(add, team) {
-		console.log("## [AddTeamController] team is: ", $scope.thisTeam);
-		close({op:add,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
+}]);
 
 
-mmModule.controller('EditTeamController', function($scope, team, close) {
+mmModule.controller('EditTeamController', ['$scope', 'team', 'close', 'privateDataService', function($scope, team, close, privateDataService) {
+	$log.info("->EditTeamController..");
+	$scope.data = privateDataService;
 	$scope.thisTeam = team;
 	
 	$scope.close = function(update, team) {
-		console.log("## [EditTeamController] team is: ", $scope.thisTeam);
+		$log.log("## [EditTeamController] team is: ", $scope.thisTeam);
 		close({op:update,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
 	 };
-});
+}]);
 
-mmModule.controller('DeleteTeamController', function($scope, team, close) {
-	$scope.thisTeam = team;
-	
-	$scope.close = function(del, team) {
-		console.log("## [DeleteTeamController] team to delete is: ", $scope.thisTeam);
-		close({op:del,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-});
 
 

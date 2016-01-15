@@ -17,12 +17,12 @@
 						</div>
 						<div class="col-md-2">
 							<div  style="float:right; align:bottom;">
-								<button type="button" class="btn btn-warning btn-xs" onclick="window.location.href='#AllMembersAdmin/All'" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">All Members</button>
+								<button type="button" class="btn btn-warning btn-xs" onclick="window.location.href='#AllMembersAdmin'" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">All Members</button>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-							<div ng-repeat="team in teams">
+							<div ng-repeat="team in data.dsTeams">
 								<div class="panel">
 									<div class="panel-heading avenue-heading" style="min-height:35px;">
 										<div class="col-md-10 teamHdr" ng-hide="showArray[team.id]"><span class="glyphicon glyphicon-triangle-bottom" ng-click="getMembers4team(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
@@ -39,24 +39,23 @@
 											    <div class="col-md-2 tblHdr">Phone</div>
 											    <div class="col-md-2 tblHdr">Operations</div>
 											</div> <!-- end of row -->
-											<div ng-repeat="member in TeamMembers[team.id]" class="row light-line">							    
+											<div ng-repeat="member in data.dsTeamMembers[team.id]" class="row light-line">							    
 									    		<div class="col-md-3">{{member.name}}</div>
 												<div class="col-md-5">{{member.address}}</div>
 												<div class="col-md-2">{{member.phone}}</div>
 									    		<div class="col-md-2">
-											    	<i ng-show="member.amount" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
-											    	<i ng-hide="member.amount" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
+											    	<i ng-show="(member.amount>0)" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
+											    	<i ng-hide="(member.amount>0)" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
 											    	<i ng-click="editMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
 											    	<i ng-click="deleteMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
 											    </div>	
 										    </div> <!-- end row -->
 										</div> <!-- end ng-show -->
 									</div> <!-- end panel body -->
-								</div> <!-- end of panel -->"				
+								</div> <!-- end of panel -->			
 							</div> <!-- End of ng-repeat -->
 						</div> <!-- end row -->
-					</div>  <!-- End of memberManagerController -->
-		
-						</div>
+					</div>  <!-- End of memberManagerController -->	
+				</div>
 			</div> <!-- end row -->
 		</div> <!-- end of container -->

@@ -3,32 +3,70 @@
             <div class="modal-content avenue-body">
               <div class="modal-header avenue-heading">
               	<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add Team Member</h4>
+                <h4 class="modal-title">Add Team</h4>
               </div>
               <div class="modal-body">
                 <form name="form" novalidate>
-                	<div class="row">
-                		<div class="col-md-9">
-		                	<label for="name">Team Name:</label>
-		                	<input type="text" class="form-control" id="name" name="name" data-ng-model="thisTeam.name" placeholder="Enter Team Name" ng-minlength="1" ng-maxlength="30" required/>
-		                	<div ng-show="form.$submitted || form.name.$touched">
-						      <div ng-show="form.name.$error.required" style="color:red">You must enter the name of the team.</div>
-						      <div ng-show="form.name.$error.minlength" style="color:red">You must enter the name of the team.</div>
-						      <div ng-show="form.name.$error.maxlength" style="color:red">You've exceeded the maximum length for a team name of 30.</div>
-						    </div>
-		                	<label for="lrcode">League Republic Code:</label>
-		                	<input type="number" integer class="form-control" name="lrcode" id="lrcode" data-ng-model="thisTeam.lrcode" placeholder="Enter Leage Republic Code"/>
-		                	<div ng-show="form.$submitted || form.name.$touched">
-						      <div ng-show="form.lrcode.$invalid" style="color:red">The value is not a valid integer!</div>
-						    </div>
-		                	<div style="min-height:100px;"></div>
-                		</div>
+
+                 	<div class="row a-modal-row">
+                 		<!-- NAME -->	
+						<div class="col-md-5">
+							<div class="form-group">
+								<label for="name">Team Name:</label>
+								<input 	type="text"
+										class="form-control"
+										ng-model="thisTeam.name"
+										id="name"
+										required="required"
+										placeholder="Enter team name" >
+							</div>
+						</div> <!-- end col --> 
+				    
                 	</div> <!-- end row -->
-                </form>
+                	<div class="row a-modal-row">
+                	
+                		<!-- League Republic ID -->	
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="lrcode">LR Id:</label>
+								<input 	type="text"
+										class="form-control"
+										ng-model="thisTeam.lrcode"
+										id="lrcode"
+										placeholder="Enter id" >
+							</div>
+						</div> <!-- end col -->
+						
+                		<!-- League Republic Fixtures code -->	
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="lrFixturesCode">LR Fixtures Id:</label>
+								<input 	type="text"
+										class="form-control"
+										ng-model="thisTeam.lrFixturesCode"
+										id="lrFixturesCode"
+										placeholder="Enter id" >
+							</div>
+						</div> <!-- end col -->
+						
+						<!-- League Republic Results code -->	
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="lrResultsCode">LR Results Id:</label>
+								<input 	type="text"
+										class="form-control"
+										ng-model="thisTeam.lrResultsCode"
+										id="lrResultsCode"
+										placeholder="Enter id" >
+							</div>
+						</div> <!-- end col -->
+                	</div> <!-- end row -->
+                	
+                </form> <!-- End form -->
               </div>
               <div class="modal-footer">
-                <button type="button" ng-click="close(true)" class="btn btn-default" data-dismiss="modal">Save</button>
-                <button type="button" ng-click="close(false)" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" ng-click="close(true, thisTeam)" class="btn btn-success" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false, thisTeam)" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 
               </div>
             </div>

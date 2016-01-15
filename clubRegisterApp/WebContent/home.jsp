@@ -25,11 +25,11 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 		
 		<!-- AngularJS -->
-		<script type="text/javascript" src="resources/js/libs/angular.js"></script>
-		<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
-		<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
-		<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
-		<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-route.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-resource.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-animate.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-cookies.js"></script>
 		<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
 		<script type="text/javascript" src="resources/js/libs/jcs-auto-validate.min.js"></script>
 		<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
@@ -42,15 +42,27 @@
 		<!-- log4javasctipt -->
 		<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
 		
+		<script type="text/javascript" src="resources/js/libs/leagueRepublicScript.js"></script>
+		
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/modules/publicApp.js"></script>
+		<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/sponsorController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/merchandiseController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/clubHistoryController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/academyController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamViewController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/tableViewController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/farViewController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/resultsViewController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/messageUsController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/newsController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/blankController.js"></script>
 		<script type="text/javascript" src="resources/js/services/sessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
+		<script type="text/javascript" src="resources/js/services/mailService.js"></script>
+		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplay.js"></script>
+		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResults.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		

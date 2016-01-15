@@ -49,14 +49,6 @@ public class TaskManagerController {
 	public TaskManagerController(){}
 	
 	TaskManagerService taskmanagerservice=new TaskManagerService();
-	
-	 @RequestMapping(value="/admin/members",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<Member> getAllTasks() {
-		 log.debug("## [TaskManagerController]->getAllTasks()..");
-	  List<Member> members=taskmanagerservice.getAllMembers();
-	  return members;
-	
-	 }
 
 	 @RequestMapping(value="/admin/team/{teamId}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<Member> getMembersByTeam(@PathVariable int teamId) {
@@ -110,6 +102,19 @@ public class TaskManagerController {
 		 taskmanagerservice.submitNewsStory( newsStory );	
 	 }
 	 
+	 @RequestMapping(value="/admin/members",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<Member> getAllTasks() {
+		 log.debug("## [TaskManagerController]->getAllTasks()..");
+	  List<Member> members=taskmanagerservice.getAllMembers();
+	  return members;
+	
+	 }
+	 
+	 @RequestMapping(value="/admin/member",method = RequestMethod.POST)
+	 public void addMember(@RequestBody Member member) {	 
+		 taskmanagerservice.addMember( member );	
+	 }
+	 
 	 @RequestMapping(value="/admin/member",method = RequestMethod.PUT)
 	 public void updateMemberDetails(@RequestBody Member member) {	 
 		 taskmanagerservice.updateMemberDetails( member );
@@ -129,11 +134,6 @@ public class TaskManagerController {
 		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
 		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
 		 return stories;
-	 }
-	 
-	 @RequestMapping(value="/admin/member",method = RequestMethod.POST)
-	 public void addMember(@RequestBody Member member) {	 
-		 taskmanagerservice.addMember( member );	
 	 }
 	 
 	 @RequestMapping(value="/admin/upload",method = RequestMethod.POST)

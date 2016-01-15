@@ -1,4 +1,4 @@
-pubModule.controller('sponsorController', function ($scope) 
+pubModule.controller('sponsorController', ['$scope', function ($scope) 
 {
 	log.debug("## Loading sponsorController...");
 	
@@ -7,4 +7,4 @@ pubModule.controller('sponsorController', function ($scope)
 						{name:"Ennis Cabs", image: "resources/images/adverts/ec.png"}
 					];
 
-});
+}]);

@@ -1,4 +1,4 @@
-pubModule.controller('MerchandiseController', function ($scope) 
+pubModule.controller('MerchandiseController', ['$scope', function ($scope) 
 {
 	log.debug("## Loading merchandiseController...");
 	
@@ -16,4 +16,4 @@ pubModule.controller('MerchandiseController', function ($scope)
 					{name:"Combo 2", image:"resources/images/merchandise/combo2.png", description:"Kids 45E (YXS-XXS), Adult 55E (XS-S-M-L-XL)", width:"700", height:"300"}
 					];
 
-});
+}]);

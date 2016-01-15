@@ -10,34 +10,34 @@
 						<div class="col-md-6">
 			    			<div class="panel">
 				    			<div class="panel-heading avenue-heading">
-				    				My Profile: {{thisUser.name}}
+				    				My Profile: {{data.dsCurrentUser.name}}
 				    			</div>
 				    			<div class="panel-body avenue-body">
 				    				<div>
-										<img src="{{thisUser.avatar}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
-										<span class="avenue-yellow-text" style="font-size:20px;">{{thisUser.name}}</span>
+										<img src="{{data.dsCurrentUser.avatar}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="30%"/>
+										<span class="avenue-yellow-text" style="font-size:20px;">{{data.dsCurrentUser.name}}</span>
 									</div>
 								    <form name="profileForm">
 								    	<div class="row">
 								    		<div class="col-md-12">
 							                	<label for="address" style="padding-top:10px;">Address:</label>
-							                	<input type="text" class="form-control" id="address" data-ng-model="thisUser.address" value="{{thisUser.address}}"/>
+							                	<input type="text" class="form-control" id="address" data-ng-model="data.dsCurrentUser.address" value="{{data.dsCurrentUser.address}}"/>
 							                	<label for="email" style="padding-top:10px;">email:</label>
-							                	<input type="email" class="form-control" id="email" data-ng-model="thisUser.email" value="{{thisUser.email}}"/>
+							                	<input type="email" class="form-control" id="email" data-ng-model="data.dsCurrentUser.email" value="{{data.dsCurrentUser.email}}"/>
 											</div>
 					                	</div>
 					                	<div class="row">
 					                		<div class="col-md-6">
 							                	<label for="phone" style="padding-top:10px;">Phone:</label>
-							                	<input type="text" class="form-control" id="phone" data-ng-model="thisUser.phone" value="{{thisUser.phone}}"/>
+							                	<input type="text" class="form-control" id="phone" data-ng-model="data.dsCurrentUser.phone" value="{{data.dsCurrentUser.phone}}"/>
 						                	</div>
 						                	<div class="col-md-6">
 							                	<label for="dob" style="padding-top:10px;">Date of Birth:</label>
-							                	<input type="text" class="form-control" id="dob" data-ng-model="thisUser.dob" value="{{thisUser.dob}}"/>
+							                	<input type="text" class="form-control" id="dob" data-ng-model="data.dsCurrentUser.dob" value="{{data.dsCurrentUser.dob}}"/>
 					                		</div>
 					                	</div>
 					                	<label for="photo" style="padding-top:10px;">Avatar:</label>
-				                		<input type="text" class="form-control" id="avatar" data-ng-model="thisUser.avatar" value="{{thisUser.avatar}}"/>
+				                		<input type="text" class="form-control" id="avatar" data-ng-model="data.dsCurrentUser.avatar" value="{{data.dsCurrentUser.avatar}}"/>
 					                	
 					                	<div class="panel-footer avenue-body">
 							                <button type="button" ng-click="close(true)" class="btn btn-success">Save</button>

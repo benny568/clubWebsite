@@ -1,5 +1,5 @@
 
-pubModule.controller('teamViewController', function ($scope, $http, $routeParams, dataService) 
+pubModule.controller('teamViewController', ['$scope', '$http', '$routeParams', 'dataService', function ($scope, $http, $routeParams, dataService) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
@@ -12,12 +12,40 @@ pubModule.controller('teamViewController', function ($scope, $http, $routeParams
 	.then( function( result )
 	{
 		$scope.team = result.data;
+		$scope.data.dsCurrentTeam = result.data;
 		return $http.get(urlmembers);
 	})
 	.then(function(result) 
 	{
-		dataService.dsTeamMembers = result.data;
+		$scope.data.dsTeamMembers = result.data;
 		console.log("## Got Team details: ", result.data);
+	})
+	.then( function(data)
+	{
+		// (3) Get the League table from the League Republic site
+		$scope.lrcode = $scope.data.dsCurrentTeam.lrcode;
+		console.log($scope.lrcode);
+		
+		var url = 'http://api.leaguerepublic.com/l/js/cs1.html?cs=' + $scope.data.dsCurrentTeam.lrcode;
+		
+		if( window[ "numCodeSnippets" ] == undefined )
+		{
+			window[ "numCodeSnippets" ] = 1;
+		} 
+		else 
+		{
+			window[ "numCodeSnippets" ]++;
+		};
+
+		if( window["numCodeSnippets"] <= 12 )
+		{
+			var randno = Math.random();
+			var el = document.createElement( "script" );
+			el.src = "http://api.leaguerepublic.com/l/js/cs1.html?cs=" + $scope.data.dsCurrentTeam.lrcode;// + "&random=" + randno;
+			el.type = "text/javascript";
+			document.getElementsByTagName("head")[0].appendChild(el);
+			console.log(el);
+		};
 	}); // End of get()
 	
 	
@@ -71,4 +99,4 @@ pubModule.controller('teamViewController', function ($scope, $http, $routeParams
 		
 	}
 	
-});
+}]);

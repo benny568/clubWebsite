@@ -1,5 +1,5 @@
 
-pubModule.controller('academyController', function ($scope,$http, dbService) 
+pubModule.controller('academyController', ['$scope', '$http', function ($scope,$http) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
@@ -11,4 +11,4 @@ pubModule.controller('academyController', function ($scope,$http, dbService)
 		console.log("## First News Story: ", $scope.news[0]);//$scope.news.title);
 	}); // End of get()
 	
-});
+}]);

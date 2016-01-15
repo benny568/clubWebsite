@@ -1,4 +1,4 @@
-mmModule.controller('DatePickerController', function ($scope) {
+mmModule.controller('DatePickerController', ['$scope', function ($scope) {
   	$scope.today = function() {
 	    $scope.dt = new Date();
 	  };
@@ -25,7 +25,8 @@ mmModule.controller('DatePickerController', function ($scope) {
 
 	  $scope.dateOptions = {
 	    formatYear: 'yy',
-	    startingDay: 1
+	    startingDay: 1,
+	    initDate: new Date('01-01-1900')
 	  };
 
 	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
@@ -66,4 +67,4 @@ mmModule.controller('DatePickerController', function ($scope) {
 
 	    return '';
 	  };
-	});
+}]);
