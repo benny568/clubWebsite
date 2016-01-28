@@ -1,10 +1,20 @@
-mmModule.controller('usersController', ['$scope', '$http', 'umService', 'privateDataService', function ($scope, $http, umService, privateDataService) 
+mmModule.controller(	'usersController', 
+						[
+						 	'$scope', 
+						 	'$http', 
+						 	'umService', 
+						 	'DataService', 
+						 	function(	$scope, 
+						 				$http, 
+						 				umService, 
+						 				DataService
+						 			) 
 {	
 	log.debug("## Loading usersController...");
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	
 	$scope.dateOptions = {
 			formatYear: 'yy',

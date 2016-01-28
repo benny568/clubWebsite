@@ -7,15 +7,15 @@
 					</div>
 					<div class="panel-body avenue-body">
 			
-				    <carousel interval="9000" style="float:left;width:100%;height:auto;">
-				    	<slide ng-repeat="item in items">
+				    <uib-carousel interval="9000" style="float:left;width:100%;height:auto;">
+				    	<uib-slide ng-repeat="item in items">
 				      		<div class="merchandise-banner">{{item.name}}</div>
 				      		<div class="merchandise-background">
 				      			<img ng-src="{{item.image}}" width="{{item.width}}" height="{{item.height}}" class="merchandise-image">
 				      		</div>
 				          	<div class="merchandise-banner">{{item.description}}</div>
-				    	</slide>
-				    </carousel>
+				    	</uib-slide>
+				    </uib-carousel>
 				    
 				 	</div> <!-- end panel-body -->
 	

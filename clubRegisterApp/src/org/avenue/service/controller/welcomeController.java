@@ -44,6 +44,14 @@ public class welcomeController {
 		Worker user = new Worker();
 		HttpSession session = request.getSession();
 		
+		/*ArrayList<String> roles = new ArrayList<String>();
+		roles.add("ROLE_ADMIN");
+		roles.add("ROLE_SUPER");
+		user.setEnabled(1);
+		user.setName("benny");
+		user.setPassword("corina");
+		user.setRoles(roles);*/
+		
 		user = taskmanagerservice.getUserByName(name);
 		session.setAttribute("user", user);
 		

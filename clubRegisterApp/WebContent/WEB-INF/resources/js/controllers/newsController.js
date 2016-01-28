@@ -13,6 +13,9 @@ pubModule.controller('newsController', ['$scope', '$http', function ($scope,$htt
 	$http.get(_home + '/news').success(function(data) 
 	{
 		$scope.stories = data;
+	})
+	.then(function(){
+		console.log("### GOT NEWS STORIES ###");
 	}); // End of get()
 
 }]);

@@ -1,8 +1,14 @@
-mmModule.controller('passwdChangeController', ['$scope', '$http', 'dbService', 'privateDataService', function ($scope,$http,dbService,privateDataService)
+mmModule.controller(	'passwdChangeController', 
+						[
+						 	'$scope', 
+						 	'$http', 
+						 	'dbService', 
+						 	'DataService', 
+						 	function ($scope,$http,dbService,DataService)
 {	
 	console.log("## [passwdChangeController] Loading....");
 	
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	
 	$scope.onSubmit = function(proceed)
 	{	

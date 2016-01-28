@@ -1,9 +1,18 @@
-mmModule.controller('userProfileController', ['$scope', 'dbService', 'privateDataService', function ($scope,dbService,privateDataService) 
+mmModule.controller(	'userProfileController', 
+						[
+						 '$scope', 
+						 'dbService', 
+						 'DataService', 
+						 function(
+								 	$scope,
+								 	dbService,
+								 	DataService
+								 ) 
 {
 	console.log("## [userProfileController] ** LOADING **");
 	
 	$scope.thisUser = {};
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	
 	getUserDetails();
 	

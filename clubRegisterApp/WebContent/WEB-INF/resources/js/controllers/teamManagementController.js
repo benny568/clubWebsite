@@ -1,9 +1,24 @@
 
-mmModule.controller('teamManagementController', ['$scope', '$http', '$routeParams', 'privateDataService', function ($scope, $http, $routeParams, privateDataService) 
+mmModule.controller(	'teamManagementController', 
+						[
+						 	'$scope', 
+						 	'$http', 
+						 	'$routeParams',
+						 	'ModalService',
+						 	'DataService',
+						 	'dbService',
+						 	function(
+						 				$scope, 
+						 				$http, 
+						 				$routeParams,
+						 				ModalService,
+						 				DataService,
+						 				dbService
+						 			) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	$scope.teamName = $routeParams.team;
 	var urlteam = _home + '/team/' + $scope.teamName;
 	var urlmembers = _home + '/teammembers/' + $scope.teamName;
@@ -75,6 +90,44 @@ mmModule.controller('teamManagementController', ['$scope', '$http', '$routeParam
 		log.trace("## <- setCurrentMember()");
 	}
 	$scope.setCurrentMember();
+	
+	/**********************************************************
+	 * Name:		editTeamNB()
+	 * Description:	Edit a teams Notice Board, update to server
+	 * 				and update local in-memory copy
+	 * Scope:		Externally accessible via the service
+	 * Params in:	scope: The parents scope
+	 * 				thisTeam: the team to edit
+	 * Return:		Updates $scope.team
+	 **********************************************************/
+	$scope.editTeamNB = function(thisTeam) {
+		if(!thisTeam)
+			return;
+		
+		 ModalService.showModal({
+	            templateUrl: 'editTeamNBModal.html',
+	            controller: "editTeamNBModalController",
+	            inputs: { team : thisTeam}
+	        }).then(function(modal) {
+	            modal.element.modal();
+	            modal.close.then(function(result) {
+	            	var newTeam = result;
+	            	var diff = $scope.data.difference( newTeam, thisTeam);
+	            	if(diff)
+	            	{
+	            		$scope.data.dsCurrentTeam = newTeam;
+		                dbService.updateTeam( newTeam )
+		        		.then( function(result) {
+		        			$scope.data.applyTeamChange(newTeam);
+		        			console.log("## [mmService] -> editTeamNB: after update: ", newTeam);
+		        		});
+	            	}
+	        	});
+
+	        });
+	      
+    };
+    $scope.editTeamNB();
 
 	/**********************************************************
 	 * Name:		calculateAge()

@@ -1,9 +1,19 @@
-
-pubModule.controller('teamViewController', ['$scope', '$http', '$routeParams', 'dataService', function ($scope, $http, $routeParams, dataService) 
+pubModule.controller(	'teamViewController', 
+						[
+						 	'$scope', 
+						 	'$http', 
+						 	'$routeParams', 
+						 	'DataService', 
+						 	function( 
+						 				$scope, 
+						 				$http, 
+						 				$routeParams, 
+						 				DataService
+						 			)
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
-	$scope.data = dataService;
+	$scope.data = DataService;
 	$scope.teamName = $routeParams.team;
 	var urlteam = _home + '/team/' + $scope.teamName;
 	var urlmembers = _home + '/teammembers/' + $scope.teamName;
@@ -11,6 +21,7 @@ pubModule.controller('teamViewController', ['$scope', '$http', '$routeParams', '
 	$http.get(urlteam)
 	.then( function( result )
 	{
+		console.log("## Got the Team: ", result.data);
 		$scope.team = result.data;
 		$scope.data.dsCurrentTeam = result.data;
 		return $http.get(urlmembers);
@@ -18,7 +29,7 @@ pubModule.controller('teamViewController', ['$scope', '$http', '$routeParams', '
 	.then(function(result) 
 	{
 		$scope.data.dsTeamMembers = result.data;
-		console.log("## Got Team details: ", result.data);
+		console.log("## Got Team members: ", result.data);
 	})
 	.then( function(data)
 	{
@@ -63,14 +74,14 @@ pubModule.controller('teamViewController', ['$scope', '$http', '$routeParams', '
 			return
 			
 		log.trace("[setCurrentMember] called with: ", member);
-		$scope.currentMember = member;
+		$scope.data.dsCurrentMember = member;
 		
 		if(typeof(member) != 'undefined')
 		{
 			$scope.displayMember = true;
-			$scope.currentMember.age = calculateAge($scope.currentMember.dob);
-			if( typeof $scope.currentMember.position == 'number' )
-				$scope.currentMember.position = itsPosition[$scope.currentMember.position];
+			$scope.data.dsCurrentMember.age = calculateAge($scope.data.dsCurrentMember.dob);
+			if( typeof $scope.data.dsCurrentMember.position == 'number' )
+				$scope.data.dsCurrentMember.position = $scope.data.dsPosition[$scope.data.dsCurrentMember.position];
 		}
 		log.trace("## <- setCurrentMember()");
 	}

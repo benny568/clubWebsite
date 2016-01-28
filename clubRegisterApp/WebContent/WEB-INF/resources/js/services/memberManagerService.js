@@ -1,10 +1,11 @@
-mmModule.service('mmService', function($http, $q, promiseTracker, dbService, privateDataService, ModalService,$rootScope) 
+mmModule.service('mmService', function($http, $q, promiseTracker, dbService, DataService, ModalService,$rootScope) 
 {
 	var cache = {};
 	var self = this;
 	self.teamName = null;
 	self.teamId = 0;
 	self.lrcode = 0;
+	data = DataService;
 	
 	return({
 		addPlayer : addPlayer,
@@ -162,7 +163,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 	
 	function convertPosToInt( sPos )
 	{
-		return itsPosition.indexOf(sPos);
+		return data.dsPosition.indexOf(sPos);
 	}
 	
 	function convertTeamToInt( sTeam )
@@ -227,10 +228,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 		        		});
 	            	}
 	        	});
-            }).catch(function(error) {
-            	  // error contains a detailed error message.
-            	  console.log(error);
-	        });
+            });
 	      
 	}
 	
@@ -266,17 +264,17 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 	            	if(diff)
 	            	{
 	            		if( typeof newMem.position != 'number' )
-	            			newMem.position = itsPosition.indexOf(newMem.position);
+	            			newMem.position = $scope.data.dsPosition.indexOf(newMem.position);
 	            		if( typeof newMem.team != 'number' )
 	            			newMem.team = getTeamIdFrmName(newMem.team);
 	            		
 	            		if( typeof newMem.position2 != 'number' )
-	            			newMem.position2 = itsPosition.indexOf(newMem.position2);
+	            			newMem.position2 = $scope.data.dsPosition.indexOf(newMem.position2);
 	            		if( typeof newMem.team2 != 'number' )
 	            			newMem.team2 = getTeamIdFrmName(newMem.team2);
 	            		
 	            		if( typeof newMem.position3 != 'number' )
-	            			newMem.position3 = itsPosition.indexOf(newMem.position3);
+	            			newMem.position3 = $scope.data.dsPosition.indexOf(newMem.position3);
 	            		if( typeof newMem.team3 != 'number' )
 	            			newMem.team3 = getTeamIdFrmName(newMem.team3);
 	            		
@@ -287,10 +285,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 		        		});
 	            	}
 	        	});
-            }).catch(function(error) {
-            	  // error contains a detailed error message.
-            	  console.log(error);
-	        });
+            });
 	      
     };
     
@@ -353,7 +348,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 	 * 				thisTeam: the team to edit
 	 * Return:		Updates $scope.team
 	 **********************************************************/
-	function editTeamNB(scope,thisTeam) {
+	function editTeamNB(thisTeam) {
 		if(!thisTeam)
 			return;
 		
@@ -457,10 +452,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, pri
 		        		});
 	            	}
 	        	});
-            }).catch(function(error) {
-            	  // error contains a detailed error message.
-            	  console.log(error);
-	        });
+            });
 	      
 	}
 

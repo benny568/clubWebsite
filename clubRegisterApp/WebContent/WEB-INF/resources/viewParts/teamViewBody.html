@@ -8,7 +8,7 @@
 							</div>
 							<div class="panel-body avenue-body">
 								<div class="row">
-									<div style="margin:10px;">{{team.noticeboard}}</div>
+									<div style="margin:10px;">{{data.dsCurrentTeam.noticeboard}}</div>
 								</div>
 							</div>
 						</div>
@@ -81,17 +81,17 @@
 			    		<div class="col-md-7">
 			    			<div class="panel" ng-show="displayMember">
 			    				<div class="panel-heading avenue-heading">
-			    					<span style="font-weight:bold">{{currentMember.name}}</span>
+			    					<span style="font-weight:bold">{{data.dsCurrentMember.name}}</span>
 			    				</div>
 			    				<div class="panel-body avenue-body">
-			    					<img ng-show="displayMember" ng-src='{{currentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
+			    					<img ng-show="displayMember" ng-src='{{data.dsCurrentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
 			    					<div ng-show="displayMember">
-			    						<br/><span class="avenue-yellow-text">Age: </span><span style="color:#D1CDCD">{{currentMember.age}}</span> <br/>
-				    					<span class="avenue-yellow-text">Position: </span><span style="color:#D1CDCD">{{currentMember.position}}</span> <br/>
-				    					<span class="avenue-yellow-text">Favourite Team: </span><span style="color:#D1CDCD">{{currentMember.favteam}}</span> <br/>
-				    					<span class="avenue-yellow-text">Favourite Player: </span><span style="color:#D1CDCD">{{currentMember.favplayer}}</span><br/><br/>
+			    						<br/><span class="avenue-yellow-text">Age: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.age}}</span> <br/>
+				    					<span class="avenue-yellow-text">Position: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.position}}</span> <br/>
+				    					<span class="avenue-yellow-text">Favourite Team: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.favteam}}</span> <br/>
+				    					<span class="avenue-yellow-text">Favourite Player: </span><span style="color:#D1CDCD">{{data.dsCurrentMember.favplayer}}</span><br/><br/>
 				    					<span class="avenue-yellow-text">Personal Achievements:</span><br/>
-				    						{{currentMember.achievements}}
+				    						{{cdata.dsCurrentMember.achievements}}
 			    					</div>
 
 			    				</div>

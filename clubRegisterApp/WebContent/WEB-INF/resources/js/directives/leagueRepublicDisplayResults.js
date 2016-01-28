@@ -1,4 +1,4 @@
-pubModule.directive("lrDisplayresults", ['dataService', function() {
+pubModule.directive("lrDisplayresults", ['DataService', function() {
 	return {
 		restrict: 	'E',
 		replace:	true,

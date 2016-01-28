@@ -6,22 +6,43 @@ var _home = '';
 
 var thisServerMode = serverMode.LOCAL;
 
+
 /********************************************
 /* Setup the logger
  * ********************************************/
-var log = log4javascript.getLogger("ClubRegisterApp");
+var log = log4javascript.getLogger("publicWebApp");
 //Create an Appender with default options
 var bcAppender = new log4javascript.BrowserConsoleAppender();
 bcAppender.setThreshold(log4javascript.Level.TRACE);
 // Add the appender to the logger
 log.addAppender(bcAppender);
+
+/*log4javascript.Level.ALL
+log4javascript.Level.TRACE
+log4javascript.Level.DEBUG
+log4javascript.Level.INFO
+log4javascript.Level.WARN
+log4javascript.Level.ERROR
+log4javascript.Level.FATAL
+log4javascript.Level.OFF*/
+log.setLevel(log4javascript.Level.ALL);
+
 // Test the logger
 log.debug("** Public Module Loaded....");
-log.trace("** TRACE: Member Manager Module Loaded....");
 /********************************************/
 
 
-var pubModule = angular.module('publicApp', ['memberManagerApp','ngRoute','angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
+var pubModule = angular.module(	'publicApp', 
+								[
+								 	'ngRoute', 
+								 	'ngAnimate', 
+								 	'ui.bootstrap', 
+								 	'csrf-cross-domain', 
+								 	'ajoslin.promise-tracker',
+								 	'memberManagerApp'
+								 ]);
+
+//['memberManagerApp','ngRoute','angularModalService', 'ajoslin.promise-tracker', 'ui.bootstrap','csrf-cross-domain','jcs-autoValidate']);
 
 pubModule.config(['$routeProvider', '$httpProvider', function($routeProvider,$httpProvider) {
 	
@@ -139,18 +160,12 @@ pubModule.config(['$routeProvider', '$httpProvider', function($routeProvider,$ht
     .otherwise({
         redirectTo: '/'
     });
-	
-	// Add an object to the scope to hold any data input in a form
-	formModel = {};
-	newUser = {};
 
 }]);
 
-pubModule.run(function(defaultErrorMessageResolver) {
+/*pubModule.run( function(defaultErrorMessageResolver) {
 	defaultErrorMessageResolver.getErrorMessages().then(function(errorMessages) {
 		errorMessages['invalidPassword'] = 'A password must contain 8 characters made up of letters, numbers and _ only.';
 		errorMessages['minPasswordLength'] = 'A password must be a least 8 characters long.';
 	});
-});
-
-
+});*/

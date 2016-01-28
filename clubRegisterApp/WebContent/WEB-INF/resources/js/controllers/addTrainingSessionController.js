@@ -1,7 +1,7 @@
-mmModule.controller('AddTrainingSessionController', ['$scope', 'close', 'privateDataService', function($scope, close, privateDataService) {
+mmModule.controller('AddTrainingSessionController', ['$scope', 'close', 'DataService', function($scope, close, DataService) {
 	
 	$scope.thisSession = {};
-	$scope.team = privateDataService.dsCurrentTeam;
+	$scope.team = DataService.dsCurrentTeam;
 
 	 $scope.close = function(save,thisSession) {
 		 if(save)

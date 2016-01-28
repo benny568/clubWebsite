@@ -1,4 +1,13 @@
-mmModule.controller('memberManagerController', ['$scope', '$http', '$routeParams', 'ModalService', 'dbService', 'mmService', 'privateDataService', function ($scope,$http,$routeParams, ModalService, dbService, mmService,privateDataService) 
+mmModule.controller(	'memberManagerController', 
+						[
+						 	'$scope', 
+						 	'$http', 
+						 	'$routeParams', 
+						 	'ModalService', 
+						 	'dbService', 
+						 	'mmService', 
+						 	'DataService', 
+						 	function( $scope,$http,$routeParams, ModalService, dbService, mmService,DataService ) 
 {	
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -6,7 +15,7 @@ mmModule.controller('memberManagerController', ['$scope', '$http', '$routeParams
 	var loghdr = logdepth + '# memberManagerController: ';
 	log.debug(loghdr + "Controller initialized");
 	$scope.showArray = [];
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	$scope.data.dsCurrentMember = {name: "", address: "", phone: "", phone2: "", email:"", dob:"", amount: 0, receiptid:"", team: 0, team2: 0,team3: 0, position: 0, position2: 0, position3: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
 
 	/* (1) Get the members to display on the page*/
@@ -89,7 +98,7 @@ mmModule.controller('memberManagerController', ['$scope', '$http', '$routeParams
 	{
 		if( typeof member == 'undefined' )
 			return
-		log.trace("## [memberManagerController] calling mmService.editMember()...");		
+		log.trace("## [memberManagerController] calling editMember()...");		
 
 		if( typeof member.position == 'number' )
 			member.position = $scope.data.dsPosition[member.position];
@@ -222,10 +231,7 @@ mmModule.controller('memberManagerController', ['$scope', '$http', '$routeParams
 		        		});
 	            	}
 	        	});
-            }).catch(function(error) {
-            	  // error contains a detailed error message.
-            	  console.log(error);
-	        });
+            });
 	}
 	$scope.deleteMember();
 	

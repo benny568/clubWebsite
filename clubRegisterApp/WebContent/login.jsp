@@ -3,31 +3,31 @@
 <head>
 	<title>Login Page</title>
 	
-	<!-- jQuery (required) -->
-	<script src="resources/js/libs/jquery-2.1.4.min.js"></script>
+		<!-- jQuery (required) -->
+		<script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
 	
-	<!-- Bootstrap -->
-	<script type="text/javascript" src="resources/js/libs/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-	
-	<!-- AngularJS -->
-	<script type="text/javascript" src="resources/js/libs/angular.js"></script>
-	<script type="text/javascript" src="resources/js/libs/angular-route.js"></script>
-	<script type="text/javascript" src="resources/js/libs/angular-resource.js"></script>
-	<script type="text/javascript" src="resources/js/libs/angular-animate.js"></script>
-	<script type="text/javascript" src="resources/js/libs/promise-tracker.js"></script>
-	<script type="text/javascript" src="resources/js/libs/angular-cookies.js"></script>
-	<script type="text/javascript" src="resources/js/libs/jcs-auto-validate.min.js"></script>
-	<script type="text/javascript" src="resources/js/modules/angular-csrf-cross-domain.js"></script>
-	<script type="text/javascript" src="resources/js/modules/angularModalService.js"></script>
-	<script type="text/javascript" src="resources/js/modules/ui-bootstrap-tpls-0.13.0.js"></script>
-	
-	<!-- Font Awsome -->
-	<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
-	
-	<!-- log4javasctipt -->
-	<script type="text/javascript" src="resources/js/libs/log4javascript.js"></script>
-	<script type="text/javascript" src="resources/js/libs/require.js"></script>
+		<!-- Bootstrap -->
+ 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+ 		<script type="text/javascript" src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		
+		<!-- AngularJS -->
+		<script type="text/javascript" src="resources/bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-cookies/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-resource/angular-resource.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-touch/angular-touch.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.min.js"></script>	
+		<script type="text/javascript" src="resources/bower_components/angular-promise-tracker/promise-tracker.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/angular-csrf-cross-domain/dist/angular-csrf-cross-domain.min.js"></script>
+		
+		<!-- Font Awsome -->
+		<link rel="stylesheet" type="text/css" href="resources/bower_components/font-awesome/css/font-awesome.min.css" />
+		
+		<!-- log4javasctipt -->
+		<script type="text/javascript" src="resources/bower_components/log4javascript/log4javascript.js"></script>
 	
 	<!-- My app -->
 	<script type="text/javascript" src="resources/js/app.js"></script>

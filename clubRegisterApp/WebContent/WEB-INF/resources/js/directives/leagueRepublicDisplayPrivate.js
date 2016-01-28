@@ -1,4 +1,4 @@
-mmModule.directive("lrDisplay", ['privateDataService', function() {
+mmModule.directive("lrDisplay", ['DataService', function() {
 	return {
 		restrict: 	'E',
 		replace:	true,

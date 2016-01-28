@@ -31,15 +31,15 @@ log.debug("** Private Module Loaded....");
 /********************************************/
 
 
-var mmModule = angular.module(	'memberManagerApp',
-								[
+var mmModule = angular.module(	'memberManagerApp', []);
+								/*[
 								 	'ngRoute', 
 								 	'angularModalService', 
 								 	'ajoslin.promise-tracker', 
 								 	'ui.bootstrap',
 								 	'csrf-cross-domain',
 								 	'jcs-autoValidate'
-								 ]);
+								 ]);*/
 
 mmModule.config(function($routeProvider,$httpProvider) {
 	
@@ -136,10 +136,14 @@ mmModule.config(function($routeProvider,$httpProvider) {
     .otherwise({
         redirectTo: '/'
     });
+	
+	// Add an object to the scope to hold any data input in a form
+	formModel = {};
+	newUser = {};
 
 });
 
-/*mmModule.run(function(defaultErrorMessageResolver) {
+mmModule.run( function(defaultErrorMessageResolver) {
 	defaultErrorMessageResolver.getErrorMessages().then(function(errorMessages) {
 		errorMessages['invalidPassword'] = 'A password must contain 8 characters made up of letters, numbers and _ only.';
 		errorMessages['minPasswordLength'] = 'A password must be a least 8 characters long.';
@@ -161,7 +165,6 @@ mmModule.controller('adminOverviewController', ['$scope', '$log', 'privateDataSe
 	$log.info("->adminOverviewController..");
 	$scope.data = privateDataService;
 }]);
-*/
 
 mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
 	$scope.news = {};
@@ -179,9 +182,9 @@ mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function
 
 }]);
 
-mmModule.controller('ModalController', ['$scope', 'DataService', 'member', 'modalType', 'close', function($scope,DataService, member, modalType, close) {
+mmModule.controller('ModalController', ['$scope', 'privateDataService', 'member', 'modalType', 'close', function($scope,privateDataService, member, modalType, close) {
 	
-	$scope.data = DataService;
+	$scope.data = privateDataService;
 	$scope.modalHeader = modalType;
 	
 	$scope.data.dsCurrentMember = jQuery.extend({},member);
@@ -194,12 +197,18 @@ mmModule.controller('ModalController', ['$scope', 'DataService', 'member', 'moda
 	else
 		close(member, 500);
 	};
+	 
+	 function truncateDate( date )
+	 {
+		 if( date.length > 10 )
+			 return date.slice(0,10);
+	 }
 
 }]);
 
-mmModule.controller('editTeamNBModalController', ['$scope', 'team', 'close', 'DataService', function($scope, team, close, DataService) {
-	//$log.info("->editTeamNBModalController..");
-	$scope.data = DataService;
+mmModule.controller('editTeamNBModalController', ['$scope', 'team', 'close', 'privateDataService', function($scope, team, close, privateDataService) {
+	$log.info("->editTeamNBModalController..");
+	$scope.data = privateDataService;
 	$scope.team = jQuery.extend({},team);
 
 	 $scope.close = function(save) {
@@ -211,7 +220,6 @@ mmModule.controller('editTeamNBModalController', ['$scope', 'team', 'close', 'Da
 
 }]);
 
-/*
 mmModule.controller('newsController', ['$scope', '$http', 'ModalService', 'dbService', function ($scope,$http, ModalService, dbService) {
 	
 	console.log("## [newsController]...");
@@ -238,37 +246,6 @@ mmModule.controller('EditTeamController', ['$scope', 'team', 'close', 'privateDa
 		close({op:update,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
 	 };
 }]);
-*/
-
-/*mmModule.controller('newsController', ['$scope', '$http', 'ModalService', function ($scope,$http, ModalService) {
-	
-	console.log("## [mmModule.newsController]...");
-	$scope.stories = new Array();
-	
-	getNewsStories();
-	
-	function getNewsStories() {
-		//$http.defaults.headers.common["Accept"] = "application/json, text/plain";
-		console.log("## [mmModule.newsController]->getNewsStories()");
-		
-		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [mmModule.newsController]->getNewsStories() csrf token is: ",csrf);
-		
-		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
-		$http.defaults.headers.post["Content-Type"] = "application/json";
-		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
-		
-		var request = $http({
-			method: "get",
-			url: _home + "/news"
-		});
-		
-		return( request.then( handleSuccess, handleError ) );
-	}
-
-}]);*/
-
 
 
 

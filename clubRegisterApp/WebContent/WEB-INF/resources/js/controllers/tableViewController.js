@@ -1,9 +1,19 @@
 
-pubModule.controller('tableViewController', ['$scope', '$http', '$routeParams', 'dataService', function ($scope,$http,$routeParams,dataService) 
+pubModule.controller(	'tableViewController', 
+						['$scope', 
+						 '$http', 
+						 '$routeParams', 
+						 'DataService', 
+						 function(
+								 	$scope,
+								 	$http,
+								 	$routeParams,
+								 	DataService
+								 ) 
 {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
-	$scope.data = dataService;
+	$scope.data = DataService;
 	$scope.teamName = $routeParams.team;
 	
 	$http.get(_home + '/team/' + $scope.teamName )

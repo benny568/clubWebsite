@@ -1,22 +1,30 @@
-mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbService', 'privateDataService', function ($scope,ModalService,dbService,privateDataService) 
+mmModule.controller(	'trainingViewController', 
+						[
+						 	'$scope', 
+						 	'ModalService', 
+						 	'dbService', 
+						 	'DataService', 
+						 	function(
+						 				$scope,
+						 				ModalService,
+						 				dbService,
+						 				DataService
+						 			) 
 {
 	console.log("## [trainingViewController] ** LOADING **");
 	
 	// Training records cache
-	$scope.data = privateDataService;
-	$scope.trainingRecords = [];
-	$scope.trainingPerMember = null;
+	$scope.data = DataService;
 	$scope.teamId = $scope.data.dsCurrentTeam.id;
 	$scope.thisSession = { sessionId:'', teamId:0, date:'', details:'' };
-	$scope.sessionPlans = [];
 	
 	
 	function getSessionsForTeam()
 	{
 		dbService.getSessionsForTeam($scope.data.dsCurrentTeam.id)
 		.then( function(result){
-			$scope.sessionPlans = result;
-			console.log("## [trainingViewController] -> getSessionsForTeam(", $scope.data.dsCurrentTeam.id, " - returned: ", $scope.sessionPlans);
+			$scope.data.dsSessionPlans = result;
+			console.log("## [trainingViewController] -> getSessionsForTeam(", $scope.data.dsCurrentTeam.id, " - returned: ", $scope.data.dsSessionPlans);
 			getSessionRecordsForTeam();
 		});
 	}
@@ -37,14 +45,14 @@ mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbServ
 	function setAllToAbsent()
 	{
 		var teamId = $scope.data.dsCurrentTeam.id;
-		$scope.trainingPerMember = new Array($scope.data.dsTeamMembers.length);
+		$scope.data.dsTrainingPerMember = new Array($scope.data.dsTeamMembers.length);
 		
 		for( var m=0; m<$scope.data.dsTeamMembers.length; m++ )
 		{
-			$scope.trainingPerMember[m] = new Array($scope.sessionPlans.length);
-			for( var i=0; i<$scope.sessionPlans.length; i++ )
+			$scope.data.dsTrainingPerMember[m] = new Array($scope.data.dsSessionPlans.length);
+			for( var i=0; i<$scope.data.dsSessionPlans.length; i++ )
 			{
-				$scope.trainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "status": false};
+				$scope.data.dsTrainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "status": false};
 			}
 		}
 	}
@@ -52,23 +60,23 @@ mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbServ
 	function sortTeamSessionsByMember()
 	{
 		var teamId = $scope.data.dsCurrentTeam.id;
-		$scope.trainingPerMember = new Array($scope.data.dsTeamMembers.length);
+		$scope.data.dsTrainingPerMember = new Array($scope.data.dsTeamMembers.length);
 		
 		for( var m=0; m<$scope.data.dsTeamMembers.length; m++ ) // for each member in the team
 		{
-			$scope.trainingPerMember[m] = new Array($scope.sessionPlans.length);
-			for( var i=0; i<$scope.sessionPlans.length; i++ ) // for each session
+			$scope.data.dsTrainingPerMember[m] = new Array($scope.data.dsSessionPlans.length);
+			for( var i=0; i<$scope.data.dsSessionPlans.length; i++ ) // for each session
 			{
-				$scope.trainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "sessionId" : $scope.sessionPlans[i].sessionId, "status" : false};
+				$scope.data.dsTrainingPerMember[m][i]= {"teamid" : $scope.data.dsCurrentTeam.id, "memberid" : $scope.data.dsTeamMembers[m].id, "sessionId" : $scope.data.dsSessionPlans[i].sessionId, "status" : false};
 				
 				for( var s=0; s<$scope.sessionRecs.length; s++ ) // Check through all the records for that member for that session
 				{
 					if( ($scope.sessionRecs[s].memberId == $scope.data.dsTeamMembers[m].id) && 
 						($scope.sessionRecs[s].teamId == $scope.data.dsTeamMembers[m].team) && 
-						($scope.sessionPlans[i].sessionId == $scope.sessionRecs[s].sessionId) )
+						($scope.data.dsSessionPlans[i].sessionId == $scope.sessionRecs[s].sessionId) )
 					{
 						console.log("## [trainingViewController] -> sortTeamSessionsByMember - found match: ", $scope.data.dsTeamMembers[m].name, " : ", $scope.sessionRecs[s] );
-						$scope.trainingPerMember[m][i] = $scope.sessionRecs[s];
+						$scope.data.dsTrainingPerMember[m][i] = $scope.sessionRecs[s];
 						break;
 					}
 				}
@@ -96,7 +104,7 @@ mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbServ
 			//getSessionRecordsForTeam();
 			$scope.TeamMembers = $scope.data.dsTeamMembers;
 		}
-		/*if( $scope.trainingPerMember == null )
+		/*if( $scope.data.dsTrainingPerMember == null )
 			sortTeamSessionsByMember();*/
 		
 	}
@@ -113,7 +121,7 @@ mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbServ
 			console.log("## [trainingViewController] -> changeTrainingAttendence, Status updated to: ", !status);
 			var memindex = getMemIndex(memberid);
 			var sessindex = getSessionIndex(sessionid);
-			$scope.trainingPerMember[getMemIndex(memberid)][getSessionIndex(sessionid)].status = !status;
+			$scope.data.dsTrainingPerMember[getMemIndex(memberid)][getSessionIndex(sessionid)].status = !status;
 		});
 
 	}
@@ -131,9 +139,9 @@ mmModule.controller('trainingViewController', ['$scope', 'ModalService', 'dbServ
 	
 	function getSessionIndex( sessionid )
 	{
-		for( var i=0; i<$scope.sessionPlans.length; i++ )
+		for( var i=0; i<$scope.data.dsSessionPlans.length; i++ )
 		{
-			if( $scope.sessionPlans[i].sessionId == sessionid )
+			if( $scope.data.dsSessionPlans[i].sessionId == sessionid )
 				return i;
 		}
 		return 0;

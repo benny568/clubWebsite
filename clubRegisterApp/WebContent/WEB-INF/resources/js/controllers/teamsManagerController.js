@@ -1,10 +1,21 @@
-mmModule.controller('teamsManagerController', ['$scope', 'ModalService', 'dbService', 'privateDataService', function ($scope, ModalService, dbService, privateDataService) 
+mmModule.controller(	'teamsManagerController', 
+						[
+						 	'$scope', 
+						 	'ModalService', 
+						 	'dbService', 
+						 	'DataService', 
+						 	function(
+						 				$scope, 
+						 				ModalService, 
+						 				dbService, 
+						 				DataService
+						 			) 
 {
 	$scope.home = _home;
 	var logdepth = '----';
 	var loghdr = logdepth + '# teamsViewController: ';
 	log.debug(loghdr + "Controller initialized");
-	$scope.data = privateDataService;
+	$scope.data = DataService;
 	var thisTeam = {};
 	
 	// (1) Get the teams from the server
