@@ -1,4 +1,10 @@
-upNews.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
+mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
+	var logdepth = '        ';
+	var loghdr = logdepth + "-> newsUploadController: ";
+	log.debug(loghdr + "Initialized");
+	
+	console.log(loghdr + "Initialized");
+
 	$scope.news = {};
 	var pristineFormTemplate = $('#newsForm').html();
 	$scope.home = _home;

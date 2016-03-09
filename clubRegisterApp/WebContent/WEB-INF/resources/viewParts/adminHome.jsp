@@ -8,14 +8,14 @@
 <%@page import="org.avenue.service.domain.Worker" %>
 <html ng-app="memberManagerApp">
 	<head>  <!-- HEAD START -->		
-		<title>Admin Home</title>
+		<title ng-controller="setUserController">Admin Home</title>
 		
 		<meta name="_csrf" content="${_csrf.token}"/>
 	    <!-- default header name is X-CSRF-TOKEN -->
 	    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 	    
 		<!-- jQuery (required) -->
-		<script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="resources/bower_components/jquery/dist/jquery.js"></script>
 		<!-- <script src="resources/bower_components/jquery-easing/jquery.easing.min.js"></script> -->
 
 		
@@ -48,6 +48,7 @@
 		<!-- My app -->
 		<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/datePickerController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/adminController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/passwdChangeController.js"></script>
@@ -64,37 +65,29 @@
 		<script type="text/javascript" src="resources/js/controllers/addTeamController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/deleteTeamController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/teamManagementController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/editTeamController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/dummyController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/newsUploadController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/fileUploadController.js"></script>
 		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
 		<script type="text/javascript" src="resources/js/services/userManagementService.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/services/multiPartForm.js"></script>
+		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayPrivate.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResultsPrivate.js"></script>
-		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		
 		<!-- <script type="text/javascript" src="resources/js/leagueRepublic.js"></script> -->
+		<script type="text/javascript" src="resources/galleries/Academy_2015/swfobject.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
-		<script>
-			<%Worker user = (Worker) session.getAttribute("user");
-			  Gson gson = new GsonBuilder().create();
-			if (null == user) {
-			   /* request.setAttribute("message", "Session has ended.  Please login.");
-			   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-			   rd.forward(request, response); */
-			} 
-			%>
-			(function setUser(){ gThisUser = <%=gson.toJson(user)%> })();
-		</script>
-		
 	</head>  <!-- HEAD END -->
-	<body>
+	<body ng-controller="adminController">
 	
 		<!-- (1) Banner across the top & the menu -->
-		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
+		<div ng-include="'resources/viewParts/adminHdrNmenu.html'"></div>
 		
 		<!-- (2) Load the body of the page -->
 
@@ -111,6 +104,23 @@
 		
 		<!-- Footer across the bottom of the page -->
 		<div ng-include="'resources/viewParts/footer.html'"></div>
+		
+		<script>
+			<%Worker user = (Worker) session.getAttribute("user");
+			  Gson gson = new GsonBuilder().create();
+			if (null == user) {
+			   request.setAttribute("message", "Session has ended.  Please login.");
+			   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			   rd.forward(request, response);
+			} 
+			%>
+			mmModule.controller('setUserController', ['$scope', function($scope){
+				gThisUser = <%=gson.toJson(user)%>;
+				console.log("# setUserController: gThisUser.roles = " + gThisUser.roles);
+				console.log("# setUserController: gThisUser.permissions.teams = " + gThisUser.permissions.teams);
+				console.log("# setUserController: gThisUser.permissions.positions = " + gThisUser.permissions.positions);
+			}]);
+		</script>
 		
 	</body>
 </html>

@@ -19,9 +19,9 @@ mmModule.controller(	'memberManagerController',
 	$scope.data.dsCurrentMember = {name: "", address: "", phone: "", phone2: "", email:"", dob:"", amount: 0, receiptid:"", team: 0, team2: 0,team3: 0, position: 0, position2: 0, position3: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
 
 	/* (1) Get the members to display on the page*/
-	log.trace("## Calling getTeams()");
+	log.trace(loghdr+"Calling getTeams()");
 	
-	//log.debug(loghdr + "THE USER IS:", $scope.thisUser);
+	//log.debug(loghdr + "THE USER IS:", DataService.dsCurrentUser);
 	
 	//getUserDetails();
 	getTeams();
@@ -37,14 +37,14 @@ mmModule.controller(	'memberManagerController',
 	 **********************************************************/
 	function getAllMembers(){
 		
-		log.trace("## -> getAllMembers()");
-		log.trace("##    | calling dbService.getAllMembers()..")
+		log.trace(loghdr+"-> getAllMembers()");
+		log.trace(loghdr+"    | calling dbService.getAllMembers()..")
 		dbService.getAllMembers()
 			.then( function(mems) {
 				$scope.data.dsAllMembers = mems;
-				log.trace("## getAllMembers() returned: ", $scope.data.dsAllMembers);
+				log.trace(loghdr+"      getAllMembers() returned: ", $scope.data.dsAllMembers);
 			});
-		log.trace("## <- getAllMembers()");
+		log.trace(loghdr+"<- getAllMembers()");
 	}
 	
 	
@@ -78,10 +78,10 @@ mmModule.controller(	'memberManagerController',
 	{
 		if( typeof teamId == 'undefined' )
 			return;
-		log.trace("## -> toggleView("+teamId+")");
+		log.trace(loghdr+"-> toggleView("+teamId+")");
 		$scope.showArray[teamId] = !$scope.showArray[teamId];
-		log.trace("##    showArray["+teamId+") set to: "+$scope.showArray[teamId]);
-		log.trace("## <- toggleView()");
+		log.trace(loghdr+"    showArray["+teamId+") set to: "+$scope.showArray[teamId]);
+		log.trace(loghdr+"<- toggleView()");
 	}
 	$scope.toggleView();
 	
@@ -98,7 +98,7 @@ mmModule.controller(	'memberManagerController',
 	{
 		if( typeof member == 'undefined' )
 			return
-		log.trace("## [memberManagerController] calling editMember()...");		
+		log.trace(loghdr+"calling editMember()...");		
 
 		if( typeof member.position == 'number' )
 			member.position = $scope.data.dsPosition[member.position];
@@ -145,7 +145,7 @@ mmModule.controller(	'memberManagerController',
 		        		.then( function(result) {
 		        			applyMemberChange($scope.data.dsAllMembers, newMem);
 		        			//$scope.data.dsCurrentMember = newMem;
-		        			console.log("## [mmService] -> editMember: after update: ", $scope.data.dsCurrentMember);
+		        			console.log(loghdr+"-> editMember: after update: ", $scope.data.dsCurrentMember);
 		        		});
 	            	}
 	        	});
@@ -170,7 +170,7 @@ mmModule.controller(	'memberManagerController',
 		if( typeof teamId == 'undefined')
 			return;
 		$scope.teamId = teamId;
-		log.trace("[memberManagerController] -> addMember, teamId: ", $scope.teamId);
+		log.trace(loghdr+"-> addMember, teamId: ", $scope.teamId);
 		
 		// Clear the current member array first
 		$scope.data.dsCurrentMember = [];
@@ -187,7 +187,7 @@ mmModule.controller(	'memberManagerController',
 		            							$scope.thisMember.position = convertPosToInt(result.member.position);
 		            							$scope.thisMember.team = convertTeamToInt(result.member.team);
 		            							dbService.addMember( $scope.thisMember ).then( function(result){
-		            								console.log("[memberManagerController] - addMember (reurned from dbService): ", $scope.thisMember);
+		            								console.log(loghdr+"- addMember (reurned from dbService): ", $scope.thisMember);
 		            								applyMemberAdd($scope.data.dsTeamMembers, $scope.thisMember);
 		            							} );
 		            						}
@@ -212,7 +212,7 @@ mmModule.controller(	'memberManagerController',
 	{
 		if( typeof member == 'undefined' )
 			return;
-		log.trace("[memberManagerController] -> deleteMember, member: ", member);
+		log.trace(loghdr+"-> deleteMember, member: ", member);
 		
 		 ModalService.showModal({
 	            templateUrl: 'delConfirmModal.html',
@@ -244,17 +244,17 @@ mmModule.controller(	'memberManagerController',
 	 **********************************************************/
 	function setTeamId()
 	{
-		log.debug("##    |->setTeamId()");
+		log.debug(loghdr+"    |->setTeamId()");
 		for( var i=0; i<$scope.data.dsTeams.length; i++ )
 		{
 			if( $scope.data.dsCurrentTeam.name === $scope.teams[i].name )
 			{
 				$scope.data.dsCurrentTeam.id = $scope.teams[i].id;
-				log.trace("##    -- teamId set to: "+ $scope.data.dsCurrentTeam.id);
+				log.trace(loghdr+"    -- teamId set to: "+ $scope.data.dsCurrentTeam.id);
 				break;
 			}
 		}
-		log.debug("##    |<-setTeamId()");
+		log.debug(loghdr+"    |<-setTeamId()");
 	}
 
 	/**********************************************************
@@ -344,28 +344,28 @@ mmModule.controller(	'memberManagerController',
     
 	function getMembers4teamOLD(teamId)
 	{
-		log.debug("##    |-> getMembers4team("+teamId+")");
+		log.debug(loghdr+"    |-> getMembers4team("+teamId+")");
 		$scope.data.dsCurrentTeam.id = teamId;
 		$scope.showArray[teamId] = 'true';
-		log.trace("##    |-- Calling dbService.getMembers4team("+teamId+")");
+		log.trace(loghdr+"    |-- Calling dbService.getMembers4team("+teamId+")");
 		dbService.getMembers4team( teamId )
 		.then( function(team) {
 			$scope.data.dsTeamMembers[teamId] = team;
 			log.trace("   |-- [memberManagerController]->getTeams()->getMembers4team() returned: ", $scope.data.dsTeamMembers[teamId]);
 			
 		});
-		log.debug("##    |<-getMembers4team()");
+		log.debug(loghdr+"    |<-getMembers4team()");
 	}
 
 	function applyMemberChange(members, member)
 	{
-		console.log("## [mmControler] -> applyMemberChange");
+		console.log(loghdr+"-> applyMemberChange");
 
 		var index = findMemberIndex( members, member );
 
 		if( index === -1 )
 		{
-			log.debug("###### ERROR: applyMemberChange - member not found!");
+			log.debug(loghdr+"###### ERROR: applyMemberChange - member not found!");
 			return;
 		}
 		
@@ -389,13 +389,13 @@ mmModule.controller(	'memberManagerController',
 	
 	function applyMemberDel( members, member )
 	{
-		console.log("## [mmControler] -> applyMemberDel");
+		console.log(loghdr+"-> applyMemberDel");
 
 		var index = findMemberIndex( members, member );
 
 		if( index === -1 )
 		{
-			log.debug("###### ERROR: applyMemberDel - member not found!");
+			log.debug(loghdr+"###### ERROR: applyMemberDel - member not found!");
 			return;
 		}		
 		else if( index > -1 ) 
@@ -406,7 +406,7 @@ mmModule.controller(	'memberManagerController',
 	
 	function applyMemberAdd( members, member )
 	{
-		console.log("## [memberManagerController] -> applyMemberAdd");
+		console.log(loghdr+"-> applyMemberAdd");
 		
 		if( $scope.data.dsTeamMembers[member.team] === undefined )
 			getMembers4team(member.team);
@@ -419,13 +419,13 @@ mmModule.controller(	'memberManagerController',
 		}		
 		else if( index > -1 ) 
 		{
-			log.debug("###### ERROR: applyMemberAdd - member not found!");
+			log.debug(loghdr+"###### ERROR: applyMemberAdd - member not found!");
 		}
 	}
 	
 	function findMemberIndex( members, member )
 	{
-		console.log("## [memberManagerController] -> findMemberIndex");
+		console.log(loghdr+"-> findMemberIndex");
 		var index = -1;
 		
 		if( typeof members !== undefined )

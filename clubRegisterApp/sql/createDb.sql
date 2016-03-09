@@ -229,3 +229,11 @@ VALUES 	(3, 28, 1, true),
         (3, 27, 6, true),
         (3, 27, 7, false),
         (3, 27, 8, true);
+        
+CREATE TABLE media (
+	mediaid INT(11) NOT NULL AUTO_INCREMENT,
+	type INT,
+    location VARCHAR(50),
+    title VARCHAR(50),
+    description VARCHAR(200),
+    PRIMARY KEY (mediaid));

@@ -11,7 +11,8 @@ mmModule.controller(	'trainingViewController',
 						 				DataService
 						 			) 
 {
-	console.log("## [trainingViewController] ** LOADING **");
+	var loghdr = "## [trainingViewController]: ";
+	log.debug(loghdr+"** LOADING **");
 	
 	// Training records cache
 	$scope.data = DataService;
@@ -24,7 +25,7 @@ mmModule.controller(	'trainingViewController',
 		dbService.getSessionsForTeam($scope.data.dsCurrentTeam.id)
 		.then( function(result){
 			$scope.data.dsSessionPlans = result;
-			console.log("## [trainingViewController] -> getSessionsForTeam(", $scope.data.dsCurrentTeam.id, " - returned: ", $scope.data.dsSessionPlans);
+			log.debug(loghdr+"-> getSessionsForTeam(", $scope.data.dsCurrentTeam.id, " - returned: ", $scope.data.dsSessionPlans);
 			getSessionRecordsForTeam();
 		});
 	}
@@ -34,7 +35,7 @@ mmModule.controller(	'trainingViewController',
 		dbService.getSessionRecordsForTeam($scope.data.dsCurrentTeam.id)
 		.then( function(result){
 			$scope.sessionRecs = result;
-			console.log("## [trainingViewController] -> getSessionRecordsForTeam - returned: ", $scope.sessionRecs);
+			log.debug(loghdr+"-> getSessionRecordsForTeam - returned: ", $scope.sessionRecs);
 			if( $scope.sessionRecs.length > 0 )
 				sortTeamSessionsByMember();
 			else
@@ -75,7 +76,7 @@ mmModule.controller(	'trainingViewController',
 						($scope.sessionRecs[s].teamId == $scope.data.dsTeamMembers[m].team) && 
 						($scope.data.dsSessionPlans[i].sessionId == $scope.sessionRecs[s].sessionId) )
 					{
-						console.log("## [trainingViewController] -> sortTeamSessionsByMember - found match: ", $scope.data.dsTeamMembers[m].name, " : ", $scope.sessionRecs[s] );
+						log.debug(loghdr+"-> sortTeamSessionsByMember - found match: ", $scope.data.dsTeamMembers[m].name, " : ", $scope.sessionRecs[s] );
 						$scope.data.dsTrainingPerMember[m][i] = $scope.sessionRecs[s];
 						break;
 					}
@@ -96,7 +97,7 @@ mmModule.controller(	'trainingViewController',
 		if( typeof teamId == 'undefined' )
 			return;
 		$scope.viewTraining = !$scope.viewTraining;
-		console.log("## [trainingViewController] -> toggleTrainingVew, value set to: ", $scope.viewTraining);
+		log.debug(loghdr+"-> toggleTrainingVew, value set to: ", $scope.viewTraining);
 		
 		if( $scope.viewTraining == true )
 		{
@@ -115,10 +116,10 @@ mmModule.controller(	'trainingViewController',
 	{
 		if(loaded == undefined)
 			return;
-		console.log("## [trainingViewController] -> changeTrainingAttendence, currently: " + status + ", for session["+sessionid+"], Team["+$scope.data.dsCurrentTeam.id+"], member["+memberid+"].");
+		log.debug(loghdr+"-> changeTrainingAttendence, currently: " + status + ", for session["+sessionid+"], Team["+$scope.data.dsCurrentTeam.id+"], member["+memberid+"].");
 		dbService.setMemberTrainingRecForSession(sessionid, $scope.data.dsCurrentTeam.id, memberid, !status)
 		.then(function(result){
-			console.log("## [trainingViewController] -> changeTrainingAttendence, Status updated to: ", !status);
+			log.debug(loghdr+"-> changeTrainingAttendence, Status updated to: ", !status);
 			var memindex = getMemIndex(memberid);
 			var sessindex = getSessionIndex(sessionid);
 			$scope.data.dsTrainingPerMember[getMemIndex(memberid)][getSessionIndex(sessionid)].status = !status;
@@ -159,7 +160,7 @@ mmModule.controller(	'trainingViewController',
 	{
 		if( typeof teamId == 'undefined')
 			return;
-		console.log("## [trainingViewController] -> addTrainingSession(" + teamId + ")");
+		log.debug(loghdr+"-> addTrainingSession(" + teamId + ")");
 		$scope.teamId = teamId;
 		
 		ModalService.showModal({
@@ -178,7 +179,7 @@ mmModule.controller(	'trainingViewController',
 		            							$scope.thisSession.teamId = $scope.data.dsCurrentTeam.id;
 		            							//$scope.thisSession.sessionId = '';
 		            							dbService.addTrainingSession( $scope.thisSession ).then( function(result){
-		            								console.log("[trainingViewController] - addTrainingSession: ", $scope.thisSession);
+		            								log.debug(loghdr+"-> addTrainingSession: ", $scope.thisSession);
 		            								//applyMemberAdd(scope);
 		            							} );
 		            						}

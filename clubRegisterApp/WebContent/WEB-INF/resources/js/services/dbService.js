@@ -1,6 +1,7 @@
 mmModule.service('dbService', function($http, $q, promiseTracker) 
 {
-	
+	var logdepth = '    ';
+	var loghdr = logdepth + '# dbService: ';
 	return({
 		getTeams: getTeams,
 		getMembers4team: getMembers4team,
@@ -73,7 +74,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function updateMember( member ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateMember] csrf token is: ",csrf);
+		log.debug(loghdr + "updateMember csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -95,8 +96,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function addMember( member ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [dbService] - (addMember) csrf token is: ",csrf);
-		console.log("## [dbService] - (addMember) member is: ",member);
+		log.debug(loghdr + "- (addMember) csrf token is: ",csrf);
+		log.debug(loghdr + "- (addMember) member is: ",member);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -118,7 +119,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function deleteMember( member ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [deleteMember] csrf token is: ",csrf);
+		log.debug(loghdr + "deleteMember csrf token is: ",csrf);
 		$http.defaults.headers.del = {'X-CSRF-TOKEN': csrf};
 		
 		var request = $http({
@@ -138,10 +139,10 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 *******************************************************/
 	function getNewsStories() {
 		//$http.defaults.headers.common["Accept"] = "application/json, text/plain";
-		console.log("## [dbService]->getNewsStories()");
+		log.debug(loghdr + "->getNewsStories()");
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [dbService]->getNewsStories() csrf token is: ",csrf);
+		log.debug(loghdr + "->getNewsStories() csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -162,8 +163,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function addUser( user ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [dbService] - (addUser) csrf token is: ",csrf);
-		console.log("## [dbService] - (addUser) user is: ",user);
+		log.debug(loghdr + "- (addUser) csrf token is: ",csrf);
+		log.debug(loghdr + "- (addUser) user is: ",user);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -186,8 +187,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function addTeam( team ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [dbService] - (addTeam) csrf token is: ",csrf);
-		console.log("## [dbService] - (addTeam) team is: ",team);
+		log.debug(loghdr + " (addTeam) csrf token is: ",csrf);
+		log.debug(loghdr + "- (addTeam) team is: ",team);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -209,7 +210,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function updateTeam( team ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateTeam] csrf token is: ",csrf);
+		log.debug(loghdr + "updateTeam csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -231,7 +232,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function deleteTeam( team ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [deleteTeam] csrf token is: ",csrf);
+		log.debug(loghdr + "deleteTeam csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -255,7 +256,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * a REST call.
 	 ***************************************************************/
 	function getSessionsForTeam(teamId) {
-		console.log("## [dbService] -> getSessionsForTeam");
+		log.debug(loghdr + "-> getSessionsForTeam");
 		
 		var request = $http({
 			method: "get",
@@ -273,7 +274,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * Get the list of taining records from the db via a REST call.
 	 ***************************************************************/
 	function getSessionsRecords() {
-		console.log("## [dbService] -> getSessionRecords");
+		log.debug(loghdr + "-> getSessionRecords");
 		
 		var request = $http({
 			method: "get",
@@ -291,7 +292,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * REST call.
 	 ***************************************************************/
 	function getSessionRecordsForTeam(teamId) {
-		console.log("## [dbService] -> getSessionRecordsForTeam - with id: ", teamId);
+		log.debug(loghdr + "ssionRecordsForTeam -> getSessionRecordsForTeam - with id: ", teamId);
 		
 		var request = $http({
 			method: "get",
@@ -308,7 +309,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * Get a particular taining record from the db via a REST call.
 	 ***************************************************************/
 	function getASessionRecord(recId) {
-		console.log("## [dbService] -> getASessionRecord - with id: ", recId);
+		log.debug(loghdr + "-> getASessionRecord - with id: ", recId);
 		
 		var request = $http({
 			method: "get",
@@ -327,7 +328,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * user from the db via a REST call.
 	 ***************************************************************/
 	function getMemberTrainingRecForSession(sessionId, teamid, userId) {
-		console.log("## [dbService] -> getMemberTrainingRecForSession - for user: " + userId + ", and session: " + sessionId + ", and team: " + teamid);
+		log.debug(loghdr + "-> getMemberTrainingRecForSession - for user: " + userId + ", and session: " + sessionId + ", and team: " + teamid);
 		
 		var request = $http({
 			method: "get",
@@ -345,10 +346,10 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * user from the db via a REST call.
 	 ***************************************************************/
 	function setMemberTrainingRecForSession(sessionid, teamid, memberid, status) {
-		console.log("## [dbService] -> setMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
+		log.debug(loghdr + "-> setMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
 		var sessionrec = {"sessionId": sessionid, "teamId": teamid, "memberId": memberid, "status": status };		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [setMemberTrainingRecForSession] csrf token is: ",csrf);
+		log.debug(loghdr + "setMemberTrainingRecForSession csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -372,11 +373,11 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * user from the db via a REST call.
 	 ***************************************************************/
 	function insertMemberTrainingRecForSession(sessionid, teamid, memberid, status) {
-		console.log("## [dbService] -> insertMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
+		log.debug(loghdr + "-> insertMemberTrainingRecForSession - for member: " + memberid + ", and session: " + sessionid + ", and team: " + teamid);
 		var sessionrec = {"sessionid": sessionid, "teamid": teamid, "memberid": memberid, "status": status };		
 		var newStatus = !status;
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [insertMemberTrainingRecForSession] csrf token is: ",csrf);
+		log.debug(loghdr + "insertMemberTrainingRecForSession csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -399,7 +400,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 * Get the user name from the db via a REST call.
 	 ***************************************************************/
 	function getCurrentUser() {
-		console.log("## [dbService] -> getCurrentUser");
+		log.debug(loghdr + "-> getCurrentUser");
 		
 		var request = $http({
 			method: "get",
@@ -415,7 +416,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function updateUser( user ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateUser] csrf token is: ",csrf);
+		log.debug(loghdr + "updateUser csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -437,7 +438,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function updateUserPassword( user ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [updateUserPassword] csrf token is: ",csrf);
+		log.debug(loghdr + "updateUserPassword csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -459,7 +460,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function deleteUser( user ) {
 		
 		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [deleteUser] csrf token is: ",csrf);
+		log.debug(loghdr + "deleteUser csrf token is: ",csrf);
 		
 		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -482,8 +483,8 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	function addTrainingSession( session ) {
 			
 			var csrf = $("meta[name='_csrf']").attr("content");
-			console.log("## [dbService] - (addTrainingSession) csrf token is: ",csrf);
-			console.log("## [dbService] - (addTrainingSession) session is: ",session);
+			log.debug(loghdr + "- (addTrainingSession) csrf token is: ",csrf);
+			log.debug(loghdr + "- (addTrainingSession) session is: ",session);
 			
 			$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 			$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -510,7 +511,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	 **********************************************************/
 	function isAuthorised( user, op ) 
 	{
-		console.log("[dbService] -> isAuthorised, user[" + user + "], op[" + op +"]");
+		log.debug(loghdr + "-> isAuthorised, user[" + user + "], op[" + op +"]");
 		
 		var request = $http({
 			method: "get",
@@ -523,13 +524,13 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 	// Error handling
 	
 	function handleSuccess( response ) {
-		console.log("## http success!!");
+		log.debug(loghdr + "http success!!");
 		return( response.data );
 	}
 	
 	function handleError( response ) {
-		console.log("## http ERROR!!");
-		console.log(response);
+		log.debug(loghdr + "http ERROR!!");
+		log.debug(response);
 		if(
 			! angular.isObject( response.data ) ||
 			! response.data.message

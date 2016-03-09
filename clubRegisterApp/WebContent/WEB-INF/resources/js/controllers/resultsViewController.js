@@ -14,6 +14,7 @@ pubModule.controller( 	'resultsViewController',
 	$scope.home = _home;
 	$scope.data = DataService;
 	$scope.teamName = $routeParams.team;
+	var loghdr = "## [resultsViewController]: ";
 	
 	$http.get(_home + '/team/' + $scope.teamName )
 	.then( function(data) 
@@ -21,14 +22,14 @@ pubModule.controller( 	'resultsViewController',
 		// (1) Get the Team details
 		$scope.team = data.data;
 		$scope.data.dsCurrentTeam = data.data;
-		console.log("## Got team details..", $scope.team.name);
-		console.log("## lrResultsCode: ", $scope.team.lrResultsCode);
+		log.debug(loghdr+"Got team details..", $scope.team.name);
+		log.debug(loghdr+"lrResultsCode: ", $scope.team.lrResultsCode);
 	})
 	.then( function(data)
 	{
 		// (2) Get the League table from the League Republic site
 		$scope.lrResultsCode = $scope.data.dsCurrentTeam.lrResultsCode;
-		console.log($scope.lrcode);
+		log.debug($scope.lrcode);
 		
 		var url = 'http://api.leaguerepublic.com/l/js/cs1.html?cs=' + $scope.data.dsCurrentTeam.lrResultsCode;
 		
@@ -48,7 +49,7 @@ pubModule.controller( 	'resultsViewController',
 			el.src = "http://api.leaguerepublic.com/l/js/cs1.html?cs=" + $scope.data.dsCurrentTeam.lrResultsCode;// + "&random=" + randno;
 			el.type = "text/javascript";
 			document.getElementsByTagName("head")[0].appendChild(el);
-			console.log(el);
+			log.debug(el);
 		};
 	}); // End of get()
 			

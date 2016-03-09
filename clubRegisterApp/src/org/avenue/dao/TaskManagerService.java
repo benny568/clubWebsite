@@ -1,5 +1,6 @@
 package org.avenue.dao;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
+import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.MyTeams;
 import org.avenue.service.domain.NewsStory;
@@ -36,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.FileCopyUtils;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
@@ -450,6 +454,7 @@ public class TaskManagerService {
 		 
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload();
+
 	
 		// Parse the request
 		FileItemIterator iter;
@@ -470,25 +475,27 @@ public class TaskManagerService {
 			     {
 			    	 value = Streams.asString(stream);
 	
-			         System.out.println("Form field " + name + " with value "
-			             + value + " detected.");
+			         System.out.println("Form field [" + name + "] with value ["
+			             + value + "] detected.");
 			         addParamToNS( ns, name, value );
 			         
 			     } 
 			     else 
 			     {
-			         System.out.println("File field " + name + " with file name "
-			             + item.getName() + " detected.");
+			         System.out.println("File field [" + name + "] with file name ["
+			             + item.getName() + "] detected.");       
+			         
 			         // Process the input stream
 			         byte[] b = new byte[10000000];
 			         String fileName = item.getName();
 			         int read = 0;
-			         FileOutputStream out = new FileOutputStream(new File(savePath + File.separator + fileName));
-			         System.out.println("## [TaksManagerService]->(uploadNews): Opened output stream to: " + savePath + File.separator + fileName);
+			         FileOutputStream out = new FileOutputStream(new File(savePath + '/' + fileName));
+			         System.out.println("## [TaksManagerService]->(uploadNews): Opened output stream to: " + savePath + '/' + fileName);
 			         
-			         while ((read = stream.read(b)) != -1) 
+			         while ((read = stream.read(b,0,b.length)) != -1) 
 			         {
 			             out.write(b, 0, read);
+			             read = 0;
 			         }
 			         if (out != null)
 			             out.close();
@@ -1228,5 +1235,124 @@ public class TaskManagerService {
 		 
 	 }
 
+	 public List<Media> getAllMedia() {
+		 log.debug("## -> getAllMedia()");
+		  List<Media> medias = new ArrayList<Media>();
+		  try {
+			  	   Connection connection = DBUtility.getConnection();
+				   Statement statement = connection.createStatement();
+				   ResultSet rs = statement.executeQuery("select * from media");
+				   log.trace("##    Executed query[select * from media]");
+				   while (rs.next()) 
+				   {
+					    Media media = new Media();
+					    media.setMediaid(rs.getInt("mediaid"));
+					    media.setType(rs.getInt("type"));
+					    media.setTitle(rs.getString("title"));
+					    media.setLocation(rs.getString("location"));
+					    media.setDescription(rs.getString("description"));				    
+					    medias.add(media);
+					    log.trace("##    Adding media to list: " + media);
+				   }
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  DBUtility.closeConnection();
+		  log.debug("## <- getAllMedia()");
+		  return medias;
+		 
+	 }
+	 
+	 public List<Media> getPhotoMedia(String cat1, String cat2) {
+		 log.debug("## -> getPhotoMedia()");
+		  List<Media> medias = new ArrayList<Media>();
+		  try {
+			  	   Connection connection = DBUtility.getConnection();
+			  	   PreparedStatement preparedStatement = connection.prepareStatement("select * from media where category1 = ? and category2 = ? and type = 0");
+				   preparedStatement.setString(1, cat1);
+				   preparedStatement.setString(2, cat2);
+				   ResultSet rs = preparedStatement.executeQuery();
+
+				   while (rs.next()) 
+				   {
+					    Media media = new Media();
+					    media.setMediaid(rs.getInt("mediaid"));
+					    media.setType(rs.getInt("type"));
+					    media.setTitle(rs.getString("title"));
+					    media.setCategory1(rs.getString("category1"));
+					    media.setCategory2(rs.getString("category2"));
+					    media.setLocation(rs.getString("location"));
+					    media.setDescription(rs.getString("description"));				    
+					    medias.add(media);
+					    log.trace("##    Adding media to list: " + media);
+				   }
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  DBUtility.closeConnection();
+		  log.debug("## <- getPhotoMedia()");
+		  return medias;
+		 
+	 }
+	 
+	 public List<Media> getVideoMedia() {
+		 log.debug("## -> getVideoMedia()");
+		  List<Media> medias = new ArrayList<Media>();
+		  try {
+			  	   Connection connection = DBUtility.getConnection();
+				   Statement statement = connection.createStatement();
+				   ResultSet rs = statement.executeQuery("select * from media where type = 1");
+				   log.trace("##    Executed query[select * from media where type = 1]");
+				   while (rs.next()) 
+				   {
+					    Media media = new Media();
+					    media.setMediaid(rs.getInt("mediaid"));
+					    media.setType(rs.getInt("type"));
+					    media.setTitle(rs.getString("title"));
+					    media.setLocation(rs.getString("location"));
+					    media.setDescription(rs.getString("description"));				    
+					    medias.add(media);
+					    log.trace("##    Adding media to list: " + media);
+				   }
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  DBUtility.closeConnection();
+		  log.debug("## <- getVideoMedia()");
+		  return medias;
+		 
+	 }
+	 
+	 public List<Media> getSoundMedia() {
+		 log.debug("## -> getSoundMedia()");
+		  List<Media> medias = new ArrayList<Media>();
+		  try {
+			  	   Connection connection = DBUtility.getConnection();
+				   Statement statement = connection.createStatement();
+				   ResultSet rs = statement.executeQuery("select * from media where type = 2");
+				   log.trace("##    Executed query[select * from media where type = 2]");
+				   while (rs.next()) 
+				   {
+					    Media media = new Media();
+					    media.setMediaid(rs.getInt("mediaid"));
+					    media.setType(rs.getInt("type"));
+					    media.setTitle(rs.getString("title"));
+					    media.setLocation(rs.getString("location"));
+					    media.setDescription(rs.getString("description"));				    
+					    medias.add(media);
+					    log.trace("##    Adding media to list: " + media);
+				   }
+		  } catch (SQLException e) {
+		   e.printStackTrace();
+		  }
+	
+		  DBUtility.closeConnection();
+		  log.debug("## <- getSoundMedia()");
+		  return medias;
+		 
+	 }
 
 }

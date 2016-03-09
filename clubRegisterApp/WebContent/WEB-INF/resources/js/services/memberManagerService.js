@@ -6,6 +6,8 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	self.teamId = 0;
 	self.lrcode = 0;
 	data = DataService;
+	var logdepth = '';
+	var loghdr = logdepth + '# mmService: ';
 	
 	return({
 		addPlayer : addPlayer,
@@ -34,7 +36,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	{
 		$http.get(_home + '/admin/manager/details')
 		.then( function(result){
-			log.debug("## getManagerDetails() returned:");
+			log.debug(loghdr+"getManagerDetails() returned:");
 		});
 	}
 	
@@ -46,13 +48,13 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 			self.teamId = result.data.id;
 			self.lrcode = result.data.lrcode;
 			lrcode = result.data.lrcode;
-			console.log("## [mmService] - getFullTeamDetails(1): ", self.teamName, self.teamId, self.lrcode, lrcode);
+			log.debug(loghdr+"- getFullTeamDetails(1): ", self.teamName, self.teamId, self.lrcode, lrcode);
 			return $http.get(_home + '/admin/team/' + self.teamId);
 		})
 		.then( function(result){
 				self.Team = result.data;
 				scope.Team = result.data;
-				console.log("## [mmService] - getFullTeamDetails(2): ", self.Team);
+				log.debug(loghdr+"- getFullTeamDetails(2): ", self.Team);
 			});
 		
 		return self.Team;
@@ -66,8 +68,8 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 		log.debug("##    |->mmService.getTeamDetails(" + teamName +")");
 		return $http.get(_home + '/team/' + teamName).success(function(tdetails)
 		{
-			console.log("## [mmService] - getTeamDetails()..Got team details: ", tdetails);
-			log.debug("##    |<-mmService.getTeamDetails()", tdetails);
+			log.debug(loghdr+"- getTeamDetails()..Got team details: ", tdetails);
+			log.debug(loghdr+"    |<-mmService.getTeamDetails()", tdetails);
 		});
 	}
 	
@@ -77,13 +79,13 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 *******************************************************/
 	function getTeammembers(teamId)
 	{
-		console.log("## [mmService] - getTeammembers()..");
+		log.debug(loghdr+"- getTeammembers()..");
 		
 		$http.get(_home + '/admin/team/' + self.teamId);/*.success(function(data) 
 		{
 			self.TeamMembers = data;
-			console.log("## [mmService] - getTeammembers()..Added Team to the cache: ", self.TeamMembers);
-			console.log("## [mmService] - getTeammembers()..Other cache data: ", self.teamName, self.teamId, self.lrcode);
+			log.debug(loghdr+"- getTeammembers()..Added Team to the cache: ", self.TeamMembers);
+			log.debug(loghdr+"- getTeammembers()..Other cache data: ", self.teamName, self.teamId, self.lrcode);
 		});*/
 	}
 	
@@ -101,7 +103,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 **********************************************************/
 	function addMember( scope ) 
 	{
-		console.log("[mmService] -> addMember", scope.teamName);
+		log.debug(loghdr+"-> addMember", scope.teamName);
 			
 		ModalService.showModal({templateUrl: 'addMemModal.html',controller: "AddMemberController"})
 			.then(	function(modal) 
@@ -115,7 +117,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 			            							scope.thisMember.position = convertPosToInt(result.member.position);
 			            							scope.thisMember.team = convertTeamToInt(result.member.team);
 			            							dbService.addMember( result.member ).then( function(result){
-			            								console.log("[mmService] - addPMember (reurned from dbService): ", scope.thisMember);
+			            								log.debug(loghdr+"- addPMember (reurned from dbService): ", scope.thisMember);
 			            								applyMemberAdd(scope);
 			            							} );
 			            						}
@@ -138,7 +140,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 **********************************************************/
 	function addUser( scope ) 
 	{
-		console.log("[mmService] -> addUser", scope.newUser);
+		log.debug(loghdr+"-> addUser", scope.newUser);
 			
 		ModalService.showModal({templateUrl: 'addUserModal.html',controller: "AddUserController"})
 			.then(	function(modal) 
@@ -150,7 +152,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 			            						{
 			            							scope.newUser = result.user;
 			            							dbService.addUser( result.user ).then( function(result){
-			            								console.log("[mmService] - addUser (reurned from dbService): ", scope.newUser);
+			            								log.debug(loghdr+"- addUser (reurned from dbService): ", scope.newUser);
 			            								applyUserAdd(scope);
 			            							} );
 			            						}
@@ -181,7 +183,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 *******************************************************/
 	function addPlayer( scope ) 
 	{
-		console.log("[mmService] - addPlayer..", scope.teamName);
+		log.debug("[mmService] - addPlayer..", scope.teamName);
 			
 		ModalService.showModal({templateUrl: 'addMemModal.html',controller: "AddMemberController"})
 			.then(	function(modal) 
@@ -193,7 +195,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 			            						{
 			            							scope.thisMember = result.member;
 			            							dbService.addMember( result.member ).then( function(result){
-			            								console.log("[mmService] - addPlayer: ", result);
+			            								log.debug(loghdr+"- addPlayer: ", result);
 			            								applyMemberAdd(scope, scope.thisMember);
 			            							} );
 			            						}
@@ -281,7 +283,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 		                dbService.updateMember( newMem )
 		        		.then( function(result) {
 		        			applyMemberChange(thisMember, newMem);
-		        			console.log("## [mmService] -> editMember: after update: ", thisMember);
+		        			log.debug(loghdr+"-> editMember: after update: ", thisMember);
 		        		});
 	            	}
 	        	});
@@ -366,7 +368,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 		                dbService.updateTeam( newTeam )
 		        		.then( function(result) {
 		        			//applyMemberChange(thisMember, newMem);
-		        			console.log("## [mmService] -> editTeamNB: after update: ", thisTeam);
+		        			log.debug(loghdr+"-> editTeamNB: after update: ", thisTeam);
 		        		});
 	            	}
 	        	});
@@ -380,17 +382,17 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 * Description:	Get details of the currently logged in user
 	 * Scope:		Externally accessible via the service
 	 * Params in:	None
-	 * Return:		Updates $scope.thisUser
+	 * Return:		Updates DataService.dsCurrentUser
 	 **********************************************************/
     function getUserDetails(scope)
 	{
 		dbService.getCurrentUser()
 		.then(function(user){
-			console.log("## [mmService]->getUserDetails: ", user );
-			scope.thisUser = user;
-			scope.orgUser = angular.copy(scope.thisUser);
-			if( scope.thisUser.avatar == "" )
-				scope.thisUser.avatar = "resources/images/avatars/default.png";
+			log.debug(loghdr+"->getUserDetails: ", user );
+			DataService.dsCurrentUser = user;
+			scope.orgUser = angular.copy(DataService.dsCurrentUser);
+			if( DataService.dsCurrentUser.avatar == "" )
+				DataService.dsCurrentUser = "resources/images/avatars/default.png";
 		});
 	}
     
@@ -405,11 +407,11 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	 **********************************************************/
 	function isAuthorised( user, op ) 
 	{
-		console.log("[mmService] -> isAuthorised, user[" + user + "], op[" + op +"]");
+		log.debug(loghdr+"-> isAuthorised, user[" + user + "], op[" + op +"]");
 		
 		dbService.isAuthorised(user,op)
 		.then(function(authorisation){
-			console.log("[mmService] ,<- isAuthorised returning [" + authorisation + "]");
+			log.debug(loghdr+"<- isAuthorised returning [" + authorisation + "]");
 			return authorisation;
 		});
 	}
@@ -418,7 +420,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	function difference(m1, m2) {
 	    var diff = false;
 	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
-	    	  console.log(val + ' -> ' + m1[val]);
+	    	  log.debug(val + ' -> ' + m1[val]);
 	    	if( m1[val] != m2[val] )
 	    		  diff = true;
 	    });
@@ -467,7 +469,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	
 	function applyMemberAdd(scope)
 	{
-		console.log("## [mmService] -> applyMemberAdd");
+		log.debug(loghdr+"-> applyMemberAdd");
 		
 		switch( scope.mode )
 		{
@@ -483,7 +485,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	
 	function applyMemberChange(mem, member)
 	{
-		console.log("## [mmService] -> applyMemberChange");
+		log.debug(loghdr+"-> applyMemberChange");
 
 		mem.name = member.name;
 		mem.address = member.address;
@@ -526,7 +528,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	
 	function applyUserAdd(scope)
 	{
-		console.log("## [mmService] -> applyUserAdd");
+		log.debug(loghdr+"-> applyUserAdd");
 
 		scope.users.push(scope.newUser);
 	}

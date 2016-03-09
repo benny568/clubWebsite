@@ -11,6 +11,8 @@ import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.Team;
 import org.avenue.service.domain.Worker;
 import org.avenue.service.utility.FileUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,14 +23,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class welcomeController {
 
 	TaskManagerService taskmanagerservice=new TaskManagerService();
+	private final Logger log = LoggerFactory.getLogger(welcomeController.class);
+	private String loghdr = "################################ ## [welcomeController]->";
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(HttpServletRequest request)
 	{
+		log.trace(loghdr+"root mapping..");
 		HttpSession session = request.getSession();  	 
         ArrayList<NewsStory> stories = new ArrayList<NewsStory>();
 
         stories = taskmanagerservice.getNewsItems();
+        log.trace(loghdr+"got news stories from getNewsItems: " + stories);
         session.setAttribute("stories", stories);
 
 		return "home";
@@ -40,21 +46,17 @@ public class welcomeController {
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public String adminPage( HttpServletRequest request, ModelMap model, Principal principal )
 	{
+		log.trace(loghdr+"/admin** mapping..");
 		String name = principal.getName();
+		log.trace(loghdr+"user name: " + name);
 		Worker user = new Worker();
 		HttpSession session = request.getSession();
 		
-		/*ArrayList<String> roles = new ArrayList<String>();
-		roles.add("ROLE_ADMIN");
-		roles.add("ROLE_SUPER");
-		user.setEnabled(1);
-		user.setName("benny");
-		user.setPassword("corina");
-		user.setRoles(roles);*/
-		
 		user = taskmanagerservice.getUserByName(name);
+		log.trace("## [welcomeController]->getUserByName returned: " + user);
 		session.setAttribute("user", user);
 		
+		log.trace(loghdr+"root mapping: returning view of /WEB-INF/resources/viewParts/adminHome");
 		return "/WEB-INF/resources/viewParts/adminHome";
 	}
 

@@ -27,3 +27,16 @@ with all leukaemia. He is currently attending to Crumlin Hospital every week for
 Before Kilian got sick he was just like any other typical 6 year old. He loved playing football with his friends and playing with his brothers. When he gets older he wants to be a fireman and help others.
 The treatment that Kilian is getting sometimes makes him very sick, but he is determined not to let it stop him from playing or having fun. Killian understands he needs the treatment to get better and he looks forward to the day he can once again play football.", "resources/news/killStory.jpg", ""),
 ("G", "Scrap Metal Collection", "25th July", "We will have another metal collection on Saturday 25th July. All proceeds to towards the pitch development at the Rosleven.", "resources/news/scrapmetal.jpg", "");
+
+INSERT INTO media (type, title, location, description)
+VALUES 	(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/1.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/2.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/3.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/4.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/5.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/6.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/7.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/8.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/9.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/10.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora."),
+		(0,"2015 Cup Final vs. Coole", "resources/images/actionshots/11.jpg", "Killian O' Daly fights for the ball against Coole at the County grounds in Doora.");

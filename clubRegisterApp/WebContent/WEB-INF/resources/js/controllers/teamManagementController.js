@@ -22,6 +22,7 @@ mmModule.controller(	'teamManagementController',
 	$scope.teamName = $routeParams.team;
 	var urlteam = _home + '/team/' + $scope.teamName;
 	var urlmembers = _home + '/teammembers/' + $scope.teamName;
+	var loghdr = "## [teamManagementController]: ";
 	
 	$http.get(urlteam)
 	.then( function( result )
@@ -33,13 +34,13 @@ mmModule.controller(	'teamManagementController',
 	.then(function(result) 
 	{
 		$scope.data.dsTeamMembers = result.data;
-		console.log("## Got Team details: ", result.data);
+		log.debug(loghdr+"Got Team details: ", result.data);
 	})
 	.then( function(data)
 	{
 		// (3) Get the League table from the League Republic site
 		$scope.lrcode = $scope.data.dsCurrentTeam.lrcode;
-		console.log($scope.lrcode);
+		log.debug($scope.lrcode);
 		
 		var url = 'http://api.leaguerepublic.com/l/js/cs1.html?cs=' + $scope.data.dsCurrentTeam.lrcode;
 		
@@ -59,7 +60,7 @@ mmModule.controller(	'teamManagementController',
 			el.src = "http://api.leaguerepublic.com/l/js/cs1.html?cs=" + $scope.data.dsCurrentTeam.lrcode;// + "&random=" + randno;
 			el.type = "text/javascript";
 			document.getElementsByTagName("head")[0].appendChild(el);
-			console.log(el);
+			log.debug(el);
 		};
 	}); // End of get()
 	
@@ -73,11 +74,11 @@ mmModule.controller(	'teamManagementController',
 	 **********************************************************/
 	$scope.setCurrentMember = function(member)
 	{
-		log.trace("## -> setCurrentMember("+member+")");
+		log.trace(loghdr+"-> setCurrentMember("+member+")");
 		if( typeof member == 'undefined' )
 			return
 			
-		log.trace("[setCurrentMember] called with: ", member);
+		log.trace(loghdr+"setCurrentMember() called with: ", member);
 		$scope.data.dsCurrentMember = member;
 		
 		if(typeof(member) != 'undefined')
@@ -87,7 +88,7 @@ mmModule.controller(	'teamManagementController',
 			if( typeof $scope.data.dsCurrentMember.position == 'number' )
 				$scope.data.dsCurrentMember.position = $scope.data.dsPosition[$scope.data.dsCurrentMember.position];
 		}
-		log.trace("## <- setCurrentMember()");
+		log.trace(loghdr+"<- setCurrentMember()");
 	}
 	$scope.setCurrentMember();
 	
@@ -119,7 +120,7 @@ mmModule.controller(	'teamManagementController',
 		                dbService.updateTeam( newTeam )
 		        		.then( function(result) {
 		        			$scope.data.applyTeamChange(newTeam);
-		        			console.log("## [mmService] -> editTeamNB: after update: ", newTeam);
+		        			log.debug(loghdr+"-> editTeamNB: after update: ", newTeam);
 		        		});
 	            	}
 	        	});

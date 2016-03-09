@@ -4,9 +4,10 @@ mmModule.controller('AddUserController', ['$scope', 'close', function($scope, cl
 	$scope.modalHeader = "Add Admin User";
 	var usr = $scope.newUser;
 	var userData = {};
+	var loghdr = "## [AddUserController]: ";
 	
 	$scope.close = function(add, usr) {
-		console.log("## AddUserController->close(): ", $scope.formModel);
+		console.log(loghdr+"->close(): ", $scope.formModel);
 		convertUserData(usr,userData);
 		close({op:add,user:userData}, 500); // close, but give 500ms for bootstrap to animate
 	 };

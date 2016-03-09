@@ -1,69 +1,56 @@
-		<div class="container">
+	<div class="container">
+		<div ng-controller="memberManagerController" mode="All">
 			<div class="row">
-			
-				<div class="col-sm-2" style="height:100%;">
-					<div class="a-adminMenu">
-					<!-- Add menu down left -->
-					<div ng-include="'resources/viewParts/adminMenu.html'"></div>
-					</div>			
-				</div> <!-- end col -->	
-				
-				<div class="col-sm-10">
-
-				<div ng-controller="memberManagerController" mode="All">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="titleStyle">
-								<h3>Club Register 2015 Season</h3>
-							</div>
-						</div>
+				<div class="col-md-12">
+					<div class="titleStyle">
+						<h3>Club Register 2015 Season</h3>
 					</div>
-					<div class="row">
-								<div class="panel">
-									<div class="panel-heading avenue-heading" style="min-height:35px;">
-										Current Members
-										<div  style="float:right; align:bottom;">
-											<button type="button" class="btn btn-warning btn-xs" ng-click="addMember('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Member</button>
-										</div>
-									</div>
-						    		<div class="panel-body avenue-body" style="height:100%;">
-						    			<div style="max-width:300px;">
-											<form>
-												<div class="form-group">
-													<div class="input-group">
-														<div class="input-group-addon"><i class="fa fa-search"></i></div>
-														<input type="text" class="form-control" placeholder="Search" ng-model="searchMem">
-													</div>      
-												</div>
-											</form>
-										</div>
-										<div>
-											<div class="row solid-line">
-												<div class="col-md-1 tblHdr">#</div>
-											    <div class="col-md-3 tblHdr">Name</div>
-											    <div class="col-md-4 tblHdr">Address</div>
-											    <div class="col-md-2 tblHdr">Phone</div>
-											    <div class="col-md-2 tblHdr">Operations</div>
-											</div> <!-- end of row -->
-											<div ng-repeat="member in data.dsAllMembers | filter:searchMem" class="row light-line">
-												<div class="col-md-1">{{$index+1}}</div>						    
-									    		<div class="col-md-3">{{member.name}}</div>
-												<div class="col-md-4">{{member.address}}</div>
-												<div class="col-md-2">{{member.phone}}</div>
-									    		<div class="col-md-2">
-											    	<i ng-show="(member.amount>0)" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
-											    	<i ng-hide="(member.amount>0)" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
-											    	<i ng-click="editMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
-											    	<i ng-click="deleteMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
-											    </div>	
-										    </div> <!-- end row -->
-										</div> <!-- end ng-show -->
-									</div> <!-- end panel body -->
-								</div> <!-- end of panel -->			
-
-						</div> <!-- end row -->
-					</div>  <!-- End of allMembersController -->
-		
 				</div>
-			</div> <!-- end row -->
+			</div>
+			<div class="row">
+						<div class="panel">
+							<div class="panel-heading avenue-heading" style="min-height:35px;">
+								Current Members
+								<div  style="float:right; align:bottom;">
+									<button type="button" class="btn btn-warning btn-xs" ng-click="addMember('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Member</button>
+								</div>
+							</div>
+				    		<div class="panel-body avenue-body" style="height:100%;">
+				    			<div style="max-width:300px;">
+									<form>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon"><i class="fa fa-search"></i></div>
+												<input type="text" class="form-control" placeholder="Search" ng-model="searchMem">
+											</div>      
+										</div>
+									</form>
+								</div>
+								<div>
+									<div class="row solid-line">
+										<div class="col-md-1 tblHdr">#</div>
+									    <div class="col-md-3 tblHdr">Name</div>
+									    <div class="col-md-4 tblHdr">Address</div>
+									    <div class="col-md-2 tblHdr">Phone</div>
+									    <div class="col-md-2 tblHdr">Operations</div>
+									</div> <!-- end of row -->
+									<div ng-repeat="member in data.dsAllMembers | filter:searchMem" class="row light-line">
+										<div class="col-md-1">{{$index+1}}</div>						    
+							    		<div class="col-md-3">{{member.name}}</div>
+										<div class="col-md-4">{{member.address}}</div>
+										<div class="col-md-2">{{member.phone}}</div>
+							    		<div class="col-md-2">
+									    	<i ng-show="(member.amount>0)" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
+									    	<i ng-hide="(member.amount>0)" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
+									    	<i ng-click="editMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
+									    	<i ng-click="deleteMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
+									    </div>	
+								    </div> <!-- end row -->
+								</div> <!-- end ng-show -->
+							</div> <!-- end panel body -->
+						</div> <!-- end of panel -->			
+
+				</div> <!-- end row -->
+			</div>  <!-- End of allMembersController -->
+
 		</div> <!-- end of container -->

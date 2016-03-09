@@ -26,7 +26,6 @@
 	<link rel="stylesheet" type="text/css" href="resources/font-awesome-4.3.0/css/font-awesome.css" />
 	
 	<!-- My app -->
-	<script type="text/javascript" src="resources/js/app.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 

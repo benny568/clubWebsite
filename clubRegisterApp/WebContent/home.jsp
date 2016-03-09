@@ -1,12 +1,14 @@
+<%@page import="org.avenue.dao.TaskManagerService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="com.google.gson.Gson" %>
 <%@page import="com.google.gson.GsonBuilder" %>
-<%@page import="org.avenue.service.domain.Worker" %>
-<%@page import="org.avenue.service.domain.NewsStory" %>
+<%@page import="org.avenue.service.domain.Media" %>
+<%@page import="org.avenue.dao.TaskManagerService" %>
 <html ng-app="publicApp">
 	<head>  <!-- HEAD START -->		
 		<title>Avenue United Home Page</title>
@@ -22,6 +24,7 @@
 		
 		<!-- Bootstrap -->
  		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+ 		<script type="text/javascript" src="resources/bower_components/tether/dist/js/tether.min.js"></script>
  		<script type="text/javascript" src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		
 		<!-- AngularJS -->
@@ -59,28 +62,29 @@
 		<script type="text/javascript" src="resources/js/controllers/resultsViewController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/messageUsController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/blankController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/photoController.js"></script>
 		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/services/mailService.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplay.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResults.js"></script>
+		<script type="text/javascript" src="resources/js/directives/memberListRow.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
-		<script>
-			<%Worker user = (Worker) session.getAttribute("user");
-			  Gson gson = new GsonBuilder().create();
-			if (null == user) {
-			   /* request.setAttribute("message", "Session has ended.  Please login.");
-			   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-			   rd.forward(request, response); */
-			} 
+<%-- 		<script>
+			<%	TaskManagerService tms = new TaskManagerService();
+				List<Media> photos = new ArrayList<Media>();
+				Gson gson = new GsonBuilder().create();
+				photos = tms.getPhotoMedia();
 			%>
-			(function setUser(){ gThisUser = <%=gson.toJson(user)%> })();
-			
-			<%ArrayList<NewsStory> stories = (ArrayList<NewsStory>)session.getAttribute("stories");%>
-			(function setNews(){ gNewsStories = <%=gson.toJson(stories)%> })();
-		</script>
+			pubModule.controller("photosController", function($scope){
+				gPhotos = <%=gson.toJson(photos)%>;
+				console.log("## photosController initialised");
+				$scope.photos = <%=gson.toJson(photos)%>;
+			});
+		
+		</script> --%>
 		
 	</head>  <!-- HEAD END -->
 	<body>

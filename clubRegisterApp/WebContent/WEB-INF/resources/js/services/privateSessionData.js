@@ -1,9 +1,13 @@
-mmModule.service('DataService', function($rootScope) 
+mmModule.service('DataService', ['$rootScope','dbService', function($rootScope, dbService) 
 {
 	var logdepth = '    ';
 	var loghdr = logdepth + '# DataService: ';
 	log.debug(loghdr + "Service initialized");
 	var self = this;
+	this.ServerMode = { LOCAL: 0, // Running locally
+						REMOTE: 1 // Running on Mochahost server
+					  };
+	this.CurrentServerMode = this.ServerMode.LOCAL;
 	this.dsTeams = [];
 	this.dsTeamMembers = [];
 	this.dsCurrentTeam = {};
@@ -16,105 +20,129 @@ mmModule.service('DataService', function($rootScope)
 	this.dsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
 
 	this.hasPermission = 
-	/**********************************************************
-	 * Name:		hasPermission()
-	 * Description:	Check the user's permission to perform the
-	 * 				given action
-	 * Scope:		Externally accessible
-	 * Params in:	action: the action being requested
-	 * Return:		true or false depending on the permissions
-	 **********************************************************/
-	function hasPermission(action, params)
-	{
-		var team = '';
-		var allow = false;
-		var index = 0;
-
-		if( typeof action === undefined || params === undefined )
-			return;
-		
-		log.trace(loghdr + " -> hasPermission("+action+")");
-		for( var r=0; r<gThisUser.roles.length; r++ )
+		/**********************************************************
+		 * Name:		hasPermission()
+		 * Description:	Check the user's permission to perform the
+		 * 				given action
+		 * Scope:		Externally accessible
+		 * Params in:	action: the action being requested
+		 * Return:		true or false depending on the permissions
+		 **********************************************************/
+		function hasPermission(action, params)
 		{
-			if( gThisUser.roles[r] === "ROLE_SUPER" )
+			var team = '';
+			var allow = false;
+			var index = 0;
+	
+			if( typeof action === undefined || params === undefined )
+				return false;
+	
+			for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
 			{
-				// Super user has permissions to do anything
-				return true;
-			}
-		}
-		switch(action)
-		{
-			case 'MANAGE_TEAM':
-				team = params;
-				log.trace(loghdr + " -> checking if you have permissions for team ["+team+"]");
-				// Check if the user is a manager of this team
-				for( var i=0; i<gThisUser.permissions.teams.length; i++ )
+				if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
 				{
-					for( var t=0; t<gTeams.length; t++ )
+					// Super user has permissions to do anything
+					//log.trace(loghdr + " -> hasPermission("+action+"): YES");
+					return true;
+				}
+			}
+			switch(action)
+			{
+				case 'MANAGE_TEAM':
+					team = params;
+					log.trace(loghdr + " -> checking if you have permissions for team ["+team+"]");
+					// Check if the user is a manager of this team
+					for( var i=0; i<this.dsCurrentUser.permissions.teams.length; i++ )
 					{
-						if( gTeams[t].id === gThisUser.permissions.teams[i] )
+						for( var t=0; t<this.dsTeams.length; t++ )
 						{
-							index = t;
-							break;
+							if( this.dsTeams[t].id === this.dsCurrentUser.permissions.teams[i] )
+							{
+								index = t;
+								break;
+							}
+						}
+	
+						log.trace(loghdr + " -> checking team ["+this.dsTeams[index].name+"]");
+						if( this.dsTeams[index].name === team )
+						{
+							log.trace(loghdr + " -> checking if user is manager for ["+this.dsTeams[index].name+"]");
+							if( this.dsCurrentUser.permissions.positions[i] == 0 )
+							{
+								allow = true;
+								break;
+							}
 						}
 					}
-
-					log.trace(loghdr + " -> checking team ["+gTeams[index].name+"]");
-					if( gTeams[index].name === team )
+					break;
+					
+				case 'ADD_TEAM':
+				case 'EDIT_TEAM':
+					for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
 					{
-						log.trace(loghdr + " -> checking if user is manager for ["+gTeams[index].name+"]");
-						if( gThisUser.permissions.positions[i] == 0 )
+						log.trace(loghdr + "     Checking ["+this.dsCurrentUser.roles[r]+"]");
+						if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
 						{
+							log.debug(loghdr + "     User has SUPER role")
+							// Super user has permissions to do anything
+							allow = true;
+							break;
+						}
+						else if( this.dsCurrentUser.roles[r] === "ROLE_EDIT_TEAM" )
+						{
+							log.debug(loghdr + "     User has Edit Team role")
 							allow = true;
 							break;
 						}
 					}
-				}
-				break;
-				
-			case 'ADD_TEAM':
-			case 'EDIT_TEAM':
-			case 'DEL_TEAM':
-				for( var r=0; r<gThisUser.roles.length; r++ )
-				{
-					log.trace(loghdr + "     Checking ["+gThisUser.roles[r]+"]");
-					if( gThisUser.roles[r] === "ROLE_SUPER" )
+					break;
+				case 'DEL_TEAM':
+					for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
 					{
-						log.debug(loghdr + "     User has SUPER role")
-						// Super user has permissions to do anything
-						allow = true;
-						break;
+						log.trace(loghdr + "     Checking ["+this.dsCurrentUser.roles[r]+"]");
+						if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+						{
+							log.debug(loghdr + "     User has SUPER role")
+							// Super user has permissions to do anything
+							allow = true;
+							break;
+						}
+						else if( this.dsCurrentUser.roles[r] === "ROLE_DEL_TEAM" )
+						{
+							log.debug(loghdr + "     User has Delete Team role")
+							allow = true;
+							break;
+						}
 					}
-				}
-				break;
-				
-			case 'ADD_USER':
-			case 'EDIT_USER':
-			case 'DELETE_USER':
-			case 'VIEW_USERS':
-				for( var r=0; r<gThisUser.roles.length; r++ )
-				{
-					log.trace(loghdr + "     Checking ["+gThisUser.roles[r]+"]");
-					if( gThisUser.roles[r] === "ROLE_SUPER" )
+					break;
+					
+				case 'ADD_USER':
+				case 'EDIT_USER':
+				case 'DELETE_USER':
+				case 'VIEW_USERS':
+					for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
 					{
-						log.trace(loghdr + "     User has SUPER role")
-						// Super user has permissions to do anything
-						allow = true;
-						break;
+						log.trace(loghdr + "     Checking ["+this.dsCurrentUser.roles[r]+"]");
+						if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+						{
+							log.trace(loghdr + "     User has SUPER role")
+							// Super user has permissions to do anything
+							allow = true;
+							break;
+						}
 					}
-				}
-				break;
-		}
-
-		log.trace(loghdr + " <- hasPermission("+allow+")");
-		return allow;
-	};
+					break;
+			}
+	
+			log.trace(loghdr + " <- hasPermission("+allow+")");
+			return allow;
+		};
 	
 	this.difference = 
 		function difference(m1, m2) {
 	    var diff = false;
 	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
-	    	  console.log(val + ' -> ' + m1[val]);
+	    	  log.debug(val + ' -> ' + m1[val]);
 	    	if( m1[val] != m2[val] )
 	    		  diff = true;
 	    });
@@ -125,7 +153,7 @@ mmModule.service('DataService', function($rootScope)
 	this.applyMemberChange =
 	function applyMemberChange(members, member)
 	{
-		console.log(loghdr + " -> applyMemberChange");
+		log.debug(loghdr + " -> applyMemberChange");
 
 		var index = findMemberIndex( members, member );
 
@@ -156,7 +184,7 @@ mmModule.service('DataService', function($rootScope)
 	this.applyMemberDel =
 	function applyMemberDel( members, member )
 	{
-		console.log(loghdr + " -> applyMemberDel");
+		log.debug(loghdr + " -> applyMemberDel");
 
 		var index = findMemberIndex( members, member );
 
@@ -174,7 +202,7 @@ mmModule.service('DataService', function($rootScope)
 	this.applyMemberAdd =
 	function applyMemberAdd( members, member )
 	{
-		console.log(loghdr + " -> applyMemberAdd");
+		log.debug(loghdr + " -> applyMemberAdd");
 		
 		if( $scope.data.dsTeamMembers[member.team] === undefined )
 			getMembers4team(member.team);
@@ -230,7 +258,7 @@ mmModule.service('DataService', function($rootScope)
 	this.findMemberIndex =
 	function findMemberIndex( members, member )
 	{
-		console.log(loghdr + " -> findMemberIndex");
+		log.debug(loghdr + " -> findMemberIndex");
 		var index = -1;
 		
 		if( typeof members !== undefined )
@@ -251,37 +279,69 @@ mmModule.service('DataService', function($rootScope)
 	this.convertPosToInt =
 	function convertPosToInt( sPos )
 	{
-		return $scope.data.dsPosition.indexOf(sPos);
+		log.debug(loghdr + "convertPosToInt(" + sPos + "): returning position of " + this.dsPosition.indexOf(sPos));
+		return this.dsPosition.indexOf(sPos);
 	}
 	
 	this.convertTeamToInt =
 	function convertTeamToInt( sTeam )
 	{
-		for( var i=0; i<$scope.data.dsTeams.length; i++ )
+		for( var i=0; i<this.dsTeams.length; i++ )
 		{
-			if( $scope.data.dsTeams[i].name == sTeam )
-				return $scope.data.dsTeams[i].id;
+			if( this.dsTeams[i].name == sTeam )
+			{
+				log.debug(loghdr + "convertTeamToInt(): returning team id of " + this.dsTeams[i].id);
+				return this.dsTeams[i].id;
+			}
 		}
+		log.debug(loghdr + "convertTeamToInt(): team not found!");
 		return 0;
 	}
 	
 	this.getTeams =
-	/**********************************************************
-	 * Name:		getTeams()
-	 * Description:	Retrieves a list of teams from the server
-	 * Scope:		Internal
-	 * Params in:	None
-	 * Return:		Sets $scope.teams
-	 **********************************************************/
-	function getTeams(){
-		log.debug(loghdr + "-> getTeams()");
-		log.trace(loghdr + "   | calling dbService.getTeams()..")
-		dbService.getTeams()
-			.then( function(teams) {
-				log.debug(loghdr + " <- getTeams() returned: ", teams);
-				$scope.data.dsTeams = teams;
-		});
-	}
+		/**********************************************************
+		 * Name:		getTeams()
+		 * Description:	Retrieves a list of teams from the server
+		 * Scope:		Internal
+		 * Params in:	None
+		 * Return:		Sets $scope.teams
+		 **********************************************************/
+		function getTeams(){
+			log.debug(loghdr + "-> getTeams()");
+			log.debug(loghdr + "   | calling dbService.getTeams()..")
+			dbService.getTeams()
+				.then( function(teams) {
+					log.debug(loghdr + " <- getTeams() returned: ", teams);
+					this.dsTeams = teams;
+					return teams;
+			});
+		}
+	
+	this.getHome = 
+		/**********************************************************
+		 * Name:		getHome()
+		 * Description:	Returns the _home URL so that it can be used
+		 * 				as a local or remote app.
+		 * Scope:		Externally accessible
+		 * Params in:	none
+		 * Return:		_home URL
+		 **********************************************************/
+		function getHome()
+		{
+			log.debug(loghdr + "-> getHome()");
+			if( this.CurrentServerMode == this.ServerMode.LOCAL )
+			{
+				log.debug(loghdr + "     | _home is LOCAL");
+				_home = 'http://localhost:8080/clubRegisterApp';
+			}
+			else if( this.CurrentServerMode == this.ServerMode.REMOTE )
+			{
+				log.debug(loghdr + "     | _home is REMOTE");
+				_home = 'http://www.avenueunited.ie';
+			}
+			
+			return _home;
+		}
 
 	
-});
+}]);

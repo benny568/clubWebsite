@@ -51,15 +51,15 @@ mmModule.controller(	'teamsManagerController',
 	 **********************************************************/
 	function getUserDetails()
 	{
-		log.debug("## [teamsManagerController] -> getUserDetails()");
+		log.debug(loghdr + "-> getUserDetails()");
 		dbService.getCurrentUser()
 		.then(function(user){
-			console.log("## [teamsManagerController] -> getUserDetails: ", user );
-			$scope.thisUser = user;
-			gThisUser = user
-			if( $scope.thisUser.avatar == "" )
-				$scope.thisUser.avatar = "resources/images/avatars/default.png";
-			log.debug("## [teamsManagerController] <- getUserDetails()");
+			log.debug(loghdr + "-> getUserDetails: ", user );
+			DataService.dsCurrentUser = user;
+			DataService.dsCurrentUser = user;
+			if( DataService.dsCurrentUser.avatar == "" )
+				DataService.dsCurrentUser.avatar = "resources/images/avatars/default.png";
+			log.debug(loghdr + "<- getUserDetails()");
 		});
 	}
 	
@@ -77,7 +77,7 @@ mmModule.controller(	'teamsManagerController',
 		if( typeof goNogo == 'undefined')
 			return;
 			
-		console.log("## [teamsManagerController] -> (addTeam)");
+		log.debug(loghdr + "-> (addTeam)");
 		
 		ModalService.showModal({templateUrl: 'addTeamModal.html',controller: "AddTeamController"})
 		.then(	function(modal) 
@@ -89,7 +89,7 @@ mmModule.controller(	'teamsManagerController',
 		            						{
 		            							$scope.data.dsCurrentTeam = result.team;
 		            							dbService.addTeam( $scope.data.dsCurrentTeam ).then( function(result){
-		            								console.log("[teamsManagerController] - addTeam: ", $scope.data.dsCurrentTeam);
+		            								log.debug(loghdr + "- addTeam: ", $scope.data.dsCurrentTeam);
 		            								$scope.data.dsTeams.push($scope.data.dsCurrentTeam);
 		            							} );
 		            						}
@@ -111,13 +111,14 @@ mmModule.controller(	'teamsManagerController',
 	{
 		if( typeof team == 'undefined')
 			return;
-		$scope.thisTeam = team;
-		console.log("## [teamsManagerController] -> (editTeam) team: ", $scope.thisTeam);
+
+		$scope.data.dsCurrentTeam = team;
+		log.debug(loghdr + "-> (editTeam) team: ", $scope.thisTeam);
 		
 		ModalService.showModal({
 			templateUrl: 'editTeamModal.html',
 			controller: "EditTeamController",
-            inputs: { team : team}
+			inputs: { team : $scope.data.dsCurrentTeam }
 		}).then(	function(modal) 
 				{
 		            modal.element.modal();
@@ -128,7 +129,7 @@ mmModule.controller(	'teamsManagerController',
 		            							thisTeam = result.team;
 		            							dbService.updateTeam( result.team ).then( function(result){
 		            								updateTeamInMemory(thisTeam);
-		            								console.log("[teamsManagerController] - editTeam - updates: ", thisTeam);
+		            								log.debug(loghdr + "- editTeam - updates: ", thisTeam);
 		            							});
 		            						}
 		            					}
@@ -152,7 +153,7 @@ mmModule.controller(	'teamsManagerController',
 			return;
 
 		$scope.data.dsCurrentTeam = team;
-		console.log("## [teamsManagerController] -> (deleteTeam) Requested to delete team: ", $scope.data.dsCurrentTeam);
+		log.debug(loghdr + "-> (deleteTeam) Requested to delete team: ", $scope.data.dsCurrentTeam);
 		
 		ModalService.showModal({
 			templateUrl: 'delTeamConfirmModal.html',
@@ -166,7 +167,7 @@ mmModule.controller(	'teamsManagerController',
 		            						if( result.op )
 		            						{
 		            							dbService.deleteTeam( $scope.data.dsCurrentTeam ).then( function(result){
-		            								console.log("[teamsManagerController] - deleteTeam - deleted: ", $scope.data.dsCurrentTeam);
+		            								log.debug(loghdr + "- deleteTeam - deleted: ", $scope.data.dsCurrentTeam);
 		            								delTeamFrmMemory($scope.data.dsCurrentTeam);
 		            							});
 		            						}

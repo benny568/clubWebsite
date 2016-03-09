@@ -1,5 +1,8 @@
 package org.avenue.service.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.EmailMessage;
+import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
@@ -29,11 +33,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -41,6 +50,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author odalybr
  *
  */
+@CrossOrigin()
 @RestController
 public class TaskManagerController {
 	java.sql.Timestamp currentTimestamp = null;
@@ -298,6 +308,15 @@ public class TaskManagerController {
 		 org.avenue.service.domain.Worker user = taskmanagerservice.getUserByName(name);
 		 log.debug("## <-getManagerDetails(): " + user);
 		 return user;	
+	 }
+	 
+	 @RequestMapping(value="/photos/{cat1}/{cat2}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  List<Media> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2) 
+	 {
+		 log.debug("## ->getPhotoMedia("+cat1+","+cat2+")");
+		 List<Media> photos = taskmanagerservice.getPhotoMedia(cat1, cat2);
+		 log.debug("## <-getPhotoMedia(): " + photos);
+		 return photos;	
 	 }
 	 
 }

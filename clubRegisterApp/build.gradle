@@ -38,10 +38,11 @@ repositories {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.springframework:spring-core:4.1.6.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
-    compile 'org.springframework:spring-orm:4.1.6.RELEASE'
-    compile 'org.springframework:spring-aspects:4.1.6.RELEASE'
+    compile 'org.springframework:spring-core:4.2.1.RELEASE'
+    compile 'org.springframework:spring-web:4.2.1.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.2.1.RELEASE'
+    compile 'org.springframework:spring-orm:4.2.1.RELEASE'
+    compile 'org.springframework:spring-aspects:4.2.1.RELEASE'
     compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-taglibs:4.0.3.RELEASE'
@@ -57,6 +58,8 @@ dependencies {
 	compile 'org.apache.tomcat:tomcat-catalina:7.0.47'
 	compile 'org.apache.tomcat:tomcat-coyote:7.0.47'
 	compile 'org.apache.tomcat.embed:tomcat-embed-core:7.0.47'
+
+	//compile 'commons-fileupload:commons-fileupload:1.2.2'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the

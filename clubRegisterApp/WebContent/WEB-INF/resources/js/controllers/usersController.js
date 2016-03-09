@@ -10,7 +10,8 @@ mmModule.controller(	'usersController',
 						 				DataService
 						 			) 
 {	
-	log.debug("## Loading usersController...");
+	var loghdr = "####### usersController: ";
+	log.debug(loghdr+"Loading usersController...");
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 	$scope.home = _home;
@@ -25,7 +26,7 @@ mmModule.controller(	'usersController',
 	$http.get(_home + '/admin/users').success(function(data) 
 	{
 		$scope.users = data;
-		console.log("## Got users..");
+		log.debug(loghdr+"Got users.."+$scope.users);
 	}); // End of get()
 	
 	

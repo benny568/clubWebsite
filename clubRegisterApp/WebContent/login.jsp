@@ -8,6 +8,7 @@
 	
 		<!-- Bootstrap -->
  		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+ 		<script type="text/javascript" src="resources/bower_components/tether/dist/js/tether.min.js"></script>
  		<script type="text/javascript" src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		
 		<!-- AngularJS -->
@@ -30,7 +31,9 @@
 		<script type="text/javascript" src="resources/bower_components/log4javascript/log4javascript.js"></script>
 	
 	<!-- My app -->
-	<script type="text/javascript" src="resources/js/app.js"></script>
+	<script type="text/javascript" src="resources/js/modules/publicApp.js"></script>
+	<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
+	<script type="text/javascript" src="resources/js/controllers/fileUploadController.js"></script>		
 	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 </head>

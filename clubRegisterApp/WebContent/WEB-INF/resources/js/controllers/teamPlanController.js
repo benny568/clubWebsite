@@ -1,6 +1,7 @@
 mmModule.controller('teamPlanController', ['$scope', function ($scope) 
 {
-	console.log("## [teamPlanController] ** LOADING **");
+	var loghdr = "## [teamPlanController]: ";
+	log.debug(loghdr+"** LOADING **");
 	
 	
 	/**********************************************************
@@ -15,7 +16,7 @@ mmModule.controller('teamPlanController', ['$scope', function ($scope)
 		if( typeof teamId == 'undefined' )
 			return;
 		$scope.viewTeamPlan = !$scope.viewTeamPlan;
-		console.log("## [teamPlanController] -> toggleTeamPlanView, value set to: ", $scope.viewTeamPlan);
+		log.debug(loghdr+"-> toggleTeamPlanView, value set to: ", $scope.viewTeamPlan);
 	}
 	$scope.toggleTeamPlanView();
 

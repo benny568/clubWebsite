@@ -1,39 +1,32 @@
 		<div class="container">
-			<div class="row">
-				<div class="col-md-2" style="height:100%;">
-					<!-- Add menu down left -->
-					<div ng-include="'resources/viewParts/adminMenu.html'"></div>			
-				</div> <!-- end col -->	
-			<div class="col-md-10">
-				<div class="panel" style="max-width:500px;margin-left:10%;">
-					<div class="panel-heading avenue-heading">
-						Teams:
-						<div  ng-if="data.hasPermission('ADD_TEAM','')" style="float:right; align:bottom;">
-							<button type="button" class="btn btn-warning btn-xs" ng-click="addTeam('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Team</button>
+			<div class="panel" style="max-width:500px;margin-left:auto;margin-right:auto;">
+				<div class="panel-heading avenue-heading">
+					Teams:
+					<div  ng-if="data.hasPermission('ADD_TEAM','')" style="float:right; align:bottom;">
+						<button type="button" class="btn btn-warning btn-xs" ng-click="addTeam('Yes')" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Team</button>
+					</div>
+				</div>
+				<div class="panel-body avenue-body">
+					<div class="row">
+						<div class="col-md-1">#</div>
+						<div class="col-md-4">Team</div>
+						<div class="col-md-4">League Republic Code</div>
+						<div class="col-md-3">Operations</div>					
+					</div>
+					<div class="row">
+						<div class="light-line"></div>
+					</div>
+					<div ng-repeat="team in data.dsTeams">
+						<div class="row">
+							<div class="col-md-1">{{$index+1}}</div>
+							<div class="col-md-4">{{team.name}}</div>
+							<div class="col-md-4">{{team.lrcode}}</div>
+							<div class="col-md-3">
+						    	<i ng-if="data.hasPermission('EDIT_TEAM', team)" ng-click="editTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;&nbsp;
+						    	<i ng-if="data.hasPermission('DEL_TEAM', team)" ng-click="deleteTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
+						    </div>
 						</div>
 					</div>
-					<div class="panel-body avenue-body">
-						<div class="row">
-							<div class="col-md-1">#</div>
-							<div class="col-md-4">Team</div>
-							<div class="col-md-4">League Republic Code</div>
-							<div class="col-md-3">Operations</div>					
-						</div>
-						<div class="row">
-							<div class="light-line"></div>
-						</div>
-						<div ng-repeat="team in data.dsTeams">
-							<div class="row">
-								<div class="col-md-1">{{$index+1}}</div>
-								<div class="col-md-4">{{team.name}}</div>
-								<div class="col-md-4">{{team.lrcode}}</div>
-								<div class="col-md-3">
-							    	<i ng-if="hasPermission('EDIT_TEAM', team)" ng-click="editTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;&nbsp;
-							    	<i ng-if="hasPermission('DEL_TEAM', team)" ng-click="deleteTeam(team)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
-							    </div>
-							</div>
-						</div>
-					</div> <!-- end panel-body -->
-				</div> <!-- end panel -->
-			</div> <!-- end col -->
+				</div> <!-- end panel-body -->
+			</div> <!-- end panel -->
 		</div> <!-- end container -->

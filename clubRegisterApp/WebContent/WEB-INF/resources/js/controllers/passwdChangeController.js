@@ -6,7 +6,8 @@ mmModule.controller(	'passwdChangeController',
 						 	'DataService', 
 						 	function ($scope,$http,dbService,DataService)
 {	
-	console.log("## [passwdChangeController] Loading....");
+	var loghdr = "## [passwdChangeController]: ";
+	console.log(loghdr+"Loading....");
 	
 	$scope.data = DataService;
 	
@@ -17,7 +18,7 @@ mmModule.controller(	'passwdChangeController',
 		if(proceed === false)
 			window.location.href='adminHome'; // Cancelled
 		
-		console.log("## [passwdChangeController]->Submit, password is: ", $scope.formModel );
+		console.log(loghdr+"->Submit, password is: ", $scope.formModel );
 		
 		getUserDetails($scope);
 		
@@ -25,15 +26,15 @@ mmModule.controller(	'passwdChangeController',
 		{
 			dbService.getCurrentUser()
 			.then(function(user){
-				console.log("## [passwdChangeController] -> getUserDetails: ", user );
-				$scope.thisUser = user;
-				$scope.orgUser = angular.copy($scope.thisUser);
-				$scope.thisUser.password = $scope.formModel.pw1;
-				if( $scope.thisUser.avatar == "" )
-					$scope.thisUser.avatar = "resources/images/avatars/default.png";
-				dbService.updateUserPassword($scope.thisUser)
+				console.log(loghdr+"-> getUserDetails: ", user );
+				DataService.dsCurrentUser = user;
+				$scope.orgUser = angular.copy(DataService.dsCurrentUser);
+				DataService.dsCurrentUser.password = $scope.formModel.pw1;
+				if( DataService.dsCurrentUser.avatar == "" )
+					DataService.dsCurrentUser.avatar = "resources/images/avatars/default.png";
+				dbService.updateUserPassword(DataService.dsCurrentUser)
 				.then(function(user){
-					console.log("## [passwdChangeController] -> after db update: ", $scope.thisUser );
+					console.log(loghdr+"-> after db update: ", DataService.dsCurrentUser );
 					window.location.href='adminHome';
 				});
 			});
@@ -45,7 +46,7 @@ mmModule.controller(	'passwdChangeController',
 	{
 		if(proceed === undefined)
 			return;
-		console.log("## [passwdChangeController]->cancel, operation canceled." );
+		console.log(loghdr+"->cancel, operation canceled." );
 		window.location.href='adminHome';
 	}
 	$scope.cancel();

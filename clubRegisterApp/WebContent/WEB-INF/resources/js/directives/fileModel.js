@@ -1,7 +1,9 @@
-mmModule.directive('fileModel', ['$parse', function($parse){
+
+mmModule.directive("fileModel", ['$parse', function($parse){
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs){
+			console.log("Inside directive, attr value is:" + attrs.fileModel );
 			var model = $parse(attrs.fileModel); // Use parse to look at attributes, specifically fileModel attribute and assign to model
 			var modelSetter = model.assign;
 			

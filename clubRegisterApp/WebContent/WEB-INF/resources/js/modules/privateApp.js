@@ -1,10 +1,7 @@
-var serverMode = {
-	LOCAL: 0, // Running locally
-	REMOTE: 1 // Running on Mochahost server
-};
+
 var _home = '';
 
-var thisServerMode = serverMode.LOCAL;
+var gThisUser = {};
 
 /********************************************
 /* Setup the logger
@@ -49,92 +46,90 @@ mmModule.config(function($routeProvider,$httpProvider) {
 	$httpProvider.defaults.headers["delete"] = {
 	'Content-Type': 'application/json;charset=utf-8'
 	};
-	  
-	if( thisServerMode == serverMode.LOCAL )
-	{
-		_home = 'http://localhost:8080/clubRegisterApp';
-	}
-	else if( thisServerMode == serverMode.REMOTE )
-	{
-		_home = 'http://www.avenueunited.ie';
-	}
 	
 	$routeProvider
     // route for the admin home page
     .when('/', {
         templateUrl : 'resources/viewParts/adminHomeBody.html',
-        controller  : 'dummyController'
+        controller  : 'dummyController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the AdminOverview page
     .when('/AdminOverview', {
         templateUrl : 'resources/viewParts/adminOverviewBody.html',
-        controller  : 'dummyController'
+        controller  : 'dummyController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the AdminTutorials page
     .when('/AdminTutorials', {
         templateUrl : 'resources/viewParts/adminTutorialsBody.html',
-        controller  : 'dummyController'
+        controller  : 'dummyController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the MemberRegister page
     .when('/MemberRegister', {
         templateUrl : 'resources/viewParts/memberRegisterBody.html',
-        controller  : 'memberManagerController'
+        controller  : 'memberManagerController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     
     // route for the MemberRegister page
     .when('/AllMembersAdmin', {
         templateUrl : 'resources/viewParts/allMembersAdminBody.html',
-        controller  : 'memberManagerController'
+        controller  : 'memberManagerController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the ManageTeams page
     .when('/ManageTeams', {
         templateUrl : 'resources/viewParts/manageTeamsBody.html',
-        controller  : 'teamsManagerController'
+        controller  : 'teamsManagerController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the UploadNewsStory page
     .when('/UploadNewsStory', {
         templateUrl : 'resources/viewParts/newsUploadBody.html',
-        controller  : 'newsUploadController'
-    })
-
-    // route for the UploadNewsStory page
-    .when('/UploadNewsStory', {
-        templateUrl : 'resources/viewParts/newsUploadBody.html',
-        controller  : 'newsUploadController'        	
+        controller  : 'newsUploadController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
 
     // route for the AllMembersAdmin page
     .when('/AllMembersAdmin/:mode', {
         templateUrl : 'resources/viewParts/allMembersAdminBody.html',
-        controller  : 'memberManagerController'
+        controller  : 'memberManagerController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     // route for the ManageTeam page
     .when('/ManageTeam/:mode/:team', {
         templateUrl : 'resources/viewParts/manageTeamBody.html',
-        controller  : 'teamManagementController'
+        controller  : 'teamManagementController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     // route for the UsersAdmin page
     .when('/UsersAdmin', {
         templateUrl : 'resources/viewParts/usersAdmin.html',
-        controller  : 'usersController'
+        controller  : 'usersController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     // route for the MyProfile page
     .when('/MyProfile', {
         templateUrl : 'resources/viewParts/myProfileBody.html',
-        controller  : 'userProfileController'
+        controller  : 'userProfileController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
         // route for the ChangePassword page
     .when('/ChangePassword', {
         templateUrl : 'resources/viewParts/changePasswordBody.html',
-        controller  : 'passwdChangeController'
+        controller  : 'passwdChangeController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     .otherwise({
-        redirectTo: '/'
+        redirectTo: '/',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
     });
 
 });
@@ -162,22 +157,6 @@ mmModule.controller('adminOverviewController', ['$scope', '$log', 'privateDataSe
 	$scope.data = privateDataService;
 }]);
 */
-
-mmModule.controller('newsUploadController', ['$scope', 'multipartForm', function($scope, multipartForm){
-	$scope.news = {};
-	var pristineFormTemplate = $('#newsForm').html();
-	$scope.home = _home;
-	
-	$scope.Submit = function(isValid){
-		var uploadUrl = _home + '/admin/upload';
-		
-		if(!isValid) 
-		      alert('Data is invalid, try again...');
-		else
-			multipartForm.post( uploadUrl, $scope.news );
-	};
-
-}]);
 
 mmModule.controller('ModalController', ['$scope', 'DataService', 'member', 'modalType', 'close', function($scope,DataService, member, modalType, close) {
 	
@@ -210,65 +189,3 @@ mmModule.controller('editTeamNBModalController', ['$scope', 'team', 'close', 'Da
 	 };
 
 }]);
-
-/*
-mmModule.controller('newsController', ['$scope', '$http', 'ModalService', 'dbService', function ($scope,$http, ModalService, dbService) {
-	
-	console.log("## [newsController]...");
-	$scope.stories = new Array();
-	
-	getNews();
-
-	function getNews(){		
-		dbService.getNewsStories()
-			.then( function(stories) {
-				$scope.stories = stories;
-		});
-	}
-}]);
-
-
-mmModule.controller('EditTeamController', ['$scope', 'team', 'close', 'privateDataService', function($scope, team, close, privateDataService) {
-	$log.info("->EditTeamController..");
-	$scope.data = privateDataService;
-	$scope.thisTeam = team;
-	
-	$scope.close = function(update, team) {
-		$log.log("## [EditTeamController] team is: ", $scope.thisTeam);
-		close({op:update,team:$scope.thisTeam}, 500); // close, but give 500ms for bootstrap to animate
-	 };
-}]);
-*/
-
-/*mmModule.controller('newsController', ['$scope', '$http', 'ModalService', function ($scope,$http, ModalService) {
-	
-	console.log("## [mmModule.newsController]...");
-	$scope.stories = new Array();
-	
-	getNewsStories();
-	
-	function getNewsStories() {
-		//$http.defaults.headers.common["Accept"] = "application/json, text/plain";
-		console.log("## [mmModule.newsController]->getNewsStories()");
-		
-		var csrf = $("meta[name='_csrf']").attr("content");
-		console.log("## [mmModule.newsController]->getNewsStories() csrf token is: ",csrf);
-		
-		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
-		$http.defaults.headers.post["Content-Type"] = "application/json";
-		$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
-		
-		var request = $http({
-			method: "get",
-			url: _home + "/news"
-		});
-		
-		return( request.then( handleSuccess, handleError ) );
-	}
-
-}]);*/
-
-
-
-

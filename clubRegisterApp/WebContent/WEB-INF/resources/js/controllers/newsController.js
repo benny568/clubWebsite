@@ -1,9 +1,10 @@
 pubModule.controller('newsController', ['$scope', '$http', function ($scope,$http) {
+	 var loghdr = "## [newsController]: ";
 	
-	console.log("## [newsController]...");
+	log.debug(loghdr);
 	$scope.stories = new Array();
 	var csrf = $("meta[name='_csrf']").attr("content");
-	console.log("## [newsController] csrf token is: ",csrf);
+	log.debug(loghdr+"csrf token is: ",csrf);
 	
 	$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 	$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
@@ -15,7 +16,6 @@ pubModule.controller('newsController', ['$scope', '$http', function ($scope,$htt
 		$scope.stories = data;
 	})
 	.then(function(){
-		console.log("### GOT NEWS STORIES ###");
 	}); // End of get()
 
 }]);

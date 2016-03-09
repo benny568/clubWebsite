@@ -43,7 +43,6 @@
 		<script type="text/javascript" src="resources/js/libs/require.js"></script>
 		
 		<!-- My app -->
-		<script type="text/javascript" src="resources/js/app.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/memberManagementController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/sponsorController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/userProfileController.js"></script>
@@ -75,7 +74,7 @@
 			   rd.forward(request, response); */
 			} 
 			%>
-			(function setUser(){ gThisUser = <%=gson.toJson(user)%> })();
+			(function setUser(){ data.dsCurrentUser = <%=gson.toJson(user)%> })();
 			
 			<%ArrayList<NewsStory> stories = (ArrayList<NewsStory>)session.getAttribute("stories");%>
 			(function setNews(){ gNewsStories = <%=gson.toJson(stories)%> })();

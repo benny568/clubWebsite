@@ -9,9 +9,10 @@ mmModule.controller(	'userProfileController',
 								 	DataService
 								 ) 
 {
-	console.log("## [userProfileController] ** LOADING **");
+	var loghdr = "## [userProfileController]: ";
+	log.debug(loghdr+"** LOADING **");
 	
-	$scope.thisUser = {};
+	DataService.dsCurrentUser = {};
 	$scope.data = DataService;
 	
 	getUserDetails();
@@ -21,7 +22,7 @@ mmModule.controller(	'userProfileController',
 		dbService.getCurrentUser()
 		.then(function(user){
 			$scope.data.dsCurrentUser = user;
-			console.log("## [userProfileController] -> getUserDetails: ", $scope.data.dsCurrentUser );
+			log.debug(loghdr+"getUserDetails: ", $scope.data.dsCurrentUser );
 			$scope.orgUser = angular.copy($scope.data.dsCurrentUser);
 			if( $scope.data.dsCurrentUser.avatar == "" )
 				$scope.data.dsCurrentUser.avatar = "resources/images/avatars/default.png";
@@ -35,17 +36,16 @@ mmModule.controller(	'userProfileController',
 		
 		if(save)
 		{
-			console.log("## [userProfileController] -> close(): save - ", save);
+			log.debug(loghdr+"-> close(): save - ", save);
 			dbService.updateUser($scope.data.dsCurrentUser)
 				.then( function(){
-					console.log("## [userProfileController] -> close(): user updated successfully ");
-					alert("Updated Successfully");
+					log.debug(loghdr+"-> close(): user updated successfully ");
 				});
 		}		
 		else
 		{
 			$scope.data.dsCurrentUser = angular.copy($scope.orgUser);
-			console.log("## [userProfileController] -> close(): cancel");
+			log.debug(loghdr+"-> close(): cancel");
 			document.location = "#/";
 		}
 	}
@@ -53,7 +53,7 @@ mmModule.controller(	'userProfileController',
 	
 	$scope.showUser = function()
 	{
-		console.log("## [] -> showUser, user is: ", $scope.data.dsCurrentUser.name );
+		log.debug(loghdr+"-> showUser, user is: ", $scope.data.dsCurrentUser.name );
 	}
 	$scope.showUser();
 	
