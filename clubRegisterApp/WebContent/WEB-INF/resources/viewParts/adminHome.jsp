@@ -68,6 +68,9 @@
 		<script type="text/javascript" src="resources/js/controllers/editTeamController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/dummyController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/newsUploadController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/newsController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/deleteStoryController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/editStoryController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/fileUploadController.js"></script>
 		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/memberManagerService.js"></script>
@@ -77,6 +80,7 @@
 		<script type="text/javascript" src="resources/js/directives/fileModel.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayPrivate.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResultsPrivate.js"></script>
+		<script type="text/javascript" src="resources/js/libs/utilities.js"></script>
 		
 		<!-- <script type="text/javascript" src="resources/js/leagueRepublic.js"></script> -->
 		<script type="text/javascript" src="resources/galleries/Academy_2015/swfobject.js"></script>

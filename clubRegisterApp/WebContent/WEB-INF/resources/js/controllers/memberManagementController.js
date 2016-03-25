@@ -18,6 +18,9 @@ mmModule.controller(	'memberManagerController',
 	$scope.data = DataService;
 	$scope.data.dsCurrentMember = {name: "", address: "", phone: "", phone2: "", email:"", dob:"", amount: 0, receiptid:"", team: 0, team2: 0,team3: 0, position: 0, position2: 0, position3: 0, lid: 0, favteam: "", favplayer: "", sappears: 0, sassists: 0, sgoals: 0, photo: "", achievements: "", status: ""};
 
+	// Initialise the ToolBox library
+	var tools = TB$(log, logdepth + '    ');
+	
 	/* (1) Get the members to display on the page*/
 	log.trace(loghdr+"Calling getTeams()");
 	
@@ -123,7 +126,7 @@ mmModule.controller(	'memberManagerController',
 	            modal.element.modal();
 	            modal.close.then(function(result) {
 	            	var newMem = result;
-	            	var diff = difference( newMem, member);
+	            	var diff = tools.difference( newMem, member);
 	            	if(diff)
 	            	{
 	            		if( typeof newMem.position != 'number' )
@@ -441,17 +444,6 @@ mmModule.controller(	'memberManagerController',
 		}
 
 		return index;
-	}
-	
-	function difference(m1, m2) {
-	    var diff = false;
-	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
-	    	  log.trace(val + ' -> ' + m1[val]);
-	    	if( m1[val] != m2[val] )
-	    		  diff = true;
-	    });
-	        
-	    return diff;
 	}
 	
 	function convertPosToInt( sPos )

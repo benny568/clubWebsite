@@ -1,6 +1,5 @@
 package org.avenue.dao;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.avenue.service.domain.Media;
@@ -39,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.FileCopyUtils;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
@@ -143,8 +140,8 @@ public class TaskManagerService {
 				    member.setTeam2(rs.getInt("team2"));
 				    member.setTeam3(rs.getInt("team3"));
 				    member.setPosition(rs.getInt("position"));
-				    member.setPosition(rs.getInt("position2"));
-				    member.setPosition(rs.getInt("position3"));
+				    member.setPosition2(rs.getInt("position2"));
+				    member.setPosition3(rs.getInt("position3"));
 				    member.setLid(rs.getInt("lid"));
 				    member.setStatus(rs.getString("status"));
 				    member.setFavplayer(rs.getString("favplayer"));
@@ -228,7 +225,7 @@ public class TaskManagerService {
 				   ns.setNsid(rs.getInt("nsid"));
 				   ns.setTitle(rs.getString("title"));
 				   ns.setDescription(rs.getString("description"));
-				   ns.setImage(rs.getString("image"));
+				   ns.setImage((rs.getString("image")==null)?"":rs.getString("image"));
 				   newsItems.add(ns);
 			   }	
 			  } catch (SQLException e) {
@@ -279,6 +276,45 @@ public class TaskManagerService {
 			   preparedStatement.setString(3, newsStory.getDescription());
 			   preparedStatement.setString(4, newsStory.getStory());
 			   preparedStatement.setString(5, newsStory.getImage());
+			   preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+			   e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+	 
+	 public void updateNewsStory(NewsStory newsStory)
+	 {
+		 
+		  try {
+			   Connection connection = DBUtility.getConnection();
+			   PreparedStatement preparedStatement = connection.prepareStatement("update newsstory set category=?, title=?, description=?, story=?, image=? where nsid=?");
+			   preparedStatement.setString(1, newsStory.getCategory());
+			   preparedStatement.setString(2, newsStory.getTitle());
+			   preparedStatement.setString(3, newsStory.getDescription());
+			   preparedStatement.setString(4, newsStory.getStory());
+			   preparedStatement.setString(5, newsStory.getImage());
+			   preparedStatement.setInt(6, newsStory.getNsid());
+			   preparedStatement.executeUpdate();
+		
+			  } catch (SQLException e) {
+			   e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+	 
+	 public void deleteNewsStory(NewsStory newsStory)
+	 {
+		 
+		  try {
+			   Connection connection = DBUtility.getConnection();
+			   PreparedStatement preparedStatement = connection.prepareStatement("delete from newsstory where nsid = ?");
+			   preparedStatement.setInt(1, newsStory.getNsid());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -460,8 +496,19 @@ public class TaskManagerService {
 		FileItemIterator iter;
 		NewsStory ns = new NewsStory();
 		String value = new String();
-		//String savePath = "C:\\avenue\\clubWebsite\\clubRegisterApp\\WebContent\\WEB-INF\\resources\\news";
+		//String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/";
 		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
+		
+		System.out.println("## ############################################################## ##");
+		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
+		System.out.println("## ############################################################## ##");
+		System.out.println("## ############################################################## ##");
+		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
+		System.out.println("## ############################################################## ##");
+		System.out.println("## ############################################################## ##");
+		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
+		System.out.println("## ############################################################## ##");
+		
 		
 		try {
 			iter = upload.getItemIterator(request);
@@ -477,6 +524,7 @@ public class TaskManagerService {
 	
 			         System.out.println("Form field [" + name + "] with value ["
 			             + value + "] detected.");
+			         System.out.println("## [TaksManagerService]->(uploadNews): Adding " + name + " to NS.");
 			         addParamToNS( ns, name, value );
 			         
 			     } 
@@ -501,6 +549,7 @@ public class TaskManagerService {
 			             out.close();
 			         if (stream != null)
 			        	 stream.close();
+			         System.out.println("## [TaksManagerService]->(uploadNews): Adding image to NS: " + fileName);
 			         addParamToNS( ns, "image", "resources/news/" + fileName );
 			     }
 			 }
@@ -1192,6 +1241,7 @@ public class TaskManagerService {
 	 {
 		 String sDate = null;
 		 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		 
 		 if( sqlDate == null )
 			 sDate = "";

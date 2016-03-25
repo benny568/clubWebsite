@@ -23,7 +23,9 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		updateUserPassword : updateUserPassword,
 		deleteUser : deleteUser,
 		addTrainingSession : addTrainingSession,
-		setMemberTrainingRecForSession : setMemberTrainingRecForSession
+		setMemberTrainingRecForSession : setMemberTrainingRecForSession,
+		deleteStory : deleteStory,
+		updateStory : updateStory
 		
 	});
 	
@@ -516,6 +518,58 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		var request = $http({
 			method: "get",
 			url: _home + "/user/authorise/user=" + user + "&op=" + op
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/**********************************************************
+	 * Name:		deleteStory()
+	 * Description:	Delete a news story
+	 * Scope:		Externally accessible
+	 * Params in:	story: the story to delete
+	 * Return:		
+	 **********************************************************/
+	function deleteStory( story ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		log.debug(loghdr + "deleteStory csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.common["Content-Type"] = "application/json";
+		$http.defaults.headers.common["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "delete",
+			url: _home + "/admin/story",
+			data: story
+		});
+		
+		return( request.then( handleSuccess, handleError ) );
+	}
+	
+	/**********************************************************
+	 * Name:		updateStory()
+	 * Description:	Update a news story
+	 * Scope:		Externally accessible
+	 * Params in:	story: the story to update
+	 * Return:		
+	 **********************************************************/
+	function updateStory( story ) {
+		
+		var csrf = $("meta[name='_csrf']").attr("content");
+		log.debug(loghdr + "updateStory csrf token is: ",csrf);
+		
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+		$http.defaults.headers.common["Content-Type"] = "application/json";
+		$http.defaults.headers.common["X-CSRF-TOKEN"] = csrf;
+		
+		var request = $http({
+			method: "put",
+			url: _home + "/admin/story",
+			data: story
 		});
 		
 		return( request.then( handleSuccess, handleError ) );

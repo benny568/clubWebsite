@@ -1,8 +1,5 @@
 package org.avenue.service.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
@@ -27,22 +24,18 @@ import org.avenue.service.domain.Member;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
 import org.avenue.service.domain.SessionRecord;
-import org.avenue.service.domain.Worker;
 import org.avenue.service.domain.Team;
+import org.avenue.service.domain.Worker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -112,6 +105,16 @@ public class TaskManagerController {
 		 taskmanagerservice.submitNewsStory( newsStory );	
 	 }
 	 
+	 @RequestMapping(value="/admin/story",method = RequestMethod.DELETE)
+	 public void deleteNewsStory(@RequestBody NewsStory newsStory) {	 
+		 taskmanagerservice.deleteNewsStory( newsStory );	
+	 }
+	 
+	 @RequestMapping(value="/admin/story",method = RequestMethod.PUT)
+	 public void updateNewsStory(@RequestBody NewsStory newsStory) {	 
+		 taskmanagerservice.updateNewsStory( newsStory );	
+	 }
+	 
 	 @RequestMapping(value="/admin/members",method = RequestMethod.GET,headers="Accept=application/json")
 	 public List<Member> getAllTasks() {
 		 log.debug("## [TaskManagerController]->getAllTasks()..");
@@ -151,6 +154,26 @@ public class TaskManagerController {
 	 {
 		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 		 System.out.println(currentTimestamp + ": ## [TaskManagerController]->uploadNewsPic()");
+		 
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ############################################################## ##");
+		 System.out.println("## ^^^^^^^^^^^^^^^^^^^^ NEWS UPLOAD RECEIVED ^^^^^^^^^^^^^^^^^^^^ ##");
+		 System.out.println("## ############################################################## ##");
+		 
 		 taskmanagerservice.uploadNews(req, res);
 	 }
 	 

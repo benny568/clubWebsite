@@ -2,12 +2,12 @@
 			<div class="row">
 				
 				<div style="margin-left:auto;margin-right:auto;">
-			 		<div class="panel" style="max-width:50%;marign-right:30%;margin-left:20%;">
+			 		<div class="panel" style="max-width:50%;marign-right:30%;margin-left:20%; height: auto;">
 			 			<div class="panel-heading avenue-heading">
 			 				Enter the story details and press submit to upload
 			 			</div>
 			 			<div class="panel-body avenue-body">
-					 		<form id="newsForm" name="newsForm" novalidate>
+					 		<form id="newsForm" name="newsForm" novalidate enctype="multipart/form-data">
 					 			<div class="form-group" ng-class="{ 'has-error' : newsForm.title.$invalid && !newsForm.title.$pristine }">
 					 				<label for="name">Title:</label>
 					 				<input type="text" class="form-control" name="title" placeholder="Enter the title" ng-model="news.title" ng-minlength="1" ng-maxlength="50" ng-required="true" required>
@@ -19,7 +19,8 @@
 					 			</div>
 					 			<div class="form-group">
 					 				<label for="story">Story:</label>
-					 				<input type="text-area" class="form-control" id="story" placeholder="Enter the full story" ng-model="news.story">
+					 				<!--<input type="text" class="form-control" id="story" placeholder="Enter the full story" ng-model="news.story"> -->
+					 				<textarea cols="50" rows="5" class="form-control" id="story" placeholder="Enter the full story" ng-model="news.story"></textarea>
 					 			</div>
 					 			<div class="form-group">
 									<label>General News:</label> <input type="radio" name="category" ng-model="news.category" value="G" ng-required="true" required>
@@ -31,7 +32,6 @@
 								</div>
 								<button type="submit" class="btn btn-warning" ng-click="Submit(newsForm.$valid)">Submit</button> <!-- ng-disabled="newsForm.$invalid" -->
 					 		</form>
-					 		{{news.title}} :: {{news.description}} :: {{news.story}} :: {{news.category}} :: {{news.image}}
 					 	</div> <!-- end panel body -->
 			 		</div> <!-- end panel -->
 			 	</div> <!-- end col -->

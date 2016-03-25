@@ -22,7 +22,11 @@ mmModule.controller(	'teamManagementController',
 	$scope.teamName = $routeParams.team;
 	var urlteam = _home + '/team/' + $scope.teamName;
 	var urlmembers = _home + '/teammembers/' + $scope.teamName;
-	var loghdr = "## [teamManagementController]: ";
+	var logdepth = '';
+	var loghdr = logdepth + "## [teamManagementController]: ";
+	
+	// Initialise the ToolBox library
+	var tools = TB$(log, logdepth + '    ');
 	
 	$http.get(urlteam)
 	.then( function( result )
@@ -113,7 +117,7 @@ mmModule.controller(	'teamManagementController',
 	            modal.element.modal();
 	            modal.close.then(function(result) {
 	            	var newTeam = result;
-	            	var diff = $scope.data.difference( newTeam, thisTeam);
+	            	var diff = tools.difference( newTeam, thisTeam);
 	            	if(diff)
 	            	{
 	            		$scope.data.dsCurrentTeam = newTeam;

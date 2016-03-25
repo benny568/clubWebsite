@@ -17,6 +17,7 @@ mmModule.service('DataService', ['$rootScope','dbService', function($rootScope, 
 	this.dsCurrentMember = {};
 	this.dsAllMembers = [];
 	this.dsCurrentUser = {};
+	this.dsNewsStories = [];
 	this.dsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
 
 	this.hasPermission = 
@@ -316,6 +317,33 @@ mmModule.service('DataService', ['$rootScope','dbService', function($rootScope, 
 					return teams;
 			});
 		}
+	
+	this.loadNewsStories =
+		/**********************************************************
+		 * Name:		getNewsStories()
+		 * Description:	Retrieves a list of Newws from the server
+		 * Scope:		Internal
+		 * Params in:	None
+		 * Return:		Sets dsNewsStories
+		 **********************************************************/
+		function loadNewsStories(){
+			var stories = [];
+			log.debug(loghdr + "-> getNewsStories()");
+			
+			// If we have already loaded the news just return
+			if( this.dsNewsStories.length !== 0 )
+				return this;
+			
+			// Otherwise read the news from the server
+			log.debug(loghdr + "   | calling dbService.getNewsStories()..")
+			dbService.getNewsStories()
+				.then( function(stories) {
+					log.debug(loghdr + " <- getNewsStories() returned: ", stories);
+					this.dsNewsStories = stories;
+					return this;
+			});
+		}
+	
 	
 	this.getHome = 
 		/**********************************************************

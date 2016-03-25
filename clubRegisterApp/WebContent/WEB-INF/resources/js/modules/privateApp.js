@@ -96,6 +96,13 @@ mmModule.config(function($routeProvider,$httpProvider) {
         controller  : 'newsUploadController',
         resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
+    
+    // route for the EditNewsStory page
+    .when('/EditNewsStory', {
+        templateUrl : 'resources/viewParts/newsListBody.html',
+        controller  : 'newsController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
+    })
 
     // route for the AllMembersAdmin page
     .when('/AllMembersAdmin/:mode', {

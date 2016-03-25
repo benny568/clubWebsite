@@ -9,6 +9,9 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	var logdepth = '';
 	var loghdr = logdepth + '# mmService: ';
 	
+	// Initialise the ToolBox library
+	var tools = TB$(log, logdepth + '    ');
+	
 	return({
 		addPlayer : addPlayer,
 		addMember : addMember,
@@ -262,7 +265,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	            modal.element.modal();
 	            modal.close.then(function(result) {
 	            	var newMem = result;
-	            	var diff = difference( newMem, thisMember);
+	            	var diff = tools.difference( newMem, thisMember);
 	            	if(diff)
 	            	{
 	            		if( typeof newMem.position != 'number' )
@@ -362,7 +365,7 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 	            modal.element.modal();
 	            modal.close.then(function(result) {
 	            	var newTeam = result;
-	            	var diff = difference( newTeam, thisTeam);
+	            	var diff = tools.difference( newTeam, thisTeam);
 	            	if(diff)
 	            	{
 		                dbService.updateTeam( newTeam )
@@ -416,17 +419,6 @@ mmModule.service('mmService', function($http, $q, promiseTracker, dbService, Dat
 		});
 	}
 
-
-	function difference(m1, m2) {
-	    var diff = false;
-	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
-	    	  log.debug(val + ' -> ' + m1[val]);
-	    	if( m1[val] != m2[val] )
-	    		  diff = true;
-	    });
-	        
-	    return diff;
-	}
 	
 	/*******************************************************
 	 * DELETE USER

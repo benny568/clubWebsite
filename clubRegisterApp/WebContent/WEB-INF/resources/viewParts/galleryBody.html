@@ -1,0 +1,12 @@
+
+	<div class="container t1">
+        <div>
+	        <uib-carousel interval="5000">
+				<uib-slide ng-repeat="photo in photos">
+					<img ng-src="{{photo.location}}" style="margin:auto;max-height:300px;"/>
+					<div class="carousel-caption">
+						<h4>{{photo.title}}</h4>
+				</uib-slide>
+		    </uib-carousel>
+	    </div>
+	</div> <!--  End of container t1 -->

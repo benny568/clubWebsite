@@ -68,7 +68,7 @@
 		<script type="text/javascript" src="resources/js/services/mailService.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplay.js"></script>
 		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResults.js"></script>
-		<script type="text/javascript" src="resources/js/directives/memberListRow.js"></script>
+		<script type="text/javascript" src="resources/js/libs/utilities.js"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
 		
