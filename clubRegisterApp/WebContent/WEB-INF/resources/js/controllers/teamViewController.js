@@ -98,7 +98,7 @@ pubModule.controller(	'teamViewController',
 	function calculateAge(dob)
 	{
 		var today = new Date();
-		var birthday = new Date(dob);
+		var birthday = new Date(reverseDateStr(dob));
 		var age = 0;
 		
 		age = (today.getFullYear() - birthday.getFullYear() - 1);
@@ -109,6 +109,24 @@ pubModule.controller(	'teamViewController',
 		
 		return age;
 		
+	}
+	
+	/**********************************************************
+	 * Name:		reverseDateStr()
+	 * Description:	Reverse from dd/mm/yyyy to yyyy/mm/dd
+	 * Scope:		Internal
+	 * Params in:	dob: The member date of birth
+	 * Return:		
+	 **********************************************************/
+	function reverseDateStr(dob)
+	{
+		var dd, mm, yyyy;
+		
+		dd = dob.slice(0,2);
+		mm = dob.slice(3,5);
+		yyyy = dob.slice(6,10);
+		
+		return yyyy + '/' + mm + '/' + dd;
 	}
 	
 }]);
