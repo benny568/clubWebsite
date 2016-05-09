@@ -9,104 +9,66 @@
 <%@page import="com.google.gson.GsonBuilder" %>
 <%@page import="org.avenue.service.domain.Media" %>
 <%@page import="org.avenue.dao.TaskManagerService" %>
-<html ng-app="publicApp">
-	<head>  <!-- HEAD START -->		
-		<title>Avenue United Home Page</title>
-		
-		<meta name="_csrf" content="${_csrf.token}"/>
-	    <!-- default header name is X-CSRF-TOKEN -->
-	    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-	    
-		<!-- jQuery (required) -->
-		<script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
-		<!-- <script src="resources/bower_components/jquery-easing/jquery.easing.min.js"></script> -->
+<html>
+  <head>
+    <base href="http://localhost:8080/clubRegisterApp/">
 
-		
-		<!-- Bootstrap -->
- 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
- 		<script type="text/javascript" src="resources/bower_components/tether/dist/js/tether.min.js"></script>
- 		<script type="text/javascript" src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-		
-		<!-- AngularJS -->
-		<script type="text/javascript" src="resources/bower_components/angular/angular.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-animate/angular-animate.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-cookies/angular-cookies.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-resource/angular-resource.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-route/angular-route.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-touch/angular-touch.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.min.js"></script>	
-		<script type="text/javascript" src="resources/bower_components/angular-promise-tracker/promise-tracker.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-csrf-cross-domain/dist/angular-csrf-cross-domain.min.js"></script>
-		
-		<!-- Font Awsome -->
-		<link rel="stylesheet" type="text/css" href="resources/bower_components/font-awesome/css/font-awesome.min.css" />
-		
-		<!-- log4javasctipt -->
-		<script type="text/javascript" src="resources/bower_components/log4javascript/log4javascript.js"></script>
-		
-		<script type="text/javascript" src="resources/js/libs/leagueRepublicScript.js"></script>
-		
-		<!-- My app -->
-		<script type="text/javascript" src="resources/js/modules/publicApp.js"></script>
-		<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/newsController.js"></script>		
-		<script type="text/javascript" src="resources/js/controllers/sponsorController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/merchandiseController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/clubHistoryController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/academyController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/teamViewController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/tableViewController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/farViewController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/resultsViewController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/messageUsController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/blankController.js"></script>
-		<script type="text/javascript" src="resources/js/controllers/photoController.js"></script>
-		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
-		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
-		<script type="text/javascript" src="resources/js/services/mailService.js"></script>
-		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplay.js"></script>
-		<script type="text/javascript" src="resources/js/directives/leagueRepublicDisplayResults.js"></script>
-		<script type="text/javascript" src="resources/js/libs/utilities.js"></script>
-		<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-		<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
-		
-<%-- 		<script>
-			<%	TaskManagerService tms = new TaskManagerService();
-				List<Media> photos = new ArrayList<Media>();
-				Gson gson = new GsonBuilder().create();
-				photos = tms.getPhotoMedia();
-			%>
-			pubModule.controller("photosController", function($scope){
-				gPhotos = <%=gson.toJson(photos)%>;
-				console.log("## photosController initialised");
-				$scope.photos = <%=gson.toJson(photos)%>;
-			});
-		
-		</script> --%>
-		
-	</head>  <!-- HEAD END -->
-	<body>
-	
-		<!-- (1) Banner across the top & the menu -->
-		<div ng-include="'resources/viewParts/headerNmenu.html'"></div>
-		
-		<!-- (2) Load the body of the page -->
+    <title>Avenue United Home Page</title>
 
-		<!-- MAIN CONTENT AND INJECTED VIEWS -->
-	    <div id="main">
-	
-	        <!-- angular templating -->
-	        <!-- this is where content will be injected -->
-	        <div ng-view></div>
-	
-	    </div>
-		
-		<div class="blankspace"></div>
-		
-		<!-- Footer across the bottom of the page -->
-		<div ng-include="'resources/viewParts/footer.html'"></div>
-		
-	</body>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+    <!-- jQuery (required) -->
+    <script src="resources/node_modules/jquery/dist/jquery.min.js"></script>
+<!--     <script src="resources/node_modules/jquery-easing/jquery.easing.1.3.js"></script> -->
+
+
+	<!-- Bootstrap -->
+   <link rel="stylesheet" type="text/css" href="resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="resources/node_modules/tether/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="resources/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="resources/node_modules/systemjs/dist/system-polyfills.js"></script>
+
+    <script src="resources/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="resources/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="resources/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="resources/node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="resources/node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="resources/node_modules/angular2/animate.js"></script>
+    <script src="resources/node_modules/ng-bootstrap/ng2-bootstrap.js"></script>
+    <script src="resources/node_modules/angular2/bundles/http.dev.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="resources/app/styles/default.css" />
+	<link rel="shortcut icon" type="image/ico" href="resources/app/images/favicon.ico" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- 2. Configure SystemJS -->
+    <script>
+    System.config({
+		defaultJSExtensions: true,
+		packages: {        
+    	    app: {
+    	      format: 'register',
+    	      defaultExtension: 'js'
+    	    }
+    	  },
+		paths: {
+				'angular2/*' : 'node_modules/angular2/*',
+				'rxjs/*'     : 'node_modules/rxjs/*.js'
+			}
+    	});
+      System.import('resources/app/boot')
+            .then(null, console.error.bind(console));
+    </script>
+
+  </head>
+
+  <!-- 3. Display the application -->
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
+
 </html>

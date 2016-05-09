@@ -25,6 +25,7 @@ version = '1.0'
 war.baseName = 'cws'
 // Web directory, this overrides the default value "webapp"
 project.webAppDirName = 'WebContent'
+description = 'Avenue United website'
 
 // In this section you declare where to find the dependencies of your project
 repositories {

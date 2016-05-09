@@ -22,6 +22,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
+        registry.addResourceHandler("/node_modules/**").addResourceLocations("/WEB-INF/resources/node_modules/");
+        registry.addResourceHandler("/app/**").addResourceLocations("/WEB-INF/resources/app/");
     }
  
  

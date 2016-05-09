@@ -3,39 +3,35 @@
 <head>
 	<title>Login Page</title>
 	
-		<!-- jQuery (required) -->
-		<script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
-	
-		<!-- Bootstrap -->
- 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
- 		<script type="text/javascript" src="resources/bower_components/tether/dist/js/tether.min.js"></script>
- 		<script type="text/javascript" src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-		
-		<!-- AngularJS -->
-		<script type="text/javascript" src="resources/bower_components/angular/angular.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-animate/angular-animate.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-cookies/angular-cookies.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-resource/angular-resource.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-route/angular-route.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-touch/angular-touch.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.min.js"></script>	
-		<script type="text/javascript" src="resources/bower_components/angular-promise-tracker/promise-tracker.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
-		<script type="text/javascript" src="resources/bower_components/angular-csrf-cross-domain/dist/angular-csrf-cross-domain.min.js"></script>
-		
-		<!-- Font Awsome -->
-		<link rel="stylesheet" type="text/css" href="resources/bower_components/font-awesome/css/font-awesome.min.css" />
+	<!-- jQuery (required) -->
+    <script src="resources/node_modules/jquery/dist/jquery.min.js"></script>
+<!--     <script src="resources/node_modules/jquery-easing/jquery.easing.1.3.js"></script> -->
+
+
+	<!-- Bootstrap -->
+   	<link rel="stylesheet" type="text/css" href="resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="resources/node_modules/tether/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="resources/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="resources/node_modules/systemjs/dist/system-polyfills.js"></script>
+
+    <script src="resources/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="resources/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="resources/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="resources/node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="resources/node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="resources/node_modules/angular2/animate.js"></script>
+    <script src="resources/node_modules/ng-bootstrap/ng2-bootstrap.js"></script>
+    <script src="resources/node_modules/angular2/bundles/http.dev.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="resources/app/styles/default.css" />
+	<link rel="shortcut icon" type="image/ico" href="resources/app/images/favicon.ico" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		
 		<!-- log4javasctipt -->
-		<script type="text/javascript" src="resources/bower_components/log4javascript/log4javascript.js"></script>
-	
-	<!-- My app -->
-	<script type="text/javascript" src="resources/js/modules/publicApp.js"></script>
-	<script type="text/javascript" src="resources/js/modules/privateApp.js"></script>
-	<script type="text/javascript" src="resources/js/controllers/fileUploadController.js"></script>		
-	<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
+		<script type="text/javascript" src="resources/node_modules/log4javascript/log4javascript.js"></script>
+
 </head>
 <body>	 
 	<%
