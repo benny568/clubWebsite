@@ -11,7 +11,7 @@
 <%@page import="org.avenue.dao.TaskManagerService" %>
 <html>
   <head>
-    <base href="http://localhost:8080/clubRegisterApp/">
+    <base href="http://www.avenueunited.ie/">
 
     <title>Avenue United Home Page</title>
 

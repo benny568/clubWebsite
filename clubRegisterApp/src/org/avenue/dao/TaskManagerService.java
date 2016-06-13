@@ -403,7 +403,7 @@ public class TaskManagerService {
 	 public ArrayList<NewsStory> getNewsStories()
 	 {
 		 ArrayList<NewsStory> newsItems = new ArrayList<NewsStory>();
-		 log.trace("-> getNewsStories()");
+		 log.debug("           |-> getNewsStories()");
 		 
 		  try 
 		  {
@@ -412,7 +412,7 @@ public class TaskManagerService {
 			     prepareStatement("select * from newsstory where category=?");
 			   preparedStatement.setString(1, "G");
 			   ResultSet rs = preparedStatement.executeQuery();
-			   log.trace("    running db select: select * from newsstory where category=G");
+			   log.debug("          | -- running db select: select * from newsstory where category=G");
 			   
 			   while(rs.next()) 
 			   {
@@ -423,7 +423,7 @@ public class TaskManagerService {
 				   ns.setDescription(rs.getString("description"));
 				   ns.setStory(rs.getString("story"));
 				   ns.setImage(rs.getString("image"));
-				   log.trace("    Adding news story: " + ns);
+				   log.debug("          | -- Adding news story: " + ns);
 				   newsItems.add(ns);
 			   }	
 		  } 
@@ -435,7 +435,7 @@ public class TaskManagerService {
 		  }
 		  
 		  DBUtility.closeConnection();
-		  log.trace("<- getNewsStories()");
+		  log.debug("           |<- getNewsStories()");
 		  return newsItems;
 	 }
 	 

@@ -77,6 +77,25 @@ public class TaskManagerController {
 	
 	 }
 	 
+	 @RequestMapping(value="/stories",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<NewsStory> getNewsStories() {
+		 log.debug("##                        |-> getNewsStories()..");
+		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
+		 log.debug("##                        |<- getNewsStories()..");
+		 return stories;
+	
+	 }
+	 
+	/* @RequestMapping(value="/news",method = RequestMethod.GET,headers="Accept=application/json")
+	 public List<NewsStory> getNewsStories() {
+		 System.out.println("## [TaskManagerController]->getNewsStories()..");
+		 //log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
+		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
+		 System.out.println("## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 //log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 return stories;
+	 }*/
+	 
 	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public Team getTeamDetails(@PathVariable String teamName) {
 		 log.debug("## [TaskManagerController]->getTeamDetails(" + teamName + ")..");
@@ -136,18 +155,8 @@ public class TaskManagerController {
 	 @RequestMapping(value="/admin/member",method = RequestMethod.DELETE)
 	 public void deleteMemberDetails(@RequestBody int memberId) {	 
 		 taskmanagerservice.deleteMemberDetails( memberId );	
-	 }
-	 
-	 @RequestMapping(value="/news",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<NewsStory> getNewsStories() {
-		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
-		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
-		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
-		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
-		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
-		 return stories;
-	 }
+	 }	 
+
 	 
 	 @RequestMapping(value="/admin/upload",method = RequestMethod.POST)
 	 public void uploadNewsPic(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException

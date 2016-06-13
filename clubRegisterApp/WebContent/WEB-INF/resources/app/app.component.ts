@@ -17,7 +17,8 @@ import { LinksComponent }       from "./components/links.component";
 import { AcademyHomeComponent } from "./components/academyHome.component";
 import { ClubHistoryComponent } from "./components/clubHistory.component";
 import { MerchandiseComponent } from "./components/merchandise.component";
-import { Test }                 from './components/test.component';
+import { LoginComponent }       from "./components/login.component";
+import { PhotosComponent }		from "./components/photos.component";
 
 @Component({
     selector: 'my-app',
@@ -40,7 +41,7 @@ import { Test }                 from './components/test.component';
             }
             `],
     //stylesUrl: '/app/styles/nav.component.css',
-    directives: [ ROUTER_DIRECTIVES, Test],
+    directives: [ ROUTER_DIRECTIVES ],
     providers: [ ROUTER_PROVIDERS, HTTP_PROVIDERS, SessionDataService ]
 })
 
@@ -56,7 +57,8 @@ import { Test }                 from './components/test.component';
     { path: '/academyHome', name: 'AcademyHome', component: AcademyHomeComponent },
     { path: '/clubHistory', name: 'ClubHistory', component: ClubHistoryComponent },
     { path: '/merchandise', name: 'Merchandise', component: MerchandiseComponent },
-    { path: '/test', name: 'Test', component: Test }
+    { path: '/media', name: 'Media', component: PhotosComponent },
+    { path: '/login', name: 'Login', component: LoginComponent }
 ])
 export class AppComponent {
 
@@ -85,6 +87,21 @@ export class AppComponent {
         //console.log(this.logHdr + "News: " + this._dataService.dsNewsStories );
         console.log(this.logHdr + "Sponsors: " + this._dataService.dsSponsors );
         this._router.navigate( ['Home', {}] );
+    }
+
+    /**********************************************************
+     * Name:		login()
+     * Description:	Navigate to the login page
+     * Scope:		Internally accessible
+     * Params in:	None
+     * Return:      None
+     **********************************************************/
+    login()
+    {
+        console.log("#### " + this.componentName + "->" + "login()");
+
+        // Change view
+        this._router.navigate( ['Login', {}] );
     }
 
     /**********************************************************
@@ -221,7 +238,7 @@ export class AppComponent {
 
     /**********************************************************
      * Name:		merchandise()
-     * Description:	Navigate to the downloads page
+     * Description:	Navigate to the merchandise page
      * Scope:		Internally accessible
      * Params in:	None
      * Return:      None
@@ -232,9 +249,16 @@ export class AppComponent {
         this._router.navigate( ['Merchandise', {}] );
     }
 
-    test()
+    /**********************************************************
+     * Name:		media()
+     * Description:	Navigate to the media page
+     * Scope:		Internally accessible
+     * Params in:	None
+     * Return:      None
+     **********************************************************/
+    media()
     {
-        console.log("#### " + this.componentName + "->" + "test()");
-        this._router.navigate( ['Test', {}] );
+    	console.log("#### " + this.componentName + "->" + "media()");
+        this._router.navigate( ['Media', {}] );
     }
 }

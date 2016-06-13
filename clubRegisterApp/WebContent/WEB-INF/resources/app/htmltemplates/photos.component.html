@@ -1,0 +1,13 @@
+
+    <div class="container">
+
+            <carousel [interval]="5000" style="float:left;width:100%;height:auto;">
+                <slide *ngFor="#photo of aAlbum">
+                    <img src="{{photo.image}}" style="max-width:80%;"/>
+                </slide>
+            </carousel>
+
+    </div> <!-- end row -->
+    <div class="photo-caption">
+    	{{photo.title}}
+    </div>
