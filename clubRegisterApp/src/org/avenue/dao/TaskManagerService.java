@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -498,8 +499,8 @@ public class TaskManagerService {
 		FileItemIterator iter;
 		NewsStory ns = new NewsStory();
 		String value = new String();
-		//String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/";
-		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
+		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/";
+		//String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
 		
 		System.out.println("## ############################################################## ##");
 		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
@@ -1316,38 +1317,43 @@ public class TaskManagerService {
 		 
 	 }
 	 
-	 public List<Media> getPhotoMedia(String cat1, String cat2) {
-		 log.debug("## -> getPhotoMedia()");
-		  List<Media> medias = new ArrayList<Media>();
+	 public List<String> getPhotoMedia(String cat1, String cat2) {
+		 log.debug("## -> getPhotoMedia(" + cat1 + "," + cat2 + ")");
+		 
+		 return getPhotoMedia(cat1, cat2, null);
+	 }
+	 public List<String> getPhotoMedia(String cat1, String cat2, String cat3) {
+		 log.debug("## -> getPhotoMedia(" + cat1 + "," + cat2 + "," + cat3 + ")");
+		  List<String> photos = new ArrayList<String>();
+		  //String rootDir = "/home/odalybr/workspace/clubWebsite/clubRegisterApp/WebContent/WEB-INF/resources/galleries/";
+		  String rootDir = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/galleries/";
+		  
 		  try {
-			  	   Connection connection = DBUtility.getConnection();
-			  	   PreparedStatement preparedStatement = connection.prepareStatement("select * from media where category1 = ? and category2 = ? and type = 0");
-				   preparedStatement.setString(1, cat1);
-				   preparedStatement.setString(2, cat2);
-				   ResultSet rs = preparedStatement.executeQuery();
+			  
+			  	// Read the file system for the gallery photos
+			  	// cat1 & cat2 are used as directories in the path	
 
-				   while (rs.next()) 
-				   {
-					    Media media = new Media();
-					    media.setMediaid(rs.getInt("mediaid"));
-					    media.setType(rs.getInt("type"));
-					    media.setTitle(rs.getString("title"));
-					    media.setCategory1(rs.getString("category1"));
-					    media.setCategory2(rs.getString("category2"));
-					    media.setLocation(rs.getString("location"));
-					    media.setDescription(rs.getString("description"));				    
-					    medias.add(media);
-					    log.trace("##    Adding media to list: " + media);
-				   }
-		  } catch (SQLException e) {
+				File folder = cat3 == null ? new File(rootDir + cat1 + "/" + cat2) : new File(rootDir + cat1 + "/" + cat2 + "/" + cat3);
+				File[] listOfFiles = folder.listFiles();
+				
+				if( listOfFiles == null )
+					return photos;
+								
+				for (File file : listOfFiles) {
+				    if( file.isFile() && (fileIsImage(file.getName())) ) {
+				    	photos.add(file.getName());
+					    log.trace("##    Adding photo to list: " + file.getName());
+				    }
+				}
+				Collections.sort(photos);
+			  } catch (Exception e) {
 		   e.printStackTrace();
 		  }
 	
-		  DBUtility.closeConnection();
-		  log.debug("## <- getPhotoMedia()");
-		  return medias;
-		 
+		  log.debug("## <- getPhotoMedia(): " + photos);
+		  return photos;
 	 }
+		 
 	 
 	 public List<Media> getVideoMedia() {
 		 log.debug("## -> getVideoMedia()");
@@ -1405,6 +1411,20 @@ public class TaskManagerService {
 		  log.debug("## <- getSoundMedia()");
 		  return medias;
 		 
+	 }
+	 
+	 boolean fileIsImage( String filename )
+	 {
+		 boolean isImage = false;
+		 
+		 if( filename.endsWith(".jpg")
+			 || filename.endsWith(".JPG")
+			 || filename.endsWith(".png") )
+		 {
+			 isImage = true;
+		 }
+		 
+		 return isImage;
 	 }
 
 }

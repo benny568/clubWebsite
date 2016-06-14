@@ -20,6 +20,9 @@ import { MerchandiseComponent } from "./components/merchandise.component";
 import { LoginComponent }       from "./components/login.component";
 import { PhotosComponent }		from "./components/photos.component";
 
+import {enableProdMode} from 'angular2/core';
+enableProdMode();
+
 @Component({
     selector: 'my-app',
     templateUrl: 'app/htmltemplates/nav.component.html',
@@ -57,7 +60,7 @@ import { PhotosComponent }		from "./components/photos.component";
     { path: '/academyHome', name: 'AcademyHome', component: AcademyHomeComponent },
     { path: '/clubHistory', name: 'ClubHistory', component: ClubHistoryComponent },
     { path: '/merchandise', name: 'Merchandise', component: MerchandiseComponent },
-    { path: '/media', name: 'Media', component: PhotosComponent },
+    { path: '/media:cat1:cat2:cat3', name: 'Media', component: PhotosComponent },
     { path: '/login', name: 'Login', component: LoginComponent }
 ])
 export class AppComponent {
@@ -248,17 +251,23 @@ export class AppComponent {
         console.log("#### " + this.componentName + "->" + "merchandise()");
         this._router.navigate( ['Merchandise', {}] );
     }
+    
+    getAlbum()
+    {
+    	console.log("IN GET ALBUM -------------------");
+    }
 
     /**********************************************************
      * Name:		media()
      * Description:	Navigate to the media page
      * Scope:		Internally accessible
-     * Params in:	None
+     * Params in:	team, year and the event (if applicable)
      * Return:      None
      **********************************************************/
-    media()
+    media(cat1:string, cat2:string, cat3:string)
     {
-    	console.log("#### " + this.componentName + "->" + "media()");
-        this._router.navigate( ['Media', {}] );
+    	console.log("#### " + this.componentName + "->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
+    	
+        this._router.navigate( ['Media', {cat1:cat1, cat2:cat2, cat3:cat3}] );
     }
 }

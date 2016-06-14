@@ -13,7 +13,84 @@
 <nav class="navbar navbar-inverse">
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li class="active"><a (click)="goHome()"><i class="fa fa-home"></i></a></li>
+            <li class="active"><a (click)="goHome()"><i class="fa fa-home"></i></a></li>           
+            <li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-picture-o"></i> Gallery<span class="caret"></span></a>
+				<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+					<!-- Drop down menu 1: Events -->						
+		        	<li class="dropdown-submenu">
+                		<a tabindex="-1" href="#">Events</a>						<!-- L1 -->	
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="#">25th Anniversery</a></li>	<!-- L2 -->
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#">Even More..</a>			<!-- L2 -->
+								<ul class="dropdown-menu">
+									<li><a tabindex="-1" href="#">3rd leve</a></li>	<!-- L3-->
+						    		<li class="dropdown-submenu">
+						        		<a href="#">3rd level</a>
+										<ul class="dropdown-menu">
+									    	<li><a href="#farView/U12 Black">4th level</a></li>
+									    	<li><a href="#farView/U11 Red">U11 Red</a></li>
+									    	<li><a href="#farView/U11 Yellow">U11 Yellow</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+              		<!-- Drop down menu 2: Academy -->
+					<li class="dropdown-submenu pull-middle">
+						<a href="#">Academy</a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-submenu">
+								<a href="#">2009</a>
+								<ul class="dropdown-menu">
+									<span class="dropdown-header">U11s</span>
+									<li class="divider"></li>
+									<li><a (click)="media('2009','U11','League')">League</a></li>
+									<li><a (click)="media('2009','U11','Cup Final')">Cup Final</a></li>
+								</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a href="#">2010</a>
+								<ul class="dropdown-menu">
+									<li><a (click)="media('2010','U12','none')">U12s</a></li>
+								</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a href="#">2015</a>
+								<ul class="dropdown-menu">
+									<li><a (click)="media('2015','U8','none')">U8s</a></li>
+								</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a href="#">2016</a>
+								<ul class="dropdown-menu">
+									<li><a (click)="media('2015','U10','none')">U10s</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+	              
+					<li class="divider"></li>
+					<!-- Drop down menu 3: Junior B -->
+					<li class="dropdown-submenu">
+						<a tabindex="-1" href="#">Junior B</a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-submenu">
+								<a href="#">2016</a>
+								<ul class="dropdown-menu">
+									<span class="dropdown-header">Junior Cup Semi-Final</span>
+									<li class="divider"></li>
+									<li><a (click)="media('2016','Junior B','CupSemiFinal')">Photos</a></li>
+									<li><a href="#Videos/2016/Junior B">Video</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+			              
+				</ul>
+			</li>           
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Teams<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -32,7 +109,6 @@
             </li>
             <li><a (click)="academyHome()"><i class="fa fa-child"></i> Academy</a></li>
             <li><a (click)="merchandise()"><i class="fa fa-shopping-cart"></i> Merchandise</a></li>
-            <li><a (click)="media()"><i class="fa fa-shopping-cart"></i> Media</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

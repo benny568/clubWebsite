@@ -343,10 +343,19 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/photos/{cat1}/{cat2}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public  List<Media> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2) 
+	 public  List<String> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2) 
 	 {
 		 log.debug("## ->getPhotoMedia("+cat1+","+cat2+")");
-		 List<Media> photos = taskmanagerservice.getPhotoMedia(cat1, cat2);
+		 List<String> photos = taskmanagerservice.getPhotoMedia(cat1, cat2);
+		 log.debug("## <-getPhotoMedia(): " + photos);
+		 return photos;	
+	 }
+	 
+	 @RequestMapping(value="/photos/{cat1}/{cat2}/{cat3}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  List<String> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2, @PathVariable String cat3) 
+	 {
+		 log.debug("## ->getPhotoMedia("+cat1+","+cat2+","+cat3+")");
+		 List<String> photos = taskmanagerservice.getPhotoMedia(cat1, cat2, cat3);
 		 log.debug("## <-getPhotoMedia(): " + photos);
 		 return photos;	
 	 }

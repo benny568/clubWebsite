@@ -24,6 +24,7 @@ export class SessionDataService {
     dsNewsStories : Array<NewsStory>;
     dsPosition : Array<string>;
     dsSponsors : Array<Sponsor>;
+    dsPhotoList : Array<string>;
     
     serviceName = 'SessionDataService';
     displayMember = false;
@@ -44,26 +45,6 @@ export class SessionDataService {
         this.dsSponsors = new Array<Sponsor>();
 
     }
-    
-//   temp(url, data)
-//   {
-//   	this.headers = new Headers();
-//		this.headers.append("Content-Type", 'application/json');
-		
-//		this.requestoptions = new RequestOptions({
-//            method: RequestMethod.Post,
-//            url: url,
-//            headers: this.headers,
-//            body: JSON.stringify(data)
-//        })
-
-//        return this.http.request(new Request(this.requestoptions))
-//            .map((res: Response) => {
-//                if (res) {
-//                    return [{ status: res.status, json: res.json() }]
-//                }
-//            });
-//    }
     
     /**********************************************************
      * Name:		setCurrentMember()
@@ -420,8 +401,9 @@ export class SessionDataService {
     loadNewsStories()
     {
         console.log("### " + this.serviceName + "->" + "loadNewsStories()..");
-
-        this._http.get( 'http://www.avenueunited.ie/stories' )
+        var url = this.getHome();
+        
+        this._http.get( url + '/stories' )
             .map(response => response.json())
             .subscribe(
             	data => this.dsNewsStories = data,
@@ -437,6 +419,7 @@ export class SessionDataService {
         let errMsg = (error.message) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
+        //return Observable.throw(errMsg);
       }
 
     /**********************************************************
@@ -453,13 +436,13 @@ export class SessionDataService {
         //log.debug(loghdr + "-> getHome()");
         if( this.CurrentServerMode == this.modes.LOCAL )
         {
-            log.debug(loghdr + "     | _home is LOCAL");
+            //log.debug(loghdr + "     | _home is LOCAL");
             _home = 'http://localhost:8080/clubRegisterApp';
             //_home = 'http://localhost:3000/';
         }
         else if( this.CurrentServerMode == this.modes.REMOTE )
         {
-        	log.debug(loghdr + "     | _home is REMOTE");
+        	//log.debug(loghdr + "     | _home is REMOTE");
             _home = 'http://www.avenueunited.ie';
         }
         
@@ -471,16 +454,17 @@ export class SessionDataService {
      * Description:	Retrieves a list of teams from the server
      * Scope:		Internal
      * Params in:	None
-     * Return:		Sets $scope.teams
+     * Return:		Sets 
      **********************************************************/
     getTeams() {
         console.log("### " + this.serviceName + "->" + "getTeams()");
+        var url = this.getHome();
 
         // If we have already loaded the news just return
         if( this.dsTeams.length !== 0 )
             return;
 
-        this._http.get( 'http://www.avenueunited.ie/teams' )
+        this._http.get( url + '/teams' )
             .map(response => response.json())
             .subscribe(
             	data => this.dsTeams = data,
@@ -508,8 +492,9 @@ export class SessionDataService {
        else {
            // Clear out the TeamMembers array first
             this.dsTeamMembers.length = 0;
+            var url = this.getHome();
 
-            this._http.get( 'http://www.avenueunited.ie/team/' + teamName )
+            this._http.get( url + '/team/' + teamName )
                 .map(response => response.json());
         }
     }
@@ -549,4 +534,24 @@ export class SessionDataService {
     {
         this.dsCurrentMember = null;
     }
+    
+    /**********************************************************
+     * Name:		loadPhotoDetails()
+     * Description:	Retrieves a list of photos from the server
+     * Scope:		Internal
+     * Params in:	None
+     * Return:		Sets 
+     **********************************************************/
+    loadPhotoDetails( url ) 
+    {
+        console.log("### " + this.serviceName + "->" + "loadPhotoDetails(" + url + ")");
+
+        // ToDo: If we have already loaded the news just return
+
+
+        // Read the list of files from the server
+       return this._http.get( url )
+            .map(response => response.json());
+    }
+
 }
