@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.EmailMessage;
-import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.NewsStory;
 import org.avenue.service.domain.SessionPlan;
@@ -35,6 +34,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author odalybr
  *
  */
-@CrossOrigin()
+@CrossOrigin(origins = "http://avenueunited.ie", maxAge = 3600)
 @RestController
 public class TaskManagerController {
 	java.sql.Timestamp currentTimestamp = null;
@@ -101,8 +101,8 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/admin/submitNews",method = RequestMethod.POST)
-	 public void submitNewsStory(@RequestBody NewsStory newsStory) {	 
-		 taskmanagerservice.submitNewsStory( newsStory );	
+	 public int submitNewsStory(@RequestBody NewsStory newsStory) {	 
+		 return taskmanagerservice.submitNewsStory( newsStory );	
 	 }
 	 
 	 @RequestMapping(value="/admin/story",method = RequestMethod.DELETE)
@@ -138,14 +138,15 @@ public class TaskManagerController {
 		 taskmanagerservice.deleteMemberDetails( memberId );	
 	 }
 	 
-	 @RequestMapping(value="/news",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<NewsStory> getNewsStories() {
+	 @CrossOrigin
+	 @RequestMapping(value="/stories",method = RequestMethod.GET,headers="Accept=application/json")
+	 public @ResponseBody List<NewsStory> getNewsStories() {
 		 currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
-		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
+		 System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
+		 //log.error(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
 		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
-		 //System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
-		 log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 System.out.println(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
+		 //log.error(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
 		 return stories;
 	 }
 	 
@@ -334,10 +335,19 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/photos/{cat1}/{cat2}",method = RequestMethod.GET,headers="Accept=application/json")
-	 public  List<Media> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2) 
+	 public  List<String> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2) 
 	 {
 		 log.debug("## ->getPhotoMedia("+cat1+","+cat2+")");
-		 List<Media> photos = taskmanagerservice.getPhotoMedia(cat1, cat2);
+		 List<String> photos = taskmanagerservice.getPhotoMedia(cat1, cat2);
+		 log.debug("## <-getPhotoMedia(): " + photos);
+		 return photos;	
+	 }
+	 
+	 @RequestMapping(value="/photos/{cat1}/{cat2}/{cat3}",method = RequestMethod.GET,headers="Accept=application/json")
+	 public  List<String> getPhotoMedia(@PathVariable String cat1, @PathVariable String cat2, @PathVariable String cat3) 
+	 {
+		 log.debug("## ->getPhotoMedia("+cat1+","+cat2+","+cat3+")");
+		 List<String> photos = taskmanagerservice.getPhotoMedia(cat1, cat2, cat3);
 		 log.debug("## <-getPhotoMedia(): " + photos);
 		 return photos;	
 	 }

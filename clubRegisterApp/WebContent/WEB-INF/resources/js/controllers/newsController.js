@@ -15,23 +15,14 @@ mmModule.controller('newsController', [	'$scope',
 	log.debug(loghdr);
 	$scope.data = DataService;
 	$scope.stories = $scope.data.dsNewsStories;
-	var csrf = $("meta[name='_csrf']").attr("content");
-	log.debug(loghdr+"csrf token is: ",csrf);
-	
-	$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-	$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
-	$http.defaults.headers.post["Content-Type"] = "application/json";
-	$http.defaults.headers.post["X-CSRF-TOKEN"] = csrf;
-	
-	// Initialise the ToolBox library
-	var tools = TB$(log, logdepth + '    ');
 	
 	$http.get(_home + '/news').success(function(data) 
 	{
+		log.debug(loghdr +  "Got news back from server.");
 		$scope.data.dsNewsStories = data;
 	})
 	.then(function(){
-		log.debug(loghdr +  "Read news: " + $scope.data.dsNewsStories);
+		log.debug(loghdr +  "Stored news: " + $scope.data.dsNewsStories);
 	}); // End of get()
 	
 	$scope.editStory = function(story) {

@@ -1,0 +1,4 @@
+.gallery
+{
+	min-height: 500px;
+}

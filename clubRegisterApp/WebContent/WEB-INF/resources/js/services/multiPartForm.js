@@ -15,7 +15,7 @@ mmModule.service('multipartForm', ['$http', function($http){
 		$http.post(uploadUrl, fd, {
 			mimeType: 'multipart/form-data',
 			transformRequest: angular.identity,
-			headers: { 'Content-Type' : undefined } // Leave browser set the content type itself
+			headers: { 'Content-Type' : undefined, 'enctype': 'multipart/form-data' } // Leave browser set the content type itself
 		});
 		
 		resetForm();

@@ -1,0 +1,43 @@
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content avenue-body">
+              <div class="modal-header avenue-heading">
+              	<button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Team</h4>
+              </div>
+              <div class="panel-body avenue-body">
+		 		<form id="newsForm" name="newsForm" novalidate>
+		 			<div class="form-group">
+		 				<label for="name">Title:</label>
+		 				<input type="text" class="form-control" name="title" ng-model="news.title" value="{{news.title}}" ng-minlength="1" ng-maxlength="50" ng-required="true" required>
+		 				<p ng-show="newsForm.title.$invalid && !newsForm.title.$pristine" class="ng-invalid-required">A title is required.</p>
+		 			</div>
+		 			<div class="form-group">
+		 				<label for="description">Description:</label>
+		 				<input type="text" class="form-control" id="name" ng-model="news.description" value="{{news.description}}" ng-maxlength="50">
+		 			</div>
+		 			<div class="form-group">
+		 				<label for="story">Story:</label>
+		 				<textarea cols="50" rows="5" class="form-control" id="story" ng-model="news.story" value="{{news.story}}"></textarea>
+		 			</div>
+		 			<div class="form-group">
+						<label>General News:</label>
+						<input type="radio" checked="checked" name="category" ng-model="news.category"/>
+						<label>Academy News:</label>
+						<input type="radio" name="category" ng-model="news.category" />
+					</div>
+					<div class="form-group">
+						<label for="file">Image:</label>
+						<input type="file" id="exampleInputFile" file-model="news.image" value="{{news.image}}">
+					</div>
+		 		</form>
+		 	</div> <!-- end panel body -->
+              <div class="modal-footer">
+                <button type="button" ng-click="close(news)" class="btn btn-success" data-dismiss="modal">Save</button>
+                <button type="button" ng-click="close(false)" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    

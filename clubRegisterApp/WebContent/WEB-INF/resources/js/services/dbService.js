@@ -153,7 +153,7 @@ mmModule.service('dbService', function($http, $q, promiseTracker)
 		
 		var request = $http({
 			method: "get",
-			url: _home + "/news"
+			url: _home + "/stories"
 		});
 		
 		return( request.then( handleSuccess, handleError ) );

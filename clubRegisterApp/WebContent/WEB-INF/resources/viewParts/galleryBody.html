@@ -1,12 +1,23 @@
+<style>
+	.photo-caption {
+		text-align: center;
+		color:white;
+		background-color:black;
+		padding: 10px;
+		margin: 0 auto;
+		width: 70%;
+	}
+</style>
 
-	<div class="container t1">
-        <div>
-	        <uib-carousel interval="5000">
-				<uib-slide ng-repeat="photo in photos">
-					<img ng-src="{{photo.location}}" style="margin:auto;max-height:300px;"/>
-					<div class="carousel-caption">
-						<h4>{{photo.title}}</h4>
-				</uib-slide>
-		    </uib-carousel>
-	    </div>
-	</div> <!--  End of container t1 -->
+<div class="container">
+
+	<uib-carousel interval="5000" style="float:left;width:100%;height:auto;">
+		<uib-slide ng-repeat="photo in aAlbum">
+			<img src="{{photo.image}}" style="max-width:80%;margin: 0 auto;"/>
+		</uib-slide>
+	</uib-carousel>
+
+</div> <!-- end row -->
+<div class="photo-caption">
+	{{photo.title}}
+</div>

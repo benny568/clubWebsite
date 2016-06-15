@@ -29,15 +29,8 @@ public class welcomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(HttpServletRequest request)
 	{
-		log.trace(loghdr+"root mapping..");
-		HttpSession session = request.getSession();  	 
-        ArrayList<NewsStory> stories = new ArrayList<NewsStory>();
-
-        stories = taskmanagerservice.getNewsItems();
-        log.trace(loghdr+"got news stories from getNewsItems: " + stories);
-        session.setAttribute("stories", stories);
-
-		return "home";
+		log.error(loghdr+"root mapping..");
+		return "home"; // Resolves to home.jsp as the default suffix is configured as '.jsp.
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)

@@ -34,8 +34,12 @@
 		        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
 		    }
 		    return copy;
-		}
+		},
         
+        // log function to include a header
+        log: function( msg ) {
+        	self.log.debug( self.parent + msg );
+        }
     };
         
     
@@ -44,7 +48,7 @@
         var self = this;
         self.log = log || ''; // Set a default if nothing is passed in
         self.logdepth = logdepth || '';
-        self.loghdr = logdepth + "@@ ToolBox: ";
+        self.loghdr = self.logdepth + "@@ ToolBox: ";
         self.log.debug(self.loghdr + "Initialised");
     }
     

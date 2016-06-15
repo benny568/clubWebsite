@@ -46,7 +46,7 @@ dependencies {
     compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-taglibs:4.0.3.RELEASE'
-    compile 'jstl:jstl:1.2'
+    compile group: 'javax.servlet.jsp.jstl', name: 'jstl-api', version: '1.2'
     compile 'mysql:mysql-connector-java:5.1.31'
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'org.slf4j:jcl-over-slf4j:1.7.12'

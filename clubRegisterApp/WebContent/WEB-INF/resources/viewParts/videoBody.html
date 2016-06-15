@@ -1,0 +1,27 @@
+<style>
+	.photo-caption {
+		text-align: center;
+		color:white;
+		background-color:black;
+		padding: 10px;
+		margin: 0 auto;
+		width: 70%;
+	}
+</style>
+
+<div class="container">
+
+	<carousel [interval]="5000" style="float:left;width:100%;height:auto;">
+		<slide ng-repeat="video in aAlbum">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/H27ccqxadqs" frameborder="0" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/jKTuskxutiQ" frameborder="0" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/foGHJqUSQvM" frameborder="0" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/BftSuT0z7Wg" frameborder="0" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/X4EdgIGS1Zo?list=PL09xXFbZ37mvGQMPEOiyVqZQxO2KHPpqz" frameborder="0" allowfullscreen></iframe>
+		</slide>
+	</carousel>
+
+</div> <!-- end row -->
+<div class="photo-caption">
+	{{video.title}}
+</div>

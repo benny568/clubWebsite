@@ -1,9 +1,6 @@
 package org.avenue.dao;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +10,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.FileItemIterator;
-import org.apache.tomcat.util.http.fileupload.FileItemStream;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.MyTeams;
@@ -41,11 +34,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
 	private final Logger log = LoggerFactory.getLogger(TaskManagerService.class);
+	private final String loghdr = "## TaskManagerService: ";
 	@Autowired
 	 private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	 public List<Member> getAllMembers() {
-		 log.debug("## -> getAllMembers()");
+		 log.debug(loghdr + "## -> getAllMembers()");
 		  List<Member> members = new ArrayList<Member>();
 		  try {
 			  	   Connection connection = DBUtility.getConnection();
@@ -212,6 +206,8 @@ public class TaskManagerService {
 	 
 	 public ArrayList<NewsStory> getNewsItems()
 	 {
+		 log.debug(loghdr + " -> getNewsItems()");
+		 
 		 ArrayList<NewsStory> newsItems = new ArrayList<NewsStory>();
 		 
 		  try {
@@ -233,6 +229,8 @@ public class TaskManagerService {
 			  }
 	
 		  DBUtility.closeConnection();
+		  
+		  log.debug(loghdr + " <- getNewsItems(" + newsItems.size() + ")");
 		  return newsItems;
 	 }
 	 
@@ -265,7 +263,7 @@ public class TaskManagerService {
 		  return newsItems;
 	 }
 	 
-	 public void submitNewsStory(NewsStory newsStory)
+	 public int submitNewsStory(NewsStory newsStory)
 	 {
 		 
 		  try {
@@ -283,7 +281,7 @@ public class TaskManagerService {
 			  }
 		  
 		  DBUtility.closeConnection();
-		  return;
+		  return (201); // 201 ==> Created
 	 }
 	 
 	 public void updateNewsStory(NewsStory newsStory)
@@ -481,87 +479,7 @@ public class TaskManagerService {
 	 
 	 public void uploadNews(HttpServletRequest request, HttpServletResponse res)
 	 {
-		// Check that we have a file upload request
-		if( !ServletFileUpload.isMultipartContent(request) )
-		{
-			System.out.println("Upload was not multipart form!");
-			return;
-		}
-		 
-		// Create a new file upload handler
-		ServletFileUpload upload = new ServletFileUpload();
-
-	
-		// Parse the request
-		FileItemIterator iter;
-		NewsStory ns = new NewsStory();
-		String value = new String();
-		//String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/";
-		String savePath = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/news";
-		
-		System.out.println("## ############################################################## ##");
-		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
-		System.out.println("## ############################################################## ##");
-		System.out.println("## ############################################################## ##");
-		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
-		System.out.println("## ############################################################## ##");
-		System.out.println("## ############################################################## ##");
-		System.out.println("## ^^^^^^^^^^^^^^^^^^^ PROCESSING NEWS UPLOAD ^^^^^^^^^^^^^^^^^^^ ##");
-		System.out.println("## ############################################################## ##");
-		
-		
-		try {
-			iter = upload.getItemIterator(request);
-		
-			 while (iter.hasNext()) 
-			 {
-			     FileItemStream item = iter.next();
-			     String name = item.getFieldName();
-			     InputStream stream = item.openStream();
-			     if (item.isFormField()) 
-			     {
-			    	 value = Streams.asString(stream);
-	
-			         System.out.println("Form field [" + name + "] with value ["
-			             + value + "] detected.");
-			         System.out.println("## [TaksManagerService]->(uploadNews): Adding " + name + " to NS.");
-			         addParamToNS( ns, name, value );
-			         
-			     } 
-			     else 
-			     {
-			         System.out.println("File field [" + name + "] with file name ["
-			             + item.getName() + "] detected.");       
-			         
-			         // Process the input stream
-			         byte[] b = new byte[10000000];
-			         String fileName = item.getName();
-			         int read = 0;
-			         FileOutputStream out = new FileOutputStream(new File(savePath + '/' + fileName));
-			         System.out.println("## [TaksManagerService]->(uploadNews): Opened output stream to: " + savePath + '/' + fileName);
-			         
-			         while ((read = stream.read(b,0,b.length)) != -1) 
-			         {
-			             out.write(b, 0, read);
-			             read = 0;
-			         }
-			         if (out != null)
-			             out.close();
-			         if (stream != null)
-			        	 stream.close();
-			         System.out.println("## [TaksManagerService]->(uploadNews): Adding image to NS: " + fileName);
-			         addParamToNS( ns, "image", "resources/news/" + fileName );
-			     }
-			 }
-		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		submitNewsStory(ns);
+		 return;
 	 }
 	 
 	 public void addParamToNS( NewsStory ns, String paramName, String paramValue )
@@ -1313,37 +1231,41 @@ public class TaskManagerService {
 		  return medias;
 		 
 	 }
-	 
-	 public List<Media> getPhotoMedia(String cat1, String cat2) {
-		 log.debug("## -> getPhotoMedia()");
-		  List<Media> medias = new ArrayList<Media>();
+	 public List<String> getPhotoMedia(String cat1, String cat2) {
+		 log.debug("## -> getPhotoMedia(" + cat1 + "," + cat2 + ")");
+		 
+		 return getPhotoMedia(cat1, cat2, null);
+	 }
+	 public List<String> getPhotoMedia(String cat1, String cat2, String cat3) {
+		 log.debug("## -> getPhotoMedia(" + cat1 + "," + cat2 + "," + cat3 + ")");
+		  List<String> photos = new ArrayList<String>();
+		  //String rootDir = "/media/odalybr/OSDisk/Users/odalybr/dev/tst3/clubWebsite/clubRegisterApp/WebContent/WEB-INF/resources/galleries/";
+		  String rootDir = "/home/odalybr/jvm/apache-tomcat-8.0.9/domains/avenueunited.ie/ROOT/WEB-INF/resources/galleries/";
+		  
 		  try {
-			  	   Connection connection = DBUtility.getConnection();
-			  	   PreparedStatement preparedStatement = connection.prepareStatement("select * from media where category1 = ? and category2 = ? and type = 0");
-				   preparedStatement.setString(1, cat1);
-				   preparedStatement.setString(2, cat2);
-				   ResultSet rs = preparedStatement.executeQuery();
+			  
+			  	// Read the file system for the gallery photos
+			  	// cat1 & cat2 are used as directories in the path	
 
-				   while (rs.next()) 
-				   {
-					    Media media = new Media();
-					    media.setMediaid(rs.getInt("mediaid"));
-					    media.setType(rs.getInt("type"));
-					    media.setTitle(rs.getString("title"));
-					    media.setCategory1(rs.getString("category1"));
-					    media.setCategory2(rs.getString("category2"));
-					    media.setLocation(rs.getString("location"));
-					    media.setDescription(rs.getString("description"));				    
-					    medias.add(media);
-					    log.trace("##    Adding media to list: " + media);
-				   }
-		  } catch (SQLException e) {
+				File folder = cat3 == null ? new File(rootDir + cat1 + "/" + cat2) : new File(rootDir + cat1 + "/" + cat2 + "/" + cat3);
+				File[] listOfFiles = folder.listFiles();
+				
+				if( listOfFiles == null )
+					return photos;
+								
+				for (File file : listOfFiles) {
+				    if( file.isFile() && (fileIsImage(file.getName())) ) {
+				    	photos.add(file.getName());
+					    log.trace("##    Adding photo to list: " + file.getName());
+				    }
+				}
+				Collections.sort(photos);
+			  } catch (Exception e) {
 		   e.printStackTrace();
 		  }
 	
-		  DBUtility.closeConnection();
-		  log.debug("## <- getPhotoMedia()");
-		  return medias;
+		  log.debug("## <- getPhotoMedia(): " + photos);
+		  return photos;
 		 
 	 }
 	 
@@ -1403,6 +1325,20 @@ public class TaskManagerService {
 		  log.debug("## <- getSoundMedia()");
 		  return medias;
 		 
+	 }
+	 
+	 boolean fileIsImage( String filename )
+	 {
+		 boolean isImage = false;
+		 
+		 if( filename.endsWith(".jpg")
+			 || filename.endsWith(".JPG")
+			 || filename.endsWith(".png") )
+		 {
+			 isImage = true;
+		 }
+		 
+		 return isImage;
 	 }
 
 }

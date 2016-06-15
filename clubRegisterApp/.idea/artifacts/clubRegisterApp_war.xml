@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="clubRegisterApp:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="clubRegisterApp-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="clubRegisterApp:war exploded" />
+    </root>
+  </artifact>
+</component>

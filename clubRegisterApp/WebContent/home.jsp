@@ -63,6 +63,7 @@
 		<script type="text/javascript" src="resources/js/controllers/messageUsController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/blankController.js"></script>
 		<script type="text/javascript" src="resources/js/controllers/photoController.js"></script>
+		<script type="text/javascript" src="resources/js/controllers/videoController.js"></script>
 		<script type="text/javascript" src="resources/js/services/privateSessionData.js"></script>
 		<script type="text/javascript" src="resources/js/services/dbService.js"></script>
 		<script type="text/javascript" src="resources/js/services/mailService.js"></script>

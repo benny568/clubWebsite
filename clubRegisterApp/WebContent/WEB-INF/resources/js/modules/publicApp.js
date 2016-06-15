@@ -167,10 +167,16 @@ pubModule.config(['$routeProvider', '$httpProvider', function($routeProvider,$ht
         controller  : 'newsController',
         resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
-    // route for the Admin home page
-    .when('/Photos/:team/:year', {
+    // route for the photo album page
+    .when('/Photos/:year/:team/:event', {
         templateUrl : 'resources/viewParts/galleryBody.html',
         controller  : 'photoController',
+        resolve: { _home: function (DataService) {return DataService.getHome();}}
+    })
+    // route for the Videos page
+    .when('/Videos/:year/:team', {
+        templateUrl : 'resources/viewParts/videoBody.html',
+        controller  : 'videoController',
         resolve: { _home: function (DataService) {return DataService.getHome();}}
     })
     .otherwise({
