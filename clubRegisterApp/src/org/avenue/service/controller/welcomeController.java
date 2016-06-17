@@ -43,17 +43,22 @@ public class welcomeController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home( ModelMap model ){return "home";}
 	
+	@RequestMapping("/user")
+	public Principal user(Principal user) {
+		return user;
+	}
+	
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public String adminPage( HttpServletRequest request, ModelMap model, Principal principal )
 	{
-		log.trace(loghdr+"/admin** mapping..");
+		log.debug(loghdr+"/admin** mapping..");
 		String name = principal.getName();
-		log.trace(loghdr+"user name: " + name);
+		log.debug(loghdr+"user name: " + name);
 		Worker user = new Worker();
 		HttpSession session = request.getSession();
 		
 		user = taskmanagerservice.getUserByName(name);
-		log.trace("## [welcomeController]->getUserByName returned: " + user);
+		log.debug("## [welcomeController]->getUserByName returned: " + user);
 		session.setAttribute("user", user);
 		
 		log.trace(loghdr+"root mapping: returning view of /WEB-INF/resources/viewParts/adminHome");
@@ -61,7 +66,13 @@ public class welcomeController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login( ModelMap model ){return "login";}
+	public String login( HttpServletRequest request, ModelMap model, Principal principal )
+	{
+		return "admin";
+	}
+	
+	
+	//public String login( ModelMap model ){return "login";}
 	
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
 	public String loginfailed( ModelMap model ){

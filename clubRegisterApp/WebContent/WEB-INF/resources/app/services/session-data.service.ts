@@ -1,11 +1,12 @@
 import { Injectable } from 'angular2/core';
 import { Http }       from 'angular2/http';
+import { Headers }    from 'angular2/http';
 import { User }       from '../dao/site-user';
 import { ServerMode } from '../dao/server-mode';
 import { Team }       from '../dao/team';
 import { Member }     from '../dao/member';
 import { NewsStory }  from '../dao/news-story';
-import {Sponsor}      from "../dao/sponsor";
+import { Sponsor }    from "../dao/sponsor";
 
 @Injectable()
 export class SessionDataService {
@@ -24,9 +25,9 @@ export class SessionDataService {
     dsNewsStories : Array<NewsStory>;
     dsPosition : Array<string>;
     dsSponsors : Array<Sponsor>;
-    dsPhotoList : Array<string>;
     
-    serviceName = 'SessionDataService';
+    loghdr: String = '    |-';
+    serviceName = this.loghdr + 'SessionDataService';
     displayMember = false;
 
      constructor ( private _http: Http ) {
@@ -55,7 +56,7 @@ export class SessionDataService {
      **********************************************************/
      setCurrentMember( member:Member )
      {
-         console.log("### " + this.serviceName + "->" + "setCurrentMember()");
+         console.log(this.serviceName + "-->" + "setCurrentMember()");
          this.dsCurrentMember = member;
          this.displayMember = true;
      }
@@ -374,7 +375,7 @@ export class SessionDataService {
      **********************************************************/
     setCurrentTeamByName( teamName: string)
     {
-        console.log("### " + this.serviceName + "->" + "setCurrentTeamByName(" + teamName + ")");
+        console.log(this.serviceName + "-->" + "setCurrentTeamByName(" + teamName + ")");
 
         // Ensure the teams information has been loaded
         if( this.dsTeams.length < 1 )
@@ -385,7 +386,7 @@ export class SessionDataService {
         {
             if( team.name == teamName ) {
                 this.dsCurrentTeam = team;
-                console.log("### " + this.serviceName + "->" + "setCurrentTeamByName(): Team set to " + teamName);
+                console.log(this.serviceName + "-->" + "setCurrentTeamByName(): Team set to " + teamName);
                 break;
             }
         }
@@ -400,7 +401,7 @@ export class SessionDataService {
      **********************************************************/
     loadNewsStories()
     {
-        console.log("### " + this.serviceName + "->" + "loadNewsStories()..");
+        console.log(this.serviceName + "-->" + "loadNewsStories()..");
         var url = this.getHome();
         
         this._http.get( url + '/stories' )
@@ -408,7 +409,7 @@ export class SessionDataService {
             .subscribe(
             	data => this.dsNewsStories = data,
             	error => this.handleError(error), //console.log("===> Error getting news from server: " + error),
-            	() => console.log("===> Received news from server.")
+            	() => console.log(this.loghdr + " <=== Received news from server. <====")
             );
 
      }
@@ -457,7 +458,7 @@ export class SessionDataService {
      * Return:		Sets 
      **********************************************************/
     getTeams() {
-        console.log("### " + this.serviceName + "->" + "getTeams()");
+        console.log(this.serviceName + "-->" + "getTeams()");
         var url = this.getHome();
 
         // If we have already loaded the news just return
@@ -468,8 +469,8 @@ export class SessionDataService {
             .map(response => response.json())
             .subscribe(
             	data => this.dsTeams = data,
-            	error => console.log("===> Error getting teams from server."),
-            	() => console.log("===> Received teams from server.")
+            	error => console.log(this.loghdr + " ** Error getting teams from server."),
+            	() => console.log(this.loghdr + " <=== Received teams from server. <===")
             );
     }
 
@@ -482,11 +483,11 @@ export class SessionDataService {
      **********************************************************/
     loadCurrentTeamMembersByName( teamName:string )
     {
-        console.log("### " + this.serviceName + "->" + "loadCurrentTeamMembersByName(" + teamName + ")");
+        console.log(this.serviceName + "-->" + "loadCurrentTeamMembersByName(" + teamName + ")");
 
        if( (this.dsTeamMembers.length !== 0) && (this.dsCurrentTeam.name == teamName) )
        {
-           console.log("### " + this.serviceName + "->" + "loadCurrentTeamByName():" + "Members already loaded not loading again!");
+           console.log(this.serviceName + "-->" + "loadCurrentTeamByName():" + "Members already loaded not loading again!");
            return;
        }
        else {
@@ -514,7 +515,7 @@ export class SessionDataService {
      **********************************************************/
     loadCurrentSponsors() : Array<Sponsor>
     {
-        console.log("### " + this.serviceName + "->" + "loadCurrentSponsors()");
+        console.log(this.serviceName + "-->" + "loadCurrentSponsors()");
 
         this.dsSponsors = [ {name:"Enzo's Takeaway", image:"resources/images/adverts/enzos.png"},
                             {name:"Rochford's Pharmacy", image: "resources/images/adverts/main-sponsor.png"},
@@ -544,7 +545,7 @@ export class SessionDataService {
      **********************************************************/
     loadPhotoDetails( url ) 
     {
-        console.log("### " + this.serviceName + "->" + "loadPhotoDetails(" + url + ")");
+        console.log(this.serviceName + "-->" + "loadPhotoDetails(" + url + ")");
 
         // ToDo: If we have already loaded the news just return
 
@@ -553,5 +554,38 @@ export class SessionDataService {
        return this._http.get( url )
             .map(response => response.json());
     }
+    
+    /**********************************************************
+     * Name:		authenticate()
+     * Description:	Authenticates the user with the server
+     * Scope:		Internal
+     * Params in:	
+     * Return:		 
+     **********************************************************/
+    authenticate(username, password)
+    {
+    	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
+		
+		var creds = "j_username=" + username + "&j_password=" + password;
 
+		/*let _csrf = '';
+		
+		var headers = new Headers();
+		headers.append('X-CSRFToken', _csrf);
+		headers.append('Content-Type', 'application/json');*/
+		
+		this._http.post( this.getHome() + '/j_spring_security_check', creds)//, {headers: headers} )
+			.map(res => res.json())
+			.subscribe(
+				data => this.saveJwt(data.id_token),
+				err => console.log("ERROR: " + err),
+				() => console.log('Authentication Complete')
+				);
+	}
+
+	saveJwt(jwt) {
+	  if(jwt) {
+	    localStorage.setItem('id_token', jwt)
+	  }
+	}
 }

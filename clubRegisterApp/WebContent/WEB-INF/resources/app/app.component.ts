@@ -19,6 +19,7 @@ import { ClubHistoryComponent } from "./components/clubHistory.component";
 import { MerchandiseComponent } from "./components/merchandise.component";
 import { LoginComponent }       from "./components/login.component";
 import { PhotosComponent }		from "./components/photos.component";
+import { PayNowComponent }		from "./components/payNow.component";
 
 import {enableProdMode} from 'angular2/core';
 enableProdMode();
@@ -61,7 +62,8 @@ enableProdMode();
     { path: '/clubHistory', name: 'ClubHistory', component: ClubHistoryComponent },
     { path: '/merchandise', name: 'Merchandise', component: MerchandiseComponent },
     { path: '/media:cat1:cat2:cat3', name: 'Media', component: PhotosComponent },
-    { path: '/login', name: 'Login', component: LoginComponent }
+    { path: '/login', name: 'Login', component: LoginComponent },
+    { path: '/payNow', name: 'PayNow', component: PayNowComponent }
 ])
 export class AppComponent {
 
@@ -251,11 +253,6 @@ export class AppComponent {
         console.log("#### " + this.componentName + "->" + "merchandise()");
         this._router.navigate( ['Merchandise', {}] );
     }
-    
-    getAlbum()
-    {
-    	console.log("IN GET ALBUM -------------------");
-    }
 
     /**********************************************************
      * Name:		media()
@@ -269,5 +266,18 @@ export class AppComponent {
     	console.log("#### " + this.componentName + "->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
     	
         this._router.navigate( ['Media', {cat1:cat1, cat2:cat2, cat3:cat3}] );
+    }
+    
+    /**********************************************************
+     * Name:		payNow()
+     * Description:	Navigate to the payNow page
+     * Scope:		Internally accessible
+     * Params in:	None
+     * Return:      None
+     **********************************************************/
+    payNow()
+    {
+    	console.log("     " + this.componentName + "->" + "payNow()");
+    	this._router.navigate( ['PayNow', {}] );
     }
 }
