@@ -29,6 +29,7 @@ export class SessionDataService {
     loghdr: String = '    |-';
     serviceName = this.loghdr + 'SessionDataService';
     displayMember = false;
+    gAuthenticated = false;
 
      constructor ( private _http: Http ) {
         
@@ -562,17 +563,17 @@ export class SessionDataService {
      * Params in:	
      * Return:		 
      **********************************************************/
-    authenticate(username, password)
+/*    authenticate(username, password)
     {
     	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
 		
 		var creds = "j_username=" + username + "&j_password=" + password;
 
-		/*let _csrf = '';
+		let _csrf = '';
 		
 		var headers = new Headers();
 		headers.append('X-CSRFToken', _csrf);
-		headers.append('Content-Type', 'application/json');*/
+		headers.append('Content-Type', 'application/json');
 		
 		this._http.post( this.getHome() + '/j_spring_security_check', creds)//, {headers: headers} )
 			.map(res => res.json())
@@ -581,7 +582,19 @@ export class SessionDataService {
 				err => console.log("ERROR: " + err),
 				() => console.log('Authentication Complete')
 				);
-	}
+	}*/
+    
+    
+    authenticate(username, password) 
+    {
+    	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
+    	
+    	var headers = new Headers();
+		headers.append('X-Requested-With', 'XMLHttpRequest');
+
+        return this._http.get(this.getHome() + '/admin', {headers : headers});
+
+      }
 
 	saveJwt(jwt) {
 	  if(jwt) {

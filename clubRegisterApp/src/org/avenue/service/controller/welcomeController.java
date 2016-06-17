@@ -61,8 +61,8 @@ public class welcomeController {
 		log.debug("## [welcomeController]->getUserByName returned: " + user);
 		session.setAttribute("user", user);
 		
-		log.trace(loghdr+"root mapping: returning view of /WEB-INF/resources/viewParts/adminHome");
-		return "/WEB-INF/resources/viewParts/adminHome";
+		log.trace(loghdr+"root mapping: returning view of home");
+		return "home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
