@@ -69,10 +69,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http
         .httpBasic()
 	      .and()
-	        .authorizeRequests()
-		        .antMatchers( "/admin/**" ).hasRole( "ADMIN" )
-	            .antMatchers( "/**" ).permitAll()
-	            .anyRequest().authenticated();
+        .authorizeRequests()
+	        .antMatchers( "/admin/**" ).hasRole( "ADMIN" )
+            .antMatchers( "/**" ).permitAll()
+            .anyRequest().authenticated()
+        	.and()
+        .logout()
+            .logoutRequestMatcher( new AntPathRequestMatcher( "/j_spring_security_logout" ) )
+            .logoutSuccessUrl( "/" )
+            .deleteCookies( "JSESSIONID" )
+            .invalidateHttpSession( true );
         
     }
  

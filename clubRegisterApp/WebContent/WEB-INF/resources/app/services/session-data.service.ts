@@ -595,6 +595,11 @@ export class SessionDataService {
         return this._http.get(this.getHome() + '/admin', {headers : headers});
 
       }
+    
+    logout()
+    {
+    	return this._http.get(this.getHome() + '/j_spring_security_logout');
+    }
 
 	saveJwt(jwt) {
 	  if(jwt) {

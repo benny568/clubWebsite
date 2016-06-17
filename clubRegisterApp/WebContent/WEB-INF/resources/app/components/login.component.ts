@@ -30,7 +30,7 @@ export class LoginComponent {
 	goToAdmin()
 	{
 		console.log("######>>>>>> AUTHENTICATED <<<<<<#####");
-		this._router.navigate( ['Home', {}] );
+		this._router.navigate( ['AdminHome', {}] );
 	}
 
 }

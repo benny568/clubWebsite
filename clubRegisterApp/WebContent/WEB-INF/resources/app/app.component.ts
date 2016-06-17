@@ -20,6 +20,7 @@ import { MerchandiseComponent } from "./components/merchandise.component";
 import { LoginComponent }       from "./components/login.component";
 import { PhotosComponent }		from "./components/photos.component";
 import { PayNowComponent }		from "./components/payNow.component";
+import { AdminHomeComponent }	from "./components/adminHome.component";
 
 import {enableProdMode} from 'angular2/core';
 enableProdMode();
@@ -63,6 +64,7 @@ enableProdMode();
     { path: '/merchandise', name: 'Merchandise', component: MerchandiseComponent },
     { path: '/media:cat1:cat2:cat3', name: 'Media', component: PhotosComponent },
     { path: '/login', name: 'Login', component: LoginComponent },
+    { path: '/admin', name: 'AdminHome', component: AdminHomeComponent },
     { path: '/payNow', name: 'PayNow', component: PayNowComponent }
 ])
 export class AppComponent {
@@ -107,6 +109,25 @@ export class AppComponent {
 
         // Change view
         this._router.navigate( ['Login', {}] );
+    }
+    
+    /**********************************************************
+     * Name:		logout()
+     * Description:	lout
+     * Scope:		Internally accessible
+     * Params in:	None
+     * Return:      None
+     **********************************************************/
+    logout()
+    {
+        console.log("#### " + this.componentName + "->" + "logout()");
+
+        this._dataService.logout().subscribe(
+        										data => this._router.navigate( ['Home', {}] ),
+        										err => console.log("ERROR: " + err),
+        										() => console.log('Logout Complete')
+        		
+        									);
     }
 
     /**********************************************************
