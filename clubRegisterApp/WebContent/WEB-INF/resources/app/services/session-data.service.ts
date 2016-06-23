@@ -478,7 +478,7 @@ export class SessionDataService {
      **********************************************************/
     dsGetTeams()
     {
-        console.log(this.serviceName + "-->" + " dsGetTeams()..");
+        console.log(this.loghdr + "-->" + " dsGetTeams()..");
         var url = this.getHome();
         
         return this._http.get( url + '/teams' )
@@ -616,6 +616,15 @@ export class SessionDataService {
     dsGetAllMembers()
     {
     	console.log(this.loghdr + "-->" + "dsGetAllMembers()");
+    	var url = this.getHome();
+    	
+    	return this._http.get(url + "/admin/members")
+    		.map(response => response.json())
+    		.subscribe(
+    					data => this.dsAllMembers = data,
+    					err => console.log(this.loghdr+"ERROR getting members from server!"),
+    					() => console.log(this.loghdr+"<== Finished getting all members from server <==")
+    					);
     }
     
     

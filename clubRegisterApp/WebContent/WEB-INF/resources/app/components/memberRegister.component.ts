@@ -23,7 +23,7 @@ export class MemberRegisterComponent
 	{
 		console.log(this.loghdr+"-> ngOnInit()");
 
-		//this.getAllMembers();
+		this._dataService.dsGetAllMembers();
 		
 		console.log(this.loghdr+"<- ngOnInit");
 	}
