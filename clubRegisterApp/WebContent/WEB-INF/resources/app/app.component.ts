@@ -6,6 +6,7 @@ import { Router }                  from 'angular2/router';
 import { Http }                    from 'angular2/http';
 import { HTTP_PROVIDERS }          from 'angular2/http';
 import { SessionDataService }      from './services/session-data.service';
+import { ToolBox }                 from './utilities/toolbox';
 import { ViewTeam }                from './components/viewTeam.component';
 import { HomeComponent }           from "./components/home.component";
 import { FarViewComponent }        from "./components/far.component";
@@ -22,7 +23,7 @@ import { PhotosComponent }		   from "./components/photos.component";
 import { PayNowComponent }		   from "./components/payNow.component";
 import { AdminHomeComponent }	   from "./components/adminHome.component";
 import { AdminOverviewComponent }  from "./components/adminOverview.component";
-import { MemberRegisterComponent } from "./components/memberRegister.component"
+import { MemberRegisterComponent } from "./components/memberRegister.component";
 
 import {enableProdMode} from 'angular2/core';
 enableProdMode();
@@ -49,7 +50,7 @@ enableProdMode();
             `],
     //stylesUrl: '/app/styles/nav.component.css',
     directives: [ ROUTER_DIRECTIVES ],
-    providers: [ ROUTER_PROVIDERS, HTTP_PROVIDERS, SessionDataService ]
+    providers: [ ROUTER_PROVIDERS, HTTP_PROVIDERS, SessionDataService, ToolBox ]
 })
 
 @RouteConfig([
@@ -78,9 +79,9 @@ export class AppComponent {
 	loghdr:string = "";
 	logdepth:number = 0;
 
-    constructor(private _dataService: SessionDataService, private _router: Router) 
+    constructor( private _dataService: SessionDataService, private _router: Router, private tb$: ToolBox ) 
     {
-    	this.loghdr = this._dataService.setLogHdr(this.logdepth, this.componentName);
+    	this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
     	
     	console.log(this.loghdr + "constructor()");
     	

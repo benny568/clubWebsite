@@ -2,6 +2,7 @@ import { Injectable }     from 'angular2/core';
 import { Http }           from 'angular2/http';
 import { Headers }        from 'angular2/http';
 import { RequestOptions } from 'angular2/http';
+import { ToolBox }        from '../utilities/toolbox';
 import { User }           from '../dao/site-user';
 import { ServerMode }     from '../dao/server-mode';
 import { Team }           from '../dao/team';
@@ -34,8 +35,8 @@ export class SessionDataService {
     displayMember = false;
     gAuthenticated = false;
 
-     constructor ( private _http: Http ) {
-        this.setLogHdr(this.logdepth, this.serviceName);
+     constructor ( private _http: Http, private tb$: ToolBox ) {
+        this.tb$.setLogHdr(this.logdepth, this.serviceName);
         
         var svr = new ServerMode();
         this.CurrentServerMode = svr.getServerMode();
@@ -50,8 +51,6 @@ export class SessionDataService {
         this.dsAllMembers = new Array<Member>();
         this.dsNewsStories = new Array<NewsStory>();
         this.dsSponsors = new Array<Sponsor>();
-        
-        this.loghdr = this.setLogHdr(this.logdepth, this.serviceName);
 
     }
  
@@ -628,7 +627,29 @@ export class SessionDataService {
     }
     
     
-    
+    /**********************************************************
+	 * Name:		getTeamNameFrmId()
+	 * Description:	Convert a team name to it's id
+	 * Scope:		Externally accessible via the service
+	 * Params in:	scope: The parents scope
+	 * 				
+	 * Return:		The team id
+	 **********************************************************/
+    getTeamNameFrmId(iTeam)
+    {
+    	var sTeamId = "";
+    	
+    	for( var i=0; i<this.dsTeams.length; i++ )
+    	{
+    		if( iTeam == i )
+    		{
+    			sTeamId = this.dsTeams[i - 1].name;
+    			return sTeamId;
+    		}
+    	}
+    	
+    	return sTeamId;
+    } 
     
     
     
@@ -679,30 +700,4 @@ export class SessionDataService {
     }*/
 	
 	
-	/**********************************************************
-     * Name:		setLogHdr()
-     * Description:	Sets up the correct indentation and header
-     * 				information for the log messages.
-     * Scope:		Internal
-     * Params in:	
-     * Return:		 
-     **********************************************************/
-	setLogHdr(logdepth, moduleName)
-	{
-		console.log("** Setting log header for [" + moduleName +"]");
-		let i = 0;
-		let depth = logdepth * 4;
-		let hdr:string = "## " +  moduleName;
-	
-		// (1) Set the indentation according to the depth
-		for( i=0; i<depth; i++ )
-		{
-			hdr += " ";
-		}
-		
-		// (2) Add on call stack indicator
-		hdr += "|-";
-		
-		return hdr;
-	}
 }

@@ -1,5 +1,6 @@
 import { Component }          from 'angular2/core';
 import { SessionDataService } from '../services/session-data.service';
+import { ToolBox }            from '../utilities/toolbox';
 import { Member }             from '../dao/member';
 
 
@@ -14,9 +15,9 @@ export class MemberRegisterComponent
 	loghdr = "";
 	showArray = [];
 	
-	constructor( private _dataService: SessionDataService )
+	constructor( private _dataService: SessionDataService, private tb$: ToolBox )
 	{
-		this.loghdr = this._dataService.setLogHdr(this.logdepth, this.componentName);
+		this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
 	}
 	
 	ngOnInit()
@@ -121,5 +122,71 @@ export class MemberRegisterComponent
 	{
 		// TODO
 	}
+	
+	
+	/**********************************************************
+	 * Name:		editMember()
+	 * Description:	Edit an existing member, update to server
+	 * 				and update local in-memory copy
+	 * Scope:		Externally accessible
+	 * Params in:	thisMember: the member to edit
+	 * Return:		Sets this._dataService.dsTeamMembers[team].<this member>
+	 **********************************************************/	
+/*	editMember(member)
+	{
+		if( typeof member == 'undefined' )
+			return
+		console.log(this.loghdr+" editMember()...");		
+
+		if( typeof member.position == 'number' )
+			member.position = this._dataService.dsPosition[member.position];
+		if( typeof member.team == 'number' )
+		if( typeof member.position2 == 'number' )
+			member.position2 = this._dataService.dsPosition[member.position2];
+		if( typeof member.team2 == 'number' )
+			member.team2 != 0 ? member.team2 = this._dataService.getTeamNameFrmId(member.team2) : member.team2 = "None";
+		if( typeof member.position3 == 'number' )
+			member.position3 = this._dataService.dsPosition[member.position3];
+		if( typeof member.team3 == 'number' )
+			member.team3 != 0 ? member.team3 = this._dataService.getTeamNameFrmId(member.team3) : member.team3 = "None";
+		
+		this._dataService.dsCurrentMember = member;
+		
+		 ModalService.showModal({
+	            templateUrl: 'memberModal.html',
+	            controller: "ModalController",
+	            inputs: { member : member, modalType: "Edit" }
+	        }).then(function(modal) {
+	            modal.element.modal();
+	            modal.close.then(function(result) {
+	            	var newMem = result;
+	            	var diff = tools.difference( newMem, member);
+	            	if(diff)
+	            	{
+	            		if( typeof newMem.position != 'number' )
+	            			newMem.position = this._dataService.dsPosition.indexOf(newMem.position);
+	            		if( typeof newMem.team != 'number' )
+	            			newMem.team = getTeamIdFrmName(newMem.team);
+	            		
+	            		if( typeof newMem.position2 != 'number' )
+	            			newMem.position2 = this._dataService.dsPosition.indexOf(newMem.position2);
+	            		if( typeof newMem.team2 != 'number' )
+	            			newMem.team2 = getTeamIdFrmName(newMem.team2);
+	            		
+	            		if( typeof newMem.position3 != 'number' )
+	            			newMem.position3 = this._dataService.dsPosition.indexOf(newMem.position3);
+	            		if( typeof newMem.team3 != 'number' )
+	            			newMem.team3 = getTeamIdFrmName(newMem.team3);
+	            		
+		                dbService.updateMember( newMem )
+		        		.then( function(result) {
+		        			applyMemberChange(this._dataService.dsAllMembers, newMem);
+		        			//this._dataService.dsCurrentMember = newMem;
+		        			console.log(loghdr+"-> editMember: after update: ", this._dataService.dsCurrentMember);
+		        		});
+	            	}
+	        	});
+            });
+	}*/
 	
 }

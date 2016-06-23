@@ -4,6 +4,7 @@
 import { Component }            from 'angular2/core';
 import { SessionDataService }   from '../services/session-data.service';
 import {RouteParams}            from "angular2/router";
+import { ToolBox }              from '../utilities/toolbox';
 import {stringify}              from "angular2/src/upgrade/util";
 
 @Component({
@@ -18,9 +19,9 @@ export class LeagueRepublicResults{
 	loghdr:string = "";
 	logdepth:number = 0;
 
-    constructor(private _dataService: SessionDataService, private rParams: RouteParams) 
+    constructor(private _dataService: SessionDataService, private rParams: RouteParams, private tb$: ToolBox) 
     { 
-    	this.loghdr = this._dataService.setLogHdr(this.logdepth, this.componentName);
+    	this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
     }
 
     ngOnInit() {
