@@ -1,28 +1,31 @@
 import { Component }          from 'angular2/core';
-import { RouteConfig, 
-         ROUTER_DIRECTIVES, 
-         ROUTER_PROVIDERS }   from 'angular2/router';
 import { SessionDataService } from '../services/session-data.service';
-import { NewsComponent }      from "./news.component";
 
 
 @Component({
-	templateUrl: 'app/htmltemplates/adminHome.component.html',
-	directives: [ NewsComponent, ROUTER_DIRECTIVES ],
-	providers: [ ROUTER_PROVIDERS ]
+	//templateUrl: 'app/htmltemplates/adminTutorials.component.html'
+	template: `
+			<div class="container">
+			<div class="panel" style="marign-right:50px;">
+				<div class="panel-heading avenue-heading" style="min-height:35px;">
+					Avenue United Tutorials Home Page
+				</div>
+				<div class="panel-body avenue-body" style="height:100%;">
+					Welcome to the tutorials page!<br><br>
+					
+				</div>
+			</div>
+		</div> <!-- end of container -->
+		`
 })
 
-export class AdminHomeComponent
+export class AdminTutorialsComponent
 {
-	componentName = 'AdminHomeComponent'; 
+	componentName = 'AdminTutorialsComponent'; 
 	logdepth = 2;
 	loghdr = "";
 	
-	constructor( private _dataService: SessionDataService ){ 
-		this.loghdr = this.setLogHdr(this.logdepth, this.componentName);
-		
-		console.log(this.loghdr + "User is: " + this._dataService.dsCurrentUser.username);
-	}
+	constructor( private _dataService: SessionDataService ){}
 
 	
 	/**********************************************************

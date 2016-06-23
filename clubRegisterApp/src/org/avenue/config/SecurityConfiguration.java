@@ -67,12 +67,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         }; // new RequestMatcher
     	
         http
-        .httpBasic()
+//        .httpBasic()
+//	      .and()
+	    // Enable csrf only on some request matches
+	    .csrf()
+	      .requireCsrfProtectionMatcher(csrfRequestMatcher)
 	      .and()
         .authorizeRequests()
 	        .antMatchers( "/admin/**" ).hasRole( "ADMIN" )
             .antMatchers( "/**" ).permitAll()
             .anyRequest().authenticated()
+        	.and()
+        .formLogin()
+        	.loginPage("/login")
+        	.loginProcessingUrl("/j_spring_security_check")
+        	.usernameParameter("j_username")
+        	.passwordParameter("j_password")
         	.and()
         .logout()
             .logoutRequestMatcher( new AntPathRequestMatcher( "/j_spring_security_logout" ) )

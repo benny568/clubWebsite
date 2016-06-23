@@ -1,26 +1,28 @@
-import { Component }            from 'angular2/core';
+import { Component }               from 'angular2/core';
 import { RouteConfig, 
          ROUTER_DIRECTIVES, 
-         ROUTER_PROVIDERS }     from 'angular2/router';
-import { Router }               from 'angular2/router';
-import { Http }                 from 'angular2/http';
-import { HTTP_PROVIDERS }       from 'angular2/http';
-import { SessionDataService }   from './services/session-data.service';
-import { ViewTeam }             from './components/viewTeam.component';
-import { HomeComponent }        from "./components/home.component";
-import { FarViewComponent }     from "./components/far.component";
-import { FindUsComponent }      from "./components/findUs.component";
-import { MessageUsComponent }   from "./components/messageUs.component";
-import { ContacteUsComponent }  from "./components/contactUs.component";
-import { DownloadsComponent }   from "./components/downloads.component";
-import { LinksComponent }       from "./components/links.component";
-import { AcademyHomeComponent } from "./components/academyHome.component";
-import { ClubHistoryComponent } from "./components/clubHistory.component";
-import { MerchandiseComponent } from "./components/merchandise.component";
-import { LoginComponent }       from "./components/login.component";
-import { PhotosComponent }		from "./components/photos.component";
-import { PayNowComponent }		from "./components/payNow.component";
-import { AdminHomeComponent }	from "./components/adminHome.component";
+         ROUTER_PROVIDERS }        from 'angular2/router';
+import { Router }                  from 'angular2/router';
+import { Http }                    from 'angular2/http';
+import { HTTP_PROVIDERS }          from 'angular2/http';
+import { SessionDataService }      from './services/session-data.service';
+import { ViewTeam }                from './components/viewTeam.component';
+import { HomeComponent }           from "./components/home.component";
+import { FarViewComponent }        from "./components/far.component";
+import { FindUsComponent }         from "./components/findUs.component";
+import { MessageUsComponent }      from "./components/messageUs.component";
+import { ContacteUsComponent }     from "./components/contactUs.component";
+import { DownloadsComponent }      from "./components/downloads.component";
+import { LinksComponent }          from "./components/links.component";
+import { AcademyHomeComponent }    from "./components/academyHome.component";
+import { ClubHistoryComponent }    from "./components/clubHistory.component";
+import { MerchandiseComponent }    from "./components/merchandise.component";
+import { LoginComponent }          from "./components/login.component";
+import { PhotosComponent }		   from "./components/photos.component";
+import { PayNowComponent }		   from "./components/payNow.component";
+import { AdminHomeComponent }	   from "./components/adminHome.component";
+import { AdminOverviewComponent }  from "./components/adminOverview.component";
+import { MemberRegisterComponent } from "./components/memberRegister.component"
 
 import {enableProdMode} from 'angular2/core';
 enableProdMode();
@@ -65,18 +67,26 @@ enableProdMode();
     { path: '/media:cat1:cat2:cat3', name: 'Media', component: PhotosComponent },
     { path: '/login', name: 'Login', component: LoginComponent },
     { path: '/admin', name: 'AdminHome', component: AdminHomeComponent },
-    { path: '/payNow', name: 'PayNow', component: PayNowComponent }
+    { path: '/payNow', name: 'PayNow', component: PayNowComponent },
+    { path: '/adminOverview', name: 'AdminOverview', component: AdminOverviewComponent },
+    { path: '/memberRegister', name: 'MemberRegister', component: MemberRegisterComponent }
 ])
+
 export class AppComponent {
+
+	componentName:string = 'AppComponent';
+	loghdr:string = "";
+	logdepth:number = 0;
 
     constructor(private _dataService: SessionDataService, private _router: Router) 
     {
+    	this.loghdr = this._dataService.setLogHdr(this.logdepth, this.componentName);
+    	
+    	console.log(this.loghdr + "constructor()");
+    	
         // Load the teams to use in the menu system
-        this._dataService.getTeams();
+        this._dataService.dsGetTeams();
     }
-
-    componentName = 'AppComponent';
-    logHdr = "#### " + this.componentName + ": ";
 
     /**********************************************************
      * Name:		goHome()
@@ -87,13 +97,18 @@ export class AppComponent {
      **********************************************************/
     goHome()
     {
-        console.log(this.logHdr + "->" + "goHome()");
+        console.log(this.loghdr + "->" + "goHome()");
 
-        this._dataService.loadNewsStories();
+        var subscriber = this._dataService.loadNewsStories();
+        subscriber.subscribe(
+				            	data => this._dataService.setNews(data),
+				            	error => console.log("===> Error getting news from server: " + error),
+				            	() => this._router.navigate( ['Home', {}] )
+				            );
         this._dataService.loadCurrentSponsors();
-        //console.log(this.logHdr + "News: " + this._dataService.dsNewsStories );
-        console.log(this.logHdr + "Sponsors: " + this._dataService.dsSponsors );
-        this._router.navigate( ['Home', {}] );
+        //console.log(this.loghdr + "News: " + this._dataService.dsNewsStories );
+        console.log(this.loghdr + "Sponsors: " + this._dataService.dsSponsors );
+        //this._router.navigate( ['Home', {}] );
     }
 
     /**********************************************************
@@ -105,7 +120,7 @@ export class AppComponent {
      **********************************************************/
     login()
     {
-        console.log("#### " + this.componentName + "->" + "login()");
+        console.log(this.loghdr + "->" + "login()");
 
         // Change view
         this._router.navigate( ['Login', {}] );
@@ -120,10 +135,10 @@ export class AppComponent {
      **********************************************************/
     logout()
     {
-        console.log("#### " + this.componentName + "->" + "logout()");
+        console.log(this.loghdr + "->" + "logout()");
 
         this._dataService.logout().subscribe(
-        										data => this._router.navigate( ['Home', {}] ),
+        										data => this.goHome(),
         										err => console.log("ERROR: " + err),
         										() => console.log('Logout Complete')
         		
@@ -139,10 +154,10 @@ export class AppComponent {
      **********************************************************/
     viewTeam( tname:string )
     {
-        console.log("#### " + this.componentName + "->" + "viewTeam(" + tname + ")");
+        console.log(this.loghdr + "->" + "viewTeam(" + tname + ")");
 
         // (1) Read in the list of teams
-        this._dataService.getTeams();
+        this._dataService.dsGetTeams();
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(tname);
         // (3) Load in the team members for that team
@@ -162,9 +177,9 @@ export class AppComponent {
      **********************************************************/
     farView( tname:string )
     {
-        console.log("#### " + this.componentName + "->" + "farView(" + tname + ")");
+        console.log(this.loghdr + "->" + "farView(" + tname + ")");
         // (1) Read in the list of teams
-        this._dataService.getTeams();
+        this._dataService.dsGetTeams();
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(tname);
         // (3) Change view
@@ -180,7 +195,7 @@ export class AppComponent {
      **********************************************************/
     findUs()
     {
-        console.log("#### " + this.componentName + "->" + "findUs()");
+        console.log(this.loghdr + "->" + "findUs()");
         this._router.navigate( ['FindUs', {}] );
     }
 
@@ -193,7 +208,7 @@ export class AppComponent {
      **********************************************************/
     messageUs()
     {
-        console.log("#### " + this.componentName + "->" + "messageUs()");
+        console.log(this.loghdr + "->" + "messageUs()");
         this._router.navigate( ['MessageUs', {}] );
     }
 
@@ -206,7 +221,7 @@ export class AppComponent {
      **********************************************************/
     contactUs()
     {
-        console.log("#### " + this.componentName + "->" + "contactUs()");
+        console.log(this.loghdr + "->" + "contactUs()");
         this._router.navigate( ['ContactUs', {}] );
     }
 
@@ -219,7 +234,7 @@ export class AppComponent {
      **********************************************************/
     downloads()
     {
-        console.log("#### " + this.componentName + "->" + "downloads()");
+        console.log(this.loghdr + "->" + "downloads()");
         this._router.navigate( ['Downloads', {}] );
     }
 
@@ -232,7 +247,7 @@ export class AppComponent {
      **********************************************************/
     links()
     {
-        console.log("#### " + this.componentName + "->" + "links()");
+        console.log(this.loghdr + "->" + "links()");
         this._router.navigate( ['Links', {}] );
     }
 
@@ -245,7 +260,7 @@ export class AppComponent {
      **********************************************************/
     academyHome()
     {
-        console.log("#### " + this.componentName + "->" + "academyHome()");
+        console.log(this.loghdr + "->" + "academyHome()");
         this._router.navigate( ['AcademyHome', {}] );
     }
 
@@ -258,7 +273,7 @@ export class AppComponent {
      **********************************************************/
     clubHistory()
     {
-        console.log("#### " + this.componentName + "->" + "clubHistory()");
+        console.log(this.loghdr + "->" + "clubHistory()");
         this._router.navigate( ['ClubHistory', {}] );
     }
 
@@ -271,7 +286,7 @@ export class AppComponent {
      **********************************************************/
     merchandise()
     {
-        console.log("#### " + this.componentName + "->" + "merchandise()");
+        console.log(this.loghdr + "->" + "merchandise()");
         this._router.navigate( ['Merchandise', {}] );
     }
 
@@ -284,7 +299,7 @@ export class AppComponent {
      **********************************************************/
     media(cat1:string, cat2:string, cat3:string)
     {
-    	console.log("#### " + this.componentName + "->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
+    	console.log(this.loghdr + "->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
     	
         this._router.navigate( ['Media', {cat1:cat1, cat2:cat2, cat3:cat3}] );
     }
@@ -298,7 +313,49 @@ export class AppComponent {
      **********************************************************/
     payNow()
     {
-    	console.log("     " + this.componentName + "->" + "payNow()");
+    	console.log(this.loghdr + "->" + "payNow()");
     	this._router.navigate( ['PayNow', {}] );
     }
+    
+    /**********************************************************
+    * Name:		adminOverview()
+    * Description:	Navigate to the payNow page
+    * Scope:		Internally accessible
+    * Params in:	None
+    * Return:      None
+    **********************************************************/
+    adminOverview()
+    {
+    	console.log(this.loghdr + "->" + "adminOverview()");
+    	
+    	this._router.navigate( ['AdminOverview', {}] );
+    }
+    
+    /**********************************************************
+     * Name:		memberRegister()
+     * Description:	Navigate to the memberRegister page
+     * Scope:		Internally accessible
+     * Params in:	None
+     * Return:      None
+     **********************************************************/
+    memberRegister()
+     {
+     	console.log(this.loghdr + "->" + "memberRegister()");
+     	
+     	var subscriber = this._dataService.dsGetTeams();
+        subscriber.subscribe(
+				            	data => this.goToMemberRegister(data),
+				            	error => console.log(this.loghdr + "===> Error getting teams from server: ", error),
+				            	() => console.log(this.loghdr + " <=== Received news from server. <====")
+				            );     	
+
+     }
+    
+    goToMemberRegister(data)
+    {
+    	console.log(this.loghdr + "->" + "goToMemberRegister(), data: ", data);
+    	this._dataService.dsTeams = data;
+    	this._router.navigate( ['MemberRegister', {}] );
+    }
+
 }

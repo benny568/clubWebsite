@@ -1,19 +1,23 @@
 package org.avenue.service.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.avenue.dao.TaskManagerService;
 import org.avenue.service.domain.NewsStory;
-import org.avenue.service.domain.Team;
 import org.avenue.service.domain.Worker;
-import org.avenue.service.utility.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +53,7 @@ public class welcomeController {
 	}
 	
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public String adminPage( HttpServletRequest request, ModelMap model, Principal principal )
+	public String adminPage( HttpServletRequest request, HttpServletResponse response, ModelMap model, Principal principal )
 	{
 		log.debug(loghdr+"/admin** mapping..");
 		String name = principal.getName();
@@ -60,15 +64,33 @@ public class welcomeController {
 		user = taskmanagerservice.getUserByName(name);
 		log.debug("## [welcomeController]->getUserByName returned: " + user);
 		session.setAttribute("user", user);
+		session.setAttribute("authid", "6141");
 		
 		log.trace(loghdr+"root mapping: returning view of home");
+		
+		response.setHeader("authid", "6141");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return "home";
+		
+//		URI location = null;
+//		try {
+//			location = new URI("/clubRegisterApp/admin");
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		HttpHeaders responseHeaders = new HttpHeaders();
+//	    responseHeaders.setLocation(location);
+//        String authid = UUID.randomUUID().toString();
+//	    responseHeaders.add("authid", authid);
+//	    responseHeaders.setAccessControlAllowOrigin("true");
+//	    return new ResponseEntity<String>(responseHeaders, HttpStatus.FOUND);
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login( HttpServletRequest request, ModelMap model, Principal principal )
 	{
-		return "admin";
+		return "home";
 	}
 	
 	

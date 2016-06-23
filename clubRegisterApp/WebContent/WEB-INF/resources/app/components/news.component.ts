@@ -29,6 +29,11 @@ export class NewsComponent {
 
     ngOnInit() {
         console.log("### " + this.componentName + "-> ngOnInit()");
-        this._dataService.loadNewsStories();
+        var subscriber = this._dataService.loadNewsStories();
+        subscriber.subscribe(
+				            	data => this._dataService.setNews(data),
+				            	error => console.log("===> Error getting news from server: " + error),
+				            	() => console.log(this.componentName + " <=== Received news from server. <====")
+				            );
     }
 }

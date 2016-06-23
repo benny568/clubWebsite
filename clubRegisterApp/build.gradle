@@ -59,6 +59,7 @@ dependencies {
 	compile 'org.apache.tomcat:tomcat-catalina:7.0.47'
 	compile 'org.apache.tomcat:tomcat-coyote:7.0.47'
 	compile 'org.apache.tomcat.embed:tomcat-embed-core:7.0.47'
+	compile 'org.apache.felix:org.osgi.foundation:1.2.0'
 
 	//compile 'commons-fileupload:commons-fileupload:1.2.2'
 

@@ -1,22 +1,24 @@
-import { Injectable } from 'angular2/core';
-import { Http }       from 'angular2/http';
-import { Headers }    from 'angular2/http';
-import { User }       from '../dao/site-user';
-import { ServerMode } from '../dao/server-mode';
-import { Team }       from '../dao/team';
-import { Member }     from '../dao/member';
-import { NewsStory }  from '../dao/news-story';
-import { Sponsor }    from "../dao/sponsor";
+import { Injectable }     from 'angular2/core';
+import { Http }           from 'angular2/http';
+import { Headers }        from 'angular2/http';
+import { RequestOptions } from 'angular2/http';
+import { User }           from '../dao/site-user';
+import { ServerMode }     from '../dao/server-mode';
+import { Team }           from '../dao/team';
+import { Member }         from '../dao/member';
+import { NewsStory }      from '../dao/news-story';
+import { Sponsor }        from "../dao/sponsor";
 
 @Injectable()
 export class SessionDataService {
     
+	dsAuthenticated:boolean;
     modes = { LOCAL:0, REMOTE:1};
     CurrentServerMode:number;
     dsTeams : Array<Team>;
-    dsTeamMembers : Array<Member>;
+    dsTeamMembers = [];
     dsCurrentTeam:Team;
-    dsCurrentMember:Member;p
+    dsCurrentMember:Member;
     dsCurrentUser:User;
     // dsSessionPlans = [];
     // dsTrainingRecords = [];
@@ -26,28 +28,34 @@ export class SessionDataService {
     dsPosition : Array<string>;
     dsSponsors : Array<Sponsor>;
     
-    loghdr: String = '    |-';
-    serviceName = this.loghdr + 'SessionDataService';
+    logdepth = 3;
+    loghdr: string = '';
+    serviceName = 'SessionDataService';
     displayMember = false;
     gAuthenticated = false;
 
      constructor ( private _http: Http ) {
+        this.setLogHdr(this.logdepth, this.serviceName);
         
         var svr = new ServerMode();
         this.CurrentServerMode = svr.getServerMode();
+        this.dsAuthenticated = false;
         this.dsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
         this.dsCurrentUser = new User();
         this.dsCurrentTeam = new Team();
         this.dsCurrentMember = new Member();
         this.dsTeams = new Array<Team>();
-        this.dsTeamMembers = new Array<Member>();
+        //this.dsTeamMembers = new Array(500);
         this.dsCurrentUser = new User();
         this.dsAllMembers = new Array<Member>();
         this.dsNewsStories = new Array<NewsStory>();
         this.dsSponsors = new Array<Sponsor>();
+        
+        this.loghdr = this.setLogHdr(this.logdepth, this.serviceName);
 
     }
-    
+ 
+       
     /**********************************************************
      * Name:		setCurrentMember()
      * Description:	Set the current member to the one passed in
@@ -57,7 +65,7 @@ export class SessionDataService {
      **********************************************************/
      setCurrentMember( member:Member )
      {
-         console.log(this.serviceName + "-->" + "setCurrentMember()");
+         console.log(this.loghdr + "-->" + "setCurrentMember()");
          this.dsCurrentMember = member;
          this.displayMember = true;
      }
@@ -75,6 +83,8 @@ export class SessionDataService {
         var team = '';
         var allow = false;
         var index = 0;
+        
+        console.log(this.serviceName + "-->" + "hasPermission("+action+","+params+")");
 
         if( typeof action === undefined || params === undefined )
             return false;
@@ -85,6 +95,7 @@ export class SessionDataService {
             {
                 // Super user has permissions to do anything
                 //log.trace(loghdr + " -> hasPermission("+action+"): YES");
+            	console.log(this.loghdr + " -> hasPermission("+action+"): YES");
                 return true;
             }
         }
@@ -283,7 +294,7 @@ export class SessionDataService {
 
         if( this.dsTeams.length === 0 )
         {
-            this.getTeams();
+            this.dsGetTeams();
         }
             
     
@@ -380,7 +391,7 @@ export class SessionDataService {
 
         // Ensure the teams information has been loaded
         if( this.dsTeams.length < 1 )
-            this.getTeams();
+            this.dsGetTeams();
 
         // Pick out this team and set it as the current one
         for( var team of this.dsTeams )
@@ -405,15 +416,21 @@ export class SessionDataService {
         console.log(this.serviceName + "-->" + "loadNewsStories()..");
         var url = this.getHome();
         
-        this._http.get( url + '/stories' )
-            .map(response => response.json())
-            .subscribe(
+        return this._http.get( url + '/stories' )
+            			.map(response => response.json());
+            /*.subscribe(
             	data => this.dsNewsStories = data,
             	error => this.handleError(error), //console.log("===> Error getting news from server: " + error),
             	() => console.log(this.loghdr + " <=== Received news from server. <====")
-            );
+            );*/
 
      }
+    
+    setNews(data)
+    {
+    	console.log(this.serviceName + "->" + "setNews()...recieved news stories: " + data);
+    	this.dsNewsStories = data;
+    }
     
     private handleError (error: any) {
         // In a real world app, we might use a remote logging infrastructure
@@ -451,29 +468,23 @@ export class SessionDataService {
         return _home;
     }
 
+
     /**********************************************************
-     * Name:		getTeams()
+     * Name:		dsGetTeams()
      * Description:	Retrieves a list of teams from the server
      * Scope:		Internal
      * Params in:	None
-     * Return:		Sets 
+     * Return:		Sets dsNewsStories
      **********************************************************/
-    getTeams() {
-        console.log(this.serviceName + "-->" + "getTeams()");
+    dsGetTeams()
+    {
+        console.log(this.serviceName + "-->" + " dsGetTeams()..");
         var url = this.getHome();
-
-        // If we have already loaded the news just return
-        if( this.dsTeams.length !== 0 )
-            return;
-
-        this._http.get( url + '/teams' )
-            .map(response => response.json())
-            .subscribe(
-            	data => this.dsTeams = data,
-            	error => console.log(this.loghdr + " ** Error getting teams from server."),
-            	() => console.log(this.loghdr + " <=== Received teams from server. <===")
-            );
-    }
+        
+        return this._http.get( url + '/teams' )
+            			.map(response => response.json());
+     }
+    
 
     /**********************************************************
      * Name:		loadCurrentTeamMembersByName()
@@ -562,48 +573,127 @@ export class SessionDataService {
      * Scope:		Internal
      * Params in:	
      * Return:		 
-     **********************************************************/
-/*    authenticate(username, password)
-    {
-    	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
-		
-		var creds = "j_username=" + username + "&j_password=" + password;
-
-		let _csrf = '';
-		
-		var headers = new Headers();
-		headers.append('X-CSRFToken', _csrf);
-		headers.append('Content-Type', 'application/json');
-		
-		this._http.post( this.getHome() + '/j_spring_security_check', creds)//, {headers: headers} )
-			.map(res => res.json())
-			.subscribe(
-				data => this.saveJwt(data.id_token),
-				err => console.log("ERROR: " + err),
-				() => console.log('Authentication Complete')
-				);
-	}*/
-    
-    
+     **********************************************************/    
     authenticate(username, password) 
     {
     	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
     	
-    	var headers = new Headers();
-		headers.append('X-Requested-With', 'XMLHttpRequest');
+    	var creds = "j_username=" + username + "&j_password=" + password;   	
+		let body = JSON.stringify({ creds  });
+	    let headers = new Headers({ 'Content-Type': 'application/json' });
+	    let options = new RequestOptions({ headers: headers });
 
-        return this._http.get(this.getHome() + '/admin', {headers : headers});
-
-      }
+        return this._http.post( this.getHome() + '/j_spring_security_check?'+creds, body, options);
+    }
     
+    getUser(username)
+    {
+    	console.log(this.loghdr + "-->" + "getUser(" + username + ")");
+    	return this._http.get(this.getHome() + '/admin/user').map(response => response.json());
+    }
+    
+    /**********************************************************
+     * Name:		logout()
+     * Description:	Invalidates the user session with the server
+     * Scope:		Internal
+     * Params in:	
+     * Return:		 
+     **********************************************************/
     logout()
     {
+    	this.dsAuthenticated = false;
     	return this._http.get(this.getHome() + '/j_spring_security_logout');
     }
+    
+    
+    /**********************************************************
+     * Name:		dsGetAllMembers()
+     * Description:	Get all members from the server
+     * Scope:		Internal
+     * Params in:	
+     * Return:		 
+     **********************************************************/
+    dsGetAllMembers()
+    {
+    	console.log(this.loghdr + "-->" + "dsGetAllMembers()");
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 	saveJwt(jwt) {
 	  if(jwt) {
 	    localStorage.setItem('id_token', jwt)
 	  }
+	}
+	
+	
+	
+	
+	/*WriteCookie()
+    {
+       if( document.myform.customer.value == "" ){
+          alert("Enter some value!");
+          return;
+       }
+       cookievalue= escape(document.myform.customer.value) + ";";
+       document.cookie="name=" + cookievalue;
+       document.write ("Setting Cookies : " + "name=" + cookievalue );
+    }
+	
+	ReadCookie()
+    {
+       var allcookies = document.cookie;
+       document.write ("All Cookies : " + allcookies );
+       
+       // Get all the cookies pairs in an array
+       cookiearray = allcookies.split(';');
+       
+       // Now take key value pair out of this array
+       for(var i=0; i<cookiearray.length; i++){
+          name = cookiearray[i].split('=')[0];
+          value = cookiearray[i].split('=')[1];
+          document.write ("Key is : " + name + " and Value is : " + value);
+       }
+    }*/
+	
+	
+	/**********************************************************
+     * Name:		setLogHdr()
+     * Description:	Sets up the correct indentation and header
+     * 				information for the log messages.
+     * Scope:		Internal
+     * Params in:	
+     * Return:		 
+     **********************************************************/
+	setLogHdr(logdepth, moduleName)
+	{
+		console.log("** Setting log header for [" + moduleName +"]");
+		let i = 0;
+		let depth = logdepth * 4;
+		let hdr:string = "## " +  moduleName;
+	
+		// (1) Set the indentation according to the depth
+		for( i=0; i<depth; i++ )
+		{
+			hdr += " ";
+		}
+		
+		// (2) Add on call stack indicator
+		hdr += "|-";
+		
+		return hdr;
 	}
 }

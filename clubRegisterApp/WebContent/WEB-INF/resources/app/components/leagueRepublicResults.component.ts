@@ -12,25 +12,37 @@ import {stringify}              from "angular2/src/upgrade/util";
 })
 
 export class LeagueRepublicResults{
-    className:string = 'LeagueRepublicResults';
-    lrcode:number;
 
-    constructor(private _dataService: SessionDataService, private rParams: RouteParams) { }
+    lrcode:number;
+    componentName:string = 'LeagueRepublicResults';
+	loghdr:string = "";
+	logdepth:number = 0;
+
+    constructor(private _dataService: SessionDataService, private rParams: RouteParams) 
+    { 
+    	this.loghdr = this._dataService.setLogHdr(this.logdepth, this.componentName);
+    }
 
     ngOnInit() {
         var teamName:string;
 
-        console.log("### " + this.className + "-" + "ngOnInit()");
+        console.log(this.loghdr + "-" + "ngOnInit()");
 
         teamName = this.rParams.get('team');
 
         // (1) Read in the list of teams
-        this._dataService.getTeams();
+        this._dataService.dsGetTeams()
+        .subscribe(
+            	data => this._dataService.dsTeams = data,
+            	error => console.log(this.loghdr + " ** Error getting teams from server."),
+            	() => console.log(this.loghdr + " <=== Received teams from server. <===")
+            );
+        
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(teamName);
 
         this.lrcode = this._dataService.dsCurrentTeam.lrResultsCode;
-        console.log("### " + this.className + "-" + "ngOnInit(): lrResultsCode is: " + this.lrcode);
+        console.log(this.loghdr + "-" + "ngOnInit(): lrResultsCode is: " + this.lrcode);
 
         if( window[ "numCodeSnippets" ] == undefined )
         {
