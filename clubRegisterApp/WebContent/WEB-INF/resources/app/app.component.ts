@@ -5,8 +5,10 @@ import { RouteConfig,
 import { Router }                  from 'angular2/router';
 import { Http }                    from 'angular2/http';
 import { HTTP_PROVIDERS }          from 'angular2/http';
+
 import { SessionDataService }      from './services/session-data.service';
-import { ToolBox }                 from './utilities/toolbox';
+import { LoggerService }           from './services/logger.service';
+
 import { ViewTeam }                from './components/viewTeam.component';
 import { HomeComponent }           from "./components/home.component";
 import { FarViewComponent }        from "./components/far.component";
@@ -24,6 +26,7 @@ import { PayNowComponent }		   from "./components/payNow.component";
 import { AdminHomeComponent }	   from "./components/adminHome.component";
 import { AdminOverviewComponent }  from "./components/adminOverview.component";
 import { MemberRegisterComponent } from "./components/memberRegister.component";
+import { EditMemberComponent }     from "./components/editMember.component";
 
 import {enableProdMode} from 'angular2/core';
 enableProdMode();
@@ -50,7 +53,7 @@ enableProdMode();
             `],
     //stylesUrl: '/app/styles/nav.component.css',
     directives: [ ROUTER_DIRECTIVES ],
-    providers: [ ROUTER_PROVIDERS, HTTP_PROVIDERS, SessionDataService, ToolBox ]
+    providers: [ LoggerService ]
 })
 
 @RouteConfig([
@@ -70,23 +73,23 @@ enableProdMode();
     { path: '/admin', name: 'AdminHome', component: AdminHomeComponent },
     { path: '/payNow', name: 'PayNow', component: PayNowComponent },
     { path: '/adminOverview', name: 'AdminOverview', component: AdminOverviewComponent },
-    { path: '/memberRegister', name: 'MemberRegister', component: MemberRegisterComponent }
+    { path: '/memberRegister', name: 'MemberRegister', component: MemberRegisterComponent },
+    { path: '/editMember', name: 'EditMember', component: EditMemberComponent }
 ])
 
 export class AppComponent {
 
 	componentName:string = 'AppComponent';
-	loghdr:string = "";
 	logdepth:number = 0;
 
-    constructor( private _dataService: SessionDataService, private _router: Router, private tb$: ToolBox ) 
+    constructor( private lg$: LoggerService, private d$: SessionDataService, private router: Router ) 
     {
-    	this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
+    	this.lg$.setLogHdr(this.logdepth, this.componentName);
     	
-    	console.log(this.loghdr + "constructor()");
+    	this.lg$.log("constructor()");
     	
         // Load the teams to use in the menu system
-        this._dataService.dsGetTeams();
+        this.d$.dsGetTeams();
     }
 
     /**********************************************************
@@ -98,18 +101,18 @@ export class AppComponent {
      **********************************************************/
     goHome()
     {
-        console.log(this.loghdr + "->" + "goHome()");
+        this.lg$.log("->" + "goHome()");
 
-        var subscriber = this._dataService.loadNewsStories();
+        var subscriber = this.d$.loadNewsStories();
         subscriber.subscribe(
-				            	data => this._dataService.setNews(data),
-				            	error => console.log("===> Error getting news from server: " + error),
-				            	() => this._router.navigate( ['Home', {}] )
+				            	data => this.d$.setNews(data),
+				            	error => this.lg$.log("===> Error getting news from server: " + error)//,
+				            	//() => this.router.navigate( ['Home', {}] )
 				            );
-        this._dataService.loadCurrentSponsors();
-        //console.log(this.loghdr + "News: " + this._dataService.dsNewsStories );
-        console.log(this.loghdr + "Sponsors: " + this._dataService.dsSponsors );
-        //this._router.navigate( ['Home', {}] );
+        this.d$.loadCurrentSponsors();
+        this.lg$.log("News: " + this.d$.dsNewsStories );
+        this.lg$.log("Sponsors: " + this.d$.dsSponsors );
+        this.router.navigate( ['Home', {}] );
     }
 
     /**********************************************************
@@ -121,10 +124,10 @@ export class AppComponent {
      **********************************************************/
     login()
     {
-        console.log(this.loghdr + "->" + "login()");
+        this.lg$.log("->" + "login()");
 
         // Change view
-        this._router.navigate( ['Login', {}] );
+        this.router.navigate( ['Login', {}] );
     }
     
     /**********************************************************
@@ -136,12 +139,12 @@ export class AppComponent {
      **********************************************************/
     logout()
     {
-        console.log(this.loghdr + "->" + "logout()");
+        this.lg$.log("->" + "logout()");
 
-        this._dataService.logout().subscribe(
+        this.d$.logout().subscribe(
         										data => this.goHome(),
-        										err => console.log("ERROR: " + err),
-        										() => console.log('Logout Complete')
+        										err => this.lg$.log("ERROR: " + err),
+        										() => this.lg$.log('Logout Complete')
         		
         									);
     }
@@ -155,18 +158,18 @@ export class AppComponent {
      **********************************************************/
     viewTeam( tname:string )
     {
-        console.log(this.loghdr + "->" + "viewTeam(" + tname + ")");
+        this.lg$.log("->" + "viewTeam(" + tname + ")");
 
         // (1) Read in the list of teams
-        this._dataService.dsGetTeams();
+        this.d$.dsGetTeams();
         // (2) Set the current team to the one in question
-        this._dataService.setCurrentTeamByName(tname);
+        this.d$.setCurrentTeamByName(tname);
         // (3) Load in the team members for that team
-        this._dataService.loadCurrentTeamMembersByName(tname);
+        this.d$.loadCurrentTeamMembersByName(tname);
         // (4) Reset the current member so the display doesn't show until the member is clicked on
-        this._dataService.clearCurrentMember();
+        this.d$.clearCurrentMember();
         // (5) Change view
-        this._router.navigate( ['ViewTeam', { team: tname }] );
+        this.router.navigate( ['ViewTeam', { team: tname }] );
     }
 
     /**********************************************************
@@ -178,13 +181,13 @@ export class AppComponent {
      **********************************************************/
     farView( tname:string )
     {
-        console.log(this.loghdr + "->" + "farView(" + tname + ")");
+        this.lg$.log("->" + "farView(" + tname + ")");
         // (1) Read in the list of teams
-        this._dataService.dsGetTeams();
+        this.d$.dsGetTeams();
         // (2) Set the current team to the one in question
-        this._dataService.setCurrentTeamByName(tname);
+        this.d$.setCurrentTeamByName(tname);
         // (3) Change view
-        this._router.navigate( ['FarView', { team: tname }] );
+        this.router.navigate( ['FarView', { team: tname }] );
     }
 
     /**********************************************************
@@ -196,8 +199,8 @@ export class AppComponent {
      **********************************************************/
     findUs()
     {
-        console.log(this.loghdr + "->" + "findUs()");
-        this._router.navigate( ['FindUs', {}] );
+        this.lg$.log("->" + "findUs()");
+        this.router.navigate( ['FindUs', {}] );
     }
 
     /**********************************************************
@@ -209,8 +212,8 @@ export class AppComponent {
      **********************************************************/
     messageUs()
     {
-        console.log(this.loghdr + "->" + "messageUs()");
-        this._router.navigate( ['MessageUs', {}] );
+        this.lg$.log("->" + "messageUs()");
+        this.router.navigate( ['MessageUs', {}] );
     }
 
     /**********************************************************
@@ -222,8 +225,8 @@ export class AppComponent {
      **********************************************************/
     contactUs()
     {
-        console.log(this.loghdr + "->" + "contactUs()");
-        this._router.navigate( ['ContactUs', {}] );
+        this.lg$.log("->" + "contactUs()");
+        this.router.navigate( ['ContactUs', {}] );
     }
 
     /**********************************************************
@@ -235,8 +238,8 @@ export class AppComponent {
      **********************************************************/
     downloads()
     {
-        console.log(this.loghdr + "->" + "downloads()");
-        this._router.navigate( ['Downloads', {}] );
+        this.lg$.log("->" + "downloads()");
+        this.router.navigate( ['Downloads', {}] );
     }
 
     /**********************************************************
@@ -248,8 +251,8 @@ export class AppComponent {
      **********************************************************/
     links()
     {
-        console.log(this.loghdr + "->" + "links()");
-        this._router.navigate( ['Links', {}] );
+        this.lg$.log("->" + "links()");
+        this.router.navigate( ['Links', {}] );
     }
 
     /**********************************************************
@@ -261,8 +264,8 @@ export class AppComponent {
      **********************************************************/
     academyHome()
     {
-        console.log(this.loghdr + "->" + "academyHome()");
-        this._router.navigate( ['AcademyHome', {}] );
+        this.lg$.log("->" + "academyHome()");
+        this.router.navigate( ['AcademyHome', {}] );
     }
 
     /**********************************************************
@@ -274,8 +277,8 @@ export class AppComponent {
      **********************************************************/
     clubHistory()
     {
-        console.log(this.loghdr + "->" + "clubHistory()");
-        this._router.navigate( ['ClubHistory', {}] );
+        this.lg$.log("->" + "clubHistory()");
+        this.router.navigate( ['ClubHistory', {}] );
     }
 
     /**********************************************************
@@ -287,8 +290,8 @@ export class AppComponent {
      **********************************************************/
     merchandise()
     {
-        console.log(this.loghdr + "->" + "merchandise()");
-        this._router.navigate( ['Merchandise', {}] );
+        this.lg$.log("->" + "merchandise()");
+        this.router.navigate( ['Merchandise', {}] );
     }
 
     /**********************************************************
@@ -300,9 +303,9 @@ export class AppComponent {
      **********************************************************/
     media(cat1:string, cat2:string, cat3:string)
     {
-    	console.log(this.loghdr + "->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
+    	this.lg$.log("->" + "media(" + cat1 + "/" + cat2 + "/" + cat3 + ")");
     	
-        this._router.navigate( ['Media', {cat1:cat1, cat2:cat2, cat3:cat3}] );
+        this.router.navigate( ['Media', {cat1:cat1, cat2:cat2, cat3:cat3}] );
     }
     
     /**********************************************************
@@ -314,8 +317,8 @@ export class AppComponent {
      **********************************************************/
     payNow()
     {
-    	console.log(this.loghdr + "->" + "payNow()");
-    	this._router.navigate( ['PayNow', {}] );
+    	this.lg$.log("->" + "payNow()");
+    	this.router.navigate( ['PayNow', {}] );
     }
     
     /**********************************************************
@@ -327,9 +330,9 @@ export class AppComponent {
     **********************************************************/
     adminOverview()
     {
-    	console.log(this.loghdr + "->" + "adminOverview()");
+    	this.lg$.log("->" + "adminOverview()");
     	
-    	this._router.navigate( ['AdminOverview', {}] );
+    	this.router.navigate( ['AdminOverview', {}] );
     }
     
     /**********************************************************
@@ -341,22 +344,22 @@ export class AppComponent {
      **********************************************************/
     memberRegister()
      {
-     	console.log(this.loghdr + "->" + "memberRegister()");
+     	this.lg$.log("->" + "memberRegister()");
      	
-     	var subscriber = this._dataService.dsGetTeams();
+     	var subscriber = this.d$.dsGetTeams();
         subscriber.subscribe(
 				            	data => this.goToMemberRegister(data),
-				            	error => console.log(this.loghdr + "===> Error getting teams from server: ", error),
-				            	() => console.log(this.loghdr + " <=== Received news from server. <====")
+				            	error => this.lg$.log("===> Error getting teams from server: " +  error),
+				            	() => this.lg$.log(" <=== Received news from server. <====")
 				            );     	
 
      }
     
     goToMemberRegister(data)
     {
-    	console.log(this.loghdr + "->" + "goToMemberRegister(), data: ", data);
-    	this._dataService.dsTeams = data;
-    	this._router.navigate( ['MemberRegister', {}] );
+    	this.lg$.log("->" + "goToMemberRegister(), data: " + data);
+    	this.d$.dsTeams = data;
+    	this.router.navigate( ['MemberRegister', {}] );
     }
 
 }

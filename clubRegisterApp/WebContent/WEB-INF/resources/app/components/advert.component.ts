@@ -1,5 +1,6 @@
-import { Component } from 'angular2/core';
-import { Router }    from 'angular2/router';
+import { Component }     from 'angular2/core';
+import { Router }        from 'angular2/router';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
     selector: 'advert',
@@ -8,12 +9,14 @@ import { Router }    from 'angular2/router';
 
 export class AdvertComponent {
 	componentName = 'AdvertComponent';
+	logdepth:number = 2;
 	advert = {title:'FLEADH WEEKEND CAMPING:', image:'', text:''};
 	
-	constructor(private _router: Router) {}
+	constructor( private _router: Router,  private lg$: LoggerService ) {}
 
     ngOnInit() {
-        console.log("### " + this.componentName + "-> ngOnInit()");
+    	this.lg$.setLogHdr(this.logdepth, this.componentName);
+        this.lg$.log("ngOnInit()");
     }
     
     /**********************************************************
@@ -25,7 +28,7 @@ export class AdvertComponent {
      **********************************************************/
     payNow()
     {
-    	console.log("     " + this.componentName + "->" + "payNow()");
+    	this.lg$.log("payNow()");
     	this._router.navigate( ['PayNow', {}] );
     }
     

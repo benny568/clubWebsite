@@ -1,32 +1,53 @@
-import { Component }          from 'angular2/core';
+import { Component, 
+         ViewChild,
+         OnInit     }         from 'angular2/core';
+import { Router }             from 'angular2/router';
+
+import { MODAL_DIRECTIVES }   from 'ng2-bs3-modal/ng2-bs3-modal';
+import { ModalComponent }     from 'ng2-bs3-modal/ng2-bs3-modal';
+
 import { SessionDataService } from '../services/session-data.service';
-import { ToolBox }            from '../utilities/toolbox';
+import { LoggerService }      from '../services/logger.service';
 import { Member }             from '../dao/member';
 
 
 @Component({
-	templateUrl: 'app/htmltemplates/memberRegister.component.html'
+	templateUrl: 'app/htmltemplates/memberRegister.component.html',
+	directives: [MODAL_DIRECTIVES],
+	providers: [ LoggerService ]
 })
 
-export class MemberRegisterComponent
+export class MemberRegisterComponent implements OnInit
 {
 	componentName = 'MemberRegisterComponent'; 
 	logdepth = 2;
-	loghdr = "";
 	showArray = [];
 	
-	constructor( private _dataService: SessionDataService, private tb$: ToolBox )
-	{
-		this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
-	}
+	// Modal stuff
+	@ViewChild('modal')
+	modal: ModalComponent;
+	items: string[] = ['item1', 'item2', 'item3'];
+    selected: string;
+    output: string;
+    model: Member = new Member();
+
+    index: number = 0;
+    backdropOptions = [true, false, 'static'];
+
+    animation: boolean = true;
+    keyboard: boolean = true;
+    backdrop: string | boolean = true;
+	
+    constructor( private d$: SessionDataService, private router: Router, private lg$: LoggerService ) {}
 	
 	ngOnInit()
 	{
-		console.log(this.loghdr+"-> ngOnInit()");
+		this.lg$.setLogHdr(this.logdepth, this.componentName);
+		this.lg$.log("-> ngOnInit()");
 
-		this._dataService.dsGetAllMembers();
+		this.d$.dsGetAllMembers();
 		
-		console.log(this.loghdr+"<- ngOnInit");
+		this.lg$.log("<- ngOnInit");
 	}
 	
 	
@@ -39,12 +60,12 @@ export class MemberRegisterComponent
 	 **********************************************************/
 	getAllMembers(){
 		
-		console.log(this.loghdr+"-> getAllMembers()");
-		console.log(this.loghdr+"    | calling dataService.getAllMembers()..")
+		this.lg$.log("-> getAllMembers()");
+		this.lg$.log("    | calling dataService.getAllMembers()..")
 		
-		this._dataService.dsGetAllMembers();
+		this.d$.dsGetAllMembers();
 		
-		console.log(this.loghdr+"<- getAllMembers()");
+		this.lg$.log("<- getAllMembers()");
 	}
 	
 	
@@ -56,13 +77,13 @@ export class MemberRegisterComponent
 	 * Return:		Sets $scope.teams
 	 **********************************************************/
 	getTeams(){
-		console.log(this.loghdr + "-> getTeams()");
-		console.log(this.loghdr + "   | calling dataService.dsGetTeams()..")
-		this._dataService.dsGetTeams()
+		this.lg$.log("-> getTeams()");
+		this.lg$.log("   | calling dataService.dsGetTeams()..")
+		this.d$.dsGetTeams()
 		.subscribe(
-            	data => this._dataService.dsTeams = data,
-            	error => console.log(this.loghdr + " ** Error getting teams from server."),
-            	() => console.log(this.loghdr + " <=== Received teams from server. <===")
+            	data => this.d$.dsTeams = data,
+            	error => this.lg$.log(" ** Error getting teams from server."),
+            	() => this.lg$.log(" <=== Received teams from server. <===")
             );
 
 	}
@@ -93,22 +114,22 @@ export class MemberRegisterComponent
 	 **********************************************************/
 	getMembers4team(teamId)
 	{
-		//log.debug(this.loghdr + "##    |-> getMembers4team("+teamId+")");
+		this.lg$.log("-> getMembers4team("+teamId+")");
 		this.showArray[teamId] = 'true';
 		
 		// Clear the array first
-		this._dataService.dsTeamMembers[teamId] = new Array<Member>();
+		this.d$.dsTeamMembers[teamId] = new Array<Member>();
 		// Populate the Team members from the complete list of members
-		for( var i=0; i<this._dataService.dsAllMembers.length; i++ )
+		for( var i=0; i<this.d$.dsAllMembers.length; i++ )
 		{
-			if( this._dataService.dsAllMembers[i].team == teamId )
+			if( this.d$.dsAllMembers[i].team == teamId )
 			{
 				// Find the members for this team and add them to the array
-				this._dataService.dsTeamMembers[teamId].push( this._dataService.dsAllMembers[i] );
-				//log.trace(loghdr + "      |- found team member (" + this._dataService.dsAllMembers[i].name + "), adding to array..");
+				this.d$.dsTeamMembers[teamId].push( this.d$.dsAllMembers[i] );
+				//log.trace(loghdr + "      |- found team member (" + this.d$.dsAllMembers[i].name + "), adding to array..");
 			}
 		}
-		//log.debug(this.loghdr + "##    |<-getMembers4team()");
+		this.lg$.log("<-getMembers4team()");
 	}
 	 
 	/**********************************************************
@@ -130,63 +151,29 @@ export class MemberRegisterComponent
 	 * 				and update local in-memory copy
 	 * Scope:		Externally accessible
 	 * Params in:	thisMember: the member to edit
-	 * Return:		Sets this._dataService.dsTeamMembers[team].<this member>
+	 * Return:		Sets this.d$.dsTeamMembers[team].<this member>
 	 **********************************************************/	
-/*	editMember(member)
+	editMember(member)
 	{
-		if( typeof member == 'undefined' )
-			return
-		console.log(this.loghdr+" editMember()...");		
+		this.router.navigate( ['EditMember', {member: member}] );
+		//this.modal.open();
+	}
+	
+	closed() {
+        this.output = '(closed) ' + this.selected;
+    }
 
-		if( typeof member.position == 'number' )
-			member.position = this._dataService.dsPosition[member.position];
-		if( typeof member.team == 'number' )
-		if( typeof member.position2 == 'number' )
-			member.position2 = this._dataService.dsPosition[member.position2];
-		if( typeof member.team2 == 'number' )
-			member.team2 != 0 ? member.team2 = this._dataService.getTeamNameFrmId(member.team2) : member.team2 = "None";
-		if( typeof member.position3 == 'number' )
-			member.position3 = this._dataService.dsPosition[member.position3];
-		if( typeof member.team3 == 'number' )
-			member.team3 != 0 ? member.team3 = this._dataService.getTeamNameFrmId(member.team3) : member.team3 = "None";
-		
-		this._dataService.dsCurrentMember = member;
-		
-		 ModalService.showModal({
-	            templateUrl: 'memberModal.html',
-	            controller: "ModalController",
-	            inputs: { member : member, modalType: "Edit" }
-	        }).then(function(modal) {
-	            modal.element.modal();
-	            modal.close.then(function(result) {
-	            	var newMem = result;
-	            	var diff = tools.difference( newMem, member);
-	            	if(diff)
-	            	{
-	            		if( typeof newMem.position != 'number' )
-	            			newMem.position = this._dataService.dsPosition.indexOf(newMem.position);
-	            		if( typeof newMem.team != 'number' )
-	            			newMem.team = getTeamIdFrmName(newMem.team);
-	            		
-	            		if( typeof newMem.position2 != 'number' )
-	            			newMem.position2 = this._dataService.dsPosition.indexOf(newMem.position2);
-	            		if( typeof newMem.team2 != 'number' )
-	            			newMem.team2 = getTeamIdFrmName(newMem.team2);
-	            		
-	            		if( typeof newMem.position3 != 'number' )
-	            			newMem.position3 = this._dataService.dsPosition.indexOf(newMem.position3);
-	            		if( typeof newMem.team3 != 'number' )
-	            			newMem.team3 = getTeamIdFrmName(newMem.team3);
-	            		
-		                dbService.updateMember( newMem )
-		        		.then( function(result) {
-		        			applyMemberChange(this._dataService.dsAllMembers, newMem);
-		        			//this._dataService.dsCurrentMember = newMem;
-		        			console.log(loghdr+"-> editMember: after update: ", this._dataService.dsCurrentMember);
-		        		});
-	            	}
-	        	});
-            });
-	}*/
+    dismissed() {
+        this.output = '(dismissed)';
+    }
+
+    opened() {
+        this.output = '(opened)';
+    }
+
+    navigate() {
+        //this.router.navigateByUrl('/hello');
+    }
+
 	
 }

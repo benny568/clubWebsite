@@ -11,7 +11,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div *ngFor="#team of _dataService.dsTeams">
+						<div *ngFor="let team of _dataService.dsTeams">
 							<div class="panel">
 								<div class="panel-heading avenue-heading" style="min-height:35px;">
 									<div class="col-md-10 teamHdr" *ngIf="!showArray[team.id]"><span class="glyphicon glyphicon-triangle-bottom" (click)="getMembers4team(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
@@ -28,7 +28,7 @@
 										    <div class="col-md-2 tblHdr">Phone</div>
 										    <div class="col-md-2 tblHdr">Operations</div>
 										</div> <!-- end of row -->
-										<div *ngFor="#member of _dataService.dsTeamMembers[team.id]" class="row light-line">							    
+										<div *ngFor="let member of _dataService.dsTeamMembers[team.id]" class="row light-line">							    
 								    		<div class="col-md-3">{{member.name}}</div>
 											<div class="col-md-5">{{member.address}}</div>
 											<div class="col-md-2">{{member.phone}}</div>

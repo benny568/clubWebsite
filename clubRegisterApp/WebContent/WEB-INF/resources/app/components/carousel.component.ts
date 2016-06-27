@@ -10,7 +10,7 @@ export enum Direction {UNKNOWN, NEXT, PREV}
     template: `
     <div (mouseenter)="pause()" (mouseleave)="play()" class="carousel slide">
       <ol class="carousel-indicators" [hidden]="slides.length <= 1">
-         <li *ngFor="#slidez of slides" [class.active]="slidez.active === true" (click)="select(slidez)"></li>
+         <li *ngFor="let slidez of slides" [class.active]="slidez.active === true" (click)="select(slidez)"></li>
       </ol>
       <div class="carousel-inner"><ng-content></ng-content></div>
                   <a class="left carousel-control" (click)="prev()" [hidden]="!slides.length">

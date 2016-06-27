@@ -39,7 +39,7 @@
     <script src="resources/node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="resources/node_modules/angular2/bundles/router.dev.js"></script>
     <script src="resources/node_modules/angular2/animate.js"></script>
-    <script src="resources/node_modules/ng-bootstrap/ng2-bootstrap.js"></script>
+    <script src="resources/node_modules/ng2-bootstrap/ng2-bootstrap.js"></script>
     <script src="resources/node_modules/angular2/bundles/http.dev.js"></script>
 
     <link rel="stylesheet" type="text/css" href="resources/app/styles/default.css" />
@@ -59,7 +59,10 @@
 		paths: {
 				'angular2/*' : 'node_modules/angular2/*',
 				'rxjs/*'     : 'node_modules/rxjs/*.js'
-			}
+			},
+    	map: {
+    	        'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
+    	    }
     	});
       System.import('resources/app/boot')
             .then(null, console.error.bind(console));

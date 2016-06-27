@@ -3,8 +3,8 @@
  */
 import { Component }            from 'angular2/core';
 import { SessionDataService }   from '../services/session-data.service';
+import { LoggerService }        from '../services/logger.service';
 import {RouteParams}            from "angular2/router";
-import { ToolBox }              from '../utilities/toolbox';
 import {stringify}              from "angular2/src/upgrade/util";
 
 @Component({
@@ -16,18 +16,17 @@ export class LeagueRepublicResults{
 
     lrcode:number;
     componentName:string = 'LeagueRepublicResults';
-	loghdr:string = "";
-	logdepth:number = 0;
+	logdepth:number = 2;
 
-    constructor(private _dataService: SessionDataService, private rParams: RouteParams, private tb$: ToolBox) 
+    constructor(private _dataService: SessionDataService, private rParams: RouteParams, private lg$: LoggerService ) 
     { 
-    	this.loghdr = this.tb$.setLogHdr(this.logdepth, this.componentName);
+    	this.lg$.setLogHdr(this.logdepth, this.componentName);
     }
 
     ngOnInit() {
         var teamName:string;
 
-        console.log(this.loghdr + "-" + "ngOnInit()");
+        this.lg$.log("ngOnInit()");
 
         teamName = this.rParams.get('team');
 
@@ -35,15 +34,15 @@ export class LeagueRepublicResults{
         this._dataService.dsGetTeams()
         .subscribe(
             	data => this._dataService.dsTeams = data,
-            	error => console.log(this.loghdr + " ** Error getting teams from server."),
-            	() => console.log(this.loghdr + " <=== Received teams from server. <===")
+            	error => this.lg$.error(" ** Error getting teams from server."),
+            	() => this.lg$.log(" <=== Received teams from server. <===")
             );
         
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(teamName);
 
         this.lrcode = this._dataService.dsCurrentTeam.lrResultsCode;
-        console.log(this.loghdr + "-" + "ngOnInit(): lrResultsCode is: " + this.lrcode);
+        this.lg$.log("-" + "ngOnInit(): lrResultsCode is: " + this.lrcode);
 
         if( window[ "numCodeSnippets" ] == undefined )
         {

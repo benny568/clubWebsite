@@ -1,7 +1,10 @@
+import { Component }      from 'angular2/core';
 import { Injectable }     from 'angular2/core';
+import { Inject }         from 'angular2/core';
 import { Http }           from 'angular2/http';
 import { Headers }        from 'angular2/http';
 import { RequestOptions } from 'angular2/http';
+import { LoggerService }  from '../services/logger.service';
 import { ToolBox }        from '../utilities/toolbox';
 import { User }           from '../dao/site-user';
 import { ServerMode }     from '../dao/server-mode';
@@ -30,13 +33,13 @@ export class SessionDataService {
     dsSponsors : Array<Sponsor>;
     
     logdepth = 3;
-    loghdr: string = '';
+    loghdr = "";
     serviceName = 'SessionDataService';
     displayMember = false;
     gAuthenticated = false;
 
-     constructor ( private _http: Http, private tb$: ToolBox ) {
-        this.tb$.setLogHdr(this.logdepth, this.serviceName);
+     constructor ( @Inject(Http) private lg$: LoggerService, private _http: Http ) {
+    	 this.loghdr = this.setLogHdr(this.logdepth, this.serviceName);
         
         var svr = new ServerMode();
         this.CurrentServerMode = svr.getServerMode();
@@ -64,7 +67,7 @@ export class SessionDataService {
      **********************************************************/
      setCurrentMember( member:Member )
      {
-         console.log(this.loghdr + "-->" + "setCurrentMember()");
+         console.log("-->" + "setCurrentMember()");
          this.dsCurrentMember = member;
          this.displayMember = true;
      }
@@ -83,7 +86,7 @@ export class SessionDataService {
         var allow = false;
         var index = 0;
         
-        console.log(this.serviceName + "-->" + "hasPermission("+action+","+params+")");
+        console.log("-->" + "hasPermission("+action+","+params+")");
 
         if( typeof action === undefined || params === undefined )
             return false;
@@ -94,7 +97,7 @@ export class SessionDataService {
             {
                 // Super user has permissions to do anything
                 //log.trace(loghdr + " -> hasPermission("+action+"): YES");
-            	console.log(this.loghdr + " -> hasPermission("+action+"): YES");
+            	console.log(" -> hasPermission("+action+"): YES");
                 return true;
             }
         }
@@ -386,7 +389,7 @@ export class SessionDataService {
      **********************************************************/
     setCurrentTeamByName( teamName: string)
     {
-        console.log(this.serviceName + "-->" + "setCurrentTeamByName(" + teamName + ")");
+    	console.log("-->" + "setCurrentTeamByName(" + teamName + ")");
 
         // Ensure the teams information has been loaded
         if( this.dsTeams.length < 1 )
@@ -397,7 +400,7 @@ export class SessionDataService {
         {
             if( team.name == teamName ) {
                 this.dsCurrentTeam = team;
-                console.log(this.serviceName + "-->" + "setCurrentTeamByName(): Team set to " + teamName);
+                console.log( "-->" + "setCurrentTeamByName(): Team set to " + teamName);
                 break;
             }
         }
@@ -412,7 +415,7 @@ export class SessionDataService {
      **********************************************************/
     loadNewsStories()
     {
-        console.log(this.serviceName + "-->" + "loadNewsStories()..");
+        console.log("-->" + "loadNewsStories()..");
         var url = this.getHome();
         
         return this._http.get( url + '/stories' )
@@ -420,14 +423,14 @@ export class SessionDataService {
             /*.subscribe(
             	data => this.dsNewsStories = data,
             	error => this.handleError(error), //console.log("===> Error getting news from server: " + error),
-            	() => console.log(this.loghdr + " <=== Received news from server. <====")
+            	() => console.log(" <=== Received news from server. <====")
             );*/
 
      }
     
     setNews(data)
     {
-    	console.log(this.serviceName + "->" + "setNews()...recieved news stories: " + data);
+    	console.log("->" + "setNews()...recieved news stories: " + data);
     	this.dsNewsStories = data;
     }
     
@@ -477,7 +480,7 @@ export class SessionDataService {
      **********************************************************/
     dsGetTeams()
     {
-        console.log(this.loghdr + "-->" + " dsGetTeams()..");
+        console.log("-->" + " dsGetTeams()..");
         var url = this.getHome();
         
         return this._http.get( url + '/teams' )
@@ -494,11 +497,11 @@ export class SessionDataService {
      **********************************************************/
     loadCurrentTeamMembersByName( teamName:string )
     {
-        console.log(this.serviceName + "-->" + "loadCurrentTeamMembersByName(" + teamName + ")");
+        console.log("-->" + "loadCurrentTeamMembersByName(" + teamName + ")");
 
        if( (this.dsTeamMembers.length !== 0) && (this.dsCurrentTeam.name == teamName) )
        {
-           console.log(this.serviceName + "-->" + "loadCurrentTeamByName():" + "Members already loaded not loading again!");
+           console.log("-->" + "loadCurrentTeamByName():" + "Members already loaded not loading again!");
            return;
        }
        else {
@@ -526,7 +529,7 @@ export class SessionDataService {
      **********************************************************/
     loadCurrentSponsors() : Array<Sponsor>
     {
-        console.log(this.serviceName + "-->" + "loadCurrentSponsors()");
+        console.log("-->" + "loadCurrentSponsors()");
 
         this.dsSponsors = [ {name:"Enzo's Takeaway", image:"resources/images/adverts/enzos.png"},
                             {name:"Rochford's Pharmacy", image: "resources/images/adverts/main-sponsor.png"},
@@ -556,7 +559,7 @@ export class SessionDataService {
      **********************************************************/
     loadPhotoDetails( url ) 
     {
-        console.log(this.serviceName + "-->" + "loadPhotoDetails(" + url + ")");
+        console.log("-->" + "loadPhotoDetails(" + url + ")");
 
         // ToDo: If we have already loaded the news just return
 
@@ -575,7 +578,7 @@ export class SessionDataService {
      **********************************************************/    
     authenticate(username, password) 
     {
-    	console.log(this.serviceName + "-->" + "authenticate(" + username + "," + password + ")");
+    	console.log("-->" + "authenticate(" + username + "," + password + ")");
     	
     	var creds = "j_username=" + username + "&j_password=" + password;   	
 		let body = JSON.stringify({ creds  });
@@ -587,7 +590,7 @@ export class SessionDataService {
     
     getUser(username)
     {
-    	console.log(this.loghdr + "-->" + "getUser(" + username + ")");
+    	console.log("-->" + "getUser(" + username + ")");
     	return this._http.get(this.getHome() + '/admin/user').map(response => response.json());
     }
     
@@ -614,15 +617,15 @@ export class SessionDataService {
      **********************************************************/
     dsGetAllMembers()
     {
-    	console.log(this.loghdr + "-->" + "dsGetAllMembers()");
+    	console.log("-->" + "dsGetAllMembers()");
     	var url = this.getHome();
     	
     	return this._http.get(url + "/admin/members")
     		.map(response => response.json())
     		.subscribe(
     					data => this.dsAllMembers = data,
-    					err => console.log(this.loghdr+"ERROR getting members from server!"),
-    					() => console.log(this.loghdr+"<== Finished getting all members from server <==")
+    					err => console.log("ERROR getting members from server!"),
+    					() => console.log("<== Finished getting all members from server <==")
     					);
     }
     
@@ -700,4 +703,41 @@ export class SessionDataService {
     }*/
 	
 	
+	
+	/**********************************************************
+     * Name:		setLogHdr()
+     * Description:	Sets up the correct indentation and header
+     * 				information for the log messages.
+     * Scope:		Internal
+     * Params in:	
+     * Return:		 
+     **********************************************************/
+	setLogHdr(logdepth, moduleName)
+	{
+		console.log("** [Logger Service] Setting log header for [" + moduleName +"]");
+		let i = 0;
+		let depth = logdepth * 4;
+		let moduleSpace = 25;
+		let hdr:string = "## " +  moduleName;
+		
+		// Make sure the field width is the standard, pad if necessary
+		if( hdr.length < moduleSpace )
+		{
+			let diff = moduleSpace - hdr.length;
+			let i = 0;
+			for( i=0; i<diff; i++ )
+				hdr += ' ';
+		}
+	
+		// (1) Set the indentation according to the depth
+		for( i=0; i<depth; i++ )
+		{
+			hdr += " ";
+		}
+		
+		// (2) Add on call stack indicator
+		hdr += "|-";
+		
+		return hdr;
+	}
 }
