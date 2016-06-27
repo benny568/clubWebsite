@@ -22,6 +22,7 @@ import { ClubHistoryComponent }    from "./components/clubHistory.component";
 import { MerchandiseComponent }    from "./components/merchandise.component";
 import { LoginComponent }          from "./components/login.component";
 import { PhotosComponent }		   from "./components/photos.component";
+import { FleadhComponent }		   from "./components/fleadh.component";
 import { PayNowComponent }		   from "./components/payNow.component";
 import { AdminHomeComponent }	   from "./components/adminHome.component";
 import { AdminOverviewComponent }  from "./components/adminOverview.component";
@@ -71,6 +72,7 @@ enableProdMode();
     { path: '/media:cat1:cat2:cat3', name: 'Media', component: PhotosComponent },
     { path: '/login', name: 'Login', component: LoginComponent },
     { path: '/admin', name: 'AdminHome', component: AdminHomeComponent },
+    { path: '/fleadh', name: 'Fleadh', component: FleadhComponent },
     { path: '/payNow', name: 'PayNow', component: PayNowComponent },
     { path: '/adminOverview', name: 'AdminOverview', component: AdminOverviewComponent },
     { path: '/memberRegister', name: 'MemberRegister', component: MemberRegisterComponent },

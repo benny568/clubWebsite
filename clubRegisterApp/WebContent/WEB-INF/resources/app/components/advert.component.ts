@@ -26,10 +26,10 @@ export class AdvertComponent {
      * Params in:	None
      * Return:      None
      **********************************************************/
-    payNow()
+    findOutMore()
     {
-    	this.lg$.log("payNow()");
-    	this._router.navigate( ['PayNow', {}] );
+    	this.lg$.log("findOutMore()");
+    	this._router.navigate( ['Fleadh', {}] );
     }
     
 }
