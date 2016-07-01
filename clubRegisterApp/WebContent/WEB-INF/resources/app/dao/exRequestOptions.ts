@@ -1,5 +1,5 @@
-import {Injectable, provide} from 'angular2/core';
-import {BaseRequestOptions, RequestOptions} from 'angular2/http';
+import {Injectable, provide} from '@angular/core';
+import {BaseRequestOptions, RequestOptions} from '@angular/http';
 
 @Injectable()
 export class ExRequestOptions extends BaseRequestOptions  {

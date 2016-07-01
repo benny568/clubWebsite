@@ -1,15 +1,12 @@
-import { Component }          from 'angular2/core';
-import { RouteConfig, 
-         ROUTER_DIRECTIVES, 
-         ROUTER_PROVIDERS }   from 'angular2/router';
+import { Component }          from '@angular/core';
+
 import { SessionDataService } from '../services/session-data.service';
 import { NewsComponent }      from "./news.component";
 
 
 @Component({
 	templateUrl: 'app/htmltemplates/adminHome.component.html',
-	directives: [ NewsComponent, ROUTER_DIRECTIVES ],
-	providers: [ ROUTER_PROVIDERS ]
+	directives: [ NewsComponent ]
 })
 
 export class AdminHomeComponent

@@ -1,8 +1,8 @@
 /**
  * Created by odalybr on 05/04/2016.
  */
-import {Component} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import {Component} from '@angular/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 import { Slide } from './slide.component';
 import { Carousel } from './carousel.component';
 import { SessionDataService } from '../services/session-data.service';

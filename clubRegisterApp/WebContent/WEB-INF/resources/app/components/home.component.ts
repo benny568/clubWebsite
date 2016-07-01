@@ -1,7 +1,7 @@
 /**
  * Created by odalybr on 06/04/2016.
  */
-import { Component }          from 'angular2/core';
+import { Component }          from '@angular/core';
 import { NewsComponent }      from './news.component';
 import { AdvertComponent }    from './advert.component';
 import { SponsorsComponent }  from './sponsors.component';

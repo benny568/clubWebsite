@@ -1,5 +1,5 @@
-import {Component, OnDestroy, Input} from 'angular2/core';
-import {NgFor} from 'angular2/common';
+import {Component, OnDestroy, Input} from '@angular/core';
+import {NgFor} from '@angular/common';
 import {Slide} from './slide.component';
 
 export enum Direction {UNKNOWN, NEXT, PREV}

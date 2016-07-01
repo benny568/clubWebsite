@@ -1,7 +1,7 @@
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { FORM_DIRECTIVES,  
 	     FormBuilder,  
-	     ControlGroup  } from 'angular2/common';
+	     ControlGroup  } from '@angular/common';
 
 @Component({
     templateUrl: 'app/htmltemplates/payNow.component.html'

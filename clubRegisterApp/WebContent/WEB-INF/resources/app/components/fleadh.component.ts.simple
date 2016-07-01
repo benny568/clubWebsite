@@ -1,8 +1,8 @@
-import { Component }     from 'angular2/core';
+import { Component }     from '@angular/core';
 import { FORM_DIRECTIVES,  
 	     FormBuilder,  
 	     ControlGroup,
-	     Validators }    from 'angular2/common';
+	     Validators }    from '@angular/common';
 import { LoggerService } from '../services/logger.service';
 
 @Component({

@@ -13,7 +13,7 @@
 <nav class="navbar navbar-inverse">
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li class="active"><a (click)="goHome()"><i class="fa fa-home"></i></a></li>           
+            <li class="active"><a [routerLink]="['']"><i class="fa fa-home"></i></a></li>           
             <li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-picture-o"></i> Gallery<span class="caret"></span></a>
 				<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -95,7 +95,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Teams<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li (click)="viewTeam(team.name)">{{team.name}}</li>
+                        <li><a [routerLink]="['/viewTeam']">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>
@@ -103,21 +103,21 @@
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> Fixtures &amp; Results<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li (click)="farView(team.name)">{{team.name}}</li>
+                        <li><a [routerLink]="['/farView']">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>
-            <li><a (click)="academyHome()"><i class="fa fa-child"></i> Academy</a></li>
-            <li><a (click)="merchandise()"><i class="fa fa-shopping-cart"></i> Merchandise</a></li>
+            <li><a [routerLink]="['/academyHome']"><i class="fa fa-child"></i> Academy</a></li>
+            <li><a [routerLink]="['merchandise']"><i class="fa fa-shopping-cart"></i> Merchandise</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         	<li class="dropdown" *ngIf="d$.dsAuthenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Admin<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                	<li><a (click)="adminHome()"><i class="fa fa-home"></i> Overview</a></li>
-                    <li><a (click)="adminOverview()"><i class="fa fa-sun-o"></i> Overview</a></li>
-					<li><a (click)="adminTutorials()"><i class="fa fa-book"></i> Tutorials</a></li>
-					<li><a (click)="memberRegister()"><i class="fa fa-child"></i> Members</a></li>
+                	<li><a [routerLink]="['/admin']"><i class="fa fa-home"></i> Overview</a></li>
+                    <li><a [routerLink]="['/adminOverview']"><i class="fa fa-sun-o"></i> Overview</a></li>
+					<li><a [routerLink]="['/adminTutorials']"><i class="fa fa-book"></i> Tutorials</a></li>
+					<li><a [routerLink]="['/memberRegister']"><i class="fa fa-child"></i> Members</a></li>
 					<li><a *ngIf="d$.hasPermission('VIEW_USERS', '*')" (onClick)="usersAdmin"><i class="fa fa-child"></i> Users</a></li>
 <!-- 					<li><a href="#ManageTeams"><i class="fa fa-users"></i> Teams</a></li> -->
 <!-- 					<li class="dropdown"> -->
@@ -144,20 +144,20 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-info-circle"></i> Information <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a (click)="findUs()"><i class="fa fa-road"></i> Find Us</a></li>
-                    <li><a (click)="messageUs()"><i class="fa fa-envelope"></i> Message Us</a></li>
-                    <li><a (click)="contactUs()"><i class="fa fa-phone"></i> Contact Us</a></li>
-                    <li><a (click)="downloads()"><i class="fa fa-arrow-circle-down"></i> Downloads</a></li>
-                    <li><a (click)="links()"><i class="fa fa-link"></i> Links</a></li>
-                    <li><a (click)="clubHistory()"><i class="fa fa-angle-double-left"></i> Our History</a></li>
+                    <li><a [routerLink]="['/findUs']"><i class="fa fa-road"></i> Find Us</a></li>
+                    <li><a [routerLink]="['/messageUs']"><i class="fa fa-envelope"></i> Message Us</a></li>
+                    <li><a [routerLink]="['/contactUs']"><i class="fa fa-phone"></i> Contact Us</a></li>
+                    <li><a [routerLink]="['/downloads']"><i class="fa fa-arrow-circle-down"></i> Downloads</a></li>
+                    <li><a [routerLink]="['/links']"><i class="fa fa-link"></i> Links</a></li>
+                    <li><a [routerLink]="['/clubHistory']"><i class="fa fa-angle-double-left"></i> Our History</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a (click)="login()"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
-                    <li><a (click)="login()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a [routerLink]="['/login']"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
+                    <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a [routerLink]="['/logout']"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </li>
         </ul>

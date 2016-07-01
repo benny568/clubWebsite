@@ -1,6 +1,6 @@
-import { Component }          from 'angular2/core';
-import { FORM_DIRECTIVES }    from 'angular2/common';
-import { Router }             from 'angular2/router';
+import { Component }          from '@angular/core';
+import { FORM_DIRECTIVES }    from '@angular/common';
+import { Router }             from '@angular/router';
 import { SessionDataService } from '../services/session-data.service';
 
 @Component({

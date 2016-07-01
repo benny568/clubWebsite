@@ -1,16 +1,19 @@
-import { bootstrap }         from 'angular2/platform/browser'
-import { ROUTER_PROVIDERS }  from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
-import {Injectable, provide} from 'angular2/core';
-import 'rxjs/add/operator/map';
-import { AppComponent }      from './app.component';
-import { SessionDataService } from './services/session-data.service';
-import { LoggerService }      from './services/logger.service';
+import { bootstrap }         from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS }    from '@angular/http';
+import {Injectable, provide} from '@angular/core';
 
+import 'rxjs/add/operator/map';
+
+import { AppComponent }      from './app.component';
+import { APP_ROUTER_PROVIDERS } from './app.routes';
+import { SessionDataService } from './services/session-data.service';
+//import { LoggerService }      from './services/logger.service';
+import { BookingService }      from './services/booking.service';
 
 bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
+    APP_ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    SessionDataService
+    SessionDataService,
+    BookingService
     
 ]);

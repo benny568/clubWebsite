@@ -1,6 +1,6 @@
-import { Component } 			from 'angular2/core';
-import { OnInit }	 			from 'angular2/core';
-import { RouteParams }			from 'angular2/router';
+import { Component } 			from '@angular/core';
+import { OnInit }	 			from '@angular/core';
+//import { RouteParams }          from '@angular/router-deprecated';
 import { Media } 				from '../dao/media';
 import { Slide } 	 			from './slide.component';
 import { Carousel }  			from './carousel.component';
@@ -30,9 +30,9 @@ export class PhotosComponent implements OnInit
     
 	ngOnInit()
 	{
-		let cat1 = this.routeParams.get('cat1'); // team
-		let cat2 = this.routeParams.get('cat2'); // year
-		let cat3 = this.routeParams.get('cat3'); // event
+		let cat1 = '';//this.routeParams.get('cat1'); // team
+		let cat2 = '';//this.routeParams.get('cat2'); // year
+		let cat3 = '';//this.routeParams.get('cat3'); // event
 		var url = '';
 		this.aAlbum = new Array<Media>();
 		
@@ -58,7 +58,7 @@ export class PhotosComponent implements OnInit
 
 	}
 	
-	constructor( private _dataService: SessionDataService, private routeParams: RouteParams ) { console.log(this.logHdr + "->" + "constructor()"); }
+	constructor( private _dataService: SessionDataService ) { console.log(this.logHdr + "->" + "constructor()"); }
 	
 	processResponse( data, path, album )
 	{

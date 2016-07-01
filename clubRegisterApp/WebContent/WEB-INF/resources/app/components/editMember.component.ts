@@ -1,5 +1,5 @@
-import { Component, ViewChild } from 'angular2/core';
-import { Router }               from 'angular2/router';
+import { Component, ViewChild } from '@angular/core';
+import { Router }               from '@angular/router';
 import { MODAL_DIRECTIVES }     from 'ng2-bs3-modal/ng2-bs3-modal';
 import { ModalComponent }       from 'ng2-bs3-modal/ng2-bs3-modal';
 import { SessionDataService }   from '../services/session-data.service';

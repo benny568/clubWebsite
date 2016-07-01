@@ -1,7 +1,7 @@
 /**
  * Created by odalybr on 09/04/2016.
  */
-import {Component, OnInit, OnDestroy, Input, HostBinding } from 'angular2/core';
+import {Component, OnInit, OnDestroy, Input, HostBinding } from '@angular/core';
 
 import {Carousel, Direction} from  './carousel.component';
 

@@ -1,7 +1,7 @@
 import { Component, 
          ViewChild,
-         OnInit     }         from 'angular2/core';
-import { Router }             from 'angular2/router';
+         OnInit     }         from '@angular/core';
+import { Router }             from '@angular/router';
 
 import { MODAL_DIRECTIVES }   from 'ng2-bs3-modal/ng2-bs3-modal';
 import { ModalComponent }     from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -79,12 +79,7 @@ export class MemberRegisterComponent implements OnInit
 	getTeams(){
 		this.lg$.log("-> getTeams()");
 		this.lg$.log("   | calling dataService.dsGetTeams()..")
-		this.d$.dsGetTeams()
-		.subscribe(
-            	data => this.d$.dsTeams = data,
-            	error => this.lg$.log(" ** Error getting teams from server."),
-            	() => this.lg$.log(" <=== Received teams from server. <===")
-            );
+		this.d$.dsGetTeams();
 
 	}
 	

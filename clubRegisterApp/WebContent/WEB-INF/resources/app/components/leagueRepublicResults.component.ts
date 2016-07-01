@@ -1,11 +1,12 @@
 /**
  * Created by odalybr on 08/04/2016.
  */
-import { Component }            from 'angular2/core';
+import { Component }            from '@angular/core';
+//import { RouteParams }          from '@angular/router-deprecated';
+
 import { SessionDataService }   from '../services/session-data.service';
 import { LoggerService }        from '../services/logger.service';
-import {RouteParams}            from "angular2/router";
-import {stringify}              from "angular2/src/upgrade/util";
+
 
 @Component({
     selector: 'lr-results',
@@ -18,7 +19,7 @@ export class LeagueRepublicResults{
     componentName:string = 'LeagueRepublicResults';
 	logdepth:number = 2;
 
-    constructor(private _dataService: SessionDataService, private rParams: RouteParams, private lg$: LoggerService ) 
+    constructor(private _dataService: SessionDataService, /*private rParams: RouteParams,*/ private lg$: LoggerService ) 
     { 
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
     }
@@ -28,15 +29,10 @@ export class LeagueRepublicResults{
 
         this.lg$.log("ngOnInit()");
 
-        teamName = this.rParams.get('team');
+        teamName = '';//this.rParams.get('team');
 
         // (1) Read in the list of teams
         this._dataService.dsGetTeams()
-        .subscribe(
-            	data => this._dataService.dsTeams = data,
-            	error => this.lg$.error(" ** Error getting teams from server."),
-            	() => this.lg$.log(" <=== Received teams from server. <===")
-            );
         
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(teamName);

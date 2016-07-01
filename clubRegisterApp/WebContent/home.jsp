@@ -13,6 +13,8 @@
   <head>
 <!--     <base href="http://www.avenueunited.ie/"> -->
     <base href="http://localhost:8080/clubRegisterApp/">
+	<!-- Set the base href -->
+<!--     <script>document.write('<base href="' + document.location + '/WEB-INF/resources/app" />');</script> -->
 
     <title>Avenue United Home Page</title>
 
@@ -22,25 +24,26 @@
 
     <!-- jQuery (required) -->
     <script src="resources/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="resources/node_modules/jquery-ui/jquery-ui.js"></script>
+    <script src="resources/node_modules/jquery-ui/datepicker.js"></script>
 <!--     <script src="resources/node_modules/jquery-easing/jquery.easing.1.3.js"></script> -->
 
+	<link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.css" />
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" />
 
 	<!-- Bootstrap -->
-   <link rel="stylesheet" type="text/css" href="resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <script type="text/javascript" src="resources/node_modules/tether/dist/js/tether.min.js"></script>
-    <script type="text/javascript" src="resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="resources/node_modules/tether/dist/js/tether.min.js"></script>
+	<script type="text/javascript" src="resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <script src="resources/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="resources/node_modules/systemjs/dist/system-polyfills.js"></script>
 
-    <script src="resources/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="resources/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="resources/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="resources/node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="resources/node_modules/angular2/bundles/router.dev.js"></script>
-    <script src="resources/node_modules/angular2/animate.js"></script>
-    <script src="resources/node_modules/ng2-bootstrap/ng2-bootstrap.js"></script>
-    <script src="resources/node_modules/angular2/bundles/http.dev.js"></script>
+	<!-- 1. Load libraries -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/typescript/lib/typescript.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+     <script src="node_modules/primeui/primeui-ng-all.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="resources/app/styles/default.css" />
 	<link rel="shortcut icon" type="image/ico" href="resources/app/images/favicon.ico" >
@@ -57,12 +60,27 @@
     	    }
     	  },
 		paths: {
-				'angular2/*' : 'node_modules/angular2/*',
-				'rxjs/*'     : 'node_modules/rxjs/*.js'
+				'@angular/*' : 'node_modules/@angular/*',
+				'rxjs/*'     : 'node_modules/rxjs/*.js',
+				'moment'     : 'node_modules/moment/moment.js'
 			},
     	map: {
-    	        'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
-    	    }
+    	        'ng2-bs3-modal':              'node_modules/ng2-bs3-modal',
+    	        moment:                       'node_modules/moment/moment.js',
+    	        'primeng':                    'node_modules/primeng'
+    	    },
+   	    packages: {
+   	        'app'                              : {main: 'boot.ts', defaultExtension: 'ts'},
+   	        'rxjs'                             : {main: 'index.js'},
+   	        '@angular/core'                    : {main: 'index.js'},
+   	        '@angular/common'                  : {main: 'index.js'},
+   	        '@angular/compiler'                : {main: 'index.js'},
+   	        '@angular/router'                  : {main: 'index.js'},
+   	     	'@angular/http'                    : {main: 'index.js'},
+   	        '@angular/platform-browser'        : {main: 'index.js'},
+   	        '@angular/platform-browser-dynamic': {main: 'index.js'},
+   	        'primeng'                          : {defaultExtension: 'js'}
+   	      }
     	});
       System.import('resources/app/boot')
             .then(null, console.error.bind(console));

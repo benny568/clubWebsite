@@ -1,58 +1,107 @@
-import { Component }     from 'angular2/core';
-import { FORM_DIRECTIVES,  
-	     FormBuilder,  
-	     ControlGroup,
-	     Validators }    from 'angular2/common';
-import { LoggerService } from '../services/logger.service';
-import { DatepickerComponent } from './datepicker.component';
+import { Component }      from '@angular/core';
+import { Router }         from '@angular/router';
+
+import {TabView} from 'primeng/primeng';
+import {TabPanel} from 'primeng/primeng';
+
+import { LoggerService }  from '../services/logger.service';
+import { BookingService } from '../services/booking.service';
+import { ArrivalDatepickerComponent } from './arrival-datepicker.component';
+import { DepartureDatepickerComponent } from './departure-datepicker.component';
+import { NumberOfPeopleComponent } from './number-of-people.component';
 
 @Component({
-	templateUrl: 'app/htmltemplates/fleadh.component.html',
+	template: `
+			<div class="panel">
+				<div class="panel-heading avenue-heading">
+					Step 1: Choose your preferred dates
+					<button type="button" class="btn btn-warning btn-xs"(click)="submit()" style="float:right">Next</button>
+				</div>
+				<div class="panel-body avenue-body">
+					<p-tabView orientation="left" class="parent">
+					    <p-tabPanel header="Step 1: Dates" [selected]="true">
+					    	<table>
+					    		<tr>
+					    			<td>Arrival:</td>
+					    			<td class="datespace"></td>
+					    			<td>Departure:</td>
+					    			<td class="datespace"></td>
+					    			<td>Number of People:</td>
+					    		</tr>
+					    		<tr>
+					    			<td><arrival-datepicker></arrival-datepicker></td>
+					    			<td class="datespace"></td>
+					    			<td><departure-datepicker></departure-datepicker></td>
+					    			<td class="datespace"></td>
+					    			<td align="center"><number-of-people></number-of-people></td>
+					    		</tr>
+					    	</table>
+					    </p-tabPanel>
+					    <p-tabPanel header="Step 2: Parking" [disabled]="true">
+					    	Parking
+					    </p-tabPanel>
+					    <p-tabPanel header="Step 3: Contact Details" [disabled]="true">
+					        Contact Details  
+					    </p-tabPanel>
+					    <p-tabPanel header="Step 4: Payment" [disabled]="true">
+					        Payment    
+					    </p-tabPanel>
+					</p-tabView>	
+				</div>
+			</div>
+			`,			
+	styles: [`
+            img {
+				    float: left;
+				    margin: 0 20px 20px 0;
+				}
+				
+			p {
+				text-align: justify;
+				text-indent: 2em;
+				}
+				
+			.center-me {
+			  margin: 0 auto;
+			}
+			.parent {
+			  position: relative;
+			}
+			.child {
+			  position: absolute;
+			  top: 50%;
+			  transform: translateY(-10%);
+			}
+			.datespace{
+	            min-width:40px;
+	        }
+            `],
+	directives: [ TabView, 
+	              TabPanel,
+	              ArrivalDatepickerComponent,
+	              DepartureDatepickerComponent,
+	              NumberOfPeopleComponent ]
 	
-	directives: [ FORM_DIRECTIVES, DatepickerComponent ] 
-/*	  template: `  
-	  <form [ngFormModel]="myForm" (ngSubmit)="onSubmit(myForm.value)">
-		  <label for="arrival">Arrival: </label>
-		  <input type="date"
-                 id="arrival"
-                 placeholder="17/08/2016"
-                 [ngFormControl]="myForm.controls['Arrival']" >
-         <input type="date"
-                 id="departure"
-                 placeholder="20/08/2016"
-                 [ngFormControl]="myForm.controls['Departure']" >
-         <input type="text"
-                id="number"
-                placeholder="2"
-                [ngFormControl]="myForm.controls['NumberOfPeople']" >
-         <button type="submit">Submit</button> 
-      </form>
-	  `*/
 })
 
-export class FleadhComponent {
-	componentName:string = 'FleahComponent';
-	logdepth:number = 3;
-	myForm: ControlGroup;
+export class FleadhComponent{
+	componentName:string = 'FleadhComponent';
+	logdepth:number = 4;
 
-	constructor( private lg$: LoggerService, fb: FormBuilder ) {
-		this.myForm = fb.group({  
-		      'Arrival': ['17/08/16', Validators.required],
-		      'Departure' : ['21/08/16', Validators.required],
-		      'NumberOfPeople' : [2, Validators.required]
-		    });
-		
-	}
+	constructor( private lg$: LoggerService, private bk$: BookingService, private router: Router  ) {}
 	
 	ngOnInit() {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log("ngOnInit()");
-    }
-	
-	onSubmit(form)
-	{
-		this.lg$.log("Arrival: " + form['Arrival']);
-		this.lg$.log("Departure: " + form['Departure']);
-		this.lg$.log("Number of people: " + form['NumberOfPeople']);
 	}
+
+	submit()
+	{
+		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
+		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
+		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
+		this.lg$.log("---- Car parking: " + this.bk$.numberOfPeople4Parking);
+		this.router.navigate(['/booking']);
+	}
+	
 }

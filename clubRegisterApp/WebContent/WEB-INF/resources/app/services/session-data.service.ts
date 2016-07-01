@@ -1,9 +1,9 @@
-import { Component }      from 'angular2/core';
-import { Injectable }     from 'angular2/core';
-import { Inject }         from 'angular2/core';
-import { Http }           from 'angular2/http';
-import { Headers }        from 'angular2/http';
-import { RequestOptions } from 'angular2/http';
+import { Component }      from '@angular/core';
+import { Injectable }     from '@angular/core';
+import { Inject }         from '@angular/core';
+import { Http }           from '@angular/http';
+import { Headers }        from '@angular/http';
+import { RequestOptions } from '@angular/http';
 import { LoggerService }  from '../services/logger.service';
 import { ToolBox }        from '../utilities/toolbox';
 import { User }           from '../dao/site-user';
@@ -484,10 +484,27 @@ export class SessionDataService {
         var url = this.getHome();
         
         return this._http.get( url + '/teams' )
-            			.map(response => response.json());
+			.map(response => response.json())
+			.subscribe( data => this.dsSetTeams(data),
+						err  => console.error("DataService: ERROR reading teams from server!"),
+						()   => console.log(" <== Teams received from server <==")
+					);
      }
     
 
+    /**********************************************************
+     * Name:		dsSetTeams()
+     * Description:	Set the current member to the one passed in
+     * Scope:		Externally accessible
+     * Params in:	member: the member in question
+     * Return:		
+     **********************************************************/
+    dsSetTeams( data )
+     {
+         console.log("-->" + "dsSetTeams()");
+         this.dsTeams = data;
+     }
+     
     /**********************************************************
      * Name:		loadCurrentTeamMembersByName()
      * Description:	Load the current team's details and members

@@ -1,7 +1,7 @@
 /**
  * Created by odalybr on 07/04/2016.
  */
-import { Component }            from 'angular2/core';
+import { Component }            from '@angular/core';
 import { SessionDataService }   from '../services/session-data.service';
 
 @Component({
