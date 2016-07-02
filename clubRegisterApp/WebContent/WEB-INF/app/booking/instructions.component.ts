@@ -1,0 +1,48 @@
+import { Component }      from '@angular/core';
+
+import {Dialog} from 'primeng/primeng';
+import {Header} from 'primeng/primeng';
+import {Footer} from 'primeng/primeng';
+import {Button} from 'primeng/primeng'
+
+@Component({
+	selector: "instructions",
+	template: `
+				<div class="ContentSideSections Implementation">
+				    <p-dialog 	header="Booking Instructions" 
+								[(visible)]="display" 
+								modal="modal" 
+								showEffect="fade"
+								responsive="true"
+								minWidth="150"
+								width="500" >
+				        <p>There are four steps in the booking process:
+				        	<br />1. Pick the dates you prefer and the number of people staying
+				        	<br />2. Indicate if you require parking and the number of parking spaces
+				        	<br />3. Provide your contact details
+				        	<br />4. Pay the deposit via PayPal</p>
+				        <footer>
+				            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				                <button type="button" pButton icon="fa-close" (click)="display=false" label="Close"></button>
+				            </div>
+				        </footer>
+				    </p-dialog>
+				    
+				    <button type="text" (click)="showDialog()" pButton icon="fa-external-link-square" label="Click for Instructions"></button>
+				    
+				    <br /><br />
+				</div>
+				`,
+	directives: [ Dialog, Header, Footer, Button ]
+})
+
+export class InstructionsComponent {
+	
+
+    display: boolean = false;
+
+    showDialog() {
+        this.display = true;
+    }
+
+}

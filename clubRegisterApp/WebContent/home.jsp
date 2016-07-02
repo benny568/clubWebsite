@@ -3,18 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="java.util.List" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="com.google.gson.Gson" %>
-<%@page import="com.google.gson.GsonBuilder" %>
-<%@page import="org.avenue.service.domain.Media" %>
-<%@page import="org.avenue.dao.TaskManagerService" %>
 <html>
   <head>
 <!--     <base href="http://www.avenueunited.ie/"> -->
     <base href="http://localhost:8080/clubRegisterApp/">
 	<!-- Set the base href -->
-<!--     <script>document.write('<base href="' + document.location + '/WEB-INF/resources/app" />');</script> -->
 
     <title>Avenue United Home Page</title>
 
@@ -29,7 +22,7 @@
 <!--     <script src="resources/node_modules/jquery-easing/jquery.easing.1.3.js"></script> -->
 
 	<link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.css" />
-    <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" />
+<!--     <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" /> -->
 
 	<!-- Bootstrap -->
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">

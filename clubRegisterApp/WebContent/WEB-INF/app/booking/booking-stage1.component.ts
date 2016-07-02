@@ -79,6 +79,12 @@ export class BookingStage1Component{
 
 	submit()
 	{
+		if( this.bk$.parking > 0 )
+		{
+			this.lg$.log("Updating the deposit amount, current: " + this.bk$.deposit + ", parking: " + this.bk$.parking);
+			this.bk$.deposit += this.bk$.parking * 10;
+		}
+	
 		this.router.navigate(['/booking3']);
 	}
 	

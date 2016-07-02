@@ -59,11 +59,14 @@ import { BookingService } from '../services/booking.service';
 					        		</tr>
 					        		<tr>
 					        			<td>Parking:&nbsp;</td>
-					        			<td>{{bk$.numberOfPeople4Parking}}<td>
+					        			<td>{{bk$.parking}} cars<td>
 					        		</tr>
 					        	</table>
 					       	</div>
 					       	<br /><br />
+					       	<div style="float:left;">
+					       		Cost of deposit: €{{bk$.deposit}}
+					       	</div>
 					       	<div style="float:right;">
 					       		<!-- <button type="button" class="btn btn-warning btn-xs"(click)="submit()" style="float:right">PayNow</button> -->
 					       		
@@ -124,7 +127,7 @@ export class BookingStage4Component{
 		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
 		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
 		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
-		this.lg$.log("---- Car parking: " + this.bk$.numberOfPeople4Parking);
+		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		//this.router.navigate(['/booking3']);
 	}
 	

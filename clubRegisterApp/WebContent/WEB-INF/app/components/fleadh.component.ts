@@ -9,6 +9,7 @@ import { BookingService } from '../services/booking.service';
 import { ArrivalDatepickerComponent } from './arrival-datepicker.component';
 import { DepartureDatepickerComponent } from './departure-datepicker.component';
 import { NumberOfPeopleComponent } from './number-of-people.component';
+import { InstructionsComponent } from '../booking/instructions.component';
 
 @Component({
 	template: `
@@ -20,6 +21,7 @@ import { NumberOfPeopleComponent } from './number-of-people.component';
 				<div class="panel-body avenue-body">
 					<p-tabView orientation="left" class="parent">
 					    <p-tabPanel header="Step 1: Dates" [selected]="true">
+					    	<instructions></instructions>
 					    	<table>
 					    		<tr>
 					    			<td>Arrival:</td>
@@ -80,7 +82,8 @@ import { NumberOfPeopleComponent } from './number-of-people.component';
 	              TabPanel,
 	              ArrivalDatepickerComponent,
 	              DepartureDatepickerComponent,
-	              NumberOfPeopleComponent ]
+	              NumberOfPeopleComponent,
+	              InstructionsComponent ]
 	
 })
 
@@ -97,10 +100,14 @@ export class FleadhComponent{
 
 	submit()
 	{
+		// If the user has pressed next then they need to pay camping deposit
+		this.bk$.deposit = 30;
+		
+		// Log the details
 		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
 		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
 		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
-		this.lg$.log("---- Car parking: " + this.bk$.numberOfPeople4Parking);
+		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		this.router.navigate(['/booking']);
 	}
 	

@@ -154,7 +154,7 @@ export class BookingStage3Component{
 		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
 		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
 		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
-		this.lg$.log("---- Car parking: " + this.bk$.numberOfPeople4Parking);
+		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		this.lg$.log("---- Firstname: " + this.bk$.firstname);
 		this.lg$.log("---- Surname: " + this.bk$.surname);
 		this.lg$.log("---- Email: " + this.bk$.email);

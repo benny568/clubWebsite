@@ -12,7 +12,7 @@ import { BookingService }  from '../services/booking.service';
 	template: `
 
 			<p-spinner size="2" 
-			           [(ngModel)]="bk$.numberOfPeople4Parking" 
+			           [(ngModel)]="bk$.parking" 
 			           [min]="1" 
 			           [max]="16" >
 			</p-spinner>
