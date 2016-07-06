@@ -1,14 +1,13 @@
-import { bootstrap }         from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS }    from '@angular/http';
-import {Injectable, provide} from '@angular/core';
+import { bootstrap }            from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS }       from '@angular/http';
+import { Injectable, provide }  from '@angular/core';
 
 import 'rxjs/add/operator/map';
 
-import { AppComponent }      from './app.component';
+import { AppComponent }         from './app.component';
 import { APP_ROUTER_PROVIDERS } from './app.routes';
-import { SessionDataService } from './services/session-data.service';
-//import { LoggerService }      from './services/logger.service';
-import { BookingService }      from './services/booking.service';
+import { SessionDataService }   from './services/session-data.service';
+import { BookingService }       from './services/booking.service';
 
 bootstrap(AppComponent, [
     APP_ROUTER_PROVIDERS,
@@ -16,4 +15,4 @@ bootstrap(AppComponent, [
     SessionDataService,
     BookingService
     
-]);
+]).catch(err => console.error(err));

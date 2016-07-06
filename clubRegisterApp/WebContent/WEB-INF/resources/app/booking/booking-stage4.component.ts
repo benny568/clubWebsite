@@ -54,28 +54,38 @@ import { BookingService } from '../services/booking.service';
 					        			<td>{{bk$.departureDate}}<td>
 					        		</tr>
 					        		<tr>
+					        			<td>Nights:&nbsp;</td>
+					        			<td>{{bk$.numberOfNights}}<td>
+					        		</tr>
+					        		<tr>
 					        			<td>People:&nbsp;</td>
 					        			<td>{{bk$.numberOfPeople}}<td>
 					        		</tr>
 					        		<tr>
 					        			<td>Parking:&nbsp;</td>
-					        			<td>{{bk$.parking}} cars<td>
+					        			<td>{{bk$.parking}} car<span *ngIf="(bk$.parking>1)">s</span><td>
 					        		</tr>
 					        	</table>
 					       	</div>
 					       	<br /><br />
 					       	<div style="float:left;">
-					       		Cost of deposit: €{{bk$.deposit}}
+					       		<button type="button" class="btn btn-warning"(click)="back()">Back</button>
+					       	</div>
+					       	<div style="float:left;min-width:10px;overflow:hidden;">&nbsp;&nbsp;</div>
+					       	<div style="float:left;">
+					       		Total cost: €{{bk$.totalCharge}} <br />
+					       		Cost of deposit (50%): €{{bk$.deposit}}
 					       	</div>
 					       	<div style="float:right;">
 					       		<!-- <button type="button" class="btn btn-warning btn-xs"(click)="submit()" style="float:right">PayNow</button> -->
 					       		
 					       		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 									<input type="hidden" name="cmd" value="_s-xclick">
-									<input type="hidden" name="hosted_button_id" value="KVVGZRYS32PVQ">
+									<input type="hidden" name="hosted_button_id" value="DL6F88H4B6V64">
 									<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 									<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 								</form>
+
 
 					       		
 					       	</div>
@@ -120,6 +130,10 @@ export class BookingStage4Component{
 	ngOnInit() {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log("ngOnInit()");
+        
+        // Total up the charge       
+        this.calculateTotalCharge();
+        
 	}
 
 	submit()
@@ -129,6 +143,37 @@ export class BookingStage4Component{
 		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
 		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		//this.router.navigate(['/booking3']);
+	}
+	
+	calculateTotalCharge()
+	{
+		// Total up the charge
+        // (€35 * number of nights) +
+        // (€5 for each additional person over 2) +
+        // (
+		let from:number = +(this.bk$.arrivalDate.slice(0,2));
+		let to:number = +(this.bk$.departureDate.slice(0,2));
+		this.bk$.numberOfNights = (to - from);
+		let extraPeople:number = this.bk$.numberOfPeople - 2;
+		let basic = 35 * this.bk$.numberOfNights;
+		let extraPeopleFee:number = 0;
+		let extraCarFee:number = 0;
+		
+		if( extraPeople > 0 )
+			extraPeopleFee = extraPeople * 5 * this.bk$.numberOfNights; // €5 extra per night per extra person
+		if( this.bk$.parking > 1 )
+			extraCarFee = (this.bk$.parking - 1) * 5 * this.bk$.numberOfNights; // €5 extra per night per extra car
+		
+		this.bk$.totalCharge = basic + extraPeopleFee + extraCarFee;
+		this.bk$.deposit = this.bk$.totalCharge/2;
+		
+		this.lg$.log("---- Total Charge: " + this.bk$.totalCharge);
+	}
+	
+	back()
+	{
+		this.lg$.log("-> back()");
+		this.router.navigate(['/booking3']);
 	}
 	
 }

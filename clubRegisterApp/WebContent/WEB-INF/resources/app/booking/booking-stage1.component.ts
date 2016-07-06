@@ -1,8 +1,9 @@
 import { Component }      from '@angular/core';
 import { Router }         from '@angular/router';
 
-import {TabView} from 'primeng/primeng';
-import {TabPanel} from 'primeng/primeng';
+import { TabView }        from 'primeng/primeng';
+import { TabPanel }       from 'primeng/primeng';
+import { Checkbox }       from 'primeng/primeng';
 
 import { LoggerService }  from '../services/logger.service';
 import { BookingService } from '../services/booking.service';
@@ -21,13 +22,40 @@ import { NumberOfPeople4ParkingComponent } from './number-of-people-4parking.com
 					       Booking Step 1
 					    </p-tabPanel>
 					    <p-tabPanel header="Step 2: Parking" [selected]="true">
-					        <img src="resources/images/fleadh/parking.png" width="50%"/>
-					        <p>10€ reservation deposit</p>
-					        <div class="center-me">
-					        	<i class="fa fa-car" aria-hidden="true"></i>
-					        	&nbsp;&nbsp;
-					        	<number-of-people-4parking></number-of-people-4parking>
-					        </div>
+					    
+					    	<div class="ui-grid ui-grid-responsive">
+
+							    <div class="ui-grid-row">
+							        <div class="ui-grid-col-12">
+										<img src="resources/images/fleadh/parking.png" width="100%"/>
+							        </div>
+							        <div class="ui-grid-col-12">
+							        	<br /><br />
+							        	<div class="ui-grid-row">
+							        		<div class="ui-grid-col-1"><p-checkbox [(ngModel)]="parkingRequired"></p-checkbox></div>
+							        		<div class="ui-grid-col-5"><label class="ui-widget">Parking Required</label></div>
+										</div>
+							        	<br />
+							        	<div class="ui-grid-row" *ngIf="parkingRequired">Please enter the number of parking spaces required:</div>
+							        	<br />
+							        	<div class="ui-grid-row" *ngIf="parkingRequired">
+											<i class="fa fa-car" aria-hidden="true"></i>
+								        	&nbsp;&nbsp;
+								        	<number-of-people-4parking></number-of-people-4parking>
+										</div>
+							        </div>
+							    </div>
+							    <div class="ui-grid-row" style="padding-top:50px;">
+							    	<div class="ui-grid-col-12">
+							    		<button type="button" class="btn btn-warning"(click)="back()">Back</button>
+							    	</div>
+							    	<div class="ui-grid-col-12"></div>
+							    	<div class="ui-grid-col-7">
+							    		<button type="button" class="btn btn-warning"(click)="submit()">Next</button>
+							    	</div>
+							    </div>
+							</div>
+					    
 					    </p-tabPanel>
 					    <p-tabPanel header="Step 3: Contact Details" [disabled]="true">
 					        Content 3    
@@ -62,13 +90,14 @@ import { NumberOfPeople4ParkingComponent } from './number-of-people-4parking.com
 			  transform: translateY(-10%);
 			}
             `],
-	directives: [ TabView, TabPanel, NumberOfPeople4ParkingComponent ]
+	directives: [ TabView, TabPanel, Checkbox, NumberOfPeople4ParkingComponent ]
 	
 })
 
 export class BookingStage1Component{
 	componentName:string = 'BookingStage1Component';
 	logdepth:number = 4;
+	parkingRequired:boolean = false;
 
 	constructor( private lg$: LoggerService, private bk$: BookingService, private router: Router  ) {}
 	
@@ -79,6 +108,7 @@ export class BookingStage1Component{
 
 	submit()
 	{
+		this.lg$.log("---- parkingRequired: " + this.parkingRequired);
 		if( this.bk$.parking > 0 )
 		{
 			this.lg$.log("Updating the deposit amount, current: " + this.bk$.deposit + ", parking: " + this.bk$.parking);
@@ -86,6 +116,12 @@ export class BookingStage1Component{
 		}
 	
 		this.router.navigate(['/booking3']);
+	}
+	
+	back()
+	{
+		this.lg$.log("-> back()");
+		this.router.navigate(['/fleadh']);
 	}
 	
 }

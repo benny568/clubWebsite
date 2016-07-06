@@ -13,8 +13,8 @@ import { BookingService }  from '../services/booking.service';
 
 			<p-spinner size="2" 
 			           [(ngModel)]="bk$.parking" 
-			           [min]="1" 
-			           [max]="16" >
+			           [min]="0" 
+			           [max]="2" >
 			</p-spinner>
 
 			`,

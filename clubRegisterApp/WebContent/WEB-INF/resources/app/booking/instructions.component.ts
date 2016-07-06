@@ -16,11 +16,23 @@ import {Button} from 'primeng/primeng'
 								responsive="true"
 								minWidth="150"
 								width="500" >
+						<p>
+							Price per night: €35 <br />
+							Includes: <br />
+							1 x camping area for up to 2 people <br />
+							1 x parking space <br />
+						</p>
+						<p>
+							NOTE: <br />
+							- Minimum stay is 3 nights <br />
+							- €5 extra per person above 2 and up to 8 <br />
+							- Extra parking space €5 per day
+						</p>
 				        <p>There are four steps in the booking process:
 				        	<br />1. Pick the dates you prefer and the number of people staying
 				        	<br />2. Indicate if you require parking and the number of parking spaces
 				        	<br />3. Provide your contact details
-				        	<br />4. Pay the deposit via PayPal</p>
+				        	<br />4. Pay the deposit (50% of total) via PayPal, <strong>Balance payable ON ARRIVAL.</strong></p>
 				        <footer>
 				            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 				                <button type="button" pButton icon="fa-close" (click)="display=false" label="Close"></button>
@@ -28,7 +40,7 @@ import {Button} from 'primeng/primeng'
 				        </footer>
 				    </p-dialog>
 				    
-				    <button type="text" (click)="showDialog()" pButton icon="fa-external-link-square" label="Click for Instructions"></button>
+				    <button type="text" (click)="showDialog()" pButton icon="fa-external-link-square" label="Booking Instructions"></button>
 				    
 				    <br /><br />
 				</div>

@@ -1,8 +1,5 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 
-import { SessionDataService }      from './services/session-data.service';
-import { LoggerService }           from './services/logger.service';
-
 import { ViewTeam }                from './components/viewTeam.component';
 import { HomeComponent }           from "./components/home.component";
 import { FarViewComponent }        from "./components/far.component";

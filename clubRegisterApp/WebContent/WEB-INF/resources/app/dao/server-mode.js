@@ -8,7 +8,7 @@ System.register([], function(exports_1, context_1) {
             ServerMode = (function () {
                 function ServerMode() {
                     this.modes = { LOCAL: 0, REMOTE: 1 };
-                    this.currentMode = this.modes.LOCAL;
+                    this.currentMode = this.modes.REMOTE;
                 }
                 ServerMode.prototype.getServerMode = function () {
                     return this.currentMode;

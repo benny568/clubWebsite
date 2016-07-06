@@ -35,7 +35,7 @@ System.register(['@angular/core', '@angular/common', 'primeng/primeng', '../serv
                 ArrivalDatepickerComponent = __decorate([
                     core_1.Component({
                         selector: 'arrival-datepicker',
-                        template: "\n\t<ui-widget>\n\t\t<ui-widget-content>\n\t\t\t<p-calendar [(ngModel)]=\"bk$.arrivalDate\" \n\t\t\t\t\t\tdateFormat=\"dd.mm.yy\" s\n\t\t\t\t\t\thowAnim=\"slideDown\"\n\t\t\t\t\t\tplaceholder=\"Please pick arrival date\"\n\t\t\t\t\t\tshowIcon=\"true\"\n\t\t\t\t\t\tminDate=\"26.08.16\"\n\t\t\t\t\t\tmaxDate=\"30.08.16\"\n\t\t\t\t\t\t>\n\t\t\t</p-calendar>\n\t\t</ui-widget-content>\n\t</ui-widget>\t\n\t\t\t",
+                        template: "\n\t<ui-widget>\n\t\t<ui-widget-content>\n\t\t\t<p-calendar [(ngModel)]=\"bk$.arrivalDate\" \n\t\t\t\t\t\tdateFormat=\"dd/mm/yy\"\n\t\t\t\t\t\thowAnim=\"slideDown\"\n\t\t\t\t\t\tplaceholder=\"Please pick arrival date\"\n\t\t\t\t\t\tshowIcon=\"true\"\n\t\t\t\t\t\tdefaultDate=\"17/08/16\"\n\t\t\t\t\t\tminDate=\"17/08/2016\"\n\t\t\t\t\t\tmaxDate=\"22/08/2016\"\n\t\t\t\t\t\t[readonlyInput]=\"true\"\n\t\t\t\t\t\t>\n\t\t\t</p-calendar>\n\t\t</ui-widget-content>\n\t</ui-widget>\t\n\t\t\t",
                         directives: [common_1.FORM_DIRECTIVES, primeng_1.Calendar]
                     }), 
                     __metadata('design:paramtypes', [booking_service_1.BookingService])

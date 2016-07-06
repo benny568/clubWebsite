@@ -5,8 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-<!--     <base href="http://www.avenueunited.ie/"> -->
-    <base href="http://localhost:8080/clubRegisterApp/">
+    <base href="http://www.avenueunited.ie/">
+<!--     <base href="http://localhost:8080/clubRegisterApp/"> -->
 	<!-- Set the base href -->
 
     <title>Avenue United Home Page</title>
@@ -22,7 +22,7 @@
 <!--     <script src="resources/node_modules/jquery-easing/jquery.easing.1.3.js"></script> -->
 
 	<link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.css" />
-<!--     <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" />
 
 	<!-- Bootstrap -->
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
      <script src="node_modules/primeui/primeui-ng-all.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="resources/app/styles/default.css" />
-	<link rel="shortcut icon" type="image/ico" href="resources/app/images/favicon.ico" >
+	<link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!-- 2. Configure SystemJS -->

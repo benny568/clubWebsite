@@ -40,7 +40,7 @@ System.register(['@angular/core', '@angular/common', 'primeng/primeng', '../serv
                 NumberOfPeople4ParkingComponent = __decorate([
                     core_1.Component({
                         selector: 'number-of-people-4parking',
-                        template: "\n\n\t\t\t<p-spinner size=\"2\" \n\t\t\t           [(ngModel)]=\"bk$.parking\" \n\t\t\t           [min]=\"1\" \n\t\t\t           [max]=\"16\" >\n\t\t\t</p-spinner>\n\n\t\t\t",
+                        template: "\n\n\t\t\t<p-spinner size=\"2\" \n\t\t\t           [(ngModel)]=\"bk$.parking\" \n\t\t\t           [min]=\"0\" \n\t\t\t           [max]=\"2\" >\n\t\t\t</p-spinner>\n\n\t\t\t",
                         directives: [common_1.FORM_DIRECTIVES, primeng_1.Spinner]
                     }), 
                     __metadata('design:paramtypes', [logger_service_1.LoggerService, booking_service_1.BookingService])

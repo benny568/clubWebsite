@@ -29,7 +29,7 @@ System.register(['@angular/platform-browser-dynamic', '@angular/http', 'rxjs/add
                 http_1.HTTP_PROVIDERS,
                 session_data_service_1.SessionDataService,
                 booking_service_1.BookingService
-            ]);
+            ]).catch(function (err) { return console.error(err); });
         }
     }
 });

@@ -11,12 +11,13 @@ import { BookingService }  from '../services/booking.service';
 	<ui-widget>
 		<ui-widget-content>
 			<p-calendar [(ngModel)]="bk$.departureDate" 
-						dateFormat="dd.mm.yy" s
+						dateFormat="dd/mm/yy"
 						howAnim="slideDown"
 						placeholder="Please pick departure date"
 						showIcon="true"
-						minDate="26.08.16"
-						maxDate="30.08.16" >
+						[readonlyInput]="true"
+						minDate="17/08/2016"
+						maxDate="22/08/2016" >
 			</p-calendar>
 		</ui-widget-content>
 	</ui-widget>
