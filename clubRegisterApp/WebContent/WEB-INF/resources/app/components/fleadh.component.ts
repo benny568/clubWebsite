@@ -49,10 +49,20 @@ import { TandCComponent } from '../booking/tandc.component';
 							        </div>
 							    </div>
 							    <div class="ui-grid-row" style="padding-top:50px;">
-							    	<div class="ui-grid-col-12">
+							    	<div class="ui-grid-col-4">
 							    		<button type="button" class="btn btn-warning"(click)="back()">Back</button>
 							    	</div>
-							    	<div class="ui-grid-col-12"></div>
+							    	<div class="ui-grid-col-14">
+							    		Our campsite on the Tulla Road is the ONLY Official Fleadh 2016 Campsite in Ennis.<br />
+
+										On site we have the Grove Bar & Restaurant, Off Licence, Supermarket, Takeaway & more!<br />
+										
+										We are located just off EXIT 13 on the M18 Motorway for really easy access and exit.<br />
+										
+										We will be serviced by the official Fleadh Shuttle Bus service to and from the town centre.<br />
+										
+										We are the best and the cheapest option for Fleadh Camping, with plenty room for everyone!
+							    	</div>
 							    	<div class="ui-grid-col-7">
 							    		<button type="button" class="btn btn-warning"(click)="submit()">Next</button>
 							    	</div>

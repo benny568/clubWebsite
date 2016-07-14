@@ -83,7 +83,8 @@ System.register(['@angular/core', '@angular/common', '../../node_modules/moment/
                 DatepickerComponent = __decorate([
                     core_1.Component({
                         selector: 'datepicker',
-                        templateUrl: 'app/htmltemplates/datepicker.component.html',
+                        //templateUrl: 'app/htmltemplates/datepicker.component.html',
+                        template: "\n\t\t\t\t<style>\n\t\t\t\t  .full button span {\n\t\t\t\t    background-color: limegreen;\n\t\t\t\t    border-radius: 32px;\n\t\t\t\t    color: black;\n\t\t\t\t  }\n\t\t\t\t  .partially button span {\n\t\t\t\t    background-color: orange;\n\t\t\t\t    border-radius: 32px;\n\t\t\t\t    color: black;\n\t\t\t\t  }\n\t\t\t\t</style>\n\t\t\t\t\n\t\t\t\t<div>\n\t\t\t\t  <pre class=\"card card-block card-header\">Selected date is: <em *ngIf=\"dt\">{{ getDate() | date:'fullDate'}}</em></pre>\n\t\t\t\t\n\t\t\t\t  <div style=\"display:inline-block; min-height:290px;\">\n\t\t\t\t    <datepicker [(ngModel)]=\"dt\" [minDate]=\"minDate\" [showWeeks]=\"true\"></datepicker>\n\t\t\t\t  </div>\n\t\t\t\t\n\t\t\t\t  <hr />\n\t\t\t\t  <button type=\"button\" class=\"btn btn-sm btn-info\" (click)=\"today()\">Today</button>\n\t\t\t\t  <button type=\"button\" class=\"btn btn-sm btn-default btn-secondary\" (click)=\"d20090824();\">2009-08-24</button>\n\t\t\t\t  <button type=\"button\" class=\"btn btn-sm btn-danger\" (click)=\"clear()\">Clear</button>\n\t\t\t\t  <button type=\"button\" class=\"btn btn-sm btn-default btn-secondary\" (click)=\"toggleMin()\" tooltip=\"After today restriction\">Min date</button>\n\t\t\t\t</div>\n  ",
                         directives: [ng2_bootstrap_1.DATEPICKER_DIRECTIVES, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [])

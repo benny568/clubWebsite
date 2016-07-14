@@ -14,7 +14,6 @@ import { NumberOfPeople4ParkingComponent } from './number-of-people-4parking.com
 			<div class="panel">
 				<div class="panel-heading avenue-heading">
 					Step 2: Parking
-					<button type="button" class="btn btn-warning btn-xs"(click)="submit()" style="float:right">Next</button>
 				</div>
 				<div class="panel-body avenue-body">
 					<p-tabView orientation="left" class="parent">

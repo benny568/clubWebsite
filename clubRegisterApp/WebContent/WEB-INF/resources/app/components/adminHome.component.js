@@ -55,7 +55,8 @@ System.register(['@angular/core', '../services/session-data.service', "./news.co
                 };
                 AdminHomeComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/htmltemplates/adminHome.component.html',
+                        //templateUrl: 'app/htmltemplates/adminHome.component.html',
+                        template: "\n\t\t<div class=\"container\">\n\t\t\t<div class=\"panel\" style=\"marign-right:50px;\">\n\t\t\t\t<div class=\"panel-heading avenue-heading\" style=\"min-height:35px;\">\n\t\t\t\t\tAvenue United Administration Home Page\n\t\t\t\t</div>\n\t\t\t\t<div class=\"panel-body avenue-body\" style=\"height:100%;\">\n\t\t\t\t\tWelcome <strong>{{_dataService.dsCurrentUser.username}}</strong> to the administration portal!<br><br>\n\t\t\t\t\tFrom here you can add, edit, remove, various details of the club records such\n\t\t\t\t\t as member information, upload news stories and photos and manage your team. \n\t\t\t\t\t Take a look at the tutorials section for more information on how to perform certain tasks.\n\t\t\t\t</div>\n\t\t\t</div> <!-- end panel -->\n\n\t\t</div> <!-- end of container -->\n\t",
                         directives: [news_component_1.NewsComponent]
                     }), 
                     __metadata('design:paramtypes', [session_data_service_1.SessionDataService])

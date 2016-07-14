@@ -32,7 +32,8 @@ System.register(['@angular/core', './news.component', './advert.component', './s
                 }
                 HomeComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/htmltemplates/home.component.html',
+                        //templateUrl: 'app/htmltemplates/home.component.html',
+                        template: "\n    \t\t\t<div class=\"component\">\n\t\t\t\t\t<advert></advert>\n\t\t\t\t\t<news></news>\n\t\t\t\t\t<sponsors></sponsors>\n\t\t\t\t</div>\n    ",
                         directives: [news_component_1.NewsComponent, advert_component_1.AdvertComponent, sponsors_component_1.SponsorsComponent]
                     }), 
                     __metadata('design:paramtypes', [])

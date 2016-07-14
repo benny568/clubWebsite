@@ -6,7 +6,35 @@ import {DATEPICKER_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootst
 
 @Component({
   selector: 'datepicker',
-  templateUrl: 'app/htmltemplates/datepicker.component.html',
+  //templateUrl: 'app/htmltemplates/datepicker.component.html',
+  template: `
+				<style>
+				  .full button span {
+				    background-color: limegreen;
+				    border-radius: 32px;
+				    color: black;
+				  }
+				  .partially button span {
+				    background-color: orange;
+				    border-radius: 32px;
+				    color: black;
+				  }
+				</style>
+				
+				<div>
+				  <pre class="card card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
+				
+				  <div style="display:inline-block; min-height:290px;">
+				    <datepicker [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="true"></datepicker>
+				  </div>
+				
+				  <hr />
+				  <button type="button" class="btn btn-sm btn-info" (click)="today()">Today</button>
+				  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="d20090824();">2009-08-24</button>
+				  <button type="button" class="btn btn-sm btn-danger" (click)="clear()">Clear</button>
+				  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="toggleMin()" tooltip="After today restriction">Min date</button>
+				</div>
+  `,
   directives: [DATEPICKER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class DatepickerComponent {

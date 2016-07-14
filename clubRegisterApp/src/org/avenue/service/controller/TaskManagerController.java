@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.avenue.dao.TaskManagerService;
+import org.avenue.exceptions.IpnException;
+import org.avenue.service.domain.Booking;
 import org.avenue.service.domain.EmailMessage;
 import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
@@ -85,16 +87,6 @@ public class TaskManagerController {
 		 return stories;
 	
 	 }
-	 
-	/* @RequestMapping(value="/news",method = RequestMethod.GET,headers="Accept=application/json")
-	 public List<NewsStory> getNewsStories() {
-		 System.out.println("## [TaskManagerController]->getNewsStories()..");
-		 //log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..");
-		 List<NewsStory> stories=taskmanagerservice.getNewsStories();
-		 System.out.println("## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
-		 //log.debug(currentTimestamp + ": ## [TaskManagerController]->getNewsStories()..returning(" + stories.size() + ") stories.");
-		 return stories;
-	 }*/
 	 
 	 @RequestMapping(value="/team/{teamName}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public Team getTeamDetails(@PathVariable String teamName) {
@@ -333,6 +325,67 @@ public class TaskManagerController {
 	      }
 	 }
 	 
+	 @RequestMapping(value="/confirmbooking",method = RequestMethod.POST)
+	 public boolean confirmEmail(@RequestBody Booking booking) 
+	 {	 
+		 EmailMessage msg = new EmailMessage();
+		 String destination = booking.getEmail();
+		 msg.setSubject("Avenue United: Booking Confirmation - Automated message, do not reply");
+		 msg.setMessage("Confirmation of your booking: \n" +
+				 		"Name: " + booking.getFirstname() + " " + booking.getSurname() + "\n" +
+				 		"Phone: " + booking.getPhone() + "\n" +
+				 		"Arrival: " + booking.getArrivalDate() + "\n" +
+				 		"Departure: " + booking.getDepartureDate() + "\n" +
+				 		"Number of nights: " + booking.getNumberOfNights() + "\n" +
+				 		"Number of people: " + booking.getNumberOfPeople() + "\n" +
+				 		"Deposit: " + booking.getDeposit() +  "\n" +
+				 		"Total Due: " + booking.getTotalCharge()
+				 		);
+		 msg.setSenderAddress("booking@avenueunited.ie");
+
+	      final String username = "booking@avenueunited.ie";
+	      final String password = "UpThe@venue83";
+
+	      Properties props = new Properties();
+	      props.put("mail.smtp.auth", "true");
+	      props.put("mail.smtp.starttls.enable", "true");
+	      props.put("mail.smtp.host", "mail.avenueunited.ie");
+	      props.put("mail.smtp.port", "25");
+
+	      // Get the default Session object.
+	      Session session = Session.getInstance(props,
+	    		  new javax.mail.Authenticator() {
+	    			protected PasswordAuthentication getPasswordAuthentication() {
+	    				return new PasswordAuthentication(username, password);
+	    			}
+	    		  });
+	      
+		 try{
+	         // Create a default MimeMessage object.
+	         MimeMessage message = new MimeMessage(session);
+
+	         // Set From: header field of the header.
+	         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+	         // Set To: header field of the header.
+	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+	         // Set Subject: header field
+	         message.setSubject(msg.getSubject());
+
+	         // Now set the actual message
+	         message.setText(msg.getMessage());
+
+	         // Send message
+	         Transport.send(message);
+	         System.out.println("Sent message successfully....");
+	         return true;
+	      }catch (MessagingException mex) {
+	         mex.printStackTrace();
+	         return false;
+	      }
+	 }
+	 
 	 @RequestMapping(value="/admin/manager/{name}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public  org.avenue.service.domain.Worker getManagerDetails(@PathVariable String name) 
 	 {
@@ -358,6 +411,25 @@ public class TaskManagerController {
 		 List<String> photos = taskmanagerservice.getPhotoMedia(cat1, cat2, cat3);
 		 log.debug("## <-getPhotoMedia(): " + photos);
 		 return photos;	
+	 }
+	 
+	 @RequestMapping(value="/booking",method = RequestMethod.POST)
+	 public void addBookingDetails(@RequestBody Booking booking) {	
+		 log.debug("## ->addBookingDetails("+booking+")");
+		 taskmanagerservice.addBookingDetails( booking );
+		 log.debug("## <-addBookingDetails()");
+	 }
+	 
+	 @RequestMapping(value="/ipn",method = RequestMethod.POST)
+	 public void papalIPNlistener(HttpServletRequest req, HttpServletResponse res) {	
+		 log.debug("## ->papalIPNlistener()");
+		 try {
+			taskmanagerservice.paypalIPNhandler2( req, res );
+		} catch (IpnException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 log.debug("## <-papalIPNlistener()");
 	 }
 	 
 }

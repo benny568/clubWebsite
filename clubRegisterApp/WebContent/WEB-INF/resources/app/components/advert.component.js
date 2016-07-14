@@ -27,7 +27,8 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
                 AdvertComponent = __decorate([
                     core_1.Component({
                         selector: 'advert',
-                        templateUrl: 'app/htmltemplates/advert.component.html',
+                        //templateUrl: 'app/htmltemplates/advert.component.html',
+                        template: "\n\t\t\t    <div class=\"container\">\n\t\t\t\t    <div class=\"panel\" style=\"margin-top:5px;\">\n\t\t\t\t        <div class=\"panel-body avenue-body\">\n\t\t\t\t\t\t\t<a [routerLink]=\"['/fleadh']\"><img width=\"100%\" src=\"resources/images/fleadh/fleadh.png\" /></a>\n\t\t\t\t        </div> <!-- end panel-body -->\n\t\t\t\t    </div> <!-- end panel -->\n\t\t\t\t</div>\n    ",
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [])

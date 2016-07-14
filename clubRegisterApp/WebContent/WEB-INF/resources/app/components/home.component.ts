@@ -7,7 +7,14 @@ import { AdvertComponent }    from './advert.component';
 import { SponsorsComponent }  from './sponsors.component';
 
 @Component({
-    templateUrl: 'app/htmltemplates/home.component.html',
+    //templateUrl: 'app/htmltemplates/home.component.html',
+    template: `
+    			<div class="component">
+					<advert></advert>
+					<news></news>
+					<sponsors></sponsors>
+				</div>
+    `,
     directives: [ NewsComponent, AdvertComponent, SponsorsComponent ]
 })
 

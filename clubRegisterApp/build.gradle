@@ -55,6 +55,7 @@ dependencies {
     compile 'javax.servlet:servlet-api:3.0-alpha-1'
     compile 'javax.mail:javax.mail-api:1.5.3'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.paypal.sdk:rest-api-sdk:+'
     
 	compile 'org.apache.tomcat:tomcat-catalina:7.0.47'
 	compile 'org.apache.tomcat:tomcat-coyote:7.0.47'

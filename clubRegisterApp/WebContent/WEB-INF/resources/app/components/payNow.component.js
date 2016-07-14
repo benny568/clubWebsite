@@ -30,7 +30,8 @@ System.register(['@angular/core', '@angular/common'], function(exports_1, contex
                 };
                 PayNowComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/htmltemplates/payNow.component.html'
+                        //templateUrl: 'app/htmltemplates/payNow.component.html'
+                        template: "\n\t\t\t<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">\n\t\t\t\t<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">\n\t\t\t\t<input type=\"hidden\" name=\"business\" value=\"treasurer@avenueunited.ie\">\n\t\t\t\t<input type=\"hidden\" name=\"lc\" value=\"US\">\n\t\t\t\t<input type=\"hidden\" name=\"item_name\" value=\"Deposit for camping\">\n\t\t\t\t<input type=\"hidden\" name=\"amount\" value=\"15.00\">\n\t\t\t\t<input type=\"hidden\" name=\"currency_code\" value=\"EUR\">\n\t\t\t\t<input type=\"hidden\" name=\"button_subtype\" value=\"services\">\n\t\t\t\t<input type=\"hidden\" name=\"no_note\" value=\"0\">\n\t\t\t\t<input type=\"hidden\" name=\"bn\" value=\"PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest\">\n\t\t\t\t<input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif\" border=\"0\" name=\"submit\" alt=\"PayPal - The safer, easier way to pay online!\">\n\t\t\t\t<img alt=\"\" border=\"0\" src=\"https://www.paypalobjects.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\">\n\t\t\t</form>\n\t"
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder])
                 ], PayNowComponent);

@@ -79,7 +79,8 @@ System.register(['@angular/core', '@angular/common', '@angular/router', '../serv
                 };
                 LoginComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/htmltemplates/login.component.html',
+                        //templateUrl: 'app/htmltemplates/login.component.html',
+                        template: "\n\t\t\t\t<div class=\"container\">\n\t\t\t\t\t<div class=\"loginbox\">\n\t\t\t\t\t\t<div class=\"loginhead\"><i class=\"glyphicon glyphicon-user\" style=\"align:right;margin-right:0px;\"></i> Please Login\n\t\t\t\t\t\t<div class=\"loginbody\">\n\t\t\t\t\t\t\t<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f.value)\" > <!-- action=\"<c:url value='j_spring_security_check' />\" method='POST'> -->\n\t\t\t\t\t\t\t\t<input type=\"text\" name='j_username' id=\"j_username\" ngControl=\"username\" placeholder=\"Username\" required/>\n\t\t\t\t\t\t\t\t<input type=\"password\" name='j_password' id=\"j_password\" ngControl=\"password\" placeholder=\"Password\" required/>\n\t\t\t\t\t\t\t\t<input type=\"submit\" value=\"Login Now\">\n\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t</div> <!-- end loginbody -->\n\t\t\t\t\t</div> <!-- end loginbox -->\n\t\t\t\t</div>\n\t",
                         directives: [common_1.FORM_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [session_data_service_1.SessionDataService, router_1.Router])

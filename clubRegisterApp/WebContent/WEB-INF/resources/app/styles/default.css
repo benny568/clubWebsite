@@ -1,10 +1,10 @@
 html,
 body
 {
-	/* Root is resources/app/styles */
-	background:url('../../images/stadium1.jpg');
-	background-size: cover;
+	Root is resources/app/styles
+	background-image: url("../../images/stadium1.jpg");
 	background-repeat:no-repeat;
+    background-size:cover;
 	background-position: center;
 	background-attachment:fixed;
 	height:100%;

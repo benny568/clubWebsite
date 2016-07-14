@@ -1,9 +1,16 @@
 package org.avenue.dao;
 
+import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,16 +22,48 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.paypal.core.LoggingManager;
+import com.paypal.ipn.IPNMessage;
+
 
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
+import org.avenue.config.IpnConfig;
+import org.avenue.config.PaypalConfiguration;
+import org.avenue.exceptions.IpnException;
+import org.avenue.service.domain.Booking;
+import org.avenue.service.domain.EmailMessage;
+import org.avenue.service.domain.IpnInfo;
 import org.avenue.service.domain.Media;
 import org.avenue.service.domain.Member;
 import org.avenue.service.domain.MyTeams;
@@ -38,6 +77,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.paypal.ipn.IPNMessage;
+
+import urn.ebay.api.PayPalAPI.PayPalAPIInterfaceServiceService;
 
 public class TaskManagerService {
 	//private Log log = LogFactory.getLog(TaskManagerService.class);
@@ -1426,5 +1470,321 @@ public class TaskManagerService {
 		 
 		 return isImage;
 	 }
+	 
+	 
+	 public void addBookingDetails(Booking booking)
+	 {
+		 java.sql.Date arrivalDate = null;
+		 java.sql.Date departureDate = null;
+		 arrivalDate = convertStringToSqlDate(booking.getArrivalDate());
+		 departureDate = convertStringToSqlDate(booking.getDepartureDate());
+		 
+		  try {
+			  Connection connection = DBUtility.getConnection();
+			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO booking ( firstname, surname, email, phone, "
+			   																	+ "country, arrivaldate, departuredate, numberofnights, "
+			   																	+ "numberofpeople, parking, vehicalreg, totalcharge, "
+			   																	+ "deposit, tandc ) VALUES (?, ?, ?, ?, ?, ?,"
+			   																	+ "?, ?, ?, ?, ?, ?, ?, ?)");
+			  preparedStatement.setString(1, booking.getFirstname());
+			  preparedStatement.setString(2, booking.getSurname());
+			  preparedStatement.setString(3, booking.getEmail());
+			  preparedStatement.setString(4, booking.getPhone());
+			  preparedStatement.setString(5, booking.getCountry());
+			  preparedStatement.setDate(6, arrivalDate);
+			  preparedStatement.setDate(7, departureDate);
+			  preparedStatement.setInt(8, booking.getNumberOfNights());
+			  preparedStatement.setInt(9, booking.getNumberOfPeople());
+			  preparedStatement.setInt(10, booking.getParking());
+			  preparedStatement.setString(11, booking.getVehicalReg());
+			  preparedStatement.setInt(12, booking.getTotalCharge());
+			  preparedStatement.setFloat(13, booking.getDeposit());
+			  preparedStatement.setInt(14, booking.getTandc());
+			  preparedStatement.executeUpdate();
+			  
+			  log.debug("## ADDED BOOKING DETALS: ", preparedStatement);
+		
+			  } catch (SQLException e) {
+			   e.printStackTrace();
+			  }
+		  
+		  DBUtility.closeConnection();
+		  return;
+	 }
+
+	 public IpnInfo paypalIPNhandler( HttpServletRequest request, HttpServletResponse response ) throws IpnException
+	 {
+
+	       IpnInfo ipnInfo = new IpnInfo();
+	       IpnInfoService ipnInfoService = new IpnInfoService();
+	       IpnConfig ipnConfig = new IpnConfig("https://www.sandbox.paypal.com/cgi-bin/webscr", "treasurer@avenueunited.ie", "35", "Euro");
+	       
+	        try
+	        {
+	        	// 1. Read in IPN message
+	        	String charEncode = request.getContentType();
+	        	log.info("****** Character Encoding in request is: [" + charEncode + "]");
+	        	
+	        	log.info("****** (1) Reading the IPN msg sent by PayPal");
+	        	BufferedReader reader = request.getReader();
+	        	String msg = reader.readLine();
+	        	log.info("****** (1.1) PayPal IPN msg: [" + msg + "]");
+	        	
+	        	//////////////////////////////////////////////////////////////
+	            
+	            // 2. Return an empty HTTP 200 response to PayPal
+	            log.info("****** (2) Returning an empty HTTP 200 response to PayPal...");
+	            
+	            //response.setContentType("application/x-www-form-urlencoded");
+	            //response.setStatus(response.SC_OK);
+	            PrintWriter mpw = response.getWriter();
+	            mpw.println("HTTP/1.1 200 OK");
+	            //response.resetBuffer();
+	            response.flushBuffer();
+	            
+	            if( response.isCommitted() )
+	            	log.info("****** (2.1) response sent");
+	            else
+	            	log.info("****** (2.1) Response not committed!");
+	            
+	            ////////////////////////////////////////////////////////////
+
+	            //3. Prepare 'notify-validate' command with exactly the same parameters
+	            log.info("****** (3) Preparing verify response for PayPal...character set: [" + request.getCharacterEncoding() + "]");
+	            Enumeration<String> en = request.getParameterNames();
+	            log.info("****** (3.1) Preparing verify response for PayPal...");
+	            StringBuilder cmd = new StringBuilder("cmd=_notify-validate");
+	            //cmd.append(URLEncoder.encode(msg, "UTF-8"));
+	            log.info("****** (3.2) Preparing verify response for PayPal...msg is: [" + cmd + "]");
+	            String paramName;
+	            String paramValue;
+	            log.info("****** (3.3) Preparing verify response for PayPal...running through each param in IPN and adding to msg");
+	            while( en.hasMoreElements() ) 
+	            {
+	                paramName = new String( (String) en.nextElement() );
+	                paramValue = new String( request.getParameter(paramName) );
+	                cmd.append("&").append(paramName).append("=")
+	                        .append(URLEncoder.encode(paramValue, "UTF-8")); //request.getParameter("charset")));
+	            }
+
+	            //4. Post above command to Paypal IPN URL {@link IpnConfig#ipnUrl}
+	            log.info("****** (4) Posting validation response to PayPal...");
+
+	            URL u = new URL(ipnConfig.getIpnUrl());
+	            HttpsURLConnection uc = (HttpsURLConnection) u.openConnection();
+	            uc.setDoOutput(true);
+	            uc.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+	            uc.setRequestProperty("Host", "www.sandbox.paypal.com");
+	            PrintWriter pw = new PrintWriter(uc.getOutputStream());
+	            pw.println(cmd.toString());
+	            pw.close();
+	            
+	            //5. Read response from Paypal
+	            log.info("****** (5) Waiting for/reading verification response from PayPal...");
+	            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+	            String res = in.readLine();
+	            in.close();
+	            log.info("****** (5.1) Response from PayPal was: [" + res + "].");
+
+	            //6. Capture Paypal IPN information
+	            //log.info("****** (6) Saving IPN information...");
+	            ipnInfo.setLogTime(System.currentTimeMillis());
+	            
+	            ipnInfo.setItemName(request.getParameter("item_name") != null ? request.getParameter("item_name") : "");
+	            ipnInfo.setItemNumber(request.getParameter("item_number") != null ? request.getParameter("item_number") : "");
+	            ipnInfo.setPaymentStatus(request.getParameter("payment_status") != null ? request.getParameter("payment_status") : "");
+	            ipnInfo.setPaymentAmount(request.getParameter("mc_gross") != null ? request.getParameter("mc_gross") : "");
+	            ipnInfo.setPaymentCurrency(request.getParameter("mc_currency") != null ? request.getParameter("mc_currency") : "");
+	            ipnInfo.setTxnId(request.getParameter("txn_id") != null ? request.getParameter("txn_id") : "");
+	            ipnInfo.setReceiverEmail(request.getParameter("receiver_email") != null ? request.getParameter("receiver_email") : "");
+	            ipnInfo.setPayerEmail(request.getParameter("payer_email") != null ? request.getParameter("payer_email") : "");
+	            ipnInfo.setResponse(res);
+	            ipnInfo.setRequestParams(getAllRequestParams(request));
+
+	            //6. Validate captured Paypal IPN Information
+	            if (res.equals("VERIFIED")) {
+	            	log.info("****** (6) IPN verified by PayPal to be good...");
+
+	                //6.1. Check that paymentStatus=Completed
+	                if(ipnInfo.getPaymentStatus() == null || !ipnInfo.getPaymentStatus().equalsIgnoreCase("COMPLETED"))
+	                    ipnInfo.setError("payment_status IS NOT COMPLETED {" + ipnInfo.getPaymentStatus() + "}");
+
+	                //6.2. Check that txnId has not been previously processed
+	                IpnInfo oldIpnInfo = ipnInfoService.getIpnInfo(ipnInfo.getTxnId());
+	                if(oldIpnInfo != null)
+	                    ipnInfo.setError("txn_id is already processed {old ipn_info " + oldIpnInfo);
+
+	                //6.3. Check that receiverEmail matches with configured {@link IpnConfig#receiverEmail}
+	                if(!ipnInfo.getReceiverEmail().equalsIgnoreCase(ipnConfig.getReceiverEmail()))
+	                    ipnInfo.setError("receiver_email " + ipnInfo.getReceiverEmail()
+	                            + " does not match with configured ipn email " + ipnConfig.getReceiverEmail());
+
+	                //6.4. Check that paymentAmount matches with configured {@link IpnConfig#paymentAmount}
+	                if(Double.parseDouble(ipnInfo.getPaymentAmount()) != Double.parseDouble(ipnConfig.getPaymentAmount()))
+	                    ipnInfo.setError("payment amount mc_gross " + ipnInfo.getPaymentAmount()
+	                            + " does not match with configured ipn amount " + ipnConfig.getPaymentAmount());
+
+	                //6.5. Check that paymentCurrency matches with configured {@link IpnConfig#paymentCurrency}
+	                if(!ipnInfo.getPaymentCurrency().equalsIgnoreCase(ipnConfig.getPaymentCurrency()))
+	                    ipnInfo.setError("payment currency mc_currency " + ipnInfo.getPaymentCurrency()
+	                            + " does not match with configured ipn currency " + ipnConfig.getPaymentCurrency());
+	                
+	                // Send confirmation email to the payer
+	                if( ipnInfo.getError().length() < 1 ) // No errors above
+	                {
+	                	sendConfirmationEmail(ipnInfo);
+	                }
+	            }
+	            else
+	            {
+	                ipnInfo.setError("Inavlid response {" + res + "} expecting {VERIFIED}");
+	                log.info("****** (6) IPN verified by PayPal to be BAD!!");
+	            }
+
+	            log.info("ipnInfo = " + ipnInfo);
+
+	            ipnInfoService.log(ipnInfo);
+
+	            //7. In case of any failed validation checks, throw {@link IpnException}
+	            if(ipnInfo.getError() != null)
+	                throw new IpnException(ipnInfo.getError());
+	        }
+	        catch(Exception e)
+	        {
+	            if(e instanceof IpnException)
+	                throw (IpnException) e;
+	            log.info(e.toString(), e);
+	            throw new IpnException(e.toString());
+	        }
+
+	        //8. If all is well, return {@link IpnInfo} to the caller for further business logic execution
+	        return ipnInfo;
+	    }
+
+	 
+	 /**
+	     * Utility method to extract all request parameters and their values from request object
+	     *
+	     * @param request {@link HttpServletRequest}
+	     * @return all request parameters in the form:
+	     *                                              param-name 1
+	     *                                                  param-value
+	     *                                              param-name 2
+	     *                                                  param-value
+	     *                                                  param-value (in case of multiple values)
+	     */
+	    private String getAllRequestParams(HttpServletRequest request)
+	    {
+	        Map map = request.getParameterMap();
+	        StringBuilder sb = new StringBuilder("\nREQUEST PARAMETERS\n");
+	        for (Iterator it = map.keySet().iterator(); it.hasNext();)
+	        {
+	            String pn = (String)it.next();
+	            sb.append(pn);//.append("\n");
+	            String[] pvs = (String[]) map.get(pn);
+	            for (int i = 0; i < pvs.length; i++) {
+	                String pv = pvs[i];
+	                sb.append("\t").append(pv).append("\n");
+	            }
+	        }
+	        return sb.toString();
+	    }
+	    
+	    
+		 public boolean sendConfirmationEmail(IpnInfo ipi) 
+		 {	 
+			 EmailMessage msg = new EmailMessage();
+			 String destination = ipi.getPayerEmail();
+			 msg.setSubject("Avenue United: Booking Confirmation - Automated message, do not reply");
+			 msg.setMessage("Confirmation of your booking: \n" +
+					 		"Name: " + ipi.getFirstName() + " " + ipi.getLastName() + "\n" +
+					 		//"Phone: " + booking.getPhone() + "\n" +
+					 		//"Arrival: " + booking.getArrivalDate() + "\n" +
+					 		//"Departure: " + booking.getDepartureDate() + "\n" +
+					 		//"Number of nights: " + booking.getNumberOfNights() + "\n" +
+					 		//"Number of people: " + booking.getNumberOfPeople() + "\n" +
+					 		"Deposit: " + ipi.getPaymentAmount() +  "\n"
+					 		//"Total Due: " + booking.getTotalCharge()
+					 		);
+			 msg.setSenderAddress("booking@avenueunited.ie");
+
+		      final String username = "booking@avenueunited.ie";
+		      final String password = "UpThe@venue83";
+
+		      Properties props = new Properties();
+		      props.put("mail.smtp.auth", "true");
+		      props.put("mail.smtp.starttls.enable", "true");
+		      props.put("mail.smtp.host", "mail.avenueunited.ie");
+		      props.put("mail.smtp.port", "25");
+
+		      // Get the default Session object.
+		      Session session = Session.getInstance(props,
+		    		  new javax.mail.Authenticator() {
+		    			protected PasswordAuthentication getPasswordAuthentication() {
+		    				return new PasswordAuthentication(username, password);
+		    			}
+		    		  });
+		      
+			 try{
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+		         // Set Subject: header field
+		         message.setSubject(msg.getSubject());
+
+		         // Now set the actual message
+		         message.setText(msg.getMessage());
+
+		         // Send message
+		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		         return true;
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		         return false;
+		      }
+		 }
+		 
+		
+		 
+		 public IpnInfo paypalIPNhandler2( HttpServletRequest request, HttpServletResponse response ) throws IpnException
+		 {
+			 
+			 Map<String,String> configMap = new HashMap<String,String>();
+
+			 // Endpoints are varied depending on whether sandbox OR live is chosen for mode
+			 configMap.put("mode", "sandbox");
+
+			 // Connection Information. These values are defaulted in SDK. If you want to override default values, uncomment it and add your value.
+			 // configMap.put("http.ConnectionTimeOut", "5000");
+			 // configMap.put("http.Retry", "2");
+			 // configMap.put("http.ReadTimeOut", "30000");
+			 // configMap.put("http.MaxConnection", "100");
+			 
+			 
+			 // For a full list of configuration parameters refer in wiki page.
+             // (https://github.com/paypal/sdk-core-java/wiki/SDK-Configuration-Parameters)
+			 
+             Map<String,String> configurationMap =  PaypalConfiguration.getConfig();
+             IPNMessage      ipnlistener = new IPNMessage(request,configurationMap);
+             boolean isIpnVerified = ipnlistener.validate();
+             String transactionType = ipnlistener.getTransactionType();
+             Map<String,String> map = ipnlistener.getIpnMap();
+
+             LoggingManager.info(TaskManagerService.class, "******* IPN (name:value) pair : "+ map + "  " +
+                             "######### TransactionType : "+transactionType+"  ======== IPN verified : "+ isIpnVerified);
+
+			 
+			 return null;
+			 
+		 }
+		 
+
 
 }

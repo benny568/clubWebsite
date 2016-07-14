@@ -41,5 +41,20 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/odalybr/dev/sdk/ipn/merchant-sdk-java/merchantsample/target/merchantsample-2.14.117/WEB-INF/lib/merchantsdk-2.14.117.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/odalybr/dev/sdk/ipn/merchant-sdk-java/merchantsample/target/merchantsample-2.14.117/WEB-INF/lib/paypal-core-1.7.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/odalybr/dev/sdk/ipn/merchant-sdk-java/merchantsample/target/merchantsample-2.14.117/WEB-INF/lib/permissionssdk-2.4.109.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

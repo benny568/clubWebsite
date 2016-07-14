@@ -32,7 +32,8 @@ import {Button} from 'primeng/primeng'
 				        	<br />1. Pick the dates you prefer and the number of people staying
 				        	<br />2. Indicate if you require parking and the number of parking spaces
 				        	<br />3. Provide your contact details
-				        	<br />4. Pay the deposit (50% of total) via PayPal, <strong>Balance payable ON ARRIVAL.</strong></p>
+				        	<br />4. Pay the deposit (€35) via PayPal, <strong>Balance payable ON ARRIVAL.</strong></p>
+				        	<!-- <br />4. Pay the deposit (50% of total) via PayPal, <strong>Balance payable ON ARRIVAL.</strong></p> -->
 				        <footer>
 				            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 				                <button type="button" pButton icon="fa-close" (click)="display=false" label="Close"></button>

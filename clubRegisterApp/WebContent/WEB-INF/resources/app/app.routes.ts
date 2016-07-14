@@ -22,6 +22,7 @@ import { EditMemberComponent }     from "./components/editMember.component";
 import { BookingStage1Component }  from "./booking/booking-stage1.component";
 import { BookingStage3Component }  from "./booking/booking-stage3.component";
 import { BookingStage4Component }  from "./booking/booking-stage4.component";
+import { SuccessComponent }        from "./booking/success.component";
 
 export const routes: RouterConfig = [
                                      { path: '', component: HomeComponent },
@@ -45,7 +46,8 @@ export const routes: RouterConfig = [
                                      { path: 'editMember', component: EditMemberComponent },
                                      { path: 'booking', component: BookingStage1Component },
                                      { path: 'booking3', component: BookingStage3Component },
-                                     { path: 'booking4', component: BookingStage4Component }
+                                     { path: 'booking4', component: BookingStage4Component },
+                                     { path: 'success', component: SuccessComponent }
                                    ];
 
 

@@ -16,7 +16,7 @@ import { Member }               from '../dao/member';
 					        Hello World!
 					    </modal-body>
 					    <modal-footer [show-default-buttons]="true"></modal-footer>
-					</modal>
+					</modal>  
                  `,
 	directives: [MODAL_DIRECTIVES]
 })
@@ -28,7 +28,7 @@ export class EditMemberComponent
 	
 	constructor( private _dataService: SessionDataService, private _router: Router, private tb$: ToolBox ) 
 	{
-		//this.modal = new ModalComponent();
+//		this.modal = new ModalComponent();
 	}
 	
 	ngAfterViewInit()

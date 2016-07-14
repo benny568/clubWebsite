@@ -27,27 +27,26 @@ import {Button} from 'primeng/primeng';
 							
 							
 							<h5>INFORMATION & RULES</h5>
-							
-							
+														
 							Campsite Opens 1pm on Wed August 17th<br />
-							Tents & Cars only.   NO caravans or campervans, sorry.<br /><br />
+							Tents & Cars only.   NO caravans or campervans, sorry.<br />
 							
-							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.&nbsp;NO noise after Midnight<br /><br />
+							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.&nbsp;NO noise after Midnight<br />
 							
-							Toilets & Showers are Provided.<br /><br />
+							Toilets & Showers are Provided.<br />
 							
-							Anyone under 18 MUST be accompanied by an adult<br /><br />
+							Anyone under 18 MUST be accompanied by an adult<br />
 							
-							NO PETS (except guide / assistive dogs)<br /><br />
+							NO PETS (except guide / assistive dogs)<br />
 							
 							Balance must be paid on arrival. You will NOT be admitted until balance is paid.<br />
-							No Sterling accepted for balance. EURO cash only.  No refunds for early departure.<br /><br />
+							No Sterling accepted for balance. EURO cash only.  No refunds for early departure.<br />
 							
-							No electrical connections are available. Bring plenty batteries!<br /><br />
+							No electrical connections are available. Bring plenty batteries!<br />
 							
 							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.  This is our soccer pitch where our kids play matches. NO Glass means NO Glass. Plastic only. This WILL be enforced.<br />  
 							
-							You must be vacated by 1pm on Mon 22 Aug.<br /><br />
+							You must be vacated by 1pm on Mon 22 Aug.<br />
 							
 							By booking you agree to the above conditions.<br /><br />
 							

@@ -23,7 +23,8 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 }
                 LinksComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/htmltemplates/links.component.html'
+                        //templateUrl: 'app/htmltemplates/links.component.html'
+                        template: "\n\t\t\t\t<div id=\"wrap\">\n\t\t\t\t    <div class=\"container t1\">\n\t\t\t\t        <div class=\"panel\">\n\t\t\t\t            <div class=\"panel-heading avenue-heading\">\n\t\t\t\t                Useful Links:\n\t\t\t\t            </div>\n\t\t\t\t            <div class=\"panel-body avenue-body\">\n\t\t\t\t                <a href=\"http://www.cssleague.ie/\" target=_blank>\n\t\t\t\t                    <img src=\"resources/images/links/cssl.jpeg\" height=\"50\" width=\"50\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Clare Schoolboys Soccer League\"/>\n\t\t\t\t                </a>\n\t\t\t\t                <a href=\"http://www.claresoccer.net/\" target=\"_blank\">\n\t\t\t\t                    <img src=\"resources/images/links/CDSL_Crest.JPG\" height=\"50\" width=\"50\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Clare Junior Soccer League\"/>\n\t\t\t\t                </a>\n\t\t\t\t                <a href=\"http://www.fai.ie/\" target=\"_blank\">\n\t\t\t\t                    <img src=\"resources/images/links/fai-crest.png\" height=\"50\" width=\"50\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Football Association of Ireland\"/>\n\t\t\t\t                </a>\n\t\t\t\t            </div>\n\t\t\t\t        </div>\n\t\t\t\t\n\t\t\t\t    </div> <!--  End of container t1 -->\n\t\t\t\t</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], LinksComponent);

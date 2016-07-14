@@ -74,20 +74,12 @@ import { BookingService } from '../services/booking.service';
 					       	<div style="float:left;min-width:10px;overflow:hidden;">&nbsp;&nbsp;</div>
 					       	<div style="float:left;">
 					       		Total cost: €{{bk$.totalCharge}} <br />
-					       		Cost of deposit (50%): €{{bk$.deposit}}
+					       		Cost of deposit: €{{bk$.deposit}}
 					       	</div>
 					       	<div style="float:right;">
-					       		<!-- <button type="button" class="btn btn-warning btn-xs"(click)="submit()" style="float:right">PayNow</button> -->
-					       		
-					       		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-									<input type="hidden" name="cmd" value="_s-xclick">
-									<input type="hidden" name="hosted_button_id" value="DL6F88H4B6V64">
-									<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-									<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-								</form>
-
-
-					       		
+					       		<button type="button" (click)="payPal()" style="float:right;">
+					       			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					       		</button>				       		
 					       	</div>
 					    </p-tabPanel>
 					</p-tabView>	
@@ -131,6 +123,9 @@ export class BookingStage4Component{
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log("ngOnInit()");
         
+        if( this.bk$.parking == undefined )
+        	this.bk$.parking = 0;
+        
         // Total up the charge       
         this.calculateTotalCharge();
         
@@ -165,7 +160,7 @@ export class BookingStage4Component{
 			extraCarFee = (this.bk$.parking - 1) * 5 * this.bk$.numberOfNights; // €5 extra per night per extra car
 		
 		this.bk$.totalCharge = basic + extraPeopleFee + extraCarFee;
-		this.bk$.deposit = this.bk$.totalCharge/2;
+		this.bk$.deposit = 35;//this.bk$.totalCharge/2;
 		
 		this.lg$.log("---- Total Charge: " + this.bk$.totalCharge);
 	}
@@ -174,6 +169,16 @@ export class BookingStage4Component{
 	{
 		this.lg$.log("-> back()");
 		this.router.navigate(['/booking3']);
+	}
+	
+	payPal()
+	{
+		this.lg$.log("-> payPal()");
+		
+		// The user has pressed pay, so store their info as pending
+		
+		// Call the PayPal interface
+		this.bk$.payPal();
 	}
 	
 }

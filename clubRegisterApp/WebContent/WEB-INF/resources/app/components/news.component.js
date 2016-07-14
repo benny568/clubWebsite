@@ -50,7 +50,8 @@ System.register(['@angular/core', '@angular/common', './slide.component', './car
                 NewsComponent = __decorate([
                     core_1.Component({
                         selector: 'news',
-                        templateUrl: 'app/htmltemplates/news.component.html',
+                        //templateUrl: 'app/htmltemplates/news.component.html',
+                        template: "\n\t\t\t    <div class=\"row avenue-body\">\n\t\t\t        <div class=\"panel\">\n\t\t\t            <div class=\"panel-heading avenue-heading\">\n\t\t\t                Latest News:\n\t\t\t            </div>\n\t\t\t            <carousel [interval]=\"5000\" style=\"float:left;width:100%;height:auto;\">\n\t\t\t                <slide *ngFor=\"let story of _dataService.dsNewsStories\">\n\t\t\t                    <img src=\"{{story.image}}\" style=\"float:left;padding-left:100px;padding-top:40px;padding-right:5px;padding-bottom:40px;max-width:40%;\"/>\n\t\t\t                    <div style=\"float:left;width:50%;\">\n\t\t\t                        <div class=\"avenue-heading\" style=\"font-weight:bold;font-size:20px;border-right:solid 1px white;border-left:solid 1px white;\">{{story.title}}</div>\n\t\t\t                        <div class=\"avenue-heading\" style=\"border-bottom:solid 1px white;border-right:solid 1px white;border-left:solid 1px white;\">{{story.description}}</div>\n\t\t\t                        <p style=\"padding-bottom:20px;padding-top:10px;\">{{story.story}}</p><br/>\n\t\t\t                    </div>\n\t\t\t                </slide>\n\t\t\t            </carousel>\n\t\t\t\n\t\t\t        </div> <!-- end panel -->\n\t\t\t    </div> <!-- end row -->\n    ",
                         directives: [slide_component_1.Slide, carousel_component_1.Carousel, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES],
                         providers: [logger_service_1.LoggerService]
                     }), 

@@ -36,7 +36,7 @@ System.register(['@angular/core', '@angular/router', 'ng2-bs3-modal/ng2-bs3-moda
                     this._dataService = _dataService;
                     this._router = _router;
                     this.tb$ = tb$;
-                    //this.modal = new ModalComponent();
+                    //		this.modal = new ModalComponent();
                 }
                 EditMemberComponent.prototype.ngAfterViewInit = function () {
                     this.modal.open();
@@ -50,7 +50,7 @@ System.register(['@angular/core', '@angular/router', 'ng2-bs3-modal/ng2-bs3-moda
                 ], EditMemberComponent.prototype, "modal", void 0);
                 EditMemberComponent = __decorate([
                     core_1.Component({
-                        templateUrl: "\n\t\t\t\t\t<modal #modal>\n\t\t\t\t\t    <modal-header [show-close]=\"true\">\n\t\t\t\t\t        <h4 class=\"modal-title\">I'm a modal!</h4>\n\t\t\t\t\t    </modal-header>\n\t\t\t\t\t    <modal-body>\n\t\t\t\t\t        Hello World!\n\t\t\t\t\t    </modal-body>\n\t\t\t\t\t    <modal-footer [show-default-buttons]=\"true\"></modal-footer>\n\t\t\t\t\t</modal>\n                 ",
+                        templateUrl: "\n\t\t\t\t\t<modal #modal>\n\t\t\t\t\t    <modal-header [show-close]=\"true\">\n\t\t\t\t\t        <h4 class=\"modal-title\">I'm a modal!</h4>\n\t\t\t\t\t    </modal-header>\n\t\t\t\t\t    <modal-body>\n\t\t\t\t\t        Hello World!\n\t\t\t\t\t    </modal-body>\n\t\t\t\t\t    <modal-footer [show-default-buttons]=\"true\"></modal-footer>\n\t\t\t\t\t</modal>  \n                 ",
                         directives: [ng2_bs3_modal_1.MODAL_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [session_data_service_1.SessionDataService, router_1.Router, toolbox_1.ToolBox])

@@ -152,6 +152,12 @@
 			<artifactId>gson</artifactId>
 			<version>${gson.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.paypal.sdk</groupId>
+		    <artifactId>rest-api-sdk</artifactId>
+		    <version>LATEST</version>
+		</dependency>
 
 	</dependencies>
 	

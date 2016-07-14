@@ -4,7 +4,21 @@ import { Router }             from '@angular/router';
 import { SessionDataService } from '../services/session-data.service';
 
 @Component({
-	templateUrl: 'app/htmltemplates/login.component.html',
+	//templateUrl: 'app/htmltemplates/login.component.html',
+	template: `
+				<div class="container">
+					<div class="loginbox">
+						<div class="loginhead"><i class="glyphicon glyphicon-user" style="align:right;margin-right:0px;"></i> Please Login
+						<div class="loginbody">
+							<form #f="ngForm" (ngSubmit)="onSubmit(f.value)" > <!-- action="<c:url value='j_spring_security_check' />" method='POST'> -->
+								<input type="text" name='j_username' id="j_username" ngControl="username" placeholder="Username" required/>
+								<input type="password" name='j_password' id="j_password" ngControl="password" placeholder="Password" required/>
+								<input type="submit" value="Login Now">
+							</form>
+						</div> <!-- end loginbody -->
+					</div> <!-- end loginbox -->
+				</div>
+	`,
 	directives: [ FORM_DIRECTIVES ]
 })
 

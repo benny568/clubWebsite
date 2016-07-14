@@ -237,3 +237,21 @@ CREATE TABLE media (
     title VARCHAR(50),
     description VARCHAR(200),
     PRIMARY KEY (mediaid));
+    
+CREATE  TABLE booking (
+  bookingid int NOT NULL AUTO_INCREMENT,
+  firstname VARCHAR(20) NOT NULL,
+  surname VARCHAR(20) NOT NULL,
+  email varchar(100),
+  phone varchar(20),
+  country varchar(20),
+  arrivaldate date,
+  departuredate date,
+  numberofnights int,
+  numberofpeople int,
+  parking int,
+  vehicalreg varchar(20),
+  totalcharge int,
+  deposit double,
+  tandc boolean,
+  PRIMARY KEY (bookingid));

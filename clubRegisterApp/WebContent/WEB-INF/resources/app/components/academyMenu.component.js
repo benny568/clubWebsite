@@ -25,7 +25,8 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 AcademyMenuComponent = __decorate([
                     core_1.Component({
                         selector: 'academy-memu',
-                        templateUrl: 'app/htmltemplates/academyMenu.component.html'
+                        //templateUrl: 'app/htmltemplates/academyMenu.component.html'
+                        template: "\n\t\t\t\t<div class=\"btn-group-vertical\">\n\t\t\t\t    <a (click)=\"academyHome()\" class=\"btn btn-primary academymenu\"><i class=\"fa fa-home\"></i> Home</a>\n\t\t\t\t    <a (click)=\"academyOverview()\" class=\"btn btn-primary academymenu\">Overview</a>\n\t\t\t\t    <a (click)=\"academyCoaches()\" class=\"btn btn-primary academymenu\">Coaches</a>\n\t\t\t\t    <a (click)=\"academySchedule()\" class=\"btn btn-primary academymenu\">Schedule</a>\n\t\t\t\t    <a (click)=\"academyRegistration()\" class=\"btn btn-primary academymenu\">Registration</a>\n\t\t\t\t    <a (click)=\"academyPhotos()\" class=\"btn btn-primary academymenu\">Photos</a>\n\t\t\t\t    <div class=\"btn-group\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary dropdown-toggle academymenu\" data-toggle=\"dropdown\">\n\t\t\t\t            FAQ <span class=\"caret\"></span></button>\n\t\t\t\t        <ul class=\"dropdown-menu academymenu\" role=\"menu\">\n\t\t\t\t            <li><a href=\"#\">Season</a></li>\n\t\t\t\t            <li><a href=\"#\">Fees</a></li>\n\t\t\t\t        </ul>\n\t\t\t\t    </div>\n\t\t\t\t</div>\n    "
                     }),
                     core_2.Injectable(), 
                     __metadata('design:paramtypes', [])

@@ -48,7 +48,8 @@ System.register(['@angular/core', '@angular/common', './slide.component', './car
                 SponsorsComponent = __decorate([
                     core_1.Component({
                         selector: 'sponsors',
-                        templateUrl: 'app/htmltemplates/sponsors.component.html',
+                        //templateUrl: 'app/htmltemplates/sponsors.component.html',
+                        template: "\n\t\t\t    <div class=\"panel\" style=\"margin-top:5px;\">\n\t\t\t        <div class=\"panel-heading avenue-heading\">\n\t\t\t            Our Sponsors:\n\t\t\t        </div>\n\t\t\t        <div class=\"panel-body avenue-body\">\n\t\t\t            <carousel [interval]=\"5000\" style=\"float:left;width:100%;height:auto;\">\n\t\t\t                <slide *ngFor=\"let sponsor of _dataService.dsSponsors\">\n\t\t\t                        <div style=\"position:relative;margin-left:auto;margin-right:auto\">\n\t\t\t                            <img src=\"{{sponsor.image}}\" width=\"80%\" height=\"150px\"/>\n\t\t\t                        </div>\n\t\t\t                </slide>\n\t\t\t                </carousel>\n\t\t\t            </div> <!-- end panel-body -->\n\t\t\t        <div class=\"panel-heading avenue-heading\"></div>\n\t\t\t    </div> <!-- end panel -->\n    ",
                         directives: [slide_component_1.Slide, carousel_component_1.Carousel, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES],
                         providers: [logger_service_1.LoggerService]
                     }), 
