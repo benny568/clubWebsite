@@ -424,7 +424,7 @@ public class TaskManagerController {
 	 public void papalIPNlistener(HttpServletRequest req, HttpServletResponse res) {	
 		 log.debug("## ->papalIPNlistener()");
 		 try {
-			taskmanagerservice.paypalIPNhandler2( req, res );
+			taskmanagerservice.paypalIPNhandler( req, res );
 		} catch (IpnException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
