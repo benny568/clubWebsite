@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', 'primeng/primeng', '../services/logger.service', '../services/booking.service', './arrival-datepicker.component', './departure-datepicker.component', './number-of-people.component', '../booking/instructions.component', '../booking/tandc.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', 'primeng/primeng', '../services/logger.service', '../services/booking.service', './arrival-datepicker.component', './departure-datepicker.component', './number-of-people.component', '../booking/instructions.component', '../booking/tandc.component', '../booking/test.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', 'primeng/primeng', '../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, primeng_1, primeng_2, primeng_3, primeng_4, logger_service_1, booking_service_1, arrival_datepicker_component_1, departure_datepicker_component_1, number_of_people_component_1, instructions_component_1, tandc_component_1;
+    var core_1, router_1, primeng_1, primeng_2, primeng_3, primeng_4, logger_service_1, booking_service_1, arrival_datepicker_component_1, departure_datepicker_component_1, number_of_people_component_1, instructions_component_1, tandc_component_1, test_component_1;
     var FleadhComponent;
     return {
         setters:[
@@ -46,6 +46,9 @@ System.register(['@angular/core', '@angular/router', 'primeng/primeng', '../serv
             },
             function (tandc_component_1_1) {
                 tandc_component_1 = tandc_component_1_1;
+            },
+            function (test_component_1_1) {
+                test_component_1 = test_component_1_1;
             }],
         execute: function() {
             FleadhComponent = (function () {
@@ -145,7 +148,8 @@ System.register(['@angular/core', '@angular/router', 'primeng/primeng', '../serv
                             departure_datepicker_component_1.DepartureDatepickerComponent,
                             number_of_people_component_1.NumberOfPeopleComponent,
                             instructions_component_1.InstructionsComponent,
-                            tandc_component_1.TandCComponent]
+                            tandc_component_1.TandCComponent,
+                            test_component_1.TestComponent]
                     }), 
                     __metadata('design:paramtypes', [logger_service_1.LoggerService, booking_service_1.BookingService, router_1.Router])
                 ], FleadhComponent);

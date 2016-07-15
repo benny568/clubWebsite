@@ -421,15 +421,15 @@ public class TaskManagerController {
 	 }
 	 
 	 @RequestMapping(value="/ipn",method = RequestMethod.POST)
-	 public void papalIPNlistener(HttpServletRequest req, HttpServletResponse res) {	
-		 log.debug("## ->papalIPNlistener()");
+	 public void paypalIPNlistener(HttpServletRequest req, HttpServletResponse res) {	
+		 log.debug("## ->paypalIPNlistener()");
 		 try {
 			taskmanagerservice.paypalIPNhandler( req, res );
 		} catch (IpnException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 log.debug("## <-papalIPNlistener()");
+		 log.debug("## <-paypalIPNlistener()");
 	 }
 	 
 }

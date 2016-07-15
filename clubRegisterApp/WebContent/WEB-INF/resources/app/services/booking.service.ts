@@ -31,7 +31,6 @@ export class BookingService {
     serviceName = 'BookingService';
     
     constructor ( @Inject(Http) private lg$: LoggerService, private com$: CommonService, private _http: Http )
-    //constructor ( @Inject(Http) private lg$: LoggerService, private _http: Http )
 	{
 		 
 	}
@@ -56,6 +55,7 @@ export class BookingService {
 	    			'cmd=_s-xclick&' +
 	    			//'hosted_button_id=L6R7Z8T7EBC4G';
 	    			'hosted_button_id=9RMD69P5JPRNQ';
+	    			//'hosted_button_id=9CQB2K78DC5DJ'; // 0.01 button
 	    window.location.href = loc;
 	}
 	
@@ -119,17 +119,21 @@ export class BookingService {
 		data.deposit = this.deposit;
 		data.tandc = 1;
 		
+		console.log("[BookingService]-->sendEmailConfirmation() should be sending email with following details:");
+		console.log("Name: " + data.firstname + " " + data.surname);
+		console.log("email: " + data.email);
+		
 		let headers = new Headers();
 	    headers.append('Content-Type', 'application/json');
 	    let options = new RequestOptions({ headers: headers });
 		
-		this._http.post(url + '/confirmbooking', 
-				data, {headers:headers})
-			.subscribe(
-	            	data => console.log("Confirmation email sent successfull"),
-	            	error => console.log("===> Error sending confirmation email: " + error),
-	            	() => console.log(" <=== Confirmation email sent successfull <====")
-	            );
+//		this._http.post(url + '/confirmbooking', 
+//				data, {headers:headers})
+//			.subscribe(
+//	            	data => console.log("Confirmation email sent successfull"),
+//	            	error => console.log("===> Error sending confirmation email: " + error),
+//	            	() => console.log(" <=== Confirmation email sent successfull <====")
+//	            );
 	}
 	
 	handleError(error)
@@ -181,11 +185,18 @@ export class BookingService {
 	
 	testIpn()
 	{
-		let params:string = "payment_type=instant&payment_date=Wed%20Jul%2013%202016%2015%3A58%3A27%20GMT+0100%20%28IST%29&payment_status=Completed&address_status=confirmed&payer_status=verified&first_name=John&last_name=Smith&payer_email=buyer@paypalsandbox.com&payer_id=TESTBUYERID01&address_name=John%20Smith&address_country=United%20States&address_country_code=US&address_zip=95131&address_state=CA&address_city=San%20Jose&address_street=123%20any%20street&business=seller@paypalsandbox.com&receiver_email=seller@paypalsandbox.com&receiver_id=seller@paypalsandbox.com&residence_country=US&item_name1=something&item_number1=AK-1234&tax=2.02&mc_currency=USD&mc_fee=0.44&mc_gross=12.34&mc_gross_1=12.34&mc_handling=2.06&mc_handling1=1.67&mc_shipping=3.02&mc_shipping1=1.02&txn_type=cart&txn_id=883854680&notify_version=2.1&custom=xyz123&invoice=abc1234&test_ipn=1&verify_sign=AFcWxV21C7fd0v3bYYYRCpSSRl31AeEncao9juvI7Xq0nFvvcOMm00CU";
+		let params:string = "charset=UTF-8&payer_email=odalybr@hotmail.com&receiver_email=treasurer@avenueunited.ie&address_country_code=IE"
+							+ "&payer_status=verified&receiver_id=NDYSM5YGRVU2Y&address_state=Clare&item_number=&transaction_subject="
+							+ "&address_name=Brendan O'Daly&address_status=confirmed&residence_country=IE&txn_id=0WE14547FT718715A"
+							+ "&protection_eligibility=Eligible&payment_gross=&verify_sign=AcE2uah9fzGQIYibH799J4hdOjH.ANduMFrh6.iW-t0JOFCS2jDIcIKy"
+							+ "&first_name=Brendan&payment_date=06:29:55 Jul 14, 2016 PDT&quantity=1&business=treasurer@avenueunited.ie"
+							+ "&address_country=Ireland&payment_status=Completed&custom=&last_name=O'Daly&item_name=Testing&notify_version=3.8"
+							+ "&mc_currency=EUR&address_city=Ennis&payment_type=instant&txn_type=web_accept&address_street=Reaskaun Larchill"
+							+ "&payment_fee=&payer_id=CJ9WTRLB4Z6D6&address_zip=&mc_gross=0.01&mc_fee=0.01&ipn_track_id=a089ad032fd6";
 		let url:string = "http://localhost:8080/clubRegisterApp/ipn";
 		
 		let headers = new Headers();
-	    headers.append('Content-Type', 'application/json');
+	    //headers.append('Content-Type', 'application/json');
 	    let options = new RequestOptions({ headers: headers });
 		
 	    console.log("*****--->> Sending IPN...");
@@ -201,6 +212,14 @@ export class BookingService {
 	checkOKresp(resp)
 	{
 		console.log("IPN Test: Got first response: " + resp );
+		
+		let url:string = "http://localhost:8080/clubRegisterApp/ipn";
+		this._http.post(url,"VERIFIED", null)
+			.subscribe(
+	            	data => console.log("IPN VERIFICATION sent."),
+	            	error => console.log("===> Error sending IPN VERIFICATION: " + error),
+	            	() => console.log(" <=== IPN verified successfull <====")
+	            );
 	}
 
 }

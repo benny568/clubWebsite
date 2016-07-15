@@ -6,10 +6,17 @@ import { BookingService } from '../services/booking.service';
 
 @Component({
 	template: `
-				<h1 style="color:white;">Thanks for your booking</h1>
-				<p style="color:white;">A confirmation email has been sent to the email you provided. 
-				Any queries should be directed to booking@avenueunited.ie.</p>
-				<strong style="color:white;">Thank you from Avenue United</strong>
+				<div class="panel">
+					<div class="panel-heading avenue-heading">
+						Thanks for your booking
+					</div>
+					<div class="panel-body avenue-body">
+						A confirmation email has been sent to the email you provided.<br /> 
+						Any queries should be directed to booking@avenueunited.ie<br />
+						Please present the email receipt on arrival as proof of your deposit.<br /><br />
+						Thank you from Avenue United
+					</div>
+				</div>
 			`
 })
 
@@ -24,6 +31,7 @@ export class SuccessComponent {
 		this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log("|- ngOnInit()");
         this.lg$.log("   |- calling sendEmailConfirmation()");
-		this.bk$.sendEmailConfirmation();
+		//this.bk$.sendEmailConfirmation();
+        return;
 	}
 }

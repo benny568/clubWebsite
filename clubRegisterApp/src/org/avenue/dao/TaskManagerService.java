@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -135,7 +136,7 @@ public class TaskManagerService {
 	}
 	
 	 public List<Team> getAllTeams() {
-		 log.debug("## -> getAllTeams");
+		 log.debug("## (TaskManagerService) -> getAllTeams");
 		  Connection connection = DBUtility.getConnection();
 		  List<Team> teams = new ArrayList<Team>();
 		  try {
@@ -150,7 +151,7 @@ public class TaskManagerService {
 					    team.setLrFixturesCode(rs.getInt("lrFixturesCode"));
 					    team.setLrResultsCode(rs.getInt("lrResultsCode"));
 					    team.setNoticeboard(rs.getString("noticeboard"));
-					    log.trace("##    Adding team to list: " + team);
+					    //log.trace("##    Adding team to list: " + team);
 					    teams.add(team);
 				   }
 		  } catch (SQLException e) {
@@ -158,7 +159,7 @@ public class TaskManagerService {
 		  }
 	
 		  DBUtility.closeConnection();
-		  log.debug("## <- getAllTeams");
+		  log.debug("## (TaskManagerService) <- getAllTeams");
 		  return teams;
 	}
 	 public List<Member> getMembersByTeam(int teamId)
@@ -1518,14 +1519,17 @@ public class TaskManagerService {
 			 EmailMessage msg = new EmailMessage();
 			 String destination = ipi.getPayerEmail();
 			 msg.setSubject("Avenue United: Booking Confirmation - Automated message, do not reply");
-			 msg.setMessage("Confirmation of your booking: \n" +
+			 msg.setMessage("Avenue United Fleadh 2016 Official Campsite Booking\n\n" +
+					 		"Confirmation of your booking: \n" +
 					 		"Name: " + ipi.getFirstName() + " " + ipi.getLastName() + "\n" +
+					 		"Address: "+ ipi.getAddressCity() + "," + ipi.getAddressStreet() + "\n" +
 					 		//"Phone: " + booking.getPhone() + "\n" +
 					 		//"Arrival: " + booking.getArrivalDate() + "\n" +
 					 		//"Departure: " + booking.getDepartureDate() + "\n" +
 					 		//"Number of nights: " + booking.getNumberOfNights() + "\n" +
 					 		//"Number of people: " + booking.getNumberOfPeople() + "\n" +
-					 		"Deposit: " + ipi.getPaymentAmount() +  "\n"
+					 		"Deposit Payed: " + ipi.getPaymentAmount() +  "\n" +
+					 		"Payment Date: "+ ipi.getPaymentDate() + "\n"
 					 		//"Total Due: " + booking.getTotalCharge()
 					 		);
 			 msg.setSenderAddress("booking@avenueunited.ie");
@@ -1579,9 +1583,10 @@ public class TaskManagerService {
 		 {
 			 
 			 Map<String,String> configMap = new HashMap<String,String>();
+			 IpnInfo ipni = null;
 
 			 // Endpoints are varied depending on whether sandbox OR live is chosen for mode
-			 configMap.put("mode", "sandbox");
+			 configMap.put("mode", "live");
 
 			 // Connection Information. These values are defaulted in SDK. If you want to override default values, uncomment it and add your value.
 			 // configMap.put("http.ConnectionTimeOut", "5000");
@@ -1601,12 +1606,233 @@ public class TaskManagerService {
 
              LoggingManager.info(TaskManagerService.class, "******* IPN (name:value) pair : "+ map + "  " +
                              "######### TransactionType : "+transactionType+"  ======== IPN verified : "+ isIpnVerified);
-
+             
+             if( isIpnVerified )
+             {
+            	 LoggingManager.info(TaskManagerService.class, "******* IPN verified, populating IpnInfo to send confirmation email.");
+            	 ipni = populateIpnInfoFromMap( ipnlistener.getIpnMap() );  
+            	 LoggingManager.info(TaskManagerService.class, "******* IPN verified, sending confirmation email.");
+            	 sendConfirmationEmail(ipni);
+            	 LoggingManager.info(TaskManagerService.class, "******* IPN VERIRIED, saving IPN info to db.");
+            	 storeIPN(ipni);
+             }
+             else
+             {
+            	 LoggingManager.info(TaskManagerService.class, "******* IPN NOT VERIRIED, but will send email anyway!");
+            	 ipni = populateIpnInfoFromMap( ipnlistener.getIpnMap() );  
+            	 sendConfirmationEmail(ipni);
+            	 LoggingManager.info(TaskManagerService.class, "******* IPN NOT VERIRIED, saving IPN info to db.");
+            	 storeIPN(ipni);
+             }
 			 
-			 return null;
+			 return ipni;
+			 
+			 //http://www.avenueunited.ie/#/success?token=76V53786FN483351C&amt=0.01&cc=EUR&item_name=Testing&st=Completed&tx=14H46935U12975918
 			 
 		 }
 		 
+		 IpnInfo populateIpnInfoFromMap( Map<String,String> map )
+		 {
+			 IpnInfo ipni = new IpnInfo();			 
+			 Iterator<Entry<String, String>> it = map.entrySet().iterator();
+			 String thisKey = null;
+        	 
+        	 while( it.hasNext() )
+        	 {
+        		 Map.Entry pair = (Map.Entry)it.next();
+        	     thisKey = (String) pair.getKey();
+        	     
+        	     switch( thisKey )
+        	     {
+        	     	case "payment_type":
+        	     		ipni.setPaymentType(pair.getValue().toString());
+        	     		break;
+	        	    case "payment_date":
+	        	    	ipni.setPaymentDate(pair.getValue().toString());
+	        	    case "payment_status":
+	        	    	ipni.setPaymentStatus(pair.getValue().toString());
+	        	    case "pending_reason":
+	        	    	ipni.setPendingReason(pair.getValue().toString());
+	        	    	break;
+	        	 	
+	        	    case "address_status":
+	        	    	ipni.setPaymentStatus(pair.getValue().toString());
+	        	    	break;
+	        	    case "payer_status":
+	        	    	ipni.setPayerStatus(pair.getValue().toString());
+	        	    	break;
+	        	    case "first_name":
+	        	    	ipni.setFirstName(pair.getValue().toString());
+	        	    	break;
+	        	    case "last_name":
+	        	    	ipni.setLastName(pair.getValue().toString());
+	        	    	break;
+	        	    case "payer_email":
+	        	    	ipni.setPayerEmail(pair.getValue().toString());
+	        	    	break;
+	        	    case "payer_id":
+	        	    	ipni.setPayerId(pair.getValue().toString());
+	        	    	break;	
+	        	    case "address_name":
+	        	    	ipni.setAddressName(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_country":
+	        	    	ipni.setAddressCountry(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_country_code":
+	        	    	ipni.setAddressCountryCode(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_zip":
+	        	    	ipni.setAddressZip(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_state":
+	        	    	ipni.setAddressState(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_city":
+	        	    	ipni.setAddressCity(pair.getValue().toString());
+	        	    	break;
+	        	    case "address_street":
+	        	    	ipni.setAddressStreet(pair.getValue().toString());
+	        	    	break;
+	        	 	// Basic Information
+	        	    case "business":
+	        	    	ipni.setBusiness(pair.getValue().toString());
+	        	    	break;
+	        	    case "receiver_email":
+	        	    	ipni.setReceiverEmail(pair.getValue().toString());
+	        	    	break;
+	        	    case "receiver_id":
+	        	    	ipni.setReceiverId(pair.getValue().toString());
+	        	    	break;
+	        	    case "residence_country":
+	        	    	ipni.setResidenceCountry(pair.getValue().toString());
+	        	    	break;
+	        	    case "item_name":
+	        	    	ipni.setItemName(pair.getValue().toString());
+	        	    	break;
+	        	    case "item_number":
+	        	    	ipni.setItemNumber(pair.getValue().toString());
+	        	    	break;
+	        	    case "quantity":
+	        	    	ipni.setQuantity( Integer.parseInt(pair.getValue().toString()) );
+	        	    	break;   
+	        	    case "shipping":
+	        	    	ipni.setShipping(pair.getValue().toString());
+	        	    	break;
+	        	    case "tax":
+	        	    	ipni.setTax(pair.getValue().toString());
+	        	    	break;
+	        	    	
+	        	    // Currency and Currrency Exchange
+	        	    case "mc_currency":
+	        	    	ipni.setPaymentCurrency(pair.getValue().toString());
+	        	    	break;
+	        	    case "mc_fee":
+	        	    	ipni.setMcFee(pair.getValue().toString());
+	        	    	break;
+	        	    case "mc_gross":
+		        	    ipni.setPaymentAmount(pair.getValue().toString());
+	        	    	break;
+	        	    case "mc_handling":
+	        	    	ipni.setMcHandling(pair.getValue().toString());
+	        	    	break;
+	        	    case "mc_shipping":
+	        	    	ipni.setMcShipping(pair.getValue().toString());
+	        	    	break;
+	        	    	
+	        	    // Transaction Fields
+	        	    case "txn_type":
+	        	    	ipni.setTxnType(pair.getValue().toString());
+	        	    	break;
+	        	    case "txn_id":
+	        	    	ipni.setTxnId(pair.getValue().toString());
+	        	    	break;
+	        	    case "notify_version":
+	        	    	ipni.setNotifyVersion(pair.getValue().toString());
+	        	    	break;
+	        	    case "parent_txn_id":
+	        	    	ipni.setParentTxnId(pair.getValue().toString());
+	        	    	break;
+	        	    case "reason_code":
+	        	    	ipni.setReasonCode(pair.getValue().toString());
+	        	    	break;
+	        	    case "receipt_id":
+	        	    	ipni.setReceiptId(pair.getValue().toString());
+	        	    	break;
+	        	    	
+	        	    // Advanced and Custom Information
+	        	    case "custom":
+	        	    	ipni.setCustom(pair.getValue().toString());
+	        	    	break;
+	        	    case "invoice":
+	        	    	ipni.setInvoice(pair.getValue().toString());
+	        	    	break;
+        	     }
 
+        	 }
+			 
+			 return ipni;
+		 }
+		 
+		 void storeIPN( IpnInfo ipni )
+		 {
+			 
+			  try {
+				  Connection connection = DBUtility.getConnection();
+				  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ipn ( paymentType, paymentDate, paymentStatus, "
+				   																	+ "addressStatus, payerStatus, firstName, "
+				   																	+ "lastName, payerEmail, payerId, addressName, "
+				   																	+ "addressCountry, addressCountryCode, addressZip, "
+				   																	+ "addressState, addressCity, addressStreet, business, "
+				   																	+ "receiverEmail, receiverId, residenceCountry, itemName, "
+				   																	+ "itemNumber, quantity, shipping, tax, paymentCurrency, "
+				   																	+ "mcFee, paymentAmount, txnType, "
+				   																	+ "txnId, notifyVersion, logTime ) VALUES (?, ?, ?, ?, ?, ?,"
+				   																	+ "?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, "
+				   																	+ "?,?,? )");
+				  preparedStatement.setString(1, ipni.getPaymentType());
+				  preparedStatement.setString(2, ipni.getPaymentDate());
+				  preparedStatement.setString(3, ipni.getPaymentStatus());
+				  preparedStatement.setString(4, ipni.getAddressStatus());
+				  preparedStatement.setString(5, ipni.getPayerStatus());
+				  preparedStatement.setString(6, ipni.getFirstName());
+				  preparedStatement.setString(7, ipni.getLastName());
+				  preparedStatement.setString(8, ipni.getPayerEmail());
+				  preparedStatement.setString(9, ipni.getPayerId());
+				  preparedStatement.setString(10, ipni.getAddressName());
+				  preparedStatement.setString(11, ipni.getAddressCountry());
+				  preparedStatement.setString(12, ipni.getAddressCountryCode());
+				  preparedStatement.setString(13, ipni.getAddressZip());
+				  preparedStatement.setString(14, ipni.getAddressState());
+				  preparedStatement.setString(15, ipni.getAddressCity());
+				  preparedStatement.setString(16, ipni.getAddressStreet());
+				  preparedStatement.setString(17, ipni.getBusiness());
+				  preparedStatement.setString(18, ipni.getReceiverEmail());
+				  preparedStatement.setString(19, ipni.getReceiverId());
+				  preparedStatement.setString(20, ipni.getResidenceCountry());
+				  preparedStatement.setString(21, ipni.getItemName());
+				  preparedStatement.setString(22, ipni.getItemNumber());
+				  preparedStatement.setInt(23, ipni.getQuantity());
+				  preparedStatement.setString(24, ipni.getShipping());
+				  preparedStatement.setString(25, ipni.getTax());
+				  preparedStatement.setString(26, ipni.getPaymentCurrency());
+				  preparedStatement.setString(27, ipni.getMcFee());
+				  preparedStatement.setString(28, ipni.getPaymentAmount());
+				  preparedStatement.setString(29, ipni.getTxnType());
+				  preparedStatement.setString(30, ipni.getTxnId());
+				  preparedStatement.setString(31, ipni.getNotifyVersion());
+				  preparedStatement.setString(32, new Date().toString());
+				  
+				  preparedStatement.executeUpdate();
+				  
+				  log.debug("## ADDED IPN DETALS");
+			
+				  } catch (SQLException e) {
+				   e.printStackTrace();
+				  }
+			  
+			  DBUtility.closeConnection();
+			  return;
+		 }
 
 }

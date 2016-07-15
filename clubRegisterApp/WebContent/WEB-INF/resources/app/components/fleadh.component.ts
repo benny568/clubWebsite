@@ -14,6 +14,7 @@ import { DepartureDatepickerComponent } from './departure-datepicker.component';
 import { NumberOfPeopleComponent } from './number-of-people.component';
 import { InstructionsComponent } from '../booking/instructions.component';
 import { TandCComponent } from '../booking/tandc.component';
+import { TestComponent } from '../booking/test.component';
 
 @Component({
 	template: `
@@ -118,7 +119,8 @@ import { TandCComponent } from '../booking/tandc.component';
 	              DepartureDatepickerComponent,
 	              NumberOfPeopleComponent,
 	              InstructionsComponent,
-	              TandCComponent ]
+	              TandCComponent,
+	              TestComponent ]
 	
 })
 
