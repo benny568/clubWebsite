@@ -12,7 +12,9 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     superstatic = require( 'superstatic' ),
     rename     = require('gulp-rename'),
-	uglify     = require('gulp-uglify');
+	uglify     = require('gulp-uglify'),
+	gulpUtil   = require('gulp-util'),
+	minifyCSS  = require('gulp-minify-css');
 
 var config = new Config();
 
@@ -72,6 +74,18 @@ gulp.task('copy-styles', function() {
 		.pipe(gulp.dest(config.tsOutputPath + '/styles'));
 });
 
+gulp.task('minify-js', function() {
+    return gulp.src(config.allJavaScript)
+        .pipe(uglify().on('error', gulpUtil.log))
+        .pipe(gulp.dest(config.rootOutput));
+});
+
+gulp.task('minify-css', function() {
+    return gulp.src(config.sourceApp + '/styles/*.css')
+        .pipe(minifyCSS())
+        .pipe(gulp.dest(config.tsOutputPath + '/styles'));
+});
+
 /**
  * Remove all generated JavaScript files from TypeScript compilation.
  */
@@ -108,7 +122,9 @@ gulp.task('serve', ['compile-ts', 'watch'], function() {
   });
 });
 
-gulp.task('default', ['ts-lint', 'compile-ts', 'rel-htmls', 'copy-images', 'copy-styles']);
+gulp.task('default', ['ts-lint', 'compile-ts']);
+
+gulp.task('min', ['rel-htmls', 'copy-images', 'minify-js', 'minify-css']);
 
 
 

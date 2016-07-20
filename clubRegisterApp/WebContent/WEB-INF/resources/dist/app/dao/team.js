@@ -1,18 +1,1 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var Team;
-    return {
-        setters:[],
-        execute: function() {
-            Team = (function () {
-                function Team() {
-                }
-                return Team;
-            }());
-            exports_1("Team", Team);
-        }
-    }
-});
-
-//# sourceMappingURL=team.js.map
+System.register([],function(t,e){"use strict";var n;e&&e.id;return{setters:[],execute:function(){n=function(){function t(){}return t}(),t("Team",n)}}});
