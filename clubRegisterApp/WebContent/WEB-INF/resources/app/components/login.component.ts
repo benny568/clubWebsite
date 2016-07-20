@@ -10,9 +10,19 @@ import { SessionDataService } from '../services/session-data.service';
 					<div class="loginbox">
 						<div class="loginhead"><i class="glyphicon glyphicon-user" style="align:right;margin-right:0px;"></i> Please Login
 						<div class="loginbody">
-							<form #f="ngForm" (ngSubmit)="onSubmit(f.value)" > <!-- action="<c:url value='j_spring_security_check' />" method='POST'> -->
-								<input type="text" name='j_username' id="j_username" ngControl="username" placeholder="Username" required/>
-								<input type="password" name='j_password' id="j_password" ngControl="password" placeholder="Password" required/>
+							<form #f="ngForm" (ngSubmit)="onSubmit(f.value)" >
+								<input 	type="text" 
+										name='j_username' 
+										id="j_username" 
+										ngControl="username" 
+										placeholder="Username" 
+										required />
+								<input 	type="password" 
+										name='j_password' 
+										id="j_password" 
+										ngControl="password" 
+										placeholder="Password" 
+										required />
 								<input type="submit" value="Login Now">
 							</form>
 						</div> <!-- end loginbody -->
@@ -84,7 +94,7 @@ export class LoginComponent {
 		let hdr:string = "## " +  moduleName;
 	
 		// (1) Set the indentation according to the depth
-		for( i=0; i<depth; i++ )
+		for ( i = 0; i < depth; i++ )
 		{
 			hdr += " ";
 		}

@@ -44,7 +44,8 @@ import {Button} from 'primeng/primeng';
 							
 							No electrical connections are available. Bring plenty batteries!<br />
 							
-							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.  This is our soccer pitch where our kids play matches. NO Glass means NO Glass. Plastic only. This WILL be enforced.<br />  
+							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.  This is our soccer pitch where our kids play matches. 
+							NO Glass means NO Glass. Plastic only. This WILL be enforced.<br />  
 							
 							You must be vacated by 1pm on Mon 22 Aug.<br />
 							

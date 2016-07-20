@@ -16,7 +16,7 @@ import { AppComponent }         from './app.component';
 import { APP_ROUTER_PROVIDERS } from './app.routes';
 import { SessionDataService }   from './services/session-data.service';
 import { BookingService }       from './services/booking.service';
-import { CommonService }        from './services/common.service'
+import { CommonService }        from './services/common.service';
 
 bootstrap(AppComponent, [
     APP_ROUTER_PROVIDERS,

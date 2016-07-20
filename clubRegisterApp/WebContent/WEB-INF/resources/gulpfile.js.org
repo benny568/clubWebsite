@@ -1,0 +1,224 @@
+var gulp       = require('gulp');
+var concat     = require('gulp-concat');
+var rename     = require('gulp-rename');
+var gulpif     = require('gulp-if');
+var uglify     = require('gulp-uglify');
+var minifyCSS  = require('gulp-minify-css');
+var typescript = require('gulp-tsc');
+var del        = require('del');
+var gulpUtil   = require('gulp-util');
+
+//script paths
+var srcFiles = 'app/**/*.ts',
+	srcDir = 'app',
+	jsFiles = 'app/**/*.js',
+    jsDest = 'dist/app',
+    cssFiles = 'app/**/*.css',
+    cssDest = 'dist/app',
+    angularFiles = 'node_modules/@angular/common/bundles/**',
+    angularDest = 'node_modules/@angular/common/bundles',
+    imageSrc = 'images/**/**.*',
+    imageDest = 'dist/images';
+
+gulp.task( 'default', ['clean','minify-js', 'minify-css'] );
+
+gulp.task('compile', function(){
+	  gulp.src(srcFiles)
+	    .pipe(typescript())
+	    .pipe(gulp.dest(srcDir))
+	});
+
+gulp.task('clean', function() {
+	return del([jsDest, cssDest, angularDest]);
+});
+
+gulp.task('watch', function() {
+	gulp.watch('app/**/*.js', ['minify-js', 'minify-css', 'copy-images'] );
+});
+
+gulp.task('minify-js', function() {
+    return gulp.src(jsFiles)
+        .pipe(uglify().on('error', gulpUtil.log))
+        .pipe(gulp.dest(jsDest));
+});
+
+gulp.task('minify-css', function() {
+    return gulp.src(cssFiles)
+        .pipe(minifyCSS())
+        .pipe(gulp.dest(cssDest));
+});
+
+gulp.task('minify-angular', function() {
+	return gulp.src(angularFiles)
+		.pipe(uglify())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest(angularDest));
+});
+
+
+gulp.task('copy-images', function() {
+	return gulp.src(imageSrc)
+		.pipe(gulp.dest(imageDest));
+});
+
+var condition = function (filename) {
+	
+	return true;
+}
+
+
+gulp.task('nm', ['nm1',
+                 'nm2',
+                 'nm3',
+                 'nm4',
+                 'nm5',
+                 'nm6',
+                 'nm6.2',
+                 'nm7',
+                 'nm7.2',
+                 'nm8',
+                 'nm8.2',
+                 'nm9',
+                 'nm9.2',
+                 'nm10',
+                 'nm10.2',
+                 'nm11',
+                 'nm11.2',
+                 'nm12',
+                 'nm12.2',
+                 'nm13',
+                 'nm13.2'
+                 ]);
+gulp.task('nm1', function() {
+	return gulp.src('node_modules/@angular/core/src/animation/metadata.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/animation/'));
+});
+gulp.task('nm2', function() {
+	return gulp.src('node_modules/@angular/core/src/di/reflective_injector.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/di/'));
+});
+gulp.task('nm3', function() {
+	return gulp.src('node_modules/@angular/router/url_tree.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/router/'));
+});
+gulp.task('nm4', function() {
+	return gulp.src('node_modules/primeng/components/datatable/datatable.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/primeng/components/datatable/'));
+});
+gulp.task('nm5', function() {
+	return gulp.src('node_modules/primeng/components/datatable/datatable.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/primeng/components/datatable/'));
+});
+gulp.task('nm6', function() {
+	return gulp.src('node_modules/@angular/router/router_state.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/router/'));
+});
+gulp.task('nm6.2', function() {
+	return gulp.src('node_modules/@angular/router/router_state.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/router/'));
+});
+
+// @angular/core/src/metadata
+gulp.task('nm7', function() {
+	return gulp.src('node_modules/@angular/core/src/metadata/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/core/src/metadata/'));
+});
+gulp.task('nm7.2', function() {
+	return gulp.src('node_modules/@angular/core/src/metadata/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/metadata/'));
+});
+
+// @angular/http
+gulp.task('nm8', function() {
+	return gulp.src('node_modules/@angular/http/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/http/'));
+});
+gulp.task('nm8.2', function() {
+	return gulp.src('node_modules/@angular/http/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/http/'));
+});
+
+//@angular/router/directives
+gulp.task('nm9', function() {
+	return gulp.src('node_modules/@angular/router/directives/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/router/directives/'));
+});
+gulp.task('nm9.2', function() {
+	return gulp.src('node_modules/@angular/router/directives/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/router/directives/'));
+});
+
+//@angular/core/src
+gulp.task('nm10', function() {
+	return gulp.src('node_modules/@angular/core/src/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/core/src/'));
+});
+gulp.task('nm10.2', function() {
+	return gulp.src('node_modules/@angular/core/src/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/'));
+});
+
+//@angular/core/src/di
+gulp.task('nm11', function() {
+	return gulp.src('node_modules/@angular/core/src/di/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/core/src/di/'));
+});
+gulp.task('nm11.2', function() {
+	return gulp.src('node_modules/@angular/core/src/di/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/di/'));
+});
+
+//@angular/core/src/zone
+gulp.task('nm12', function() {
+	return gulp.src('node_modules/@angular/core/src/zone/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/@angular/core/src/zone/'));
+});
+gulp.task('nm12.2', function() {
+	return gulp.src('node_modules/@angular/core/src/zone/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('node_modules/@angular/core/src/zone/'));
+});
+
+//@angular/core/src/zone
+gulp.task('nm13', function() {
+	return gulp.src('node_modules/typescript/lib/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/typescript/lib/'));
+});
+gulp.task('nm13.2', function() {
+	return gulp.src('node_modules/typescript/lib/*.js')
+		.pipe(uglify())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('node_modules/typescript/lib/'));
+});
+
+// systemjs/dist/*.js
+gulp.task('nm14', function() {
+	return gulp.src('node_modules/systemjs/dist/*.js')
+		.pipe(rename({ suffix: '.2' }))
+		.pipe(gulp.dest('node_modules/systemjs/dist/'));
+});
+gulp.task('nm14.2', function() {
+	return gulp.src('node_modules/systemjs/dist/*.js')
+		.pipe(uglify())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('node_modules/systemjs/dist/'));
+});

@@ -40,7 +40,7 @@ export class SponsorsComponent {
     
     constructor( private _dataService: SessionDataService, private lg$: LoggerService ) { }
 
-    ngOnInit(){
+    ngOnInit() {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log(" ngOnInit()");
         this._dataService.loadCurrentSponsors();

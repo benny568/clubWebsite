@@ -123,7 +123,7 @@ import { BookingService } from '../services/booking.service';
 	
 })
 
-export class BookingStage3Component{
+export class BookingStage3Component {
 	componentName:string = 'BookingStage3Component';
 	logdepth:number = 4;
 	myForm: ControlGroup;
@@ -147,25 +147,25 @@ export class BookingStage3Component{
 
 	submit( value: any )
 	{
-		if( !this.checkName(value.firstname) )
+		if ( !this.checkName( value.firstname ) )
 		{
 			this.showFNError();
 			return;
 		}
 		
-		if( !this.checkName(value.surname) )
+		if ( !this.checkName( value.surname ) )
 		{
 			this.showsSNError();
 			return;
 		}
 		
-		if( !this.checkEmail(value.email) )
+		if ( !this.checkEmail( value.email ) )
 		{
 			this.showEmailError();
 			return;
 		}
 		
-		if( !this.checkPh(value.phone) )
+		if ( !this.checkPh( value.phone ) )
 		{
 			this.showPhError();
 			return;
@@ -178,9 +178,9 @@ export class BookingStage3Component{
 		this.bk$.vehicalReg = value.vehicalReg;
 		
 		
-		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
-		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
-		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
+		this.lg$.log("---- Arrival Date: " + this.bk$.arrivalDate );
+		this.lg$.log("---- Departure Date: " + this.bk$.departureDate );
+		this.lg$.log("---- Number of People: " + this.bk$.numberOfPeople );
 		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		this.lg$.log("---- Firstname: " + this.bk$.firstname);
 		this.lg$.log("---- Surname: " + this.bk$.surname);
@@ -200,9 +200,10 @@ export class BookingStage3Component{
 	{
 		this.lg$.log("----> checkName(" + name + ")");
 		
-		if( (name != undefined) && (name != '') )
+		if ( ( name !== undefined ) && ( name !== '' ) )
+		{
 			return /^\w+/.test(name);
-		else
+		} else
 		{
 			this.lg$.log("----> checkName(" + name + ") undefined or blank!");
 			return false;
@@ -213,9 +214,10 @@ export class BookingStage3Component{
 	{
 		this.lg$.log("----> checkEmail(" + email + ")");
 		
-		if( (email != undefined) && (email != '') )
+		if ( ( email !== undefined ) && ( email !== '' ) )
+		{
 			return /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i.test(email);
-		else
+		} else
 		{
 			this.lg$.log("----> checkEmail(" + email + ") undefined or blank!");
 			return false;
@@ -228,12 +230,16 @@ export class BookingStage3Component{
 		this.lg$.log("== " + /^\d{10}$/.test(phone) );
 		this.lg$.log("== " + /^\+\d{12}$/.test(phone) );
 		
-		if( (phone != undefined) && (phone != '') )
-			if( (/^\d{10}$/.test(phone)) || (/^\+\d{12}$/.test(phone)) )
+		if ( ( phone !== undefined ) && ( phone !== '' ) )
+		{
+			if ( (/^\d{10}$/.test(phone)) || (/^\+\d{12}$/.test(phone)) )
+			{
 				return true;
-			else
+			} else
+			{
 				return false;
-		else
+			}
+		} else
 		{
 			this.lg$.log("----> checkPh(" + phone + ") undefined or blank!");
 			return false;

@@ -45,6 +45,6 @@ import { SessionDataService } from '../services/session-data.service';
 		`
 })
 
-export class AdminOverviewComponent{
+export class AdminOverviewComponent {
 	constructor( private _dataService: SessionDataService ) { }
 }

@@ -3,7 +3,7 @@ import { Component }      from '@angular/core';
 import {Dialog} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
 import {Footer} from 'primeng/primeng';
-import {Button} from 'primeng/primeng'
+import {Button} from 'primeng/primeng';
 
 @Component({
 	selector: "instructions",

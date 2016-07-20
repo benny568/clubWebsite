@@ -93,7 +93,7 @@ import { NumberOfPeople4ParkingComponent } from './number-of-people-4parking.com
 	
 })
 
-export class BookingStage1Component{
+export class BookingStage1Component {
 	componentName:string = 'BookingStage1Component';
 	logdepth:number = 4;
 	parkingRequired:boolean = false;
@@ -108,7 +108,7 @@ export class BookingStage1Component{
 	submit()
 	{
 		this.lg$.log("---- parkingRequired: " + this.parkingRequired);
-		if( this.bk$.parking > 0 )
+		if ( this.bk$.parking > 0 )
 		{
 			this.lg$.log("Updating the deposit amount, current: " + this.bk$.deposit + ", parking: " + this.bk$.parking);
 			this.bk$.deposit += this.bk$.parking * 10;

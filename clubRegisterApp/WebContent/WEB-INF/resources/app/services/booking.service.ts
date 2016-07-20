@@ -72,7 +72,7 @@ export class BookingService {
 		data.surname = this.surname;
 		data.email = this.email;
 		data.phone = this.phone;
-		data.country = this.country != undefined ? this.country : 'None';
+		data.country = this.country !== undefined ? this.country : 'None';
 		data.arrivalDate = this.arrivalDate;
 		data.departureDate = this.departureDate;
 		data.numberOfNights = this.numberOfNights;
@@ -108,7 +108,7 @@ export class BookingService {
 		data.surname = this.surname;
 		data.email = this.email;
 		data.phone = this.phone;
-		data.country = this.country != undefined ? this.country : 'None';
+		data.country = this.country !== undefined ? this.country : 'None';
 		data.arrivalDate = this.arrivalDate;
 		data.departureDate = this.departureDate;
 		data.numberOfNights = this.numberOfNights;
@@ -146,20 +146,20 @@ export class BookingService {
 	{
 		console.error(
 				"BOOKING ERROR: There was an error adding the following to the database: [ " +
-				"firstname: "+this.firstname + ", " +
-				"surname:  "+this.surname + ", " +
-				"email:  "+this.email + ", " +
-				"phone:  "+this.phone + ", " +
-				"country:  "+this.country + ", " +
-				"arrivalDate:  "+this.arrivalDate + ", " +
-				"departureDate:  "+this.departureDate + ", " +
-				"numberOfNights:  "+this.numberOfNights + ", " +
-				"numberOfPeople:  "+this.numberOfPeople + ", " +
-				"parking:  "+this.parking + ", " +
-				"vehicalReg:  "+this.vehicalReg + ", " +
-				"totalCharge:  "+this.totalCharge + ", " +
-				"deposit:  "+this.deposit + ", " +
-				"tandc:  "+this.tandc + " ]"
+				"firstname: " + this.firstname + ", " +
+				"surname:  " + this.surname + ", " +
+				"email:  " + this.email + ", " +
+				"phone:  " + this.phone + ", " +
+				"country:  " + this.country + ", " +
+				"arrivalDate:  " + this.arrivalDate + ", " +
+				"departureDate:  " + this.departureDate + ", " +
+				"numberOfNights:  " + this.numberOfNights + ", " +
+				"numberOfPeople:  " + this.numberOfPeople + ", " +
+				"parking:  " + this.parking + ", " +
+				"vehicalReg:  " + this.vehicalReg + ", " +
+				"totalCharge:  " + this.totalCharge + ", " +
+				"deposit:  " + this.deposit + ", " +
+				"tandc:  " + this.tandc + " ]"
 				);
 	}
 		
@@ -167,20 +167,20 @@ export class BookingService {
 	{
 		console.log("Booking Details:");
 		console.log("================================");
-		console.log("firstname: "+this.firstname); 
-		console.log("surname:  "+this.surname);
-		console.log("email:  "+this.email);
-		console.log("phone:  "+this.phone);
-		console.log("country:  "+this.country);
-		console.log("arrivalDate:  "+this.arrivalDate);
-		console.log("departureDate:  "+this.departureDate);
-		console.log("numberOfNights:  "+this.numberOfNights);
-		console.log("numberOfPeople:  "+this.numberOfPeople);
-		console.log("parking:  "+this.parking);
-		console.log("vehicalReg:  "+this.vehicalReg);
-		console.log("totalCharge:  "+this.totalCharge);
-		console.log("deposit:  "+this.deposit);
-		console.log("tandc:  "+this.tandc);
+		console.log("firstname: " + this.firstname); 
+		console.log("surname:  " + this.surname);
+		console.log("email:  " + this.email);
+		console.log("phone:  " + this.phone);
+		console.log("country:  " + this.country);
+		console.log("arrivalDate:  " + this.arrivalDate);
+		console.log("departureDate:  " + this.departureDate);
+		console.log("numberOfNights:  " + this.numberOfNights);
+		console.log("numberOfPeople:  " + this.numberOfPeople);
+		console.log("parking:  " + this.parking);
+		console.log("vehicalReg:  " + this.vehicalReg);
+		console.log("totalCharge:  " + this.totalCharge);
+		console.log("deposit:  " + this.deposit);
+		console.log("tandc:  " + this.tandc);
 	}
 	
 	testIpn()
@@ -214,7 +214,7 @@ export class BookingService {
 		console.log("IPN Test: Got first response: " + resp );
 		
 		let url:string = "http://localhost:8080/clubRegisterApp/ipn";
-		this._http.post(url,"VERIFIED", null)
+		this._http.post( url, "VERIFIED", null )
 			.subscribe(
 	            	data => console.log("IPN VERIFICATION sent."),
 	            	error => console.log("===> Error sending IPN VERIFICATION: " + error),

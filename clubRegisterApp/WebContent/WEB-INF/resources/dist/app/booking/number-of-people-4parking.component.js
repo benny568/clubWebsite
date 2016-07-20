@@ -1,1 +1,55 @@
-System.register(["@angular/core","@angular/common","primeng/primeng","../services/logger.service","../services/booking.service"],function(e,t){"use strict";var n,r,i,o,c,f,s=(t&&t.id,this&&this.__decorate||function(e,t,n,r){var i,o=arguments.length,c=o<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,n):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)c=Reflect.decorate(e,t,n,r);else for(var f=e.length-1;f>=0;f--)(i=e[f])&&(c=(o<3?i(c):o>3?i(t,n,c):i(t,n))||c);return o>3&&c&&Object.defineProperty(t,n,c),c}),a=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};return{setters:[function(e){n=e},function(e){r=e},function(e){i=e},function(e){o=e},function(e){c=e}],execute:function(){f=function(){function e(e,t){this.lg$=e,this.bk$=t,this.componentName="NumberOfPeople4ParkingComponent",this.logdepth=4}return e=s([n.Component({selector:"number-of-people-4parking",template:'\n\n\t\t\t<p-spinner size="2" \n\t\t\t           [(ngModel)]="bk$.parking" \n\t\t\t           [min]="0" \n\t\t\t           [max]="2" >\n\t\t\t</p-spinner>\n\n\t\t\t',directives:[r.FORM_DIRECTIVES,i.Spinner]}),a("design:paramtypes",[o.LoggerService,c.BookingService])],e)}(),e("NumberOfPeople4ParkingComponent",f)}}});
+System.register(['@angular/core', '@angular/common', 'primeng/primeng', '../services/logger.service', '../services/booking.service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, common_1, primeng_1, logger_service_1, booking_service_1;
+    var NumberOfPeople4ParkingComponent;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (primeng_1_1) {
+                primeng_1 = primeng_1_1;
+            },
+            function (logger_service_1_1) {
+                logger_service_1 = logger_service_1_1;
+            },
+            function (booking_service_1_1) {
+                booking_service_1 = booking_service_1_1;
+            }],
+        execute: function() {
+            NumberOfPeople4ParkingComponent = (function () {
+                function NumberOfPeople4ParkingComponent(lg$, bk$) {
+                    this.lg$ = lg$;
+                    this.bk$ = bk$;
+                    this.componentName = 'NumberOfPeople4ParkingComponent';
+                    this.logdepth = 4;
+                }
+                NumberOfPeople4ParkingComponent = __decorate([
+                    core_1.Component({
+                        selector: 'number-of-people-4parking',
+                        template: "\n\n\t\t\t<p-spinner size=\"2\" \n\t\t\t           [(ngModel)]=\"bk$.parking\" \n\t\t\t           [min]=\"0\" \n\t\t\t           [max]=\"2\" >\n\t\t\t</p-spinner>\n\n\t\t\t",
+                        directives: [common_1.FORM_DIRECTIVES, primeng_1.Spinner]
+                    }), 
+                    __metadata('design:paramtypes', [logger_service_1.LoggerService, booking_service_1.BookingService])
+                ], NumberOfPeople4ParkingComponent);
+                return NumberOfPeople4ParkingComponent;
+            }());
+            exports_1("NumberOfPeople4ParkingComponent", NumberOfPeople4ParkingComponent);
+        }
+    }
+});
+
+//# sourceMappingURL=number-of-people-4parking.component.js.map

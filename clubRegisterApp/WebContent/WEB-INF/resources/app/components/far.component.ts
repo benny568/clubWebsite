@@ -11,7 +11,9 @@ import { LeagueRepublicResults } from './leagueRepublicResults.component';
 				<div id="wrap">
 				    <div class="container t1">
 				        <div class="row">
-				            <div class="lead a-orange-text" style="margin-left:40px;">Fixtures and Results for <em>{{ _dataService.dsCurrentTeam.name }}</em> team.</div>
+				            <div class="lead a-orange-text" style="margin-left:40px;">
+				            	Fixtures and Results for <em>{{ _dataService.dsCurrentTeam.name }}</em> team.
+				            </div>
 				        </div>
 				        <div class="row" style="margin-left:20px;">
 				            <div class="col-md-6">
@@ -46,6 +48,6 @@ import { LeagueRepublicResults } from './leagueRepublicResults.component';
     directives: [LeagueRepublicResults]
 })
 
-export class FarViewComponent{
-    constructor(private _dataService: SessionDataService) { }
+export class FarViewComponent {
+    constructor( private _dataService: SessionDataService ) { }
 }

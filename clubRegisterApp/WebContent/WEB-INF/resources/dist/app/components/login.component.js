@@ -1,1 +1,95 @@
-System.register(["@angular/core","@angular/common","@angular/router","../services/session-data.service"],function(t,e){"use strict";var n,o,r,i,s,a=(e&&e.id,this&&this.__decorate||function(t,e,n,o){var r,i=arguments.length,s=i<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(t,e,n,o);else for(var a=t.length-1;a>=0;a--)(r=t[a])&&(s=(i<3?r(s):i>3?r(e,n,s):r(e,n))||s);return i>3&&s&&Object.defineProperty(e,n,s),s}),c=this&&this.__metadata||function(t,e){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(t,e)};return{setters:[function(t){n=t},function(t){o=t},function(t){r=t},function(t){i=t}],execute:function(){s=function(){function t(t,e){this._dataService=t,this._router=e,this.componentName="LoginComponent",this.logdepth=2,this.loghdr="",this.loghdr=this.setLogHdr(this.logdepth,this.componentName)}return t.prototype.onSubmit=function(t){var e=this;console.log(this.loghdr+"->onSubmit(): you submitted value:"+t);var n=this._dataService.authenticate(t.username,t.password);n.subscribe(function(n){return e.getUserDetails(t.username,n)},function(t){return console.log("ERROR: "+t)})},t.prototype.getUserDetails=function(t,e){var n=this;console.log(this.loghdr+"->getUserDetails("+t+"): "+e),this._dataService.dsCurrentUser.username=t;var o=this._dataService.getUser(t);o.subscribe(function(t){return n._dataService.dsCurrentUser=t},function(t){return console.log("ERROR: "+t)},function(){return n.goToAdmin(t)})},t.prototype.goToAdmin=function(t){console.log(this.loghdr+"->goToAdmin("+t+")"),this._dataService.dsCurrentUser.username=t,this._dataService.dsAuthenticated=!0,console.log("######>>>>>> AUTHENTICATED: ["+this._dataService.dsCurrentUser.username+"] <<<<<<#####"),console.log("Authenticated: "+this._dataService.dsAuthenticated),this._router.navigate(["AdminHome",{}])},t.prototype.setLogHdr=function(t,e){var n=0,o=4*t,r="## "+e;for(n=0;n<o;n++)r+=" ";return r+="|-"},t=a([n.Component({template:'\n\t\t\t\t<div class="container">\n\t\t\t\t\t<div class="loginbox">\n\t\t\t\t\t\t<div class="loginhead"><i class="glyphicon glyphicon-user" style="align:right;margin-right:0px;"></i> Please Login\n\t\t\t\t\t\t<div class="loginbody">\n\t\t\t\t\t\t\t<form #f="ngForm" (ngSubmit)="onSubmit(f.value)" > <!-- action="<c:url value=\'j_spring_security_check\' />" method=\'POST\'> -->\n\t\t\t\t\t\t\t\t<input type="text" name=\'j_username\' id="j_username" ngControl="username" placeholder="Username" required/>\n\t\t\t\t\t\t\t\t<input type="password" name=\'j_password\' id="j_password" ngControl="password" placeholder="Password" required/>\n\t\t\t\t\t\t\t\t<input type="submit" value="Login Now">\n\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t</div> <!-- end loginbody -->\n\t\t\t\t\t</div> <!-- end loginbox -->\n\t\t\t\t</div>\n\t',directives:[o.FORM_DIRECTIVES]}),c("design:paramtypes",[i.SessionDataService,r.Router])],t)}(),t("LoginComponent",s)}}});
+System.register(['@angular/core', '@angular/common', '@angular/router', '../services/session-data.service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, common_1, router_1, session_data_service_1;
+    var LoginComponent;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (session_data_service_1_1) {
+                session_data_service_1 = session_data_service_1_1;
+            }],
+        execute: function() {
+            LoginComponent = (function () {
+                function LoginComponent(_dataService, _router) {
+                    this._dataService = _dataService;
+                    this._router = _router;
+                    this.componentName = 'LoginComponent';
+                    this.logdepth = 2;
+                    this.loghdr = "";
+                    this.loghdr = this.setLogHdr(this.logdepth, this.componentName);
+                }
+                LoginComponent.prototype.onSubmit = function (form) {
+                    var _this = this;
+                    console.log(this.loghdr + "->onSubmit(): you submitted value:" + form);
+                    var subscriber = this._dataService.authenticate(form.username, form.password);
+                    subscriber.subscribe(function (data) { return _this.getUserDetails(form.username, data); }, function (err) { return console.log("ERROR: " + err); });
+                };
+                LoginComponent.prototype.getUserDetails = function (username, data) {
+                    var _this = this;
+                    console.log(this.loghdr + "->getUserDetails(" + username + "): " + data);
+                    this._dataService.dsCurrentUser.username = username;
+                    var subscriber = this._dataService.getUser(username);
+                    subscriber.subscribe(function (data) { return _this._dataService.dsCurrentUser = data; }, function (err) { return console.log("ERROR: " + err); }, function () { return _this.goToAdmin(username); });
+                };
+                LoginComponent.prototype.goToAdmin = function (username) {
+                    console.log(this.loghdr + "->goToAdmin(" + username + ")");
+                    this._dataService.dsCurrentUser.username = username;
+                    this._dataService.dsAuthenticated = true;
+                    console.log("######>>>>>> AUTHENTICATED: [" + this._dataService.dsCurrentUser.username + "] <<<<<<#####");
+                    console.log("Authenticated: " + this._dataService.dsAuthenticated);
+                    this._router.navigate(['AdminHome', {}]);
+                };
+                /**********************************************************
+                 * Name:		setLogHdr()
+                 * Description:	Sets up the correct indentation and header
+                 * 				information for the log messages.
+                 * Scope:		Internal
+                 * Params in:
+                 * Return:
+                 **********************************************************/
+                LoginComponent.prototype.setLogHdr = function (logdepth, moduleName) {
+                    var i = 0;
+                    var depth = logdepth * 4;
+                    var hdr = "## " + moduleName;
+                    // (1) Set the indentation according to the depth
+                    for (i = 0; i < depth; i++) {
+                        hdr += " ";
+                    }
+                    // (2) Add on call stack indicator
+                    hdr += "|-";
+                    return hdr;
+                };
+                LoginComponent = __decorate([
+                    core_1.Component({
+                        //templateUrl: 'app/htmltemplates/login.component.html',
+                        template: "\n\t\t\t\t<div class=\"container\">\n\t\t\t\t\t<div class=\"loginbox\">\n\t\t\t\t\t\t<div class=\"loginhead\"><i class=\"glyphicon glyphicon-user\" style=\"align:right;margin-right:0px;\"></i> Please Login\n\t\t\t\t\t\t<div class=\"loginbody\">\n\t\t\t\t\t\t\t<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f.value)\" >\n\t\t\t\t\t\t\t\t<input \ttype=\"text\" \n\t\t\t\t\t\t\t\t\t\tname='j_username' \n\t\t\t\t\t\t\t\t\t\tid=\"j_username\" \n\t\t\t\t\t\t\t\t\t\tngControl=\"username\" \n\t\t\t\t\t\t\t\t\t\tplaceholder=\"Username\" \n\t\t\t\t\t\t\t\t\t\trequired />\n\t\t\t\t\t\t\t\t<input \ttype=\"password\" \n\t\t\t\t\t\t\t\t\t\tname='j_password' \n\t\t\t\t\t\t\t\t\t\tid=\"j_password\" \n\t\t\t\t\t\t\t\t\t\tngControl=\"password\" \n\t\t\t\t\t\t\t\t\t\tplaceholder=\"Password\" \n\t\t\t\t\t\t\t\t\t\trequired />\n\t\t\t\t\t\t\t\t<input type=\"submit\" value=\"Login Now\">\n\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t</div> <!-- end loginbody -->\n\t\t\t\t\t</div> <!-- end loginbox -->\n\t\t\t\t</div>\n\t",
+                        directives: [common_1.FORM_DIRECTIVES]
+                    }), 
+                    __metadata('design:paramtypes', [session_data_service_1.SessionDataService, router_1.Router])
+                ], LoginComponent);
+                return LoginComponent;
+            }());
+            exports_1("LoginComponent", LoginComponent);
+        }
+    }
+});
+
+//# sourceMappingURL=login.component.js.map

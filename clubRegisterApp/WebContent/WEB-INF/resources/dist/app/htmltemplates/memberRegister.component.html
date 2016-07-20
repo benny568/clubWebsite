@@ -1,0 +1,48 @@
+		<div class="container">
+			<div style="margin-left:auto;margin-right:auto;width:80%;">
+					<div class="row">
+						<div class="col-md-10">
+							<h3>Club Register 2016 Season</h3>
+						</div>
+						<div class="col-md-2">
+							<div  style="float:right; align:bottom;">
+								<button type="button" class="btn btn-warning btn-xs" (click)="allMembersAdmin()" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">All Members</button>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div *ngFor="let team of _dataService.dsTeams">
+							<div class="panel">
+								<div class="panel-heading avenue-heading" style="min-height:35px;">
+									<div class="col-md-10 teamHdr" *ngIf="!showArray[team.id]"><span class="glyphicon glyphicon-triangle-bottom" (click)="getMembers4team(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
+									<div class="col-md-10 teamHdr" *ngIf="showArray[team.id]"><span class="glyphicon glyphicon-triangle-top" (click)="toggleView(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
+									<div  style="float:right; align:bottom;">
+										<button type="button" class="btn btn-warning btn-xs" ng-click="addMember(team.id)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Member</button>
+									</div>
+								</div>
+					    		<div class="panel-body avenue-body" style="height:100%;">
+									<div *ngIf="showArray[team.id]">
+										<div class="row">
+										    <div class="col-md-3 tblHdr">Name</div>
+										    <div class="col-md-5 tblHdr">Address</div>
+										    <div class="col-md-2 tblHdr">Phone</div>
+										    <div class="col-md-2 tblHdr">Operations</div>
+										</div> <!-- end of row -->
+										<div *ngFor="let member of _dataService.dsTeamMembers[team.id]" class="row light-line">							    
+								    		<div class="col-md-3">{{member.name}}</div>
+											<div class="col-md-5">{{member.address}}</div>
+											<div class="col-md-2">{{member.phone}}</div>
+								    		<div class="col-md-2">
+										    	<i *ngIf="(member.amount>0)" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
+										    	<i *ngIf="!(member.amount>0)" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
+										    	<i (click)="editMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
+										    	<i (click)="deleteMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
+										    </div>	
+									    </div> <!-- end row -->
+									</div> <!-- end ng-show -->
+								</div> <!-- end panel body -->
+							</div> <!-- end of panel -->			
+						</div> <!-- End of ng-repeat -->
+					</div> <!-- end row -->
+			</div>
+		</div> <!-- end of container -->

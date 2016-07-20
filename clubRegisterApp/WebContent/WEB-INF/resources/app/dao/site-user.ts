@@ -15,8 +15,5 @@ class User {
     enabled:number;
     roles:ArrayLike<string>;
     permissions:MyTeams;
-    
-    constructor() {
-        
-    }
+
 }

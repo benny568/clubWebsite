@@ -115,7 +115,9 @@ enableProdMode();
                 </ul>
             </li>
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> Fixtures &amp; Results<span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                	<i class="fa fa-list"></i> Fixtures &amp; Results<span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
                         <li><a [routerLink]="['/farView']">{{team.name}}</a></li>
@@ -134,30 +136,12 @@ enableProdMode();
 					<li><a [routerLink]="['/adminTutorials']"><i class="fa fa-book"></i> Tutorials</a></li>
 					<li><a [routerLink]="['/memberRegister']"><i class="fa fa-child"></i> Members</a></li>
 					<li><a *ngIf="d$.hasPermission('VIEW_USERS', '*')" (onClick)="usersAdmin"><i class="fa fa-child"></i> Users</a></li>
-<!-- 					<li><a href="#ManageTeams"><i class="fa fa-users"></i> Teams</a></li> -->
-<!-- 					<li class="dropdown"> -->
-<!-- 				  		<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-futbol-o"></i> My Teams<span class="caret"></span></a> -->
-<!-- 				  		<ul class="dropdown-menu"> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'Junior A')"><a href="#ManageTeam/team/Junior A">Junior A</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'Junior B')"><a href="#ManageTeam/team/Junior B">Junior B</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U18')"><a href="#ManageTeam/team/U18">U18</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U17')"><a href="#ManageTeam/team/U17">U17</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U16')"><a href="#ManageTeam/team/U16">U16</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U15')"><a href="#ManageTeam/team/U15">U15A</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U15B')"><a href="#ManageTeam/team/U15B">U15B</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U14A')"><a href="#ManageTeam/team/U14A">U14</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U13 Red')"><a href="#ManageTeam/team/U13">U13 Red</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U13 Yellow')"><a href="#ManageTeam/team/U13B">U13 Yellow</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U12A')"><a href="#ManageTeam/team/U12">U12A</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U12 Black')"><a href="#ManageTeam/team/U12B">U12 Black</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U11 Red')"><a href="#ManageTeam/team/U11">U11 Red</a></li> -->
-<!-- 							<li *ngIf="d$.hasPermission('MANAGE_TEAM', 'U11 Yellow')"><a href="#ManageTeam/team/U11B">U11 Yellow</a></li> -->
-<!-- 				  		</ul> -->
-<!-- 					</li> -->
                 </ul>
             </li>
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-info-circle"></i> Information <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                	<i class="fa fa-info-circle"></i> Information <span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu">
                     <li><a [routerLink]="['/findUs']"><i class="fa fa-road"></i> Find Us</a></li>
                     <li><a [routerLink]="['/messageUs']"><i class="fa fa-envelope"></i> Message Us</a></li>

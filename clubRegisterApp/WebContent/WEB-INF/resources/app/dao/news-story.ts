@@ -10,7 +10,7 @@ class NewsStory {
     image:string;
     thumb:string;
     
-    constructor(nsid:number,category:string,title:string,description:string,story:string,image:string) {
+    constructor( nsid:number, category:string, title:string, description:string, story:string, image:string ) {
         this.nsid = nsid;
         this.category = category;
         this.title = title;

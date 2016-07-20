@@ -13,7 +13,7 @@ import { LoggerService }        from '../services/logger.service';
     template: '<div id=\"lrep{{lrcode}}\"></div>'
 })
 
-export class LeagueRepublicResults{
+export class LeagueRepublicResults {
 
     lrcode:number;
     componentName:string = 'LeagueRepublicResults';
@@ -29,10 +29,10 @@ export class LeagueRepublicResults{
 
         this.lg$.log("ngOnInit()");
 
-        teamName = '';//this.rParams.get('team');
+        teamName = ''; //this.rParams.get('team');
 
         // (1) Read in the list of teams
-        this._dataService.dsGetTeams()
+        this._dataService.dsGetTeams();
         
         // (2) Set the current team to the one in question
         this._dataService.setCurrentTeamByName(teamName);
@@ -40,16 +40,15 @@ export class LeagueRepublicResults{
         this.lrcode = this._dataService.dsCurrentTeam.lrResultsCode;
         this.lg$.log("-" + "ngOnInit(): lrResultsCode is: " + this.lrcode);
 
-        if( window[ "numCodeSnippets" ] == undefined )
+        if ( window[ "numCodeSnippets" ] === undefined )
         {
             window[ "numCodeSnippets" ] = 1;
-        }
-        else
+        } else
         {
             window[ "numCodeSnippets" ]++;
         };
 
-        if( window["numCodeSnippets"] <= 12 )
+        if ( window["numCodeSnippets"] <= 12 )
         {
             var randno = Math[ "random" ]();
             var el = document[ "createElement" ]( "script" );

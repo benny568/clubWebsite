@@ -44,7 +44,19 @@ export class SessionDataService {
         var svr = new ServerMode();
         this.CurrentServerMode = svr.getServerMode();
         this.dsAuthenticated = false;
-        this.dsPosition = [ 'Manager','Goalkeeper','Full Back','Center Half','Mid Field','CAM','Winger','Striker', 'Chairman', 'Secretary', 'Treasurer', 'PRO', 'Committee'];
+        this.dsPosition = [ 'Manager', 
+                            'Goalkeeper', 
+                            'Full Back', 
+                            'Center Half', 
+                            'Mid Field', 
+                            'CAM', 
+                            'Winger', 
+                            'Striker', 
+                            'Chairman', 
+                            'Secretary', 
+                            'Treasurer', 
+                            'PRO', 
+                            'Committee'];
         this.dsCurrentUser = new User();
         this.dsCurrentTeam = new Team();
         this.dsCurrentMember = new Member();
@@ -56,8 +68,7 @@ export class SessionDataService {
         this.dsSponsors = new Array<Sponsor>();
 
     }
- 
-       
+
     /**********************************************************
      * Name:		setCurrentMember()
      * Description:	Set the current member to the one passed in
@@ -85,41 +96,43 @@ export class SessionDataService {
         var team = '';
         var allow = false;
         var index = 0;
-        
-        console.log("-->" + "hasPermission("+action+","+params+")");
 
-        if( typeof action === undefined || params === undefined )
-            return false;
+        console.log("-->" + "hasPermission(" + action + "," + params + ")");
 
-        for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
+        if ( typeof action === undefined || params === undefined )
         {
-            if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+            return false;
+        }
+
+        for ( var r = 0; r < this.dsCurrentUser.roles.length; r++ )
+        {
+            if ( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
             {
                 // Super user has permissions to do anything
                 //log.trace(loghdr + " -> hasPermission("+action+"): YES");
-            	console.log(" -> hasPermission("+action+"): YES");
+            	console.log(" -> hasPermission(" + action + "): YES");
                 return true;
             }
         }
-        switch(action)
+        switch ( action )
         {
             case 'MANAGE_TEAM':
                 team = params;
                 // Check if the user is a manager of this team
-                for( var i=0; i<this.dsCurrentUser.permissions.teams.length; i++ )
+                for ( var i = 0; i < this.dsCurrentUser.permissions.teams.length; i++ )
                 {
-                    for( var t=0; t<this.dsTeams.length; t++ )
+                    for ( var t = 0; t < this.dsTeams.length; t++ )
                     {
-                        if( this.dsTeams[t].id === this.dsCurrentUser.permissions.teams[i] )
+                        if (  this.dsTeams[t].id === this.dsCurrentUser.permissions.teams[i] )
                         {
                             index = t;
                             break;
                         }
                     }
 
-                    if( this.dsTeams[index].name === team )
+                    if ( this.dsTeams[index].name === team )
                     {
-                        if( this.dsCurrentUser.permissions.positions[i] == 0 )
+                        if ( this.dsCurrentUser.permissions.positions[i] === 0 )
                         {
                             allow = true;
                             break;
@@ -127,18 +140,17 @@ export class SessionDataService {
                     }
                 }
                 break;
-                
+
             case 'ADD_TEAM':
             case 'EDIT_TEAM':
-                for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
+                for ( var r = 0; r < this.dsCurrentUser.roles.length; r++ )
                 {
-                    if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+                    if ( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
                     {
                         // Super user has permissions to do anything
                         allow = true;
                         break;
-                    }
-                    else if( this.dsCurrentUser.roles[r] === "ROLE_EDIT_TEAM" )
+                    } else if ( this.dsCurrentUser.roles[r] === "ROLE_EDIT_TEAM" )
                     {
                         allow = true;
                         break;
@@ -146,29 +158,28 @@ export class SessionDataService {
                 }
                 break;
             case 'DEL_TEAM':
-                for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
+                for ( var r = 0; r < this.dsCurrentUser.roles.length; r++ )
                 {
-                    if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+                    if ( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
                     {
                         // Super user has permissions to do anything
                         allow = true;
                         break;
-                    }
-                    else if( this.dsCurrentUser.roles[r] === "ROLE_DEL_TEAM" )
+                    } else if ( this.dsCurrentUser.roles[r] === "ROLE_DEL_TEAM" )
                     {
                         allow = true;
                         break;
                     }
                 }
                 break;
-                
+
             case 'ADD_USER':
             case 'EDIT_USER':
             case 'DELETE_USER':
             case 'VIEW_USERS':
-                for( var r=0; r<this.dsCurrentUser.roles.length; r++ )
+                for ( var r = 0; r < this.dsCurrentUser.roles.length; r++ )
                 {
-                     if( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
+                     if ( this.dsCurrentUser.roles[r] === "ROLE_SUPER" )
                     {
                         // Super user has permissions to do anything
                         allow = true;
@@ -180,7 +191,7 @@ export class SessionDataService {
 
         return allow;
     }
-    
+
     /**********************************************************
      * Name:		difference()
      * Description:	Checeks to see if there is a difference
@@ -189,17 +200,19 @@ export class SessionDataService {
      * Params in:	None
      * Return:		
      **********************************************************/
-    difference(m1, m2) 
+    difference(m1, m2)
     {
 	    var diff = false;
 	    Object.getOwnPropertyNames(m1).forEach(function(val, idx, array) {
-	    	if( m1[val] != m2[val] )
+	    	if ( m1[val] !== m2[val] )
+	    	{
 	    		  diff = true;
+	    	}
 	    });
-	        
+
 	    return diff;
 	}
-    
+
     /**********************************************************
      * Name:		applyMemberChange()
      * Description:	Applies a change to the local data so the 
@@ -212,11 +225,11 @@ export class SessionDataService {
 	{
 		var index:number = SessionDataService.findMemberIndex( members, member );
 
-		if( index === -1 )
+		if ( index === -1 )
 		{
 			return;
 		}
-		
+
 		members[index].name = member.name;
 		members[index].address = member.address;
 		members[index].phone = member.phone;
@@ -234,7 +247,7 @@ export class SessionDataService {
 		members[index].photo = member.photo;
 		members[index].achievments = member.achievments;
 	}
-    
+
     /**********************************************************
      * Name:		applyMemberDel()
      * Description:	Applies a change to the local data so the 
@@ -247,16 +260,15 @@ export class SessionDataService {
 	{
 		var index:number = SessionDataService.findMemberIndex( members, member );
 
-		if( index === -1 )
+		if ( index === -1 )
 		{
 			return;
-		}		
-		else if( index > -1 ) 
+		} else if ( index > -1 ) 
 		{   // Delete the member at index
-		    members.splice(index, 1);
+		    members.splice( index, 1 );
 		}
 	}
-    
+
     /**********************************************************
      * Name:		applyMemberAdd()
      * Description:	Applies a change to the local data so the 
@@ -267,21 +279,22 @@ export class SessionDataService {
      **********************************************************/
     applyMemberAdd( members, member )
 	{
-		if( this.dsTeamMembers[member.team] === undefined )
+		if ( this.dsTeamMembers[member.team] === undefined )
+		{
 			//getMembers4team(member.team);
+		}
 
 		var index = SessionDataService.findMemberIndex( this.dsTeamMembers[member.team], member );
 
-		if( index === -1 )
+		if ( index === -1 )
 		{// Add the member if it doesn't exits
 		    members[member.team].push( member );
-		}		
-		else if( index > -1 ) 
+		} else if ( index > -1 ) 
 		{
 			//log.debug(loghdr + "###### ERROR: applyMemberAdd - member not found!");
 		}
 	}
-    
+
     /**********************************************************
      * Name:		applyTeamChange()
      * Description:	Applies a change to the local data so the 
@@ -290,37 +303,35 @@ export class SessionDataService {
      * Params in:	None
      * Return:		
      **********************************************************/
-    applyTeamChange(teams, thisTeam)
+    applyTeamChange( teams, thisTeam )
     {
         var index:number = -1;
 
-        if( this.dsTeams.length === 0 )
+        if ( this.dsTeams.length === 0 )
         {
             this.dsGetTeams();
         }
-            
+
     
-        for( var i=0; i<this.dsTeams.length; i++ )
+        for ( var i = 0; i < this.dsTeams.length; i++ )
         {
-            if( this.dsTeams[i].id === thisTeam.id )
+            if ( this.dsTeams[i].id === thisTeam.id )
             {
                 index = i;
                 break;
             }
         }
 
-
-        if( index === -1 )
+        if ( index === -1 )
         {
             //log.debug(loghdr + "###### ERROR: applyTeamChange - team not found!");
-        }		
-        else if( index > -1 ) 
+        } else if ( index > -1 ) 
         {
             this.dsTeams[index] = thisTeam;
             //log.debug(loghdr + " -> applyTeamChange - team updated: " + thisTeam.name );
         }
     }
-    
+
     /**********************************************************
      * Name:		findMemberIndex()
      * Description:	Find a members index/position in the array
@@ -333,11 +344,11 @@ export class SessionDataService {
 	{
 		var index = -1;
 		
-		if( typeof members !== undefined )
+		if ( typeof members !== undefined )
 		{
-			for( var i=0; i<members.length; i++ )
+			for ( var i = 0; i < members.length; i++ )
 			{
-				if( members[i].id === member.id )
+				if ( members[i].id === member.id )
 				{
 					index = i;
 					break;
@@ -347,7 +358,7 @@ export class SessionDataService {
 
 		return index;
 	}
-    
+
     /**********************************************************
      * Name:		convertPosToInt()
      * Description:	Converts the position name to the integer 
@@ -360,7 +371,7 @@ export class SessionDataService {
 	{
 		return this.dsPosition.indexOf(sPos);
 	}
-    
+
     /**********************************************************
      * Name:		convertTeamToInt()
      * Description:	Converts the team name to the integer value
@@ -370,9 +381,9 @@ export class SessionDataService {
      **********************************************************/
     convertTeamToInt( sTeam:string )
 	{
-		for( var i=0; i<this.dsTeams.length; i++ )
+		for ( var i = 0; i < this.dsTeams.length; i++ )
 		{
-			if( this.dsTeams[i].name == sTeam )
+			if ( this.dsTeams[i].name === sTeam )
 			{
 				return this.dsTeams[i].id;
 			}
@@ -392,20 +403,22 @@ export class SessionDataService {
     	console.log("-->" + "setCurrentTeamByName(" + teamName + ")");
 
         // Ensure the teams information has been loaded
-        if( this.dsTeams.length < 1 )
+        if ( this.dsTeams.length < 1 )
+        {
             this.dsGetTeams();
+        }
 
         // Pick out this team and set it as the current one
-        for( var team of this.dsTeams )
+        for ( var team of this.dsTeams )
         {
-            if( team.name == teamName ) {
+            if ( team.name === teamName ) {
                 this.dsCurrentTeam = team;
                 console.log( "-->" + "setCurrentTeamByName(): Team set to " + teamName);
                 break;
             }
         }
     }
-    
+
     /**********************************************************
      * Name:		loadNewsStories()
      * Description:	Retrieves a list of Newws from the server
@@ -417,7 +430,7 @@ export class SessionDataService {
     {
         console.log("-->" + "loadNewsStories()..");
         var url = this.getHome();
-        
+
         return this._http.get( url + '/stories' )
             			.map(response => response.json());
             /*.subscribe(
@@ -425,19 +438,18 @@ export class SessionDataService {
             	error => this.handleError(error), //console.log("===> Error getting news from server: " + error),
             	() => console.log(" <=== Received news from server. <====")
             );*/
-
      }
-    
-    setNews(data)
+
+    setNews( data )
     {
     	console.log("->" + "setNews()...recieved news stories: " + data);
     	this.dsNewsStories = data;
     }
-    
-    private handleError (error: any) {
+
+    private handleError( error: any ) {
         // In a real world app, we might use a remote logging infrastructure
         // We'd also dig deeper into the error to get a better message
-        let errMsg = (error.message) ? error.message :
+        let errMsg = ( error.message ) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
         //return Observable.throw(errMsg);
@@ -455,21 +467,19 @@ export class SessionDataService {
     {
         var _home:string;
         //log.debug(loghdr + "-> getHome()");
-        if( this.CurrentServerMode == this.modes.LOCAL )
+        if ( this.CurrentServerMode === this.modes.LOCAL )
         {
             //log.debug(loghdr + "     | _home is LOCAL");
             _home = 'http://localhost:8080/clubRegisterApp';
             //_home = 'http://localhost:3000/';
-        }
-        else if( this.CurrentServerMode == this.modes.REMOTE )
+        } else if ( this.CurrentServerMode === this.modes.REMOTE )
         {
         	//log.debug(loghdr + "     | _home is REMOTE");
             _home = 'http://www.avenueunited.ie';
         }
-        
+
         return _home;
     }
-
 
     /**********************************************************
      * Name:		dsGetTeams()
@@ -490,7 +500,6 @@ export class SessionDataService {
 						()   => console.log(" <== Teams received from server <==")
 					);
      }
-    
 
     /**********************************************************
      * Name:		dsSetTeams()
@@ -504,7 +513,7 @@ export class SessionDataService {
          console.log("-->" + "dsSetTeams()");
          this.dsTeams = data;
      }
-     
+
     /**********************************************************
      * Name:		loadCurrentTeamMembersByName()
      * Description:	Load the current team's details and members
@@ -516,12 +525,11 @@ export class SessionDataService {
     {
         console.log("-->" + "loadCurrentTeamMembersByName(" + teamName + ")");
 
-       if( (this.dsTeamMembers.length !== 0) && (this.dsCurrentTeam.name == teamName) )
+       if ( ( this.dsTeamMembers.length !== 0 ) && ( this.dsCurrentTeam.name === teamName ) )
        {
            console.log("-->" + "loadCurrentTeamByName():" + "Members already loaded not loading again!");
            return;
-       }
-       else {
+       } else {
            // Clear out the TeamMembers array first
             this.dsTeamMembers.length = 0;
             var url = this.getHome();
@@ -531,10 +539,9 @@ export class SessionDataService {
         }
     }
 
-
     /// TEMP FUNCTION TO SIM REST CALL TO SERVER
     getTeamDetailsSim( teamName:string ) : Team {
-        return this.dsCurrentTeam;// = this._sds.getTeamDetailsByName(teamName);
+        return this.dsCurrentTeam; // = this._sds.getTeamDetailsByName(teamName);
     }
 
     /**********************************************************
@@ -546,7 +553,7 @@ export class SessionDataService {
      **********************************************************/
     loadCurrentSponsors() : Array<Sponsor>
     {
-        console.log("-->" + "loadCurrentSponsors()");
+        console.log('-->' + 'loadCurrentSponsors()');
 
         this.dsSponsors = [ {name:"Enzo's Takeaway", image:"resources/images/adverts/enzos.png"},
                             {name:"Rochford's Pharmacy", image: "resources/images/adverts/main-sponsor.png"},
@@ -566,7 +573,7 @@ export class SessionDataService {
     {
         this.dsCurrentMember = null;
     }
-    
+
     /**********************************************************
      * Name:		loadPhotoDetails()
      * Description:	Retrieves a list of photos from the server
@@ -580,12 +587,11 @@ export class SessionDataService {
 
         // ToDo: If we have already loaded the news just return
 
-
         // Read the list of files from the server
        return this._http.get( url )
             .map(response => response.json());
     }
-    
+
     /**********************************************************
      * Name:		authenticate()
      * Description:	Authenticates the user with the server
@@ -596,21 +602,21 @@ export class SessionDataService {
     authenticate(username, password) 
     {
     	console.log("-->" + "authenticate(" + username + "," + password + ")");
-    	
+
     	var creds = "j_username=" + username + "&j_password=" + password;   	
 		let body = JSON.stringify({ creds  });
 	    let headers = new Headers({ 'Content-Type': 'application/json' });
 	    let options = new RequestOptions({ headers: headers });
 
-        return this._http.post( this.getHome() + '/j_spring_security_check?'+creds, body, options);
+        return this._http.post( this.getHome() + '/j_spring_security_check?' + creds, body, options);
     }
-    
+
     getUser(username)
     {
     	console.log("-->" + "getUser(" + username + ")");
     	return this._http.get(this.getHome() + '/admin/user').map(response => response.json());
     }
-    
+
     /**********************************************************
      * Name:		logout()
      * Description:	Invalidates the user session with the server
@@ -623,8 +629,7 @@ export class SessionDataService {
     	this.dsAuthenticated = false;
     	return this._http.get(this.getHome() + '/j_spring_security_logout');
     }
-    
-    
+
     /**********************************************************
      * Name:		dsGetAllMembers()
      * Description:	Get all members from the server
@@ -636,7 +641,7 @@ export class SessionDataService {
     {
     	console.log("-->" + "dsGetAllMembers()");
     	var url = this.getHome();
-    	
+
     	return this._http.get(url + "/admin/members")
     		.map(response => response.json())
     		.subscribe(
@@ -645,8 +650,7 @@ export class SessionDataService {
     					() => console.log("<== Finished getting all members from server <==")
     					);
     }
-    
-    
+
     /**********************************************************
 	 * Name:		getTeamNameFrmId()
 	 * Description:	Convert a team name to it's id
@@ -658,40 +662,29 @@ export class SessionDataService {
     getTeamNameFrmId(iTeam)
     {
     	var sTeamId = "";
-    	
-    	for( var i=0; i<this.dsTeams.length; i++ )
+
+    	for ( var i = 0; i < this.dsTeams.length; i++ )
     	{
-    		if( iTeam == i )
+    		if ( iTeam === i )
     		{
     			sTeamId = this.dsTeams[i - 1].name;
     			return sTeamId;
     		}
     	}
-    	
+
     	return sTeamId;
     } 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
     
 
 	saveJwt(jwt) {
-	  if(jwt) {
-	    localStorage.setItem('id_token', jwt)
+	  if ( jwt ) {
+	    localStorage.setItem('id_token', jwt);
 	  }
 	}
-	
-	
-	
-	
+
+
 	/*WriteCookie()
     {
        if( document.myform.customer.value == "" ){
@@ -718,9 +711,8 @@ export class SessionDataService {
           document.write ("Key is : " + name + " and Value is : " + value);
        }
     }*/
-	
-	
-	
+
+
 	/**********************************************************
      * Name:		setLogHdr()
      * Description:	Sets up the correct indentation and header
@@ -731,30 +723,32 @@ export class SessionDataService {
      **********************************************************/
 	setLogHdr(logdepth, moduleName)
 	{
-		console.log("** [Logger Service] Setting log header for [" + moduleName +"]");
+		console.log("** [Logger Service] Setting log header for [" + moduleName + "]");
 		let i = 0;
 		let depth = logdepth * 4;
 		let moduleSpace = 25;
 		let hdr:string = "## " +  moduleName;
-		
+
 		// Make sure the field width is the standard, pad if necessary
-		if( hdr.length < moduleSpace )
+		if ( hdr.length < moduleSpace )
 		{
 			let diff = moduleSpace - hdr.length;
 			let i = 0;
-			for( i=0; i<diff; i++ )
+			for ( i = 0; i < diff; i++ )
+			{
 				hdr += ' ';
+			}
 		}
-	
+
 		// (1) Set the indentation according to the depth
-		for( i=0; i<depth; i++ )
+		for ( i = 0; i < depth; i++ )
 		{
 			hdr += " ";
 		}
-		
+
 		// (2) Add on call stack indicator
 		hdr += "|-";
-		
+
 		return hdr;
 	}
 }

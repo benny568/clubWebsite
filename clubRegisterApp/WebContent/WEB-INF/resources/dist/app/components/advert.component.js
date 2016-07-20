@@ -1,1 +1,43 @@
-System.register(["@angular/core","@angular/router"],function(t,e){"use strict";var n,r,a,o=(e&&e.id,this&&this.__decorate||function(t,e,n,r){var a,o=arguments.length,i=o<3?e:null===r?r=Object.getOwnPropertyDescriptor(e,n):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(t,e,n,r);else for(var c=t.length-1;c>=0;c--)(a=t[c])&&(i=(o<3?a(i):o>3?a(e,n,i):a(e,n))||i);return o>3&&i&&Object.defineProperty(e,n,i),i}),i=this&&this.__metadata||function(t,e){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(t,e)};return{setters:[function(t){n=t},function(t){r=t}],execute:function(){a=function(){function t(){}return t=o([n.Component({selector:"advert",template:'\n\t\t\t    <div class="container">\n\t\t\t\t    <div class="panel" style="margin-top:5px;">\n\t\t\t\t        <div class="panel-body avenue-body">\n\t\t\t\t\t\t\t<a [routerLink]="[\'/fleadh\']"><img width="100%" src="resources/images/fleadh/fleadh.png" /></a>\n\t\t\t\t        </div> <!-- end panel-body -->\n\t\t\t\t    </div> <!-- end panel -->\n\t\t\t\t</div>\n    ',directives:[r.ROUTER_DIRECTIVES]}),i("design:paramtypes",[])],t)}(),t("AdvertComponent",a)}}});
+System.register(['@angular/core', '@angular/router'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, router_1;
+    var AdvertComponent;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            }],
+        execute: function() {
+            AdvertComponent = (function () {
+                function AdvertComponent() {
+                }
+                AdvertComponent = __decorate([
+                    core_1.Component({
+                        selector: 'advert',
+                        //templateUrl: 'app/htmltemplates/advert.component.html',
+                        template: "\n\t\t\t    <div class=\"container\">\n\t\t\t\t    <div class=\"panel\" style=\"margin-top:5px;\">\n\t\t\t\t        <div class=\"panel-body avenue-body\">\n\t\t\t\t\t\t\t<a [routerLink]=\"['/fleadh']\"><img width=\"100%\" src=\"resources/images/fleadh/fleadh.png\" /></a>\n\t\t\t\t        </div> <!-- end panel-body -->\n\t\t\t\t    </div> <!-- end panel -->\n\t\t\t\t</div>\n    ",
+                        directives: [router_1.ROUTER_DIRECTIVES]
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], AdvertComponent);
+                return AdvertComponent;
+            }());
+            exports_1("AdvertComponent", AdvertComponent);
+        }
+    }
+});
+
+//# sourceMappingURL=advert.component.js.map

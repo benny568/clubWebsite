@@ -125,7 +125,7 @@ import { TestComponent } from '../booking/test.component';
 	
 })
 
-export class FleadhComponent{
+export class FleadhComponent {
 	componentName:string = 'FleadhComponent';
 	logdepth:number = 4;
 	msgs: Message[] = [];
@@ -140,44 +140,42 @@ export class FleadhComponent{
 	submit()
 	{
 		// If user has not accepted T&C's go no further
-		if( !this.bk$.tandc )
+		if ( !this.bk$.tandc )
 		{
 			this.lg$.log("---- YOU MUST ACCEPT THE T&C'S TO CONTINUE ----");
 			this.showTCError();
 			return;
 		}
 		
-		if( (this.bk$.arrivalDate != undefined) && (this.bk$.departureDate != undefined) )  // must be defined
+		if ( ( this.bk$.arrivalDate !== undefined ) && ( this.bk$.departureDate !== undefined ) )  // must be defined
 		{
-			if( (this.bk$.arrivalDate != '') && (this.bk$.departureDate != '') )			// must have a value
+			if ( ( this.bk$.arrivalDate !== '' ) && ( this.bk$.departureDate !== '' ) )			// must have a value
 			{
-				let from:number = +(this.bk$.arrivalDate.slice(0,2));
-				let to:number = +(this.bk$.departureDate.slice(0,2));
+				let from:number = + ( this.bk$.arrivalDate.slice( 0, 2 ) );
+				let to:number = + ( this.bk$.departureDate.slice( 0, 2 ) );
 				this.bk$.numberOfNights = (to - from);
 				this.lg$.log("---- Number of nights stay is: " + this.bk$.numberOfNights);
 				
-				if( this.bk$.numberOfNights < 3 )
+				if ( this.bk$.numberOfNights < 3 )
 				{
 					this.lg$.log("---- MINIMUM STAY 3 NIGHTS ----");
 					this.show3NError();
 					return;
 				}
-			}
-			else
+			} else
 			{
 				this.showDateError();
 				this.lg$.log("---- submit() called with start or end date empty!");
 				return;
 			}
-		}
-		else
+		} else
 		{
 			this.showDateError();
 			this.lg$.log("---- submit() called with start or end date undefined!");
 			return;
 		}
 		
-		if( (this.bk$.numberOfPeople == undefined) || (this.bk$.numberOfPeople < 1) )
+		if ( ( this.bk$.numberOfPeople === undefined ) || ( this.bk$.numberOfPeople < 1 ) )
 		{
 			this.lg$.log("---- YOU MUST INDICATE NUMBER OF PEOPLE ----");
 			this.showNPError();
@@ -189,9 +187,9 @@ export class FleadhComponent{
 		this.bk$.deposit = 30;
 		
 		// Log the details
-		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
-		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
-		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
+		this.lg$.log("---- Arrival Date: " + this.bk$.arrivalDate );
+		this.lg$.log("---- Departure Date: " + this.bk$.departureDate );
+		this.lg$.log("---- Number of People: " + this.bk$.numberOfPeople );
 		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		this.lg$.log("---- T&C accepted: " + this.bk$.tandc);
 		this.router.navigate(['/booking']);

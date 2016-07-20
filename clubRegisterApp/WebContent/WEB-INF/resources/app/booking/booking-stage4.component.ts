@@ -78,7 +78,7 @@ import { BookingService } from '../services/booking.service';
 					       	</div>
 					       	<div style="float:right;">
 					       		<button type="button" (click)="payPal()" style="float:right;">
-					       			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					       			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0">
 					       		</button>				       		
 					       	</div>
 					    </p-tabPanel>
@@ -113,7 +113,7 @@ import { BookingService } from '../services/booking.service';
 	
 })
 
-export class BookingStage4Component{
+export class BookingStage4Component {
 	componentName:string = 'BookingStage4Component';
 	logdepth:number = 4;
 
@@ -123,8 +123,10 @@ export class BookingStage4Component{
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
         this.lg$.log("ngOnInit()");
         
-        if( this.bk$.parking == undefined )
+        if ( this.bk$.parking === undefined )
+        {
         	this.bk$.parking = 0;
+        }
         
         // Total up the charge       
         this.calculateTotalCharge();
@@ -133,9 +135,9 @@ export class BookingStage4Component{
 
 	submit()
 	{
-		this.lg$.log("---- Arrival Date: "+ this.bk$.arrivalDate );
-		this.lg$.log("---- Departure Date: "+ this.bk$.departureDate );
-		this.lg$.log("---- Number of People: "+ this.bk$.numberOfPeople );
+		this.lg$.log("---- Arrival Date: " + this.bk$.arrivalDate );
+		this.lg$.log("---- Departure Date: " + this.bk$.departureDate );
+		this.lg$.log("---- Number of People: " + this.bk$.numberOfPeople );
 		this.lg$.log("---- Car parking: " + this.bk$.parking);
 		//this.router.navigate(['/booking3']);
 	}
@@ -146,21 +148,25 @@ export class BookingStage4Component{
         // (€35 * number of nights) +
         // (€5 for each additional person over 2) +
         // (
-		let from:number = +(this.bk$.arrivalDate.slice(0,2));
-		let to:number = +(this.bk$.departureDate.slice(0,2));
-		this.bk$.numberOfNights = (to - from);
+		let from:number = + ( this.bk$.arrivalDate.slice( 0, 2 ) );
+		let to:number = + ( this.bk$.departureDate.slice( 0, 2 ) );
+		this.bk$.numberOfNights = ( to - from );
 		let extraPeople:number = this.bk$.numberOfPeople - 2;
 		let basic = 35 * this.bk$.numberOfNights;
 		let extraPeopleFee:number = 0;
 		let extraCarFee:number = 0;
 		
-		if( extraPeople > 0 )
+		if ( extraPeople > 0 )
+		{
 			extraPeopleFee = extraPeople * 5 * this.bk$.numberOfNights; // €5 extra per night per extra person
-		if( this.bk$.parking > 1 )
+		}
+		if ( this.bk$.parking > 1 )
+		{
 			extraCarFee = (this.bk$.parking - 1) * 5 * this.bk$.numberOfNights; // €5 extra per night per extra car
+		}
 		
 		this.bk$.totalCharge = basic + extraPeopleFee + extraCarFee;
-		this.bk$.deposit = 35;//this.bk$.totalCharge/2;
+		this.bk$.deposit = 35; //this.bk$.totalCharge/2;
 		
 		this.lg$.log("---- Total Charge: " + this.bk$.totalCharge);
 	}

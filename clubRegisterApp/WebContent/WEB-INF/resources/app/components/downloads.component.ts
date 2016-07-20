@@ -28,27 +28,47 @@ import { Component } from '@angular/core';
 				                            <tr>
 				                                <th scope="row">1</th>
 				                                <td>Coaches Code of Conduct</td>
-				                                <td align="center"><a href="resources/docs/Coaches Code of Conduct.doc"><img src="images/Sheet_of_paper.png" alt="Coches Code of Conduct" height="20px"/></a></td>
+				                                <td align="center">
+				                                	<a href="resources/docs/Coaches Code of Conduct.doc">
+				                                		<img src="images/Sheet_of_paper.png" alt="Coches Code of Conduct" height="20px"/>
+				                                	</a>
+				                                </td>
 				                            </tr>
 				                            <tr>
 				                                <th scope="row">2</th>
 				                                <td>200 Club Draw - 2016 Form</td>
-				                                <td align="center"><a href="resources/docs/2016 New Standing Order - Full Payment Form.doc"><img src="images/Sheet_of_paper.png" alt="200 Club Draw Form" height="20px"/></a></td>
+				                                <td align="center">
+				                                	<a href="resources/docs/2016 New Standing Order - Full Payment Form.doc">
+				                                		<img src="images/Sheet_of_paper.png" alt="200 Club Draw Form" height="20px"/>
+				                                	</a>
+				                                </td>
 				                            </tr>
 				                            <tr>
 				                                <th scope="row">3</th>
 				                                <td>FAI's Player Development Plan</td>
-				                                <td align="center"><a href="resources/docs/Player Development Plan.pdf"><img src="resources/docs/FAI Plan.PNG" alt="" height="20px"/></a></td>
+				                                <td align="center">
+				                                	<a href="resources/docs/Player Development Plan.pdf">
+				                                		<img src="resources/docs/FAI Plan.PNG" alt="" height="20px"/>
+				                                	</a>
+				                                </td>
 				                            </tr>
 				                            <tr>
 				                                <th scope="row">4</th>
 				                                <td>2016 CSSL Registration form</td>
-				                                <td align="center"><a href="resources/docs/CSSL 2016 IndividualRegForm.pdf"><img src="resources/docs/regform-icon.png" alt="" height="20px"/></a></td>
+				                                <td align="center">
+				                                	<a href="resources/docs/CSSL 2016 IndividualRegForm.pdf">
+				                                		<img src="resources/docs/regform-icon.png" alt="" height="20px"/>
+				                                	</a>
+				                                </td>
 				                            </tr>
 				                            <tr>
 				                                <th scope="row">5</th>
 				                                <td>2016 CSSL Non-national Registration form</td>
-				                                <td align="center"><a href="resources/docs/CSSL_2016_Non_Nat_RegForm.pdf"><img src="resources/docs/application_icon.png" alt="" height="20px"/></a></td>
+				                                <td align="center">
+				                                	<a href="resources/docs/CSSL_2016_Non_Nat_RegForm.pdf">
+				                                		<img src="resources/docs/application_icon.png" alt="" height="20px"/>
+				                                	</a>
+				                                </td>
 				                            </tr>
 				                            </tbody>
 				                        </table>

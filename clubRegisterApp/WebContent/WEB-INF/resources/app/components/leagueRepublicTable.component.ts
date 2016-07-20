@@ -9,7 +9,7 @@ import { SessionDataService }   from '../services/session-data.service';
     template: '<div id=\"lrep{{lrcode}}\"></div>'
 })
 
-export class LeagueRepublicTable{
+export class LeagueRepublicTable {
     className:string = 'LeagueRepublicTable';
     lrcode:number;
 
@@ -20,16 +20,15 @@ export class LeagueRepublicTable{
         this.lrcode = this._dataService.dsCurrentTeam.lrcode;
         console.log("### " + this.className + "-" + "ngOnInit(): lrcode is: " + this.lrcode);
 
-        if( window[ "numCodeSnippets" ] == undefined )
+        if ( window[ "numCodeSnippets" ] === undefined )
         {
             window[ "numCodeSnippets" ] = 1;
-        }
-        else
+        } else
         {
             window[ "numCodeSnippets" ]++;
         };
 
-        if( window["numCodeSnippets"] <= 12 )
+        if ( window[ "numCodeSnippets" ] <= 12 )
         {
             var randno = Math[ "random" ]();
             var el = document[ "createElement" ]( "script" );

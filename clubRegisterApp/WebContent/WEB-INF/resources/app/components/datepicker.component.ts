@@ -32,7 +32,10 @@ import {DATEPICKER_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootst
 				  <button type="button" class="btn btn-sm btn-info" (click)="today()">Today</button>
 				  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="d20090824();">2009-08-24</button>
 				  <button type="button" class="btn btn-sm btn-danger" (click)="clear()">Clear</button>
-				  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="toggleMin()" tooltip="After today restriction">Min date</button>
+				  <button 	type="button" 
+				  			class="btn btn-sm btn-default btn-secondary" 
+				  			(click)="toggleMin()" 
+				  			tooltip="After today restriction">Min date</button>
 				</div>
   `,
   directives: [DATEPICKER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES]

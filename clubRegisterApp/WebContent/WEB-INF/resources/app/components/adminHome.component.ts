@@ -31,7 +31,7 @@ export class AdminHomeComponent
 	logdepth = 2;
 	loghdr = "";
 	
-	constructor( private _dataService: SessionDataService ){ 
+	constructor( private _dataService: SessionDataService ) { 
 		this.loghdr = this.setLogHdr(this.logdepth, this.componentName);
 		
 		console.log(this.loghdr + "User is: " + this._dataService.dsCurrentUser.username);
@@ -53,7 +53,7 @@ export class AdminHomeComponent
 		let hdr:string = "## " +  moduleName;
 	
 		// (1) Set the indentation according to the depth
-		for( i=0; i<depth; i++ )
+		for ( i = 0; i < depth; i++ )
 		{
 			hdr += " ";
 		}

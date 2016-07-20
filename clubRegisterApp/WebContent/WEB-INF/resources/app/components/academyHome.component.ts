@@ -67,10 +67,11 @@ import { NewsComponent }        from "./news.component";
 				                            Passing, pace and accuracy
 				                        </div>
 				                        <div class="panel-heading avenue-heading">NOTES</div>
-				                        <div class="panel-body avenue-body">Progress the competition between teams, change distance of passing depending on ability of players.
-				                            Create a competition between teams by awarding 2 points to anyone who dribbles through the cones without
-				                            the ball hitting the cones.  Award 2 points if they pass the ball through the cones. Award 5 points if
-				                            they knock the ball off the middle cone.
+				                        <div class="panel-body avenue-body">Progress the competition between teams, change distance of 
+				                        	passing depending on ability of players. Create a competition between teams by awarding 2 
+				                        	points to anyone who dribbles through the cones without the ball hitting the cones.  Award 2 
+				                        	points if they pass the ball through the cones. Award 5 points if they knock the ball off the 
+				                        	middle cone.
 				                        </div>
 				                        <div class="panel-body avenue-body">
 				                            <img src="resources/images/academy/drilloftheweek.png" alt="" width="100%"/>
@@ -87,10 +88,10 @@ import { NewsComponent }        from "./news.component";
 })
 
 export class AcademyHomeComponent {
-    constructor(private _dataService: SessionDataService ){}
+    constructor( private _dataService: SessionDataService ) {}
 
     ngOnInit() {
-        console.log("### AcademyHomeComponent -> ngOnInit()")
+        console.log( "### AcademyHomeComponent -> ngOnInit()" );
         this._dataService.loadNewsStories();
     }
 

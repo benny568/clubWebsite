@@ -78,7 +78,9 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 						    			<div class="panel-body avenue-body">
 						    				<div *ngFor="#mem of _dataService.dsTeamMembers; #i=index;">
 						    					<div *ngIf="mem.position != 0"> 
-													<span (click)="_dataService.setCurrentMember( mem )" style="cursor:pointer;"><font color="white">{{i+1}}: {{mem.name}}</font></span>
+													<div (click)="_dataService.setCurrentMember( mem )" style="cursor:pointer;">
+														<font color="white">{{i+1}}: {{mem.name}}</font>
+													</div>
 												</div>
 											</div>
 						    			</div> <!-- end panel body -->
@@ -93,10 +95,14 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 					    				<div class="panel-body avenue-body">
 					    					<img src='{{_dataService.dsCurrentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
 					    					<div>
-					    						<br/><span class="avenue-yellow-text">Age: </span><span style="color:#D1CDCD">{{_dataService.dsCurrentMember.age}}</span> <br/>
-						    					<span class="avenue-yellow-text">Position: </span><span style="color:#D1CDCD">{{_dataService.dsCurrentMember.position}}</span> <br/>
-						    					<span class="avenue-yellow-text">Favourite Team: </span><span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favteam}}</span> <br/>
-						    					<span class="avenue-yellow-text">Favourite Player: </span><span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favplayer}}</span><br/><br/>
+					    						<br/><span class="avenue-yellow-text">Age: </span>
+					    						<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.age}}</span> <br/>
+						    					<span class="avenue-yellow-text">Position: </span>
+						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.position}}</span> <br/>
+						    					<span class="avenue-yellow-text">Favourite Team: </span>
+						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favteam}}</span> <br/>
+						    					<span class="avenue-yellow-text">Favourite Player: </span>
+						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favplayer}}</span><br/><br/>
 						    					<span class="avenue-yellow-text">Personal Achievements:</span><br/>
 						    						{{_dataService.dsCurrentMember.achievements}}
 					    					</div>

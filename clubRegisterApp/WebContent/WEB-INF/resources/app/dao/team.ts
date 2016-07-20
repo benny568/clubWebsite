@@ -8,8 +8,5 @@ class Team {
 	lrFixturesCode:number;
 	lrResultsCode:number;
 	noticeboard:string;
-    
-    constructor() {
-        
-    }
+
 }

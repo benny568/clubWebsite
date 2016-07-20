@@ -1,1 +1,50 @@
-System.register(["@angular/core","@angular/common","primeng/primeng","../services/booking.service"],function(t,e){"use strict";var n,r,i,o,a,c=(e&&e.id,this&&this.__decorate||function(t,e,n,r){var i,o=arguments.length,a=o<3?e:null===r?r=Object.getOwnPropertyDescriptor(e,n):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(t,e,n,r);else for(var c=t.length-1;c>=0;c--)(i=t[c])&&(a=(o<3?i(a):o>3?i(e,n,a):i(e,n))||a);return o>3&&a&&Object.defineProperty(e,n,a),a}),l=this&&this.__metadata||function(t,e){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(t,e)};return{setters:[function(t){n=t},function(t){r=t},function(t){i=t},function(t){o=t}],execute:function(){a=function(){function t(t){this.bk$=t,console.log("==> ArrivalDatepickerComponent...")}return t=c([n.Component({selector:"arrival-datepicker",template:'\n\t<ui-widget>\n\t\t<ui-widget-content>\n\t\t\t<p-calendar [(ngModel)]="bk$.arrivalDate" \n\t\t\t\t\t\tdateFormat="dd/mm/yy"\n\t\t\t\t\t\thowAnim="slideDown"\n\t\t\t\t\t\tplaceholder="Please pick arrival date"\n\t\t\t\t\t\tshowIcon="true"\n\t\t\t\t\t\tdefaultDate="17/08/16"\n\t\t\t\t\t\tminDate="17/08/2016"\n\t\t\t\t\t\tmaxDate="22/08/2016"\n\t\t\t\t\t\t[readonlyInput]="true"\n\t\t\t\t\t\t>\n\t\t\t</p-calendar>\n\t\t</ui-widget-content>\n\t</ui-widget>\t\n\t\t\t',directives:[r.FORM_DIRECTIVES,i.Calendar]}),l("design:paramtypes",[o.BookingService])],t)}(),t("ArrivalDatepickerComponent",a)}}});
+System.register(['@angular/core', '@angular/common', 'primeng/primeng', '../services/booking.service'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, common_1, primeng_1, booking_service_1;
+    var ArrivalDatepickerComponent;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (primeng_1_1) {
+                primeng_1 = primeng_1_1;
+            },
+            function (booking_service_1_1) {
+                booking_service_1 = booking_service_1_1;
+            }],
+        execute: function() {
+            ArrivalDatepickerComponent = (function () {
+                function ArrivalDatepickerComponent(bk$) {
+                    this.bk$ = bk$;
+                    console.log("==> ArrivalDatepickerComponent...");
+                }
+                ArrivalDatepickerComponent = __decorate([
+                    core_1.Component({
+                        selector: 'arrival-datepicker',
+                        template: "\n\t<ui-widget>\n\t\t<ui-widget-content>\n\t\t\t<p-calendar [(ngModel)]=\"bk$.arrivalDate\" \n\t\t\t\t\t\tdateFormat=\"dd/mm/yy\"\n\t\t\t\t\t\thowAnim=\"slideDown\"\n\t\t\t\t\t\tplaceholder=\"Please pick arrival date\"\n\t\t\t\t\t\tshowIcon=\"true\"\n\t\t\t\t\t\tdefaultDate=\"17/08/16\"\n\t\t\t\t\t\tminDate=\"17/08/2016\"\n\t\t\t\t\t\tmaxDate=\"22/08/2016\"\n\t\t\t\t\t\t[readonlyInput]=\"true\"\n\t\t\t\t\t\t>\n\t\t\t</p-calendar>\n\t\t</ui-widget-content>\n\t</ui-widget>\t\n\t\t\t",
+                        directives: [common_1.FORM_DIRECTIVES, primeng_1.Calendar]
+                    }), 
+                    __metadata('design:paramtypes', [booking_service_1.BookingService])
+                ], ArrivalDatepickerComponent);
+                return ArrivalDatepickerComponent;
+            }());
+            exports_1("ArrivalDatepickerComponent", ArrivalDatepickerComponent);
+        }
+    }
+});
+
+//# sourceMappingURL=arrival-datepicker.component.js.map

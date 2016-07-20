@@ -22,7 +22,12 @@ import { Member }             from '../dao/member';
 								</div>
 								<div class="col-md-2">
 									<div  style="float:right; align:bottom;">
-										<button type="button" class="btn btn-warning btn-xs" (click)="allMembersAdmin()" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">All Members</button>
+										<button type="button" 
+												class="btn btn-warning btn-xs" 
+												(click)="allMembersAdmin()" 
+												style="cursor:pointer;" 
+												data-toggle="tooltip" 
+												data-placement="right">All Members</button>
 									</div>
 								</div>
 							</div>
@@ -30,10 +35,28 @@ import { Member }             from '../dao/member';
 								<div *ngFor="let team of _dataService.dsTeams">
 									<div class="panel">
 										<div class="panel-heading avenue-heading" style="min-height:35px;">
-											<div class="col-md-10 teamHdr" *ngIf="!showArray[team.id]"><span class="glyphicon glyphicon-triangle-bottom" (click)="getMembers4team(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
-											<div class="col-md-10 teamHdr" *ngIf="showArray[team.id]"><span class="glyphicon glyphicon-triangle-top" (click)="toggleView(team.id)" style="cursor:pointer;"></span> {{team.name}}</div>
+											<div class="col-md-10 teamHdr" *ngIf="!showArray[team.id]">
+												<span 	class="glyphicon glyphicon-triangle-bottom" 
+														(click)="getMembers4team(team.id)" 
+														style="cursor:pointer;">
+												</span> 
+												{{team.name}}
+											</div>
+											<div class="col-md-10 teamHdr" *ngIf="showArray[team.id]">
+												<span 	class="glyphicon 
+														glyphicon-triangle-top" 
+														(click)="toggleView(team.id)" 
+														style="cursor:pointer;">
+												</span> 
+												{{team.name}}
+											</div>
 											<div  style="float:right; align:bottom;">
-												<button type="button" class="btn btn-warning btn-xs" ng-click="addMember(team.id)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right">Add Member</button>
+												<button type="button" 
+														class="btn btn-warning btn-xs" 
+														ng-click="addMember(team.id)" 
+														style="cursor:pointer;" 
+														data-toggle="tooltip" 
+														data-placement="right">Add Member</button>
 											</div>
 										</div>
 							    		<div class="panel-body avenue-body" style="height:100%;">
@@ -49,10 +72,36 @@ import { Member }             from '../dao/member';
 													<div class="col-md-5">{{member.address}}</div>
 													<div class="col-md-2">{{member.phone}}</div>
 										    		<div class="col-md-2">
-												    	<i *ngIf="(member.amount>0)" class="glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="right" title="Paid" style="float:left;"></i>&nbsp;
-												    	<i *ngIf="!(member.amount>0)" class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Not Paid" style="float:left;"></i>&nbsp;
-												    	<i (click)="editMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Edit" class="glyphicon glyphicon-pencil" style="float:left;padding-left:10px;"> </i>&nbsp;
-												    	<i (click)="deleteMember(member)" style="cursor:pointer;" data-toggle="tooltip" data-placement="right" title="Delete" class="glyphicon glyphicon-trash" style="float:left;padding-left:10px;"></i>
+												    	<i *ngIf="(member.amount>0)" 
+												    		class="glyphicon glyphicon-euro" 
+												    		data-toggle="tooltip" 
+												    		data-placement="right" 
+												    		title="Paid" 
+												    		style="float:left;">
+												    	</i>&nbsp;
+												    	<i *ngIf="!(member.amount>0)" 
+												    		class="glyphicon glyphicon-remove" 
+												    		data-toggle="tooltip" 
+												    		data-placement="right" 
+												    		title="Not Paid" 
+												    		style="float:left;">
+												    	</i>&nbsp;
+												    	<i (click)="editMember(member)" 
+												    		style="cursor:pointer;" 
+												    		data-toggle="tooltip" 
+												    		data-placement="right" 
+												    		title="Edit" 
+												    		class="glyphicon glyphicon-pencil" 
+												    		style="float:left;padding-left:10px;"> 
+												    	</i>&nbsp;
+												    	<i (click)="deleteMember(member)" 
+												    		style="cursor:pointer;" 
+												    		data-toggle="tooltip" 
+												    		data-placement="right" 
+												    		title="Delete" 
+												    		class="glyphicon glyphicon-trash" 
+												    		style="float:left;padding-left:10px;">
+												    	</i>
 												    </div>	
 											    </div> <!-- end row -->
 											</div> <!-- end ng-show -->
@@ -108,10 +157,10 @@ export class MemberRegisterComponent implements OnInit
 	 * Params in:	None
 	 * Return:		Sets $scope.members
 	 **********************************************************/
-	getAllMembers(){
+	getAllMembers() {
 		
 		this.lg$.log("-> getAllMembers()");
-		this.lg$.log("    | calling dataService.getAllMembers()..")
+		this.lg$.log("    | calling dataService.getAllMembers()..");
 		
 		this.d$.dsGetAllMembers();
 		
@@ -126,9 +175,9 @@ export class MemberRegisterComponent implements OnInit
 	 * Params in:	None
 	 * Return:		Sets $scope.teams
 	 **********************************************************/
-	getTeams(){
+	getTeams() {
 		this.lg$.log("-> getTeams()");
-		this.lg$.log("   | calling dataService.dsGetTeams()..")
+		this.lg$.log("   | calling dataService.dsGetTeams()..");
 		this.d$.dsGetTeams();
 
 	}
@@ -159,15 +208,15 @@ export class MemberRegisterComponent implements OnInit
 	 **********************************************************/
 	getMembers4team(teamId)
 	{
-		this.lg$.log("-> getMembers4team("+teamId+")");
+		this.lg$.log("-> getMembers4team(" + teamId + ")");
 		this.showArray[teamId] = 'true';
 		
 		// Clear the array first
 		this.d$.dsTeamMembers[teamId] = new Array<Member>();
 		// Populate the Team members from the complete list of members
-		for( var i=0; i<this.d$.dsAllMembers.length; i++ )
+		for ( var i = 0; i < this.d$.dsAllMembers.length; i++ )
 		{
-			if( this.d$.dsAllMembers[i].team == teamId )
+			if ( this.d$.dsAllMembers[i].team === teamId )
 			{
 				// Find the members for this team and add them to the array
 				this.d$.dsTeamMembers[teamId].push( this.d$.dsAllMembers[i] );

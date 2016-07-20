@@ -4,8 +4,4 @@ export /**
 class MyTeams {
     teams:Array<number>;
     positions:Array<number>;
-    
-    constructor() {
-        
-    }
 }

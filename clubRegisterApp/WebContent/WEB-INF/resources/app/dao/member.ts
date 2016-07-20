@@ -25,8 +25,5 @@ class Member {
     photo:string;
     achievements:string;
     status:string;
-    
-    constructor() {
-        
-    }
+
 }

@@ -23,27 +23,26 @@ import { SessionDataService }   from '../services/session-data.service';
 
 export class PhotosComponent implements OnInit
 {
-	componentName:String = 'PhotosComponent';
-    logHdr:String = "#### " + this.componentName + ": ";
+	componentName : string = 'PhotosComponent';
+    logHdr : string = "#### " + this.componentName + ": ";
 	aAlbum : Array<Media>;
-	path:String = '';
+	path : string = '';
     
 	ngOnInit()
 	{
-		let cat1 = '';//this.routeParams.get('cat1'); // team
-		let cat2 = '';//this.routeParams.get('cat2'); // year
-		let cat3 = '';//this.routeParams.get('cat3'); // event
+		let cat1 = ''; //this.routeParams.get('cat1'); // team
+		let cat2 = ''; //this.routeParams.get('cat2'); // year
+		let cat3 = ''; //this.routeParams.get('cat3'); // event
 		var url = '';
 		this.aAlbum = new Array<Media>();
 		
 		console.log(this.logHdr + "->" + "OnInit(" + cat1 + "/" + cat2 + "/" + cat3 + "," + ")");
 		
-		if( cat3 !== "none" && cat3 != '' )
+		if ( cat3 !== "none" && cat3 !== '' )
 		{
 			url = this._dataService.getHome() + '/photos/' + cat1 + '/' + cat2 + '/' + cat3;
 			this.path = 'resources/galleries/' + cat1 + '/' + cat2 + '/' + cat3 + '/';
-		}
-		else
+		} else
 		{
 			url = this._dataService.getHome() + '/photos/' + cat1 + '/' + cat2;
 			this.path = 'resources/galleries/' + cat1 + '/' + cat2 + '/';
@@ -69,6 +68,6 @@ export class PhotosComponent implements OnInit
 			photo.image = path + row;
 			album.push(photo);
 			console.log("          -- added image: " + photo.image );
-		})
+		});
 	}
 }

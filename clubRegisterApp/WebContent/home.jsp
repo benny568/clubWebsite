@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-  	<base href="http://www.avenueunited.ie/">
-<!--       <base href="http://localhost:8080/clubRegisterApp/"> -->
+<!--     	<base href="http://www.avenueunited.ie/"> -->
+    <base href="http://localhost:8080/clubRegisterApp/">
 	<!-- Set the base href -->
 
     <title>Avenue United Home Page</title>
@@ -86,7 +86,9 @@
 	    	map: {
 	    	        'ng2-bs3-modal':              'node_modules/ng2-bs3-modal',
 	    	        moment:                       'node_modules/moment/moment.js',
-	    	        'primeng':                    'node_modules/primeng'
+	    	        'primeng':                    'node_modules/primeng',
+	    	        'symbol-observable'         : 'node_modules/symbol-observable'
+	    	        
 	    	    },
 	   	    packages: {
 	   	        'app'                              : {main: 'boot.ts', defaultExtension: 'ts'},
@@ -99,7 +101,8 @@
 	   	     	'@angular/http'                    : {main: 'index.js'},
 	   	        '@angular/platform-browser'        : {main: 'index.js'},
 	   	        '@angular/platform-browser-dynamic': {main: 'index.js'},
-	   	        'primeng'                          : {defaultExtension: 'js'}
+	   	        'primeng'                          : {defaultExtension: 'js'},
+	   	        'symbol-observable'                : {main: 'index.js', defaultExtension: 'js' }
 	   	      }
 	    	});
 	      System.import('resources/dist/app/boot')

@@ -14,7 +14,10 @@ import {Carousel} from './carousel.component';
 				    <div class="row avenue-body">
 				        <div class="panel">
 				            <div class="panel-heading avenue-heading">
-				                2015/2016 Merchandise range: <div style="float:right;">Available from <strong>Rochfords Pharmacy</strong>, 21 Parnell Street, Ennis Phone: 065 68 20099</div>
+				                2015/2016 Merchandise range: 
+				                <div style="float:right;">
+				                	Available from <strong>Rochfords Pharmacy</strong>, 21 Parnell Street, Ennis Phone: 065 68 20099
+				                </div>
 				            </div>
 				            <div class="panel-body avenue-body">
 				
@@ -22,7 +25,10 @@ import {Carousel} from './carousel.component';
 				                    <slide *ngFor="let item of items">
 				                        <div class="merchandise-banner">{{item.name}}</div>
 				                        <div class="merchandise-background">
-				                            <img src="{{item.image}}" width="{{item.width}}" height="{{item.height}}" class="merchandise-image">
+				                            <img 	src="{{item.image}}" 
+				                            		width="{{item.width}}" 
+				                            		height="{{item.height}}" 
+				                            		class="merchandise-image" >
 				                        </div>
 				                        <div class="merchandise-banner">{{item.description}}</div>
 				                    </slide>
@@ -55,8 +61,6 @@ import {Carousel} from './carousel.component';
 export class MerchandiseComponent {
     items;
 
-    constructor() { }
-
     ngOnInit() {
         this.items = [
             {
@@ -73,10 +77,6 @@ export class MerchandiseComponent {
                 width: "300",
                 height: "300"
             },
-            /*{name:"1/4 Zip Top", image:"resources/images/merchandise/quarterZipTop.png", description:"Kids 20E (2YXS-YXS-XXS), Adult 25E (XS-S-M-L-XL)", width:"300", height:"300"},
-             {name:"Tracksuit Top", image:"resources/images/merchandise/tracksuittop.png", description:"", width:"300", height:"300"},
-             {name:"Windbreaker", image:"resources/images/merchandise/windbreaker.png", description:"", width:"300", height:"300"},
-             {name:"Rucksack", image:"resources/images/merchandise/rucksack.png", description:"One Size 20E", width:"300", height:"300"},*/
             {
                 name: "Beanie",
                 image: "resources/images/merchandise/beanie.png",
@@ -84,8 +84,6 @@ export class MerchandiseComponent {
                 width: "300",
                 height: "300"
             },
-            /*{name:"Base-Layer Top", image:"resources/images/merchandise/baselayertop.png", description:"Kids 25E (XXS-XS), Adult 30E (S/M-L/XL)", width:"300", height:"300"},
-             {name:"Base-Layer Shorts", image:"resources/images/merchandise/baselayershorts.png", description:"Kids 20E (XXS-XS), Adult 25E (S/M-L/XL)", width:"300", height:"300"},*/
             {
                 name: "Combo 1",
                 image: "resources/images/merchandise/combo1.png",
