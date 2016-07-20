@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-  	<base href="http://www.avenueunited.ie/">
-<!--       <base href="http://localhost:8080/clubRegisterApp/"> -->
-	<!-- Set the base href -->
+  
+  	<!-- Set the base href -->
+<!--   	<base href="http://www.avenueunited.ie/"> -->
+      <base href="http://localhost:8080/clubRegisterApp/">
+
 
     <title>Avenue United Home Page</title>
 
@@ -11,13 +13,15 @@
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     
-    <link rel="stylesheet" type="text/css" href="resources/dist/app/styles/default.min.css" media="none" onload="if(media!='all')media='all'"/>
+    <!-- Specifying a Viewport for mobile devices -->
+    <meta name=viewport content="width=device-width, initial-scale=1">
+
     <link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" />
-    
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="none" onload="if(media!='all')media='all'"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"  media="none" onload="if(media!='all')media='all'"/>
-    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.min.css"  media="none" onload="if(media!='all')media='all'"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/primeui/4.1.12/primeui-ng-all.min.css" media="none" onload="if(media!='all')media='all'"/>
+
+	<link rel="preload" href="resources/dist/app/styles/default.min.css" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" as="style" onload="this.rel='stylesheet'">
+
 
     <style>
     	@keyframes blink {
@@ -40,7 +44,7 @@
   </head>
 
   <!-- 3. Display the application -->
-  <body class="main">
+  <body class="main" background="resources/dist/images/stadium1.jpg">
   		<my-app>
   			<div style="color:white;text-align:center;">
 	    		<span style="font-size:50px;">OFFICIAL FLEADH CAMPSITE <br />ONLINE BOOKING NOW OPEN <br /></span>
@@ -53,22 +57,53 @@
 			</div>
 					
 	    </my-app>
-	 
-	    	
-	    <!-- jQuery (required) -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script>
+(function(doc, script) {
+    var js, 
+        fjs = doc.getElementsByTagName(script)[0],
+        add = function(url, id) {
+            if (doc.getElementById(id)) {return;}
+            js = doc.createElement(script);
+            js.src = url;
+            id && (js.id = id);
+            fjs.parentNode.insertBefore(js, fjs);
+        };
+
+    // JQuery
+    //add('https://code.jquery.com/jquery-2.2.0.min.js', 'jq');
+    // JQuery UI
+    add('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', 'jqui');
+    // Bootstrap
+    add('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', 'bs');
+
+	add('node_modules/core-js/client/shim.min.js', 'shim');
+	add('node_modules/zone.js/dist/zone.min.js', 'zone');
+	//add('node_modules/systemjs/dist/system.src.min.js', 'sys');
 	
-		<!-- Bootstrap -->
-		<script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	    	
-	    <!-- 1. Load libraries -->
-	    <script src="node_modules/core-js/client/shim.min.js"></script>
-	    <script src="node_modules/zone.js/dist/zone.min.js"></script>
-	    <script src="node_modules/systemjs/dist/system.src.min.js"></script>
+}(document, 'script'));
+</script>
+
+	 
+	 
+	 	<link rel="preload" href="node_modules/primeui/themes/omega/theme.min.css" as="style" onload="this.rel='stylesheet'">
+		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/primeui/4.1.12/primeui-ng-all.min.css" as="style" onload="this.rel='stylesheet'">
+	 
+		
+			    	
+	    	<!-- 1. Load libraries -->
+	    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+	    	<script src="node_modules/systemjs/dist/system.src.min.js"></script>
 
     	
-    	<!-- 2. Configure SystemJS -->
+    	    <!-- 2. Configure SystemJS -->
 	    <script>
 	    System.config({
 			defaultJSExtensions: true,

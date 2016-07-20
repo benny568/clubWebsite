@@ -1,1 +1,1 @@
-System.register([],function(e,t){"use strict";var r;t&&t.id;return{setters:[],execute:function(){r=function(){function e(){this.modes={LOCAL:0,REMOTE:1},this.currentMode=this.modes.LOCAL}return e.prototype.getServerMode=function(){return this.currentMode},e}(),e("ServerMode",r)}}});
+System.register([],function(e,t){"use strict";var r;t&&t.id;return{setters:[],execute:function(){r=function(){function e(){this.modes={LOCAL:0,REMOTE:1},this.currentMode=this.modes.REMOTE}return e.prototype.getServerMode=function(){return this.currentMode},e}(),e("ServerMode",r)}}});

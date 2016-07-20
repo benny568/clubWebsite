@@ -19,7 +19,7 @@ import {Carousel} from './carousel.component';
 				            <div class="panel-body avenue-body">
 				
 				                <carousel [interval]="5000">
-				                    <slide *ngFor="#item of items">
+				                    <slide *ngFor="let item of items">
 				                        <div class="merchandise-banner">{{item.name}}</div>
 				                        <div class="merchandise-background">
 				                            <img src="{{item.image}}" width="{{item.width}}" height="{{item.height}}" class="merchandise-image">

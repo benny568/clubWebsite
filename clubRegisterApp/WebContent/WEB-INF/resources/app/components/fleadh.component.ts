@@ -62,7 +62,8 @@ import { TestComponent } from '../booking/test.component';
 										
 										We will be serviced by the official Fleadh Shuttle Bus service to and from the town centre.<br />
 										
-										We are the best and the cheapest option for Fleadh Camping, with plenty room for everyone!
+										We are the best and the cheapest option for Fleadh Camping, with plenty room for everyone!<br />
+										Enquiries: 086 8120055 between 6pm and 9pm.
 							    	</div>
 							    	<div class="ui-grid-col-7">
 							    		<button type="button" class="btn btn-warning"(click)="submit()">Next</button>

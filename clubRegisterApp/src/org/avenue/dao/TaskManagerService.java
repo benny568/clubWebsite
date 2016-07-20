@@ -1529,9 +1529,35 @@ public class TaskManagerService {
 					 		//"Number of nights: " + booking.getNumberOfNights() + "\n" +
 					 		//"Number of people: " + booking.getNumberOfPeople() + "\n" +
 					 		"Deposit Payed: " + ipi.getPaymentAmount() +  "\n" +
-					 		"Payment Date: "+ ipi.getPaymentDate() + "\n"
-					 		//"Total Due: " + booking.getTotalCharge()
-					 		);
+					 		"Payment Date: "+ ipi.getPaymentDate() + "\n\n\n" +
+					 		//"Total Due: " + booking.getTotalCharge() + "\n" +
+					 		
+							"Thank you for booking your Fleadh 2016 Campsite place at Avenue United Grounds.\n" +
+							"Please retain this receipt as it may be required at check-in.\n\n" +
+							
+							"We are located behind the Roslevan Shopping Centre, Tulla Road, Ennis, Co Clare\n" +
+							"This is just off EXIT 13 on the M18 Motorway for really easy access and exit. Simply follow the signs!\n" +
+							"We will be serviced by the official Fleadh Shuttle Bus service to and from the town centre.\n\n" +
+							
+							"INFORMATION & RULES:\n" +
+							"Campsite Opens 1pm on Wed August 17th\n" +
+							"Tents & Cars only. NO Caravans or Campervans, sorry.\n" +
+							"STRICTLY NO GLASS BOTTLES ALLOWED ON SITE. \n" +
+							"NO noise after Midnight\n" +
+							"Toilets & Showers are Provided.\n" +
+							"Anyone under 18 MUST be accompanied by an adult\n" +
+							"NO PETS (except guide / assistive dogs)\n" +
+							"Balance must be paid on arrival. You will NOT be admitted until balance is paid.\n" +
+							"No Sterling accepted for balance. EURO cash only. No refunds for early departure.\n" +
+							"No electrical connections are available. Bring plenty batteries!\n" +
+							"STRICTLY NO GLASS BOTTLES ALLOWED ON SITE. This is our soccer pitch where our kids play matches. \n" +
+							"NO Glass means NO Glass. Plastic only. This WILL be enforced.\n" +
+							"You must be vacated by 1pm on Mon 22 Aug.\n" +
+							"For enquiries phone: 086 8120055 (between 6pm and 9pm)\n\n" +
+							
+							"Welcome to \'the Fleadh Down in Ennis\'. We hope you enjoy your stay!"
+							
+					 		); 
 			 msg.setSenderAddress("booking@avenueunited.ie");
 
 		      final String username = "booking@avenueunited.ie";
