@@ -1,5 +1,7 @@
 import { Component }           from '@angular/core';
+
 import { SessionDataService }  from '../services/session-data.service';
+import { LoggerService }       from '../services/logger.service';
 import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 
 @Component({
@@ -15,7 +17,7 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 									</div>
 									<div class="panel-body avenue-body">
 										<div class="row">
-											<div style="margin:10px;">{{_dataService.dsCurrentTeam.noticeboard}}</div>
+											<div style="margin:10px;">{{d$.dsCurrentTeam.noticeboard}}</div>
 										</div>
 									</div>
 								</div>
@@ -32,7 +34,7 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 						    					<tr style="color:white;">
 						    						<th>Managers:</th>
 						    						<td>
-							    						<div *ngFor="#mem of _dataService.dsTeamMembers">
+							    						<div *ngFor="let mem of d$.dsTeamMembers">
 									    					<div *ngIf="mem.position == 0">
 									    						{{mem.name}}
 									    						<div style="float:right;">
@@ -46,7 +48,7 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 						 						<tr style="color:white;">
 						 							<th>Captian:</th>
 						 							<td>
-						 								<div *ngFor="#mem of _dataService.dsTeamMembers">
+						 								<div *ngFor="let mem of d$.dsTeamMembers">
 									    					<div *ngIf="mem.position == 99">{{mem.name}}</div>
 									    				</div>
 						 							</td>
@@ -76,9 +78,9 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 						    				Squad Details:
 						    			</div>
 						    			<div class="panel-body avenue-body">
-						    				<div *ngFor="#mem of _dataService.dsTeamMembers; #i=index;">
+						    				<div *ngFor="let mem of d$.dsTeamMembers; let i=index;">
 						    					<div *ngIf="mem.position != 0"> 
-													<div (click)="_dataService.setCurrentMember( mem )" style="cursor:pointer;">
+													<div (click)="d$.setCurrentMember( mem )" style="cursor:pointer;">
 														<font color="white">{{i+1}}: {{mem.name}}</font>
 													</div>
 												</div>
@@ -87,24 +89,24 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 						    		</div> <!-- end panel -->
 					    		</div> <!-- end col -->
 					    		
-					    		<div class="col-md-7" *ngIf="_dataService.displayMember">
+					    		<div class="col-md-7" *ngIf="d$.displayMember">
 					    			<div class="panel">
 					    				<div class="panel-heading avenue-heading">
-					    					<span style="font-weight:bold">{{_dataService.dsCurrentMember.name}}</span>
+					    					<span style="font-weight:bold">{{d$.dsCurrentMember.name}}</span>
 					    				</div>
 					    				<div class="panel-body avenue-body">
-					    					<img src='{{_dataService.dsCurrentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
+					    					<img src='{{d$.dsCurrentMember.photo}}' align="left" HSPACE="5" VSPACE="5" width="40%">
 					    					<div>
 					    						<br/><span class="avenue-yellow-text">Age: </span>
-					    						<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.age}}</span> <br/>
+					    						<span style="color:#D1CDCD">{{d$.dsCurrentMember.age}}</span> <br/>
 						    					<span class="avenue-yellow-text">Position: </span>
-						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.position}}</span> <br/>
+						    					<span style="color:#D1CDCD">{{d$.dsCurrentMember.position}}</span> <br/>
 						    					<span class="avenue-yellow-text">Favourite Team: </span>
-						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favteam}}</span> <br/>
+						    					<span style="color:#D1CDCD">{{d$.dsCurrentMember.favteam}}</span> <br/>
 						    					<span class="avenue-yellow-text">Favourite Player: </span>
-						    					<span style="color:#D1CDCD">{{_dataService.dsCurrentMember.favplayer}}</span><br/><br/>
+						    					<span style="color:#D1CDCD">{{d$.dsCurrentMember.favplayer}}</span><br/><br/>
 						    					<span class="avenue-yellow-text">Personal Achievements:</span><br/>
-						    						{{_dataService.dsCurrentMember.achievements}}
+						    						{{d$.dsCurrentMember.achievements}}
 					    					</div>
 		
 					    				</div>
@@ -116,9 +118,19 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 					</div> <!--  End of container t1 -->
 				</div>
     `,
-    directives: [LeagueRepublicTable]
+    directives: [ LeagueRepublicTable ],
+    providers: [ LoggerService ]
 })
 
 export class ViewTeam {
-    constructor(private _dataService: SessionDataService) { }
+	teamName:string;
+	componentName:string = 'ViewTeam';
+	logdepth:number = 2;
+	
+    constructor(private lg$: LoggerService, public d$: SessionDataService) { }
+
+	ngOnInit() 
+	{
+		this.lg$.setLogHdr(this.logdepth, this.componentName);
+	}
 }

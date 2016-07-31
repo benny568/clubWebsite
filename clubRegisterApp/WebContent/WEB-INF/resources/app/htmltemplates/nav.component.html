@@ -95,7 +95,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Teams<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li><a [routerLink]="['/viewTeam']">{{team.name}}</a></li>
+                        <li><a [routerLink]="['/viewTeam', team.name]">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>
@@ -103,7 +103,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> Fixtures &amp; Results<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li><a [routerLink]="['/farView']">{{team.name}}</a></li>
+                        <li><a [routerLink]="['/farView', team.name]]">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>

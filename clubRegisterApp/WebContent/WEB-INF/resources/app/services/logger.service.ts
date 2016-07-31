@@ -23,18 +23,18 @@ export class LoggerService {
 		let i = 0;
 		let depth = logdepth * 4;
 		let moduleSpace = 25;
-		let hdr:string = "## " +  moduleName;
+		let hdr:string = " "; // +  moduleName;
 		
 		// Make sure the field width is the standard, pad if necessary
-		if ( hdr.length < moduleSpace )
-		{
-			let diff = moduleSpace - hdr.length;
-			let i = 0;
-			for ( i = 0; i < diff; i++ )
-			{
-				hdr += ' ';
-			}
-		}
+//		if ( hdr.length < moduleSpace )
+//		{
+//			let diff = moduleSpace - hdr.length;
+//			let i = 0;
+//			for ( i = 0; i < diff; i++ )
+//			{
+//				hdr += ' ';
+//			}
+//		}
 	
 		// (1) Set the indentation according to the depth
 		for ( i = 0; i < depth; i++ )

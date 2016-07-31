@@ -7,7 +7,7 @@ var GulpConfig = (function () {
         this.source = './';
         this.sourceApp = this.source + 'app/';
         
-        this.allFiles = this.source + '/**/*';
+        this.allFiles = this.source + '/**/*.ts';
 
         this.rootOutput = this.source + '/dist';
         this.tsOutputPath = this.rootOutput + '/app';

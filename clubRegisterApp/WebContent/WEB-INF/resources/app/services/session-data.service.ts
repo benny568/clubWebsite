@@ -515,6 +515,84 @@ export class SessionDataService {
      }
 
     /**********************************************************
+     * Name:		loadTeamDetailsByName()
+     * Description:	Load the current team's details
+     * Scope:		Externally accessible
+     * Params in:	teamName: the name of the team in question
+     * Return:
+     **********************************************************/
+    loadTeamDetailsByName( teamName:string )
+    {
+    	console.log("-->" + "loadTeamDetailsByName(" + teamName + ")");
+
+
+        // Clear out the TeamMembers array first
+        this.dsCurrentTeam = null;
+        var url = this.getHome();
+
+        this._http.get( url + '/team/' + teamName )
+             .map(response => response.json())
+             .subscribe( data => this.dsCurrentTeam = data,
+   					error => console.log("ERROR: Reading team details from server, team: " + teamName),
+   					() => console.log("Team details read successfully for team: " + teamName)
+   				  );
+
+    }
+    
+    /**********************************************************
+     * Name:		loadTeamDetailsByNameByObservable()
+     * Description:	Load the current team's details, return an
+     * 				observable to the caller
+     * Scope:		Externally accessible
+     * Params in:	teamName: the name of the team in question
+     * Return:		An observable
+     **********************************************************/
+    loadTeamDetailsByNameByObservable( teamName:string, indent: number )
+    {
+    	var prefix: string = '';
+    
+    	for ( var i = 0; i < (indent + 4); i++ )
+    	{
+    		prefix += ' ';
+    	}
+        console.log(prefix + "|-->" + "loadTeamDetailsByNameByObservable(" + teamName + ")");
+
+
+        // Clear out the TeamMembers array first
+        //this.dsCurrentTeam = null;
+        var url = this.getHome();
+
+        return this._http.get( url + '/team/' + teamName )
+             		.map(response => response.json());
+
+    }
+    
+    /**********************************************************
+     * Name:		loadCurrentTeamMembersByNameByObservable()
+     * Description:	Load the current team's members
+     * Scope:		Externally accessible
+     * Params in:	teamName: the name of the team in question
+     * Return:		Observable
+     **********************************************************/
+    loadCurrentTeamMembersByNameByObservable( teamName: string, indent: number )
+    {
+    	var prefix: string = '';
+    
+    	for ( var i = 0; i < (indent + 4); i++ )
+    	{
+    		prefix += ' ';
+    	}
+        console.log(prefix + "|-->" + "loadCurrentTeamMembersByName(" + teamName + ")");
+
+       // Clear out the TeamMembers array first
+        this.dsTeamMembers.length = 0;
+        var url = this.getHome();
+
+       return this._http.get( url + '/teammembers/' + teamName )
+            	.map(response => response.json());
+    }
+    
+    /**********************************************************
      * Name:		loadCurrentTeamMembersByName()
      * Description:	Load the current team's details and members
      * Scope:		Externally accessible
@@ -534,8 +612,12 @@ export class SessionDataService {
             this.dsTeamMembers.length = 0;
             var url = this.getHome();
 
-            this._http.get( url + '/team/' + teamName )
-                .map(response => response.json());
+           this._http.get( url + '/teammembers/' + teamName )
+                .map(response => response.json())
+                .subscribe( data => this.dsTeamMembers = data,
+	   					error => console.log("ERROR: Reading team members from server, team: " + teamName),
+	   					() => console.log("<-- Team members read successfully for team: " + teamName)
+	   				  );
         }
     }
 

@@ -232,13 +232,17 @@ export class BookingStage3Component {
 		
 		if ( ( phone !== undefined ) && ( phone !== '' ) )
 		{
-			if ( (/^\d{10}$/.test(phone)) || (/^\+\d{12}$/.test(phone)) )
+			/*if ( (/^\d{10}$/.test(phone)) || (/^\+\d{12}$/.test(phone)) )
 			{
 				return true;
 			} else
 			{
 				return false;
-			}
+			}*/
+			
+			// Removing checks, once it is entered we'll take it
+			return true;
+			
 		} else
 		{
 			this.lg$.log("----> checkPh(" + phone + ") undefined or blank!");

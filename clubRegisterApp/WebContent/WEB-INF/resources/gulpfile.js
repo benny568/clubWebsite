@@ -101,7 +101,7 @@ gulp.task('clean-ts', function (cb) {
 });
 
 gulp.task('watch', function() {
-    gulp.watch([config.allFiles], ['ts-lint', 'compile-ts', 'rel-htmls', 'copy-images']);
+    gulp.watch([config.allFiles], ['ts-lint', 'compile-ts']);
 });
 
 gulp.task('serve', ['compile-ts', 'watch'], function() {
@@ -124,7 +124,7 @@ gulp.task('serve', ['compile-ts', 'watch'], function() {
 
 gulp.task('default', ['ts-lint', 'compile-ts']);
 
-gulp.task('min', ['rel-htmls', 'copy-images', 'minify-js', 'minify-css']);
+gulp.task('min', ['copy-styles', 'rel-htmls', 'copy-images', 'minify-js', 'minify-css']);
 
 
 

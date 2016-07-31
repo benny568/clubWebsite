@@ -24,7 +24,7 @@ import { SessionDataService }   from '../services/session-data.service';
 export class PhotosComponent implements OnInit
 {
 	componentName : string = 'PhotosComponent';
-    logHdr : string = "#### " + this.componentName + ": ";
+    logHdr : string = "#### "  + this.componentName + ": ";
 	aAlbum : Array<Media>;
 	path : string = '';
     

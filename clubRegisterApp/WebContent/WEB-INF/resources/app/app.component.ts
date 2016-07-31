@@ -1,5 +1,6 @@
 import { Component }               from '@angular/core';
-import { ROUTER_DIRECTIVES }       from '@angular/router';
+import { Router, 
+         ROUTER_DIRECTIVES }       from '@angular/router';
 import { Http }                    from '@angular/http';
 import { HTTP_PROVIDERS }          from '@angular/http';
 
@@ -110,7 +111,7 @@ enableProdMode();
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Teams<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li><a [routerLink]="['/viewTeam']">{{team.name}}</a></li>
+                        <li><a (click)="goToTeamView(team.name)">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>
@@ -120,7 +121,7 @@ enableProdMode();
                 </a>
                 <ul class="dropdown-menu">
                     <div *ngFor="let team of d$.dsTeams">
-                        <li><a [routerLink]="['/farView']">{{team.name}}</a></li>
+                        <li><a (click)="goToFarView(team.name)">{{team.name}}</a></li>
                     </div>
                 </ul>
             </li>
@@ -182,6 +183,12 @@ enableProdMode();
                 left:0px;
                 height:110px;
             }
+            .dropdown-menu li a
+            {
+             	color:black;
+             	cursor:pointer;
+             	text-decoration: none;
+            }
             `],
     //stylesUrl: '/app/styles/nav.component.css',
     directives: [ ROUTER_DIRECTIVES ],
@@ -194,7 +201,7 @@ export class AppComponent {
 	componentName:string = 'AppComponent';
 	logdepth:number = 0;
 
-    constructor( private lg$: LoggerService, private d$: SessionDataService ) 
+    constructor( private lg$: LoggerService, public d$: SessionDataService, private router: Router ) 
     {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
     	
@@ -202,6 +209,73 @@ export class AppComponent {
     	
         // Load the teams to use in the menu system
         this.d$.dsGetTeams();
+    }
+     
+    
+    goToTeamView(team)
+    {
+    	this.lg$.log("-> goToTeamView(" + team + ")");
+    	this.d$.loadTeamDetailsByNameByObservable(team, this.logdepth)
+    		.subscribe( data => this.getTeamMembers( data ),
+						error => this.lg$.log("ERROR: Reading team details from server, team: " + team),
+						() => this.lg$.log("<-- Team details read successfully for team: " + team)
+					  );
+    }
+    
+    getTeamMembers( data )
+    {
+    	this.lg$.log("-> getTeamMembers()");
+    	this.d$.dsCurrentTeam = data;
+    	this.lg$.log("  |-- Data returned, id: " + this.d$.dsCurrentTeam.id);
+    	this.lg$.log("  |-- Data returned, team name: " + this.d$.dsCurrentTeam.name);
+    	this.lg$.log("  |-- Data returned, lrcode: " + this.d$.dsCurrentTeam.lrcode);
+    	this.lg$.log("  |-- Data returned, lrFixturesCode: " + this.d$.dsCurrentTeam.lrFixturesCode);
+    	this.lg$.log("  |-- Data returned, lrResultsCode: " + this.d$.dsCurrentTeam.lrResultsCode);
+    	this.lg$.log("  |-- Data returned, noticeboard: " + this.d$.dsCurrentTeam.noticeboard);
+    	this.d$.loadCurrentTeamMembersByNameByObservable(this.d$.dsCurrentTeam.name, this.logdepth)
+	        .subscribe( data => this.changeToTeamPage( data ),
+						error => this.lg$.log("ERROR: Reading team members from server, team: " + this.d$.dsCurrentTeam.name),
+						() => this.lg$.log("<-- Team members read successfully for team: " + this.d$.dsCurrentTeam.name)
+					  );
+    }
+    
+    changeToTeamPage( data )
+    {
+    	this.lg$.log("-> changeToTeamPage()");
+    	this.d$.dsTeamMembers = data;
+    	
+    	for ( var i = 0; i < this.d$.dsTeamMembers.length; i++ )
+    	{
+    		this.lg$.log("  |-- Members returned, " + i + ": " + this.d$.dsTeamMembers[i].name);
+    	}
+    	
+
+    	this.router.navigate(['/viewTeam']);
+    }
+
+    
+    goToFarView(team)
+    {
+    	this.lg$.log("-> goToFarView(" + team + ")");
+    	this.d$.loadTeamDetailsByNameByObservable(team, this.logdepth)
+    		.subscribe( data => this.changeToFarPage( data ),
+						error => this.lg$.log("ERROR: Reading team details from server, team: " + team),
+						() => this.lg$.log("<-- Team details read successfully for team: " + team)
+					  );
+    }
+    
+    changeToFarPage( data )
+    {
+    	this.lg$.log("-> changeToFarPage()");
+ 
+    	this.d$.dsCurrentTeam = data;
+    	this.lg$.log("  |-- Data returned, id: " + this.d$.dsCurrentTeam.id);
+    	this.lg$.log("  |-- Data returned, team name: " + this.d$.dsCurrentTeam.name);
+    	this.lg$.log("  |-- Data returned, lrcode: " + this.d$.dsCurrentTeam.lrcode);
+    	this.lg$.log("  |-- Data returned, lrFixturesCode: " + this.d$.dsCurrentTeam.lrFixturesCode);
+    	this.lg$.log("  |-- Data returned, lrResultsCode: " + this.d$.dsCurrentTeam.lrResultsCode);
+    	this.lg$.log("  |-- Data returned, noticeboard: " + this.d$.dsCurrentTeam.noticeboard);
+    	this.router.navigate(['/farView']);
     }
 
 }
