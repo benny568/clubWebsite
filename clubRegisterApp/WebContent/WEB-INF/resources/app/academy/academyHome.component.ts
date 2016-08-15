@@ -7,7 +7,7 @@ import { Router }               from '@angular/router';
 import { AcademyMenuComponent } from "./academyMenu.component";
 import { SessionDataService }   from "../services/session-data.service";
 import { LoggerService }        from "../services/logger.service";
-import { NewsComponent }        from "./news.component";
+import { NewsComponent }        from "../components/news.component";
 
 @Component({
     //templateUrl: 'app/htmltemplates/academyHome.component.html',

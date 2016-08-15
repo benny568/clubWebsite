@@ -152,7 +152,8 @@ export class BookingStage4Component {
 		let to:number = + ( this.bk$.departureDate.slice( 0, 2 ) );
 		this.bk$.numberOfNights = ( to - from );
 		let extraPeople:number = this.bk$.numberOfPeople - 2;
-		let basic = 35 * this.bk$.numberOfNights;
+		// Basic cost for 2 nights is €40/night, for 3 nights + it's €35/night
+		let basic = this.bk$.numberOfNights < 3 ? (40 * this.bk$.numberOfNights) : (35 * this.bk$.numberOfNights);
 		let extraPeopleFee:number = 0;
 		let extraCarFee:number = 0;
 		
@@ -166,8 +167,12 @@ export class BookingStage4Component {
 		}
 		
 		this.bk$.totalCharge = basic + extraPeopleFee + extraCarFee;
-		this.bk$.deposit = 35; //this.bk$.totalCharge/2;
 		
+		this.bk$.deposit = this.bk$.numberOfNights === 1 ? 40 : 50;
+		//this.bk$.deposit = 50; //this.bk$.totalCharge/2;
+		
+		this.lg$.trace("---- Num Nights: " + this.bk$.numberOfNights);
+		this.lg$.trace("---- Basic charge: " + basic);
 		this.lg$.log("---- Total Charge: " + this.bk$.totalCharge);
 	}
 	

@@ -6,6 +6,7 @@ var gulp = require('gulp'),
     tsc = require('gulp-typescript'),
     tslint = require('gulp-tslint'),
     sourcemaps = require('gulp-sourcemaps'),
+    clean = require('gulp-clean'),
     del = require('del'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('tsconfig.json'),
@@ -83,6 +84,7 @@ gulp.task('minify-js', function() {
 gulp.task('minify-css', function() {
     return gulp.src(config.sourceApp + '/styles/*.css')
         .pipe(minifyCSS())
+        .pipe(rename({extname: ".min.css"}))
         .pipe(gulp.dest(config.tsOutputPath + '/styles'));
 });
 
@@ -99,6 +101,11 @@ gulp.task('clean-ts', function (cb) {
   // delete the files
   del(typeScriptGenFiles, cb);
 });
+
+gulp.task('clean-styles', function () {  
+	  return gulp.src(config.tsOutputPath + '/styles', {read: false})
+	    .pipe(clean());
+	});
 
 gulp.task('watch', function() {
     gulp.watch([config.allFiles], ['ts-lint', 'compile-ts']);
@@ -124,7 +131,7 @@ gulp.task('serve', ['compile-ts', 'watch'], function() {
 
 gulp.task('default', ['ts-lint', 'compile-ts']);
 
-gulp.task('min', ['copy-styles', 'rel-htmls', 'copy-images', 'minify-js', 'minify-css']);
+gulp.task('min', ['rel-htmls', 'copy-images', 'minify-js', 'minify-css']);
 
 
 

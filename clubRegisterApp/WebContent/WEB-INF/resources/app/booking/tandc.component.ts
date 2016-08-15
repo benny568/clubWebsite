@@ -47,7 +47,7 @@ import {Button} from 'primeng/primeng';
 							STRICTLY NO GLASS BOTTLES ALLOWED ON SITE.  This is our soccer pitch where our kids play matches. 
 							NO Glass means NO Glass. Plastic only. This WILL be enforced.<br />  
 							
-							You must be vacated by 1pm on Mon 22 Aug.<br />
+							You must be vacated by 5pm on Mon 22 Aug.<br />
 							
 							By booking you agree to the above conditions.<br /><br />
 							

@@ -14,7 +14,6 @@ import { DepartureDatepickerComponent } from './departure-datepicker.component';
 import { NumberOfPeopleComponent } from './number-of-people.component';
 import { InstructionsComponent } from '../booking/instructions.component';
 import { TandCComponent } from '../booking/tandc.component';
-import { TestComponent } from '../booking/test.component';
 
 @Component({
 	template: `
@@ -61,6 +60,8 @@ import { TestComponent } from '../booking/test.component';
 										We are located just off EXIT 13 on the M18 Motorway for really easy access and exit.<br />
 										
 										We will be serviced by the official Fleadh Shuttle Bus service to and from the town centre.<br />
+										
+										No Campervans, tents & cars only. <br />
 										
 										We are the best and the cheapest option for Fleadh Camping, with plenty room for everyone!<br />
 										Enquiries: 086 8120055 between 6pm and 9pm.
@@ -120,8 +121,7 @@ import { TestComponent } from '../booking/test.component';
 	              DepartureDatepickerComponent,
 	              NumberOfPeopleComponent,
 	              InstructionsComponent,
-	              TandCComponent,
-	              TestComponent ]
+	              TandCComponent ]
 	
 })
 
@@ -156,12 +156,12 @@ export class FleadhComponent {
 				this.bk$.numberOfNights = (to - from);
 				this.lg$.log("---- Number of nights stay is: " + this.bk$.numberOfNights);
 				
-				if ( this.bk$.numberOfNights < 3 )
+				/*if ( this.bk$.numberOfNights < 2 )
 				{
-					this.lg$.log("---- MINIMUM STAY 3 NIGHTS ----");
-					this.show3NError();
+					this.lg$.log("---- MINIMUM STAY 2 NIGHTS ----");
+					this.show2NError();
 					return;
-				}
+				}*/
 			} else
 			{
 				this.showDateError();
@@ -201,10 +201,10 @@ export class FleadhComponent {
         this.msgs.push({severity:'info', summary:'Error:', detail:'You must accept the T&C\'s to continue!'});
     }
     
-    show3NError() {
-    	this.lg$.log("----> show3NError()");
+    show2NError() {
+    	this.lg$.log("----> show2NError()");
         this.msgs = [];
-        this.msgs.push({severity:'info', summary:'Error:', detail:'Minimum stay is 3 nights!'});
+        this.msgs.push({severity:'info', summary:'Error:', detail:'Minimum stay is 2 nights!'});
     }
     
     showDateError() {

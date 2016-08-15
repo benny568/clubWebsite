@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
- <!--  	<base href="http://www.avenueunited.ie/"> -->
+ <!--    	<base href="http://www.avenueunited.ie/"> -->
     <base href="http://localhost:8080/clubRegisterApp/">
 	<!-- Set the base href -->
 
@@ -11,15 +11,30 @@
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     
-    <link rel="stylesheet" href="resources/dist/app/styles/default.min.css" media="none" onload="if(media!='all')media='all'"/>
+    <link rel="stylesheet" type="text/css" href="resources/dist/app/styles/default.min.css" media="none" onload="if(media!='all')media='all'"/>
     <link rel="shortcut icon" type="image/ico" href="resources/images/favicon.ico" />
     
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="none" onload="if(media!='all')media='all'"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"  media="none" onload="if(media!='all')media='all'"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/primeui/4.1.12/primeui-ng-all.min.css" media="none" onload="if(media!='all')media='all'"/>
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/omega/theme.min.css"  media="none" onload="if(media!='all')media='all'"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/primeui/4.1.12/primeui-ng-all.min.css" media="none" onload="if(media!='all')media='all'"/>
 
     <style>
-    	@keyframes blink{50%{opacity:0}}@-webkit-keyframes blink{50%{opacity:0}}.blink{animation:blink 1s step-start 0s infinite;-webkit-animation:blink 1s step-start 0s infinite;color:#fff}
+    	@keyframes blink {
+		  50% {
+		    opacity: 0.0;
+		  }
+		}
+		@-webkit-keyframes blink {
+		  50% {
+		    opacity: 0.0;
+		  }
+		}
+		.blink {
+		  animation: blink 1s step-start 0s infinite;
+		  -webkit-animation: blink 1s step-start 0s infinite;
+		  color:white;
+		}
     </style>
 
   </head>
@@ -43,10 +58,10 @@
 	    	
 	    <!-- jQuery (required) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+		<script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
 	
 		<!-- Bootstrap -->
-		<script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	    	
 	    <!-- 1. Load libraries -->
 	    <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -97,7 +112,6 @@
 	      System.import('resources/dist/app/boot')
 	            .then(null, console.error.bind(console));
 	    </script>
-
   </body>
 
 </html>

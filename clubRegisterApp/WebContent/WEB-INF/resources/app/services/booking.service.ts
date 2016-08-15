@@ -51,11 +51,21 @@ export class BookingService {
 	    this.storeBookingDetails();
 	    
 	    console.log("    |- Calling http post to PayPal..");
-	    let loc = 	'https://www.paypal.com/cgi-bin/webscr?' +
+	    
+	    let loc = '';
+	    if ( this.deposit === 50 )
+	    {
+	    	loc = 	'https://www.paypal.com/cgi-bin/webscr?' +
 	    			'cmd=_s-xclick&' +
-	    			//'hosted_button_id=L6R7Z8T7EBC4G';
-	    			'hosted_button_id=9RMD69P5JPRNQ';
+	    			'hosted_button_id=V27T86UZWZ55C'; // €50
+	    			//'hosted_button_id=9RMD69P5JPRNQ'; // €35
 	    			//'hosted_button_id=9CQB2K78DC5DJ'; // 0.01 button
+	    } else {
+	    	loc = 	'https://www.paypal.com/cgi-bin/webscr?' +
+			'cmd=_s-xclick&' +
+			'hosted_button_id=9346WKJ6NSDHQ'; // €40
+	    }
+	    
 	    window.location.href = loc;
 	}
 	

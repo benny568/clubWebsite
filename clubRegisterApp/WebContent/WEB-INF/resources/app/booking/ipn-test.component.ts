@@ -18,7 +18,7 @@ import { BookingService } from '../services/booking.service';
 })
 
 
-export class TestComponent {
+export class IpnTestComponent {
 	
 	constructor( private lg$: LoggerService, private bk$: BookingService ) {}
 	
