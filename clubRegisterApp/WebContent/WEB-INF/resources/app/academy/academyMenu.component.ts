@@ -1,20 +1,22 @@
 /**
  * Created by odalybr on 08/04/2016.
  */
-import { Component }  from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Component }         from '@angular/core';
+import { Injectable }        from '@angular/core';
+import { Router, 
+         ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
     selector: 'academy-memu',
     //templateUrl: 'app/htmltemplates/academyMenu.component.html'
     template: `
 				<div class="btn-group-vertical">
-				    <a (click)="academyHome()" class="btn btn-primary academymenu"><i class="fa fa-home"></i> Home</a>
-				    <a (click)="academyOverview()" class="btn btn-primary academymenu">Overview</a>
-				    <a (click)="academyCoaches()" class="btn btn-primary academymenu">Coaches</a>
-				    <a (click)="academySchedule()" class="btn btn-primary academymenu">Schedule</a>
-				    <a (click)="academyRegistration()" class="btn btn-primary academymenu">Registration</a>
-				    <a (click)="academyPhotos()" class="btn btn-primary academymenu">Photos</a>
+				    <a (click)="goAcademyHome()" class="btn btn-primary academymenu"><i class="fa fa-home"></i> Home</a>
+				    <a [routerLink]="['academyOverview']" class="btn btn-primary academymenu">Overview</a>
+				    <a [routerLink]="['academyCoaches']" class="btn btn-primary academymenu">Coaches</a>
+				    <a [routerLink]="['academySchedule']" class="btn btn-primary academymenu">Schedule</a>
+				    <a [routerLink]="['academyRegistration']" class="btn btn-primary academymenu">Registration</a>
+				    <a [routerLink]="['academyPhotos']" class="btn btn-primary academymenu">Photos</a>
 				    <div class="btn-group">
 				        <button type="button" class="btn btn-primary dropdown-toggle academymenu" data-toggle="dropdown">
 				            FAQ <span class="caret"></span></button>
@@ -24,10 +26,17 @@ import { Injectable } from '@angular/core';
 				        </ul>
 				    </div>
 				</div>
-    `
+    `,
+    directives: [ ROUTER_DIRECTIVES ]
 })
 
 @Injectable()
 export class AcademyMenuComponent {
-
+	constructor( private router: Router ) {}
+	
+	goAcademyHome()
+	{
+		console.log("### Going to Academy Home...");
+		this.router.navigate(['/academyHome', {}]);
+	}
 }

@@ -37,7 +37,7 @@ body
 }
 .academyflag
 {
-	background-image: url('../images/academy/flag.gif');
+	background-image: url('../../images/academy/flag.gif');
 	background-size: cover;
 	height:226px;
 	width:318px;

@@ -26,7 +26,7 @@ enableProdMode();
 </div>
 
 <!-- (2) Navigation bar or menu system -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="cursor:pointer">
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
             <li class="active"><a [routerLink]="['']"><i class="fa fa-home"></i></a></li>           
@@ -125,7 +125,16 @@ enableProdMode();
                     </div>
                 </ul>
             </li>
-            <li><a [routerLink]="['/academyHome']"><i class="fa fa-child"></i> Academy</a></li>
+            <li class="dropdown">
+            	<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-child"></i> Academy<span class="caret"></span></a>
+            	<ul class="dropdown-menu">
+                	<li><a [routerLink]="['/academyHome']"><i class="fa fa-newspaper-o"></i> News</a></li>
+                	<li><a [routerLink]="['/academyOverview']"><i class="fa fa-eye"></i> Overview</a></li>
+                	<li><a [routerLink]="['/academyCoaches']"><i class="fa fa-group"></i> Coaches</a></li>
+                	<li><a [routerLink]="['/academySchedule']"><i class="fa fa-calendar"></i> Schedule</a></li>
+                	<li><a [routerLink]="['/academyTandC']"><i class="fa fa-pencil-square-o "></i> Registration</a></li>
+                </ul>
+            </li>
             <li><a [routerLink]="['merchandise']"><i class="fa fa-shopping-cart"></i> Merchandise</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

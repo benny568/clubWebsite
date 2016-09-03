@@ -1,15 +1,42 @@
-/*import { Routes, RouterModule } from '@angular/router';
+import { RouterConfig }                  from '@angular/router';
+import { Location }                      from '@angular/common';
 
-import { AcademyHomeComponent }        from './academyHome.component';
+import { AcademyHomeComponent }          from './academyHome.component';
+import { AcademyOverviewComponent }      from './academyOverview.component';
+import { AcademyCoachesComponent }       from './academyCoaches.component';
+import { AcademyScheduleComponent }      from './academySchedule.component';
+import { AcademyTandCComponent }         from './academyTandC.component';
+import { AcademyRegistrationComponent }  from './academyRegistration.component';
+import { AcademyMemberPaymentComponent } from './academyMemberPayment.component';
 
-const academyRoutes: Routes = [
-  {
-    path: 'academy',
-    component: AcademyHomeComponent,
-    children: [
-      { path: '',     component: AcademyHomeComponent }
-    ]
-  }
+export const academyRouterConfig: RouterConfig = [
+	{ 
+		path: 'academyHome', 
+		component: AcademyHomeComponent
+	},
+	{
+		path: 'academyOverview',
+		component: AcademyOverviewComponent
+	},
+	{
+		path: 'academyCoaches',
+		component: AcademyCoachesComponent  
+	}
+	,
+	{
+		path: 'academySchedule',
+		component: AcademyScheduleComponent  
+	},
+	{
+		path: 'academyTandC',
+		component: AcademyTandCComponent
+	},
+	{
+		path: 'academyRegistration',
+		component: AcademyRegistrationComponent
+	},
+	{
+		path: 'academyPayment',
+		component: AcademyMemberPaymentComponent
+	}
 ];
-
-export const academyRouting = RouterModule.forChild(academyRoutes);*/

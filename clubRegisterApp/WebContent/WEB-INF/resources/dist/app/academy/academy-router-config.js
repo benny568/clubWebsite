@@ -1,0 +1,1 @@
+System.register(["./academyHome.component"],function(e,n){"use strict";var t,o;return n&&n.id,{setters:[function(e){t=e}],execute:function(){e("academyRouterConfig",o=[{path:"academy",component:t.AcademyHomeComponent,children:[{path:"",component:t.AcademyHomeComponent}]}])}}});

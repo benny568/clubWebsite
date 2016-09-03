@@ -11,7 +11,7 @@ import { SponsorsComponent }  from './sponsors.component';
     //templateUrl: 'app/htmltemplates/home.component.html',
     template: `
     			<div class="component">
-					<advert></advert>
+					<!--<advert></advert>-->
 					<news></news>
 					<sponsors></sponsors>
 				</div>

@@ -97,21 +97,21 @@ import { Component } from '@angular/core';
 				                </tr>
 				                <tr>
 				                    <th scope="row">Junior A Manager</th>
-				                    <td>Keith Mc Inerney</td>
-				                    <td>085 8630838</td>
+				                    <td>Richie O'Grady</td>
+				                    <td>089 4417679</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
 				                    <th scope="row">Junior B Manager</th>
-				                    <td>Greg O'Neill, Richie O'Grady</td>
-				                    <td>087 0622859, 089 4417679</td>
-				                    <td>avenueunited@gmail.com</td>
+				                    <td>Brendan O'Daly</td>
+				                    <td>087 6470883</td>
+				                    <td>odalybr@hotmail.com</td>
 				                </tr>
 				                <tr>
 				                    <th scope="row">U18 Manager</th>
-				                    <td>Brendan O'Daly, Nigel Braddish</td>
-				                    <td>087 6470883, 087 2873996</td>
-				                    <td>odalybr@hotmail.com, avenueunited@gmail.com</td>
+				                    <td>Nigel Braddish</td>
+				                    <td>087 2873996</td>
+				                    <td>avenueunited@gmail.com</td>
 				                </tr>
 				                <tr>
 				                    <th scope="row">U17 Manager</th>
@@ -120,31 +120,25 @@ import { Component } from '@angular/core';
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U16 Manager</th>
-				                    <td>John O Malley</td>
-				                    <td>087 2660715</td>
-				                    <td></td>
-				                </tr>
-				                <tr>
-				                    <th scope="row">U15A (Red) Manager</th>
+				                    <th scope="row">U16A (Red) Manager</th>
 				                    <td>Jarlet McCabe, Pat McDaid</td>
 				                    <td>087 6520523, 085 8644954</td>
 				                    <td>jarlath.mccabe@genworth.com, enniscarpets@eircom.net</td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U15B (Yellow) Manager</th>
+				                    <th scope="row">U16B (Yellow) Manager</th>
 				                    <td>Joe O'Keeffe, Laurence Ryan, Peter Maddigan</td>
 				                    <td>087 2041612, 087 6858167</td>
 				                    <td>jokeeffe62@gmail.com</td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U14 Manager</th>
-				                    <td>Enda Meaney, Colin McDonough, Tony Downey, Brendan O'Daly</td>
-				                    <td>087 2107407, , 085 8420330, 085 842033, 087 6470883</td>
-				                    <td>endameaney@eircom.net, colinedmcdonough@gmail.com, tonypaulanthonydowney@gmail.com, odalybr@hotmail.com</td>
+				                    <th scope="row">U15 Manager</th>
+				                    <td>Enda Meaney</td>
+				                    <td>087 2107407</td>
+				                    <td>endameaney@eircom.net</td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U13 Red Manager</th>
+				                    <th scope="row">U14 Red Manager</th>
 				                    <td>Dave Barry, Brian Clohessey</td>
 				                    <td>087 9880069, 086 6836022</td>
 				                    <td>djamesbarry@hotmail.com</td>
@@ -156,53 +150,72 @@ import { Component } from '@angular/core';
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U12 Red Manager</th>
+				                    <th scope="row">U13 Red Manager</th>
 				                    <td>Albert Hardiman, Ray Crowley</td>
 				                    <td>087 1210833, 086 8545802</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U12 Yellow Manager</th>
+				                    <th scope="row">U13 Yellow Manager</th>
 				                    <td>Kevin Lane, Ronan Burke</td>
 				                    <td>087 2736235, 086 1627209</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U12 Black Manager</th>
+				                    <th scope="row">U13 Black Manager</th>
 				                    <td>Wayne Ryan, Paul Roche</td>
 				                    <td>086 3980548, 087 1579002</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U11 Yellow Manager</th>
+				                    <th scope="row">U12 Yellow Manager</th>
 				                    <td>John O Malley</td>
 				                    <td>087 2660715</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U11 Red Manager</th>
+				                    <th scope="row">U12 Red Manager</th>
 				                    <td>Alan Murphy</td>
 				                    <td>086 0747544</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U10 Yellow Manager</th>
+				                    <th scope="row">U11 Yellow Manager</th>
 				                    <td>David Herlihy</td>
 				                    <td>086 8516699</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U10 White Manager</th>
+				                    <th scope="row">U11 White Manager</th>
 				                    <td>Leo Herbert</td>
 				                    <td>086 8368878</td>
 				                    <td></td>
 				                </tr>
 				                <tr>
-				                    <th scope="row">U10 Red Manager</th>
+				                    <th scope="row">U11 Red Manager</th>
 				                    <td>Brian Aherne</td>
 				                    <td>087 6932803</td>
 				                    <td></td>
 				                </tr>
+				                <tr>
+				                    <th scope="row">U10 Yellow Manager</th>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                </tr>
+				                <tr>
+				                    <th scope="row">U10 White Manager</th>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                </tr>
+				                <tr>
+				                    <th scope="row">U10 Red Manager</th>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                </tr>
+				                
 				                </tbody>
 				            </table>
 				            <!-- 				</div> end panel body

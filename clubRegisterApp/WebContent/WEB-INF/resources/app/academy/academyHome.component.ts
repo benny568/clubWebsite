@@ -2,9 +2,7 @@
  * Created by odalybr on 08/04/2016.
  */
 import { Component }            from '@angular/core';
-import { Router }               from '@angular/router';
 
-import { AcademyMenuComponent } from "./academyMenu.component";
 import { SessionDataService }   from "../services/session-data.service";
 import { LoggerService }        from "../services/logger.service";
 import { NewsComponent }        from "../components/news.component";
@@ -15,12 +13,8 @@ import { NewsComponent }        from "../components/news.component";
     template: `
 				<div class="container t1">
 				    <div class="row">
-				        <div class="col-md-1" style="padding-top:50px;">
-				            <!-- Add menu down left -->
-				            <academy-memu></academy-memu>
-				        </div>
 				        <div class="col-md-6">
-				            <img src="resources/images/academy/avenue-academy-15.1.jpg" height="auto" width="100%" style="margin-left:100px;"/>
+				            <img src="resources/images/academy/avenue-academy-15.1.jpg" height="auto" width="100%" style="margin-left:50px;"/>
 				        </div>
 				        <div class="col-md-5">
 				            <div class="academyflag" style="margin-left:150px;margin-top:30px;"></div>
@@ -36,7 +30,7 @@ import { NewsComponent }        from "../components/news.component";
 				                    Latest News
 				                </div>
 				                <div class="panel-body avenue-body">
-				                    <div *ngFor="#story of _dataService.dsNewsStories">
+				                    <div *ngFor="let story of d$.dsNewsStories">
 				                        <div *ngIf="story.category == 'A'" style="border-bottom: 1px solid #ccc;padding-bottom:5px;">
 				                            <img src="{{story.image}}" align="left" HSPACE="5" VSPACE="5" height="auto" width="50%"/>
 				                            <h4 style="color:#FAE900;">{{story.description}}</h4><p>{{story.story}}</p>
@@ -87,49 +81,48 @@ import { NewsComponent }        from "../components/news.component";
 				</div> <!--  End of container t1 -->
 
     `,
-    directives: [ AcademyMenuComponent, NewsComponent ],
-    providers: [ LoggerService, Router ]
+    directives: [ NewsComponent ],
+    providers: [ LoggerService ]
 })
 
 export class AcademyHomeComponent {
 	componentName:string = 'AcademyHomeComponent';
 	logdepth:number = 1;
 	
-    constructor( private d$: SessionDataService, private lg$: LoggerService, private router: Router ) {}
+    constructor( private d$: SessionDataService, private lg$: LoggerService ) {}
 
     ngOnInit() {
         this.lg$.setLogHdr(this.logdepth, this.componentName);
-        this.d$.loadNewsStories();
+        this.d$.loadNewsStories()
+          .subscribe(
+		            	data => this.d$.setNews(data),
+		            	error => this.lg$.error("===> Error getting news from server: " + error),
+		            	() => this.lg$.log(" <=== Received news from server. <====")
+		            );
     }
     
     goToAcademyHome() {
     	this.lg$.log("-- going home..");
-    	this.router.navigate(['/academyHome']);
     }
     
     goToAcademyOverview() {
     	this.lg$.log("-- going to overview..");
-    	this.router.navigate(['/academyOverview']);
     }
     
     goToAcademyCoaches() {
     	this.lg$.log("-- going to coaches..");
-    	this.router.navigate(['/academyCoaches']);
     }
     
     goToAcademySchedule() {
     	this.lg$.log("-- going to schedule..");
-    	this.router.navigate(['/academySchedule']);
     }
     
     goToAcademyRegistration() {
     	this.lg$.log("-- going to registration..");
-    	this.router.navigate(['/academyRegistration']);
     }
     
     goToAcademyPhotos() {
     	this.lg$.log("-- going to photos..");
-    	this.router.navigate(['/academyPhotos']);
     }
 
 }

@@ -455,10 +455,11 @@ public class TaskManagerService {
 		  {
 			   Connection connection = DBUtility.getConnection();
 			   PreparedStatement preparedStatement = connection.
-			     prepareStatement("select * from newsstory where category=?");
-			   preparedStatement.setString(1, "G");
+					prepareStatement("select * from newsstory");
+			     //prepareStatement("select * from newsstory where category=?");
+			   //preparedStatement.setString(1, "G");
 			   ResultSet rs = preparedStatement.executeQuery();
-			   log.debug("          | -- running db select: select * from newsstory where category=G");
+			   log.debug("          | -- running db select: select * from newsstory");
 			   
 			   while(rs.next()) 
 			   {

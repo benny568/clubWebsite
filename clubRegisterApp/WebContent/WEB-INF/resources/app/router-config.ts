@@ -1,4 +1,6 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import { RouterConfig, Route }     from '@angular/router';
+
+import { academyRouterConfig }     from './academy/academy.routes';
 
 import { ViewTeam }                from './components/viewTeam.component';
 import { HomeComponent }           from "./components/home.component";
@@ -8,7 +10,7 @@ import { MessageUsComponent }      from "./components/messageUs.component";
 import { ContacteUsComponent }     from "./components/contactUs.component";
 import { DownloadsComponent }      from "./components/downloads.component";
 import { LinksComponent }          from "./components/links.component";
-import { AcademyHomeComponent }    from "./components/academyHome.component";
+import { AcademyHomeComponent }    from "./academy/academyHome.component";
 import { ClubHistoryComponent }    from "./components/clubHistory.component";
 import { MerchandiseComponent }    from "./components/merchandise.component";
 import { LoginComponent }          from "./components/login.component";
@@ -23,8 +25,19 @@ import { BookingStage1Component }  from "./booking/booking-stage1.component";
 import { BookingStage3Component }  from "./booking/booking-stage3.component";
 import { BookingStage4Component }  from "./booking/booking-stage4.component";
 import { SuccessComponent }        from "./booking/success.component";
+import { AcademyOverviewComponent } from './academy/academyOverview.component';
 
-export const routes: RouterConfig = [
+const indexRoute:Route = {
+		path: "",
+		component: HomeComponent
+};
+
+const fallbackRoute:Route = {
+		path: '**',
+		component: HomeComponent
+};
+
+export const routeConfig: RouterConfig = [
                                      { path: '', component: HomeComponent },
                                      { path: 'findUs', component: FindUsComponent },
                                      { path: 'contactUs', component: ContacteUsComponent },
@@ -33,24 +46,15 @@ export const routes: RouterConfig = [
                                      { path: 'messageUs', component: MessageUsComponent },
                                      { path: 'viewTeam', component: ViewTeam },
                                      { path: 'farView', component: FarViewComponent },
-                                     { path: 'academyHome', component: AcademyHomeComponent },
                                      { path: 'clubHistory', component: ClubHistoryComponent },
                                      { path: 'merchandise', component: MerchandiseComponent },
                                      { path: 'media/:cat1/:cat2/:cat3', component: PhotosComponent },
                                      { path: 'login', component: LoginComponent },
                                      { path: 'admin', component: AdminHomeComponent },
-                                     { path: 'fleadh', component: FleadhComponent },
-                                     { path: 'payNow', component: PayNowComponent },
                                      { path: 'adminOverview', component: AdminOverviewComponent },
                                      { path: 'memberRegister', component: MemberRegisterComponent },
                                      { path: 'editMember', component: EditMemberComponent },
-                                     { path: 'booking', component: BookingStage1Component },
-                                     { path: 'booking3', component: BookingStage3Component },
-                                     { path: 'booking4', component: BookingStage4Component },
-                                     { path: 'success', component: SuccessComponent }
+                                     { path: 'success', component: SuccessComponent },
+                                     ...academyRouterConfig
                                    ];
 
-
-export const APP_ROUTER_PROVIDERS = [
-      provideRouter(routes)
-    ];

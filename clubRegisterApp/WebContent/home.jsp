@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
- <!--  	<base href="http://www.avenueunited.ie/"> -->
-    <base href="http://localhost:8080/clubRegisterApp/">
-	<!-- Set the base href -->
+  	<!-- Set the base href -->
+ <!--   	<base href="http://www.avenueunited.ie/"> -->
+   <base href="http://localhost:8080/clubRegisterApp/">
 
     <title>Avenue United Home Page</title>
 
@@ -29,11 +29,9 @@
   		<my-app>
   		
   			<div style="color:white;text-align:center;">
-	    		<span style="font-size:50px;">OFFICIAL FLEADH CAMPSITE <br />ONLINE BOOKING NOW OPEN <br /></span>
+	    		<span style="font-size:50px;">Avenue United Official Website <br /></span>
 	    		
-		    	Booking engine is a little slow at present. It may take up to 20 seconds to load.<br />
-				You will need a credit or debit card to pay a deposit to secure your campsite place.<br />
-				(or you can use your PayPal account, if you have one)<br />
+		    	Loading is a little slow at present. It may take up to 20 seconds to load.<br />
 				Thank you for your patience.<br />
 				<span class="blink">LOADING....PLEASE WAIT<br /></span>
 			</div>
