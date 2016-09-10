@@ -6,7 +6,7 @@ class ServerMode {
     currentMode:number;
     
     constructor() {    
-        this.currentMode = this.modes.LOCAL;
+        this.currentMode = this.modes.REMOTE;
     }
     
     getServerMode()

@@ -24,135 +24,22 @@ import { AcademyRegistrationService }  from './academyRegistration.service';
 		    <p-tabPanel header="Step 3: Payment" [selected]="true">	   
 
 				<div class="ui-grid ui-grid-responsive">
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Firstname: 
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.firstname}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Surname:
-						</div>
-						<div class="ui-grid-col-7"> 
-							{{ar$.surname}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							email:
-						</div>
-						<div class="ui-grid-col-7"> 
-							{{ar$.email}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Date of Birth:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.dob}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Contact number 1:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.phone1}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-					 		Contact number 2:
-					 	</div>
-						<div class="ui-grid-col-7">
-							{{ar$.phone2}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Allergies:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.allergies}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Asthma:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.asthma}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Diabetes: 
-						</div>
-						<div class="ui-grid-col-7">	
-							{{ar$.diabetes}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Medication:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.medication}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Notes:
-						</div>
-						<div class="ui-grid-col-7">	
-							{{ar$.notes}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Date of registration:
-						</div>
-						<div class="ui-grid-col-7">	
-							{{ar$.regDate}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Mother's name:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.mother}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Father's name:
-						</div>
-						<div class="ui-grid-col-7">	
-							{{ar$.father}}
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							General Consent:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.generalConsent===true?'Given':'Not Given'}}				
-						</div>
-					</div>
-					<div class="ui-grid-row">
-						<div class="ui-grid-col-3" style="font-weight: bold;">
-							Picture Consent:
-						</div>
-						<div class="ui-grid-col-7">
-							{{ar$.pictureConsent===true?'Given':'Not Given'}}				
-						</div>
-					</div>
-					
+				
+					<div *ngFor="let item of ar$.regData">
+
+			    		<div class="ui-grid-row" *ngIf="(item.type==='text')&&(item.display)" style="margin-bottom:5px;">
+			    			
+			    			<div class="ui-grid-col-3">
+								<strong>{{item.name}}:</strong>
+					        </div>
+					        <div class="ui-grid-col-4">
+								{{item.value}}
+					        </div>
+					        
+				        </div>
+				        
+					</div>	
+				
 					<!-- Leave a space -->
 					<div class="ui-grid-row">
 						<br />

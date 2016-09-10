@@ -3,11 +3,11 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
 <!--             <pattern>web - %date [%thread] %-5level %logger{36} - %message%n</pattern> -->
-            <pattern>%message%n</pattern>
+            <pattern>%date: %message%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springframework" level="TRACE" />
 
     <root level="TRACE">
         <appender-ref ref="STDOUT" />

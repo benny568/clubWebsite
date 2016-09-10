@@ -28,6 +28,7 @@ public class Member {
 	 private String photo;
 	 private String achievements;
 	 private String status;
+	 private String academyinfo;
 	 
 	
 	 public int getId() {
@@ -177,6 +178,12 @@ public class Member {
 	}
 	public void setPhone2(String phone2) {
 		this.phone2 = phone2;
+	}
+	public String getAcademyinfo() {
+		return academyinfo;
+	}
+	public void setAcademyinfo(String academyinfo) {
+		this.academyinfo = academyinfo;
 	}
 	
 }

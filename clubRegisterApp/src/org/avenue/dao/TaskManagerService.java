@@ -496,8 +496,8 @@ public class TaskManagerService {
 			  PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO member ( name, address, phone, phone2, email,"
 			   																	+ "dob, amount, team, team2, team3, position, lid, favteam, "
 			   																	+ "favplayer, sappears, sassists, sgoals, photo, "
-			   																	+ "achievements, status ) VALUES (?, ?, ?, ?, ?, ?,"
-			   																	+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			   																	+ "achievements, status, academyinfo ) VALUES (?, ?, ?, ?, ?,"
+			   																	+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			  preparedStatement.setString(1, member.getName());
 			   preparedStatement.setString(2, member.getAddress());
 			   preparedStatement.setString(3, member.getPhone());
@@ -518,6 +518,7 @@ public class TaskManagerService {
 			   preparedStatement.setString(18, member.getPhoto());
 			   preparedStatement.setString(19, member.getAchievements());
 			   preparedStatement.setString(20, member.getStatus());
+			   preparedStatement.setString(21, member.getAcademyinfo());
 			   preparedStatement.executeUpdate();
 		
 			  } catch (SQLException e) {
@@ -1519,6 +1520,233 @@ public class TaskManagerService {
 		 {	 
 			 EmailMessage msg = new EmailMessage();
 			 String destination = ipi.getPayerEmail();
+			 msg.setSubject("Avenue United: Payment Confirmation - Automated message, do not reply");
+			 msg.setMessage("Avenue United Academy 2016/17\n\n" +
+					 		"Confirmation of your payment: \n" +
+					 		"Name: " + ipi.getFirstName() + " " + ipi.getLastName() + "\n" +
+					 		"Address: "+ ipi.getAddressCity() + "," + ipi.getAddressStreet() + "\n" +
+					 		"Payment amount: " + ipi.getPaymentAmount() +  "\n" +
+					 		"Payment Date: "+ ipi.getPaymentDate() + "\n\n\n" +
+					 		
+							"Thank you for using our online payment system.\n" +
+							"Please retain this email for your receipt.\n\n" +
+							
+							"Parents Code:\n" +
+							"As a parent, you play a special role in the development of your daughter or son, and of his/her teammates." +
+							" Your encouragement and good example will do more to ensure good sportsmanship and self-discipline than any" +
+							" other influence. While winning is important, playing well and fairly is the essence of the game.\n\n" + 
+							
+							"Support your Child:\n" +
+							"Support your child by giving encouragement and showing interest in his/her team. Help your child work toward"+
+							" skill improvement and good sportsmanship in every game. Teach your child that hard work and an honest " +
+							"effort are often more important than winning.\n\n" +
+							
+							"Always be positive:\n" +
+							"Children learn more by example than by criticism. Work to be a positive role model, and reinforce positive " +
+							"behavior in others. Applaud good plays by others on your child's team as well as good plays by the opposing "+
+							"team. Do not criticize any child’s performance from the sidelines. Accept the results of each game. Teach " +
+							"your child to be gracious in victory and to turn defeat into victory by learning and working toward " +
+							"improvement.\n\n" +
+							
+							"Don’t be a sideline coach or referee:\n" +
+							"Refrain from coaching or refereeing from the sidelines. Parents who shout or scream from the sidelines often"+
+							" give inappropriate advice at the wrong time. The coach should be the only sideline voice. Remain well back "+
+							"from the sidelines and within the spectator area. You and your child will both enjoy the coaching sessions " +
+							"more if you put some emotional distance between yourself and the field or play.\n\n" +
+							
+							"Demonstrate a positive attitude:\n" +
+							"Toward your opponents and their families Opponents are not enemies. Take care to show good hospitality at " +
+							"home and to represent Avenue United F.C in a positive way when visiting other clubs. Never allow yourself " +
+							"to be drawn into a verbal disagreement with opposing parents or coaches. No one has ever regretted letting " +
+							"cooler heads prevail.\n\n" +
+							
+							"Remember that your child wants to have fun:\n" +
+							"Your child is the one playing soccer, not you. Children must establish their own goals - to play the game " +
+							"for themselves. Take care not to impose unreasonable demands on your child. Let your children experience " +
+							"the fun of playing as well as the challenge of excelling." 
+							
+					 		); 
+			 msg.setSenderAddress("academy@avenueunited.ie");
+
+		      final String username = "academy@avenueunited.ie";
+		      final String password = "LorealShannon16";
+
+		      Properties props = new Properties();
+		      props.put("mail.smtp.auth", "true");
+		      props.put("mail.smtp.starttls.enable", "true");
+		      props.put("mail.smtp.host", "mail.avenueunited.ie");
+		      props.put("mail.smtp.port", "25");
+
+		      // Get the default Session object.
+		      Session session = Session.getInstance(props,
+		    		  new javax.mail.Authenticator() {
+		    			protected PasswordAuthentication getPasswordAuthentication() {
+		    				return new PasswordAuthentication(username, password);
+		    			}
+		    		  });
+		      
+			 try{
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+		         // Set Subject: header field
+		         message.setSubject(msg.getSubject());
+
+		         // Now set the actual message
+		         message.setText(msg.getMessage());
+
+		         // Send message
+		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		         return true;
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		         return false;
+		      }
+		 }
+		 
+		 public boolean sendRegistrationDetailsEmail(Member member) 
+		 {	 
+			 EmailMessage msg = new EmailMessage();
+			 String destination = member.getEmail();
+			 msg.setSubject("Avenue United: Registration Details - Automated message, do not reply");
+			 msg.setMessage("Avenue United Academy 2016/17\n\n" +
+					 		"You added the folllowing details via our website, please check: \n" +
+					 		"Name: " + member.getName() + "\n" +
+					 		//"Address: " + member.getAddress() + "\n" +
+					 		"Primary Contact number: " + member.getPhone() + "\n" +
+					 		"Secondary Contact number: " + member.getPhone2() + "\n" +
+					 		"email: " + member.getEmail() + "\n" +
+					 		"dob: " + member.getDob() + "\n" +
+					 		"Receipt id: " + member.getReceiptid() + "\n" +
+					 		"Team: " + member.getTeam() + "\n" +
+					 		//"Team2: " + member.getTeam2() + "\n" +
+					 		//"Team3: " + member.getTeam3() + "\n" +
+					 		//"Position: " + member.getPosition() + "\n" +
+					 		//"Position2: " + member.getPosition2() + "\n" +
+					 		//"Position3: " + member.getPosition3() + "\n" +
+					 		//"LeagueId: " + member.getLid() + "\n" +
+					 		"Favorite team: " + member.getFavteam() + "\n" +
+					 		"Favorite Player: " + member.getFavplayer() + "\n" +
+					 		"Health information: " + member.getAcademyinfo() + "\n\n" +
+
+					 		"Payment due: " + member.getAmount() +  "\n\n" +
+					 		
+					 		"Thank you for using our online registration, please note that a registration is not valid until " +
+					 		"the fees due are paid. If you pay via PayPal you should receive another email confirming your payment." +
+					 		"\n\nYours in sport,\nAvenue United."
+
+							
+					 		); 
+			 msg.setSenderAddress("academy@avenueunited.ie");
+
+		      final String username = "academy@avenueunited.ie";
+		      final String password = "LorealShannon16";
+
+		      Properties props = new Properties();
+		      props.put("mail.smtp.auth", "true");
+		      props.put("mail.smtp.starttls.enable", "true");
+		      props.put("mail.smtp.host", "mail.avenueunited.ie");
+		      props.put("mail.smtp.port", "25");
+
+		      // Get the default Session object.
+		      Session session = Session.getInstance(props,
+		    		  new javax.mail.Authenticator() {
+		    			protected PasswordAuthentication getPasswordAuthentication() {
+		    				return new PasswordAuthentication(username, password);
+		    			}
+		    		  });
+		      
+			 try{
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+		         // Set Subject: header field
+		         message.setSubject(msg.getSubject());
+
+		         // Now set the actual message
+		         message.setText(msg.getMessage());
+
+		         // Send message
+		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		         sendRegistrationDetailsEmailCopy(msg.getMessage(), member);
+		         return true;
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		         return false;
+		      }
+		 }
+		 
+		 public boolean sendRegistrationDetailsEmailCopy(String msgBody, Member member) 
+		 {	 
+			 EmailMessage msg = new EmailMessage();
+			 String destination = "academy@avenueunited.ie";
+			 msg.setSubject("Avenue United: Registration Details - " + member.getName());
+			 msg.setMessage(msgBody); 
+			 msg.setSenderAddress("academy@avenueunited.ie");
+
+		      final String username = "academy@avenueunited.ie";
+		      final String password = "LorealShannon16";
+
+		      Properties props = new Properties();
+		      props.put("mail.smtp.auth", "true");
+		      props.put("mail.smtp.starttls.enable", "true");
+		      props.put("mail.smtp.host", "mail.avenueunited.ie");
+		      props.put("mail.smtp.port", "25");
+
+		      // Get the default Session object.
+		      Session session = Session.getInstance(props,
+		    		  new javax.mail.Authenticator() {
+		    			protected PasswordAuthentication getPasswordAuthentication() {
+		    				return new PasswordAuthentication(username, password);
+		    			}
+		    		  });
+		      
+			 try{
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(msg.getSenderAddress()));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+
+		         // Set Subject: header field
+		         message.setSubject(msg.getSubject());
+
+		         // Now set the actual message
+		         message.setText(msg.getMessage());
+
+		         // Send message
+		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		         return true;
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		         return false;
+		      }
+		 }
+
+
+
+/*		 public boolean sendConfirmationEmail(IpnInfo ipi) 
+		 {	 
+			 EmailMessage msg = new EmailMessage();
+			 String destination = ipi.getPayerEmail();
 			 msg.setSubject("Avenue United: Booking Confirmation - Automated message, do not reply");
 			 msg.setMessage("Avenue United Fleadh 2016 Official Campsite Booking\n\n" +
 					 		"Confirmation of your booking: \n" +
@@ -1603,7 +1831,7 @@ public class TaskManagerService {
 		         return false;
 		      }
 		 }
-		 
+*/
 		
 		 
 		 public IpnInfo paypalIPNhandler( HttpServletRequest request, HttpServletResponse response ) throws IpnException

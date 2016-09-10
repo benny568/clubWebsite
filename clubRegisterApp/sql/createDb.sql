@@ -25,6 +25,7 @@ create table member(	id int not null auto_increment,
                         photo varchar(100) default 'resources/images/Players/default.png',
                         achievements text default '',
 						status varchar(20) default '',
+						academyinfo TEXT,
 						primary key(id));
 
 insert into member (name, address, phone, amount, team, position, lid, status)

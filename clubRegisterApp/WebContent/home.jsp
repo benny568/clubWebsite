@@ -2,8 +2,8 @@
 <html>
   <head>
   	<!-- Set the base href -->
- <!--   	<base href="http://www.avenueunited.ie/"> -->
-   <base href="http://localhost:8080/clubRegisterApp/">
+  	<base href="http://www.avenueunited.ie/">
+  <!--   <base href="http://localhost:8080/clubRegisterApp/"> -->
 
     <title>Avenue United Home Page</title>
 

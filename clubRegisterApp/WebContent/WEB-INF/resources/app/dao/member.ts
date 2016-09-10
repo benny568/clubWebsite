@@ -2,13 +2,14 @@ export /**
  * name
  */
 class Member {
+	id:number;
     name:string;
     address:string;
     phone:string;
     phone2:string;
-    dob:string;
     email:string;
-    amount:string;
+    dob:string;
+    amount:number;
     receiptid:string;
     team:number;
     team2:number;
@@ -25,5 +26,6 @@ class Member {
     photo:string;
     achievements:string;
     status:string;
+    academyinfo:string;
 
 }

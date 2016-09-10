@@ -386,6 +386,16 @@ public class TaskManagerController {
 	      }
 	 }
 	 
+	 @RequestMapping(value="/confirmregistration",method = RequestMethod.POST)
+	 public void confirmRegistrationEmail(@RequestBody Member member) 
+	 {	 
+		 log.debug("## ->confirmRegistrationEmail("+member.getName()+")");
+		 taskmanagerservice.sendRegistrationDetailsEmail(member);
+		 log.debug("## <-confirmRegistrationEmail()");
+		 return;
+	 }
+
+	 
 	 @RequestMapping(value="/admin/manager/{name}",method = RequestMethod.GET,headers="Accept=application/json")
 	 public  org.avenue.service.domain.Worker getManagerDetails(@PathVariable String name) 
 	 {
@@ -420,6 +430,14 @@ public class TaskManagerController {
 		 log.debug("## <-addBookingDetails()");
 	 }
 	 
+	 @RequestMapping(value="/academyregistration",method = RequestMethod.POST)
+	 public void addAcademyRegistration(@RequestBody Member member) {	
+		 log.debug("## ->addAcademyRegistration("+member+")");
+		 taskmanagerservice.addMember( member );
+		 logMemberDetails(member);
+		 log.debug("## <-addAcademyRegistration()");
+	 }
+	 
 	 @RequestMapping(value="/ipn",method = RequestMethod.POST)
 	 public void paypalIPNlistener(HttpServletRequest req, HttpServletResponse res) {	
 		 log.debug("## ->paypalIPNlistener()");
@@ -430,6 +448,39 @@ public class TaskManagerController {
 			e.printStackTrace();
 		}
 		 log.debug("## <-paypalIPNlistener()");
+	 }
+	 
+	 public void logMemberDetails( Member member )
+	 {
+		 log.debug("*************************************************");
+		 log.debug("***           MEMBER DETAILS                  ***");
+		 log.debug("*************************************************");
+		 log.debug("**    Name: " + member.getName());
+		 log.debug("**    Address: " + member.getAddress());
+		 log.debug("**    Phone: " + member.getPhone());
+		 log.debug("**    Phone2: " + member.getPhone2());
+		 log.debug("**    email: " + member.getEmail());
+		 log.debug("**    dob: " + member.getDob());
+		 log.debug("**    Payment: " + member.getAmount());
+		 log.debug("**    Receipt id: " + member.getReceiptid());
+		 log.debug("**    Team: " + member.getTeam());
+		 log.debug("**    Team2: " + member.getTeam2());
+		 log.debug("**    Team3: " + member.getTeam3());
+		 log.debug("**    Position: " + member.getPosition());
+		 log.debug("**    Position2: " + member.getPosition2());
+		 log.debug("**    Position3: " + member.getPosition3());
+		 log.debug("**    LeagueId: " + member.getLid());
+		 log.debug("**    Fav team: " + member.getFavteam());
+		 log.debug("**    Fav Player: " + member.getFavplayer());
+		 log.debug("**    Appearances: " + member.getSappears());
+		 log.debug("**    Assists: " + member.getSassists());
+		 log.debug("**    Goals: " + member.getSgoals());
+		 log.debug("**    Photo Loc: " + member.getPhoto());
+		 log.debug("**    Achievements: " + member.getAchievements());
+		 log.debug("**    Status: " + member.getStatus());
+		 
+		 
+		 log.debug("*************************************************");
 	 }
 	 
 }
