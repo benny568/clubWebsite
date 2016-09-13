@@ -1,7 +1,9 @@
 import { Component }          from '@angular/core';
 import { FORM_DIRECTIVES }    from '@angular/common';
 import { Router }             from '@angular/router';
+
 import { SessionDataService } from '../services/session-data.service';
+import { LoggerService }      from '../services/logger.service';
 
 @Component({
 	//templateUrl: 'app/htmltemplates/login.component.html',
@@ -24,6 +26,7 @@ import { SessionDataService } from '../services/session-data.service';
 										placeholder="Password" 
 										required />
 								<input type="submit" value="Login Now">
+								<!-- <button type="button" (click)="login(f.value)">Login Now</button> -->
 							</form>
 						</div> <!-- end loginbody -->
 					</div> <!-- end loginbox -->
@@ -36,18 +39,24 @@ export class LoginComponent {
 
 	componentName = 'LoginComponent'; 
 	logdepth = 2;
-	loghdr = "";
 
-	constructor( private _dataService: SessionDataService, private _router: Router ) 
+	constructor( private lg$: LoggerService, private d$: SessionDataService, private _router: Router ) 
 	{
-		this.loghdr = this.setLogHdr(this.logdepth, this.componentName);
+		this.lg$.setLogHdr(this.logdepth, this.componentName);
+	}
+	
+	login(user)
+	{
+		this.lg$.log("#### login() function called...");
+		this.lg$.log("Username: " + user.username );
+		this.lg$.log("Password: " + user.password );
 	}
 
 
 	onSubmit(form: any): void {
-		console.log(this.loghdr + "->onSubmit(): you submitted value:" + form);
+		this.lg$.log( "->onSubmit(): you submitted value:" + form);
 		
-		var subscriber = this._dataService.authenticate( form.username, form.password );
+		var subscriber = this.d$.authenticate( form.username, form.password );
 		subscriber.subscribe(
 								data => this.getUserDetails(form.username, data),
 								err => console.log("ERROR: " + err)
@@ -56,13 +65,13 @@ export class LoginComponent {
 	
 	getUserDetails(username, data)
 	{
-		console.log(this.loghdr + "->getUserDetails(" + username + "): " + data );
+		this.lg$.log("->getUserDetails(" + username + "): " + data );
 		
-		this._dataService.dsCurrentUser.username = username;
+		this.d$.dsCurrentUser.username = username;
 		
-		var subscriber = this._dataService.getUser( username );
+		var subscriber = this.d$.getUser( username );
 		subscriber.subscribe(
-								data => this._dataService.dsCurrentUser = data,
+								data => this.d$.dsCurrentUser = data,
 								err => console.log("ERROR: " + err),
 								() => this.goToAdmin( username )
 							);
@@ -70,39 +79,12 @@ export class LoginComponent {
 	
 	goToAdmin( username )
 	{
-		console.log(this.loghdr + "->goToAdmin(" + username + ")" );
-		this._dataService.dsCurrentUser.username = username;
-		this._dataService.dsAuthenticated = true;
-		console.log("######>>>>>> AUTHENTICATED: [" + this._dataService.dsCurrentUser.username + "] <<<<<<#####");
-		console.log("Authenticated: " + this._dataService.dsAuthenticated );
+		this.lg$.log("->goToAdmin(" + username + ")" );
+		this.d$.dsCurrentUser.username = username;
+		this.d$.dsAuthenticated = true;
+		this.lg$.log("######>>>>>> AUTHENTICATED: [" + this.d$.dsCurrentUser.username + "] <<<<<<#####");
+		this.lg$.log("Authenticated: " + this.d$.dsAuthenticated );
 		this._router.navigate( ['AdminHome', {}] );
 	}
 	
-	
-	/**********************************************************
-     * Name:		setLogHdr()
-     * Description:	Sets up the correct indentation and header
-     * 				information for the log messages.
-     * Scope:		Internal
-     * Params in:	
-     * Return:		 
-     **********************************************************/
-	setLogHdr(logdepth, moduleName)
-	{
-		let i = 0;
-		let depth = logdepth * 4;
-		let hdr:string = "## " +  moduleName;
-	
-		// (1) Set the indentation according to the depth
-		for ( i = 0; i < depth; i++ )
-		{
-			hdr += " ";
-		}
-		
-		// (2) Add on call stack indicator
-		hdr += "|-";
-		
-		return hdr;
-	}
-
 }

@@ -12,13 +12,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
  
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
+@EnableWebMvcSecurity
 @EnableGlobalMethodSecurity( prePostEnabled = true )
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
@@ -77,20 +79,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         	.disable()
         .authorizeRequests()
 	        .antMatchers( "/admin/**" ).hasRole( "ADMIN" )
-            .antMatchers( "/**" ).permitAll();
-//            .anyRequest().authenticated()
-//        	.and()
-//        .formLogin()
-//        	.loginPage("/login")
-//        	.loginProcessingUrl("/j_spring_security_check")
-//        	.usernameParameter("j_username")
-//        	.passwordParameter("j_password")
-//        	.and()
-//        .logout()
-//            .logoutRequestMatcher( new AntPathRequestMatcher( "/j_spring_security_logout" ) )
-//            .logoutSuccessUrl( "/" )
-//            .deleteCookies( "JSESSIONID" )
-//            .invalidateHttpSession( true );
+            .antMatchers( "/**" ).permitAll()
+            .anyRequest().authenticated()
+        	.and()
+        .formLogin()
+        	.loginPage("/login")
+        	.loginProcessingUrl("/j_spring_security_check")
+        	.usernameParameter("j_username")
+        	.passwordParameter("j_password")
+        	.and()
+        .logout()
+            .logoutRequestMatcher( new AntPathRequestMatcher( "/j_spring_security_logout" ) )
+            .logoutSuccessUrl( "/" )
+            .deleteCookies( "JSESSIONID" )
+            .invalidateHttpSession( true );
         
     }
  

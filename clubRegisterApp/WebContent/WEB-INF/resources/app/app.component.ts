@@ -1,11 +1,14 @@
-import { Component }               from '@angular/core';
+import { Component }          from '@angular/core';
 import { Router, 
-         ROUTER_DIRECTIVES }       from '@angular/router';
-import { Http }                    from '@angular/http';
-import { HTTP_PROVIDERS }          from '@angular/http';
+         ROUTER_DIRECTIVES }  from '@angular/router';
+import { Http }               from '@angular/http';
+import { HTTP_PROVIDERS }     from '@angular/http';
+import { Headers }            from '@angular/http';
+import { RequestOptions }     from '@angular/http';
 
-import { SessionDataService }      from './services/session-data.service';
-import { LoggerService }           from './services/logger.service';
+import { SessionDataService } from './services/session-data.service';
+import { LoggerService }      from './services/logger.service';
+import { CommonService }      from './services/common.service';
 
 import {enableProdMode} from '@angular/core';
 enableProdMode();
@@ -141,7 +144,7 @@ enableProdMode();
         	<li class="dropdown" *ngIf="d$.dsAuthenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Admin<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                	<li><a [routerLink]="['/admin']"><i class="fa fa-home"></i> Overview</a></li>
+                	<li><a [routerLink]="['/adminHome']"><i class="fa fa-home"></i> Admin Home</a></li>
                     <li><a [routerLink]="['/adminOverview']"><i class="fa fa-sun-o"></i> Overview</a></li>
 					<li><a [routerLink]="['/adminTutorials']"><i class="fa fa-book"></i> Tutorials</a></li>
 					<li><a [routerLink]="['/memberRegister']"><i class="fa fa-child"></i> Members</a></li>
@@ -164,9 +167,9 @@ enableProdMode();
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a [routerLink]="['/login']"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
+                    <li><a [routerLink]="['/admin']"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
                     <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <li><a [routerLink]="['/logout']"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -210,7 +213,11 @@ export class AppComponent {
 	componentName:string = 'AppComponent';
 	logdepth:number = 0;
 
-    constructor( private lg$: LoggerService, public d$: SessionDataService, private router: Router ) 
+    constructor( private lg$: LoggerService, 
+    			 public d$: SessionDataService, 
+    			 private com$: CommonService, 
+    			 private router: Router,
+    			 private _http: Http ) 
     {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
     	
@@ -285,6 +292,26 @@ export class AppComponent {
     	this.lg$.log("  |-- Data returned, lrResultsCode: " + this.d$.dsCurrentTeam.lrResultsCode);
     	this.lg$.log("  |-- Data returned, noticeboard: " + this.d$.dsCurrentTeam.noticeboard);
     	this.router.navigate(['/farView']);
+    }
+    
+    logout()
+    {
+    	this.lg$.setLogHdr(this.logdepth, this.componentName);
+        this.lg$.log("logout()");
+
+		var url = this.com$.getHome();
+		
+		let headers = new Headers();
+	    headers.append('Content-Type', 'application/json');
+	    let options = new RequestOptions({ headers: headers });
+	    
+	    this._http.post(url + '/j_spring_security_logout', 
+				null, {headers:headers})
+			.subscribe(
+	            	data => console.log("Logout successfull"),
+	            	error => console.log("===> Error logging out: " + error),
+	            	() => console.log("Logout successfull")
+	            );
     }
 
 }

@@ -102,21 +102,32 @@ export class AcademyRegistrationService {
     
     calculateTotalCost()
 	{
-    	console.log( "### Single Term: " + this.getSingleTerm );
-		this.payment = this.getSingleTerm() ? 60 : 120;		
+    	console.log( "### Single Term: " + this.getFieldValue('Single Term') );
+		this.payment = this.getFieldValue('Single Term') ? 60 : 120;		
 	}
     
-    getGeneralConsent()
+    getFieldValue( field )
     {
-    	let consent = this.regData[17];
-    	return consent.value;
+    	let value = '';
+    	
+    	let thisField = this.regData.find( function(item) {
+    		return item.name === field;
+    	});
+    	if ( thisField !== undefined )
+    	{
+    		return thisField.value;
+    	}
     }
     
-    getSingleTerm()
+    setFieldValue( field, value )
     {
-    	let term = this.regData[14];
-    	console.log( "### " + term.name + ": " + term.value );
-    	return term.value;
+    	let thisField = this.regData.find( function(item) {
+    		return item.name === field;
+    	});
+    	if ( thisField !== undefined )
+    	{
+    		thisField.value = value;
+    	}
     }
     
     payPal()
@@ -194,15 +205,21 @@ export class AcademyRegistrationService {
 		this.member.photo		= 'resources/images/Players/default.png';
 		this.member.achievements = '';
 		this.member.status		= '';
-		this.member.academyinfo = this.regData[6].name  + ": " +
+		this.member.academyinfo = this.regData[11].name  + ": " +  /* Registration Date */
+		                          this.regData[11].value + ", " +
+			                      this.regData[12].name  + ": " +  /* Mother's name */
+		  						  this.regData[12].value + ", " +
+		  						  this.regData[13].name  + ": " +  /* Father's name */
+								  this.regData[13].value + ", " +
+								  this.regData[6].name  + ": " +   /* Allergy information */
 								  this.regData[6].value + ", " +
-								  this.regData[7].name  + ": " +
+								  this.regData[7].name  + ": " +   /* Asthma */
 								  this.regData[7].value + ", " +
-								  this.regData[8].name  + ": " +
+								  this.regData[8].name  + ": " +   /* Diabetes */
 								  this.regData[8].value + ", " +
-								  this.regData[9].name  + ": " +
+								  this.regData[9].name  + ": " +   /* Medication */
 								  this.regData[9].value + ", " +
-								  this.regData[10].name  + ": " +
+								  this.regData[10].name  + ": " +  /* Notes */
 								  this.regData[10].value;
 		
 		this.logMember();

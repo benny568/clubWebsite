@@ -1,7 +1,8 @@
 import { Component }          from '@angular/core';
 
 import { SessionDataService } from '../services/session-data.service';
-import { NewsComponent }      from "./news.component";
+import { LoggerService }      from '../services/logger.service';
+import { NewsComponent }      from "../components/news.component";
 
 
 @Component({
@@ -13,7 +14,7 @@ import { NewsComponent }      from "./news.component";
 					Avenue United Administration Home Page
 				</div>
 				<div class="panel-body avenue-body" style="height:100%;">
-					Welcome <strong>{{_dataService.dsCurrentUser.username}}</strong> to the administration portal!<br><br>
+					Welcome <strong>{{d$.dsCurrentUser.username}}</strong> to the administration portal!<br><br>
 					From here you can add, edit, remove, various details of the club records such
 					 as member information, upload news stories and photos and manage your team. 
 					 Take a look at the tutorials section for more information on how to perform certain tasks.
@@ -29,12 +30,11 @@ export class AdminHomeComponent
 {
 	componentName = 'AdminHomeComponent'; 
 	logdepth = 2;
-	loghdr = "";
 	
-	constructor( private _dataService: SessionDataService ) { 
-		this.loghdr = this.setLogHdr(this.logdepth, this.componentName);
+	constructor( private lg$: LoggerService, private d$: SessionDataService ) { 
+		this.lg$.setLogHdr(this.logdepth, this.componentName);
 		
-		console.log(this.loghdr + "User is: " + this._dataService.dsCurrentUser.username);
+		this.lg$.log("User is: " + this.d$.dsCurrentUser.username);
 	}
 
 	

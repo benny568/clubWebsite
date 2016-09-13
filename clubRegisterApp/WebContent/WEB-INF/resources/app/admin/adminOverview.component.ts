@@ -1,5 +1,7 @@
 import { Component }          from '@angular/core';
+
 import { SessionDataService } from '../services/session-data.service';
+import { LoggerService }      from '../services/logger.service';
 
 @Component({
 	//templateUrl: 'app/htmltemplates/adminOverview.component.html'
@@ -46,5 +48,14 @@ import { SessionDataService } from '../services/session-data.service';
 })
 
 export class AdminOverviewComponent {
-	constructor( private _dataService: SessionDataService ) { }
+	componentName = 'AdminHomeComponent'; 
+	logdepth = 2;
+
+	constructor( private lg$: LoggerService, private _dataService: SessionDataService ) { }
+	
+	onInit()
+    {
+    	this.lg$.setLogHdr(this.logdepth, this.componentName);
+        this.lg$.log("ngOnInit()");
+    }
 }

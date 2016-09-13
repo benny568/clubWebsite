@@ -8,6 +8,7 @@ import { Growl }           from 'primeng/primeng';
 import { Message }         from 'primeng/primeng';
 
 import { LoggerService }   from '../services/logger.service';
+import { CommonService }   from '../services/common.service';
 import { AcademyRegistrationService }  from './academyRegistration.service';
 
 @Component({
@@ -102,7 +103,10 @@ export class AcademyRegistrationComponent {
 	logdepth:number = 4;
 	msgs: Message[] = [];
 
-	constructor( private lg$: LoggerService, private ar$: AcademyRegistrationService, private router: Router  ) {}
+	constructor( private lg$: LoggerService, 
+			     private com$: CommonService,
+			     private ar$: AcademyRegistrationService, 
+			     private router: Router  ) {}
 	
 	ngOnInit() {
     	this.lg$.setLogHdr(this.logdepth, this.componentName);
@@ -112,17 +116,57 @@ export class AcademyRegistrationComponent {
 	submit()
 	{
 		var today = new Date();
-		//this.ar$.member.regdate = today.toDateString();
-		
-		console.log( "### GENERAL CONSENT SET TO: " + this.ar$.getGeneralConsent() );
+		this.ar$.setFieldValue( 'Registration Date', today.toDateString() );
 
-		if ( this.ar$.getGeneralConsent() )
+		if ( !this.ar$.getFieldValue('General Consent') )
+		{
+			this.showConsenterror();
+		
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('First name') ) )
+		{
+			this.showFNError();
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Last name') ) )
+		{
+			this.showsSNError();
+		} else if ( !this.com$.isValidEmail( this.ar$.getFieldValue('email') ) )
+		{
+			this.showEmailError();
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Date of Birth') ) )
+		{
+			this.showDOBError();
+			
+		} else if ( !this.com$.isValidPhone( this.ar$.getFieldValue('First contact number') ) )
+		{
+			this.showPhError();
+			
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Allergy information') ) )
+		{
+			this.showInfoError();
+			
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Asthma') ) )
+		{
+			this.showAsthmaError();
+			
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Diabetes') ) )
+		{
+			this.showDiabetesError();
+			
+		} else if ( !this.com$.isEmpty( this.ar$.getFieldValue('Medication') ) )
+		{
+			this.showMedicationError();
+			
+		} else if ( !this.com$.isValidName( this.ar$.getFieldValue('Mother\'s Name') ) )
+		{
+			this.showMomError();
+			
+		} else if ( !this.com$.isValidName( this.ar$.getFieldValue('Father\'s name') ) )
+		{
+			this.showDadError();
+			
+		} else
 		{
 			this.ar$.logValues();
 			this.router.navigate(['/academyPayment']);
-		} else
-		{
-			this.showConsenterror();
 		}
 	}
 	
@@ -138,4 +182,73 @@ export class AcademyRegistrationComponent {
         this.msgs.push({severity:'info', summary:'Error:', detail:'You must give your consent for your child to participate to continue!'});
     }
 	
+    showFNError() {
+    	this.lg$.log("----> showFNError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter a valid first name!'});
+    }
+	
+	showsSNError() {
+    	this.lg$.log("----> showSNError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter a valid surname!'});
+    }
+	
+	showEmailError() {
+    	this.lg$.log("----> showEmailError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter a valid email address!'});
+    }
+	
+	showPhError() {
+    	this.lg$.log("----> showPhError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter a valid phone number!'});
+    }
+	
+	showDOBError() {
+    	this.lg$.log("----> showDOBError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter a valid date of birth!'});
+    }
+	
+	showMomError() {
+    	this.lg$.log("----> showMomError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter the child\'s Mother\'s name!'});
+    }
+	showDadError() 
+	{
+    	this.lg$.log("----> showDadError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'You must enter the child\'s Father\'s name!'});
+    }
+	
+	showInfoError() 
+	{
+    	this.lg$.log("----> showInfoError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'Please enter any allergy information or state none if applicable.'});
+    }
+	showAsthmaError() 
+	{
+    	this.lg$.log("----> showInfoError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'Please idicate if your child has asthma.'});
+    }
+	showDiabetesError() 
+	{
+    	this.lg$.log("----> showInfoError()");
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Error:', detail:'Please idicate if your child has diabetes.'});
+    }
+	showMedicationError() 
+	{
+    	this.lg$.log("----> showInfoError()");
+        this.msgs = [];
+        this.msgs.push({	severity:'info', 
+        					summary:'Error:', 
+        					detail:'Please list any medication your child may need during academy sessions.'
+        				});
+    }
 }

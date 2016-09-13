@@ -1,6 +1,7 @@
 import { RouterConfig, Route }     from '@angular/router';
 
 import { academyRouterConfig }     from './academy/academy.routes';
+import { adminRouterConfig }       from './admin/admin.routes';
 
 import { ViewTeam }                from './components/viewTeam.component';
 import { HomeComponent }           from "./components/home.component";
@@ -17,8 +18,10 @@ import { LoginComponent }          from "./components/login.component";
 import { PhotosComponent }		   from "./components/photos.component";
 import { FleadhComponent }		   from "./components/fleadh.component";
 import { PayNowComponent }		   from "./components/payNow.component";
-import { AdminHomeComponent }	   from "./components/adminHome.component";
-import { AdminOverviewComponent }  from "./components/adminOverview.component";
+import { AdminHomeComponent }	   from "./admin/adminHome.component";
+import { AdminOverviewComponent }  from "./admin/adminOverview.component";
+import { AdminMembersComponent }   from "./admin/adminMembers.component";
+import { AdminUsersComponent }     from "./admin/adminUsers.component";
 import { MemberRegisterComponent } from "./components/memberRegister.component";
 import { EditMemberComponent }     from "./components/editMember.component";
 import { BookingStage1Component }  from "./booking/booking-stage1.component";
@@ -26,6 +29,7 @@ import { BookingStage3Component }  from "./booking/booking-stage3.component";
 import { BookingStage4Component }  from "./booking/booking-stage4.component";
 import { SuccessComponent }        from "./booking/success.component";
 import { AcademyOverviewComponent } from './academy/academyOverview.component';
+import { LogoutComponent }         from "./components/logout.component";
 
 const indexRoute:Route = {
 		path: "",
@@ -50,11 +54,11 @@ export const routeConfig: RouterConfig = [
                                      { path: 'merchandise', component: MerchandiseComponent },
                                      { path: 'media/:cat1/:cat2/:cat3', component: PhotosComponent },
                                      { path: 'login', component: LoginComponent },
-                                     { path: 'admin', component: AdminHomeComponent },
-                                     { path: 'adminOverview', component: AdminOverviewComponent },
+                                     { path: 'logout', component: LogoutComponent },
                                      { path: 'memberRegister', component: MemberRegisterComponent },
                                      { path: 'editMember', component: EditMemberComponent },
                                      { path: 'success', component: SuccessComponent },
-                                     ...academyRouterConfig
+                                     ...academyRouterConfig,
+                                     ...adminRouterConfig
                                    ];
 
