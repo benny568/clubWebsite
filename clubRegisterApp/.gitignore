@@ -1,1 +1,13 @@
+/target/
+build/*
+
+## exclude possible classical building folder
+build/
+WebContent/WEB-INF/bower_components/
+
+# Specific files
+*.class
+~*
+*.jar
+*.log
 /npm-debug.log
