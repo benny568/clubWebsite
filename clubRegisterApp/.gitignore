@@ -10,3 +10,4 @@ WebContent/WEB-INF/bower_components/
 ~*
 *.jar
 *.log
+/npm-debug.log
