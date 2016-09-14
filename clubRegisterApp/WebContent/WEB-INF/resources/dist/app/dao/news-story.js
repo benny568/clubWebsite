@@ -1,1 +1,0 @@
-System.register([],function(t,i){"use strict";var e;i&&i.id;return{setters:[],execute:function(){e=function(){function t(t,i,e,s,r,n){this.nsid=t,this.category=i,this.title=e,this.description=s,this.story=r,this.image=n}return t}(),t("NewsStory",e)}}});
