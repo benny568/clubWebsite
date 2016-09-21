@@ -88,11 +88,7 @@ import { LoggerService }  from '../services/logger.service';
 			  top: 50%;
 			  transform: translateY(-10%);
 			}
-            `],
-	directives: [ TabView, 
-	              TabPanel,
-	              Checkbox,
-	              Growl ]
+            `]
 })
 
 export class AcademyTandCComponent {

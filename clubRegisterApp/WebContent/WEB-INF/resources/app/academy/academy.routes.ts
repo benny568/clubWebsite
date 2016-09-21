@@ -1,4 +1,4 @@
-import { RouterConfig }                  from '@angular/router';
+import { Routes, RouterModule }          from '@angular/router';
 import { Location }                      from '@angular/common';
 
 import { AcademyHomeComponent }          from './academyHome.component';
@@ -9,7 +9,7 @@ import { AcademyTandCComponent }         from './academyTandC.component';
 import { AcademyRegistrationComponent }  from './academyRegistration.component';
 import { AcademyMemberPaymentComponent } from './academyMemberPayment.component';
 
-export const academyRouterConfig: RouterConfig = [
+export const academyRoutes: Routes = [
 	{ 
 		path: 'academyHome', 
 		component: AcademyHomeComponent

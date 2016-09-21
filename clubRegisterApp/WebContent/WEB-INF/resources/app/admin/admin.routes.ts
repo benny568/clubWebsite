@@ -1,4 +1,4 @@
-import { RouterConfig }            from '@angular/router';
+import { Routes, RouterModule }    from '@angular/router';
 import { Location }                from '@angular/common';
 
 import { AdminHomeComponent }      from './adminHome.component';
@@ -7,7 +7,7 @@ import { AdminTutorialsComponent } from './adminTutorials.component';
 import { AdminMembersComponent }   from './adminMembers.component';
 import { AdminUsersComponent }     from './adminUsers.component';
 
-export const adminRouterConfig: RouterConfig = [
+export const adminRoutes: Routes = [
 	{ 
 		path: 'adminHome', 
 		component: AdminHomeComponent

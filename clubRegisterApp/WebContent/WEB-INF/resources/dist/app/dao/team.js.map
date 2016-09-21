@@ -1,0 +1,1 @@
+{"version":3,"sources":["dao/team.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAWA,CAAC;gBAAD,WAAC;YAAD,CAXA,AAWC,IAAA;YAXD,uBAWC,CAAA","file":"dao/team.js","sourcesContent":["export /**\n * Team\n */\nclass Team {\n    id:number;\n\tname:string;\n\tlrcode:number;\n\tlrFixturesCode:number;\n\tlrResultsCode:number;\n\tnoticeboard:string;\n\n}"],"sourceRoot":"/source/"}

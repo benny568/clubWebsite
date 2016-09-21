@@ -25,7 +25,7 @@ import { LeagueRepublicResults }  from './leagueRepublicResults.component';
 				                    </div>
 				                    <div class="panel-body avenue-body">
 				
-				                        <lr-display></lr-display>
+				                        <!--<lr-display></lr-display>-->
 				
 				                    </div>
 				                </div>
@@ -46,9 +46,7 @@ import { LeagueRepublicResults }  from './leagueRepublicResults.component';
 				
 				    </div> <!--  End of container t1 -->
 				</div>
-    `,
-    directives: [LeagueRepublicResults],
-    providers: [ LoggerService ]
+    `
 })
 
 export class FarViewComponent {

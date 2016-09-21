@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 
 import * as moment from '../../node_modules/moment/moment';
-import {DATEPICKER_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootstrap';
+//import {DATEPICKER_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'datepicker',
@@ -37,8 +36,7 @@ import {DATEPICKER_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootst
 				  			(click)="toggleMin()" 
 				  			tooltip="After today restriction">Min date</button>
 				</div>
-  `,
-  directives: [DATEPICKER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES]
+  `
 })
 export class DatepickerComponent {
   public dt:Date = new Date();

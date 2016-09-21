@@ -93,8 +93,7 @@ import { AcademyRegistrationService }  from './academyRegistration.service';
 			  top: 50%;
 			  transform: translateY(-10%);
 			}
-            `],
-	directives: [ TabView, TabPanel, Checkbox, Growl ]
+            `]
 	
 })
 

@@ -80,9 +80,7 @@ import { NewsComponent }        from "../components/news.component";
 				    </div>
 				</div> <!--  End of container t1 -->
 
-    `,
-    directives: [ NewsComponent ],
-    providers: [ LoggerService ]
+    `
 })
 
 export class AcademyHomeComponent {

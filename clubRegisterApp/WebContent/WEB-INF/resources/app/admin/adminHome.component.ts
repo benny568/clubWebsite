@@ -22,8 +22,7 @@ import { NewsComponent }      from "../components/news.component";
 			</div> <!-- end panel -->
 
 		</div> <!-- end of container -->
-	`,
-	directives: [ NewsComponent ]
+	`
 })
 
 export class AdminHomeComponent

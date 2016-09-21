@@ -1,0 +1,39 @@
+<div class="container">
+
+    <div class="row avenue-body">
+        <div class="panel">
+            <div class="panel-heading avenue-heading">
+                2015/2016 Merchandise range: <div style="float:right;">Available from <strong>Rochfords Pharmacy</strong>, 21 Parnell Street, Ennis Phone: 065 68 20099</div>
+            </div>
+            <div class="panel-body avenue-body">
+
+                <carousel [interval]="5000">
+                    <slide *ngFor="#item of items">
+                        <div class="merchandise-banner">{{item.name}}</div>
+                        <div class="merchandise-background">
+                            <img src="{{item.image}}" width="{{item.width}}" height="{{item.height}}" class="merchandise-image">
+                        </div>
+                        <div class="merchandise-banner">{{item.description}}</div>
+                    </slide>
+                </carousel>
+
+            </div> <!-- end panel-body -->
+
+        </div> <!-- end panel -->
+    </div> <!-- end row -->
+
+    <div class="panel">
+        <div class="panel-heading avenue-heading">
+            Sponsored By:
+        </div>
+        <div class="panel-body">
+            <img alt="Sponsor" src="/resources/images/merchandise/sponsor.png" width="100%">
+        </div>
+    </div>
+
+    <div class="blankspace"></div>
+    <div class="blankspace"></div>
+
+    <!-- Footer across the bottom of the page -->
+    <div ng-include="'/resources/viewParts/footer.html'"></div>
+</div>

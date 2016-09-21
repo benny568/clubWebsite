@@ -15,8 +15,7 @@ import { SponsorsComponent }  from './sponsors.component';
 					<news></news>
 					<sponsors></sponsors>
 				</div>
-    `,
-    directives: [ NewsComponent, AdvertComponent, SponsorsComponent ] //, TestComponent ]
+    `
 })
 
 export class HomeComponent {

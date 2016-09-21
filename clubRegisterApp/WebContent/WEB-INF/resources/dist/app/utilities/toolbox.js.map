@@ -1,0 +1,1 @@
+{"version":3,"sources":["utilities/toolbox.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAOA,CAAC;gBAAD,cAAC;YAAD,CAPA,AAOC,IAAA;YAPD,6BAOC,CAAA","file":"utilities/toolbox.js","sourcesContent":["export /**\n * ToolBox\n */\nclass ToolBox {\n\n    \n\n}"],"sourceRoot":"/source/"}

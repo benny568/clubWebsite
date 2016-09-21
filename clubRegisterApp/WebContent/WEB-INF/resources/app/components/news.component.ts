@@ -2,7 +2,6 @@
  * Created by odalybr on 05/04/2016.
  */
 import {Component} from '@angular/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 import { Slide } from './slide.component';
 import { Carousel } from './carousel.component';
 import { SessionDataService } from '../services/session-data.service';
@@ -17,7 +16,7 @@ import { LoggerService }      from '../services/logger.service';
 			            <div class="panel-heading avenue-heading">
 			                Latest News:
 			            </div>
-			            <carousel [interval]="5000" style="float:left;width:100%;height:auto;">
+			            <carousel style="float:left;width:100%;height:auto;">
 			                <slide *ngFor="let story of _dataService.dsNewsStories">
 			                    <img src="{{story.image}}" 
 			                    style="float:left;padding-left:100px;padding-top:40px;padding-right:5px;padding-bottom:40px;max-width:40%;"/>
@@ -37,9 +36,7 @@ import { LoggerService }      from '../services/logger.service';
 			
 			        </div> <!-- end panel -->
 			    </div> <!-- end row -->
-    `,
-    directives: [ Slide, Carousel, CORE_DIRECTIVES, FORM_DIRECTIVES ],
-    providers: [ LoggerService ]
+    `
 })
 
 

@@ -1,0 +1,1 @@
+{"version":3,"sources":["dao/sponsor.ts"],"names":[],"mappings":";;;;;;;YAAA;;eAEG;YACH;gBAAA;gBAGA,CAAC;gBAAD,cAAC;YAAD,CAHA,AAGC,IAAA;YAHD,6BAGC,CAAA","file":"dao/sponsor.js","sourcesContent":["/**\n * Created by odalybr on 06/04/2016.\n */\nexport class Sponsor {\n    name:String;\n    image:String;\n}"],"sourceRoot":"/source/"}

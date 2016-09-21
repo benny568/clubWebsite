@@ -1,10 +1,9 @@
 /**
  * Created by odalybr on 08/04/2016.
  */
-import {Component} from '@angular/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
-import {Slide} from './slide.component';
-import {Carousel} from './carousel.component';
+import { Component } from '@angular/core';
+import { Slide } from './slide.component';
+import { Carousel } from './carousel.component';
 
 @Component({
     //templateUrl: 'app/htmltemplates/merchandise.component.html',
@@ -54,8 +53,7 @@ import {Carousel} from './carousel.component';
 				    <!-- Footer across the bottom of the page -->
 				    <div ng-include="'/resources/viewParts/footer.html'"></div>
 				</div>
-    `,
-    directives: [ Slide, Carousel, CORE_DIRECTIVES, FORM_DIRECTIVES ]
+    `
 })
 
 export class MerchandiseComponent {

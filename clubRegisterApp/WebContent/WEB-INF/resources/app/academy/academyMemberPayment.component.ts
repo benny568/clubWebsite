@@ -74,8 +74,7 @@ import { AcademyRegistrationService }  from './academyRegistration.service';
 		<p-growl [value]="msgs" sticky="sticky"></p-growl>
 	</div>
 	</div>
-	`,
-	directives: [ TabView, TabPanel, Checkbox ]
+	`
 })
 
 export class AcademyMemberPaymentComponent {

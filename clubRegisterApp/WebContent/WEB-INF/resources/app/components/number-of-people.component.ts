@@ -1,5 +1,4 @@
 import { Component }       from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common';
 
 import { Spinner }        from 'primeng/primeng';
 
@@ -16,8 +15,7 @@ import { BookingService }  from '../services/booking.service';
 			           [max]="16" >
 			</p-spinner>
 
-			`,
-	directives: [ FORM_DIRECTIVES, Spinner ]
+			`
 })
 
 

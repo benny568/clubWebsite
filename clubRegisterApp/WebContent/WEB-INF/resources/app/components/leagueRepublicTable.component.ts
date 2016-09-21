@@ -8,8 +8,7 @@ import { LoggerService }        from '../services/logger.service';
 
 @Component({
     selector: 'lr-table',
-    template: '<div id=\"lrep{{lrcode}}\"></div>',
-    providers: [ LoggerService ]
+    template: '<div id=\"lrep{{lrcode}}\"></div>'
 })
 
 export class LeagueRepublicTable {

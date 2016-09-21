@@ -4,6 +4,10 @@ import { Inject }         from '@angular/core';
 import { Http }           from '@angular/http';
 import { Headers }        from '@angular/http';
 import { RequestOptions } from '@angular/http';
+
+import {Observable}       from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+
 import { LoggerService }  from '../services/logger.service';
 import { ToolBox }        from '../utilities/toolbox';
 import { User }           from '../dao/site-user';

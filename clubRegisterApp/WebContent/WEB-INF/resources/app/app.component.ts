@@ -1,17 +1,10 @@
 import { Component }          from '@angular/core';
-import { Router, 
-         ROUTER_DIRECTIVES }  from '@angular/router';
-import { Http }               from '@angular/http';
-import { HTTP_PROVIDERS }     from '@angular/http';
-import { Headers }            from '@angular/http';
-import { RequestOptions }     from '@angular/http';
+import { Router }             from '@angular/router';
+import { Http, Response, Headers, RequestOptions} from '@angular/http';
 
 import { SessionDataService } from './services/session-data.service';
 import { LoggerService }      from './services/logger.service';
 import { CommonService }      from './services/common.service';
-
-import {enableProdMode} from '@angular/core';
-enableProdMode();
 
 @Component({
     selector: 'my-app',
@@ -32,7 +25,7 @@ enableProdMode();
 <nav class="navbar navbar-inverse" style="cursor:pointer">
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li class="active"><a [routerLink]="['']"><i class="fa fa-home"></i></a></li>           
+            <li class="active"><a routerLink=""><i class="fa fa-home"></i></a></li>           
             <li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-picture-o"></i> Gallery<span class="caret"></span></a>
 				<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -131,11 +124,11 @@ enableProdMode();
             <li class="dropdown">
             	<a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-child"></i> Academy<span class="caret"></span></a>
             	<ul class="dropdown-menu">
-                	<li><a [routerLink]="['/academyHome']"><i class="fa fa-newspaper-o"></i> News</a></li>
-                	<li><a [routerLink]="['/academyOverview']"><i class="fa fa-eye"></i> Overview</a></li>
-                	<li><a [routerLink]="['/academyCoaches']"><i class="fa fa-group"></i> Coaches</a></li>
-                	<li><a [routerLink]="['/academySchedule']"><i class="fa fa-calendar"></i> Schedule</a></li>
-                	<li><a [routerLink]="['/academyTandC']"><i class="fa fa-pencil-square-o "></i> Registration</a></li>
+                	<li><a routerLink="/academyHome"><i class="fa fa-newspaper-o"></i> News</a></li>
+                	<li><a routerLink="/academyOverview"><i class="fa fa-eye"></i> Overview</a></li>
+                	<li><a routerLink="/academyCoaches"><i class="fa fa-group"></i> Coaches</a></li>
+                	<li><a routerLink="/academySchedule"><i class="fa fa-calendar"></i> Schedule</a></li>
+                	<li><a routerLink="/academyTandC"><i class="fa fa-pencil-square-o "></i> Registration</a></li>
                 </ul>
             </li>
             <li><a [routerLink]="['merchandise']"><i class="fa fa-shopping-cart"></i> Merchandise</a></li>
@@ -144,10 +137,10 @@ enableProdMode();
         	<li class="dropdown" *ngIf="d$.dsAuthenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Admin<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                	<li><a [routerLink]="['/adminHome']"><i class="fa fa-home"></i> Admin Home</a></li>
-                    <li><a [routerLink]="['/adminOverview']"><i class="fa fa-sun-o"></i> Overview</a></li>
-					<li><a [routerLink]="['/adminTutorials']"><i class="fa fa-book"></i> Tutorials</a></li>
-					<li><a [routerLink]="['/memberRegister']"><i class="fa fa-child"></i> Members</a></li>
+                	<li><a routerLink="/adminHome"><i class="fa fa-home"></i> Admin Home</a></li>
+                    <li><a routerLink="/adminOverview"><i class="fa fa-sun-o"></i> Overview</a></li>
+					<li><a routerLink="/adminTutorials"><i class="fa fa-book"></i> Tutorials</a></li>
+					<li><a routerLink="/memberRegister"><i class="fa fa-child"></i> Members</a></li>
 					<li><a *ngIf="d$.hasPermission('VIEW_USERS', '*')" (onClick)="usersAdmin"><i class="fa fa-child"></i> Users</a></li>
                 </ul>
             </li>
@@ -156,19 +149,19 @@ enableProdMode();
                 	<i class="fa fa-info-circle"></i> Information <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a [routerLink]="['/findUs']"><i class="fa fa-road"></i> Find Us</a></li>
-                    <li><a [routerLink]="['/messageUs']"><i class="fa fa-envelope"></i> Message Us</a></li>
-                    <li><a [routerLink]="['/contactUs']"><i class="fa fa-phone"></i> Contact Us</a></li>
-                    <li><a [routerLink]="['/downloads']"><i class="fa fa-arrow-circle-down"></i> Downloads</a></li>
-                    <li><a [routerLink]="['/links']"><i class="fa fa-link"></i> Links</a></li>
-                    <li><a [routerLink]="['/clubHistory']"><i class="fa fa-angle-double-left"></i> Our History</a></li>
+                    <li><a routerLink="/findUs"><i class="fa fa-road"></i> Find Us</a></li>
+                    <li><a routerLink="/messageUs"><i class="fa fa-envelope"></i> Message Us</a></li>
+                    <li><a routerLink="/contactUs"><i class="fa fa-phone"></i> Contact Us</a></li>
+                    <li><a routerLink="/downloads"><i class="fa fa-arrow-circle-down"></i> Downloads</a></li>
+                    <li><a routerLink="/links"><i class="fa fa-link"></i> Links</a></li>
+                    <li><a routerLink="/clubHistory"><i class="fa fa-angle-double-left"></i> Our History</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a [routerLink]="['/admin']"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
-                    <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a routerLink="/admin"><i class="glyphicon glyphicon-user"></i> Admin</a></li>
+                    <li><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </li>
@@ -202,9 +195,7 @@ enableProdMode();
              	text-decoration: none;
             }
             `],
-    //stylesUrl: '/app/styles/nav.component.css',
-    directives: [ ROUTER_DIRECTIVES ],
-    providers: [ LoggerService ]
+    //stylesUrl: '/app/styles/nav.component.css'
 })
 
 
@@ -308,10 +299,17 @@ export class AppComponent {
 	    this._http.post(url + '/j_spring_security_logout', 
 				null, {headers:headers})
 			.subscribe(
-	            	data => console.log("Logout successfull"),
+	            	data => this.goHomeAfterLogout(),
 	            	error => console.log("===> Error logging out: " + error),
-	            	() => console.log("Logout successfull")
+	            	() => this.goHomeAfterLogout()
 	            );
+    }
+    
+    goHomeAfterLogout()
+    {
+    	this.d$.dsAuthenticated = false;
+    	this.lg$.log("logout(): authenticated: " + this.d$.dsAuthenticated);
+    	this.router.navigate(['/']);
     }
 
 }

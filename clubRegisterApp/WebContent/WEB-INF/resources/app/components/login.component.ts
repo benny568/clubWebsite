@@ -1,5 +1,4 @@
 import { Component }          from '@angular/core';
-import { FORM_DIRECTIVES }    from '@angular/common';
 import { Router }             from '@angular/router';
 
 import { SessionDataService } from '../services/session-data.service';
@@ -31,8 +30,7 @@ import { LoggerService }      from '../services/logger.service';
 						</div> <!-- end loginbody -->
 					</div> <!-- end loginbox -->
 				</div>
-	`,
-	directives: [ FORM_DIRECTIVES ]
+	`
 })
 
 export class LoginComponent {
@@ -84,7 +82,7 @@ export class LoginComponent {
 		this.d$.dsAuthenticated = true;
 		this.lg$.log("######>>>>>> AUTHENTICATED: [" + this.d$.dsCurrentUser.username + "] <<<<<<#####");
 		this.lg$.log("Authenticated: " + this.d$.dsAuthenticated );
-		this._router.navigate( ['AdminHome', {}] );
+		this._router.navigate( ['adminHome', {}] );
 	}
 	
 }

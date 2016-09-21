@@ -1,10 +1,9 @@
 /**
  * Created by odalybr on 08/04/2016.
  */
-import { Component }         from '@angular/core';
-import { Injectable }        from '@angular/core';
-import { Router, 
-         ROUTER_DIRECTIVES } from '@angular/router';
+import { Component }   from '@angular/core';
+import { Injectable }  from '@angular/core';
+import { Router }      from '@angular/router';
 
 @Component({
     selector: 'academy-memu',
@@ -26,8 +25,7 @@ import { Router,
 				        </ul>
 				    </div>
 				</div>
-    `,
-    directives: [ ROUTER_DIRECTIVES ]
+    `
 })
 
 @Injectable()

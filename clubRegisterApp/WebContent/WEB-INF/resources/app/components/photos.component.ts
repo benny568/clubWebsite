@@ -17,8 +17,7 @@ import { SessionDataService }   from '../services/session-data.service';
 	         	margin: 0 auto;
 	         	width: 70%;
 	         }
-	       `],
-	directives: [ Slide, Carousel ]
+	       `]
 })
 
 export class PhotosComponent implements OnInit

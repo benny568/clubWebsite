@@ -1,0 +1,1 @@
+{"version":3,"sources":["dao/my-teams.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAMA,CAAC;gBAAD,cAAC;YAAD,CANA,AAMC,IAAA;YAND,6BAMC,CAAA","file":"dao/my-teams.js","sourcesContent":["export /**\n * MyTeams\n */\nclass MyTeams {\n    teams:Array<number>;\n    positions:Array<number>;\n}"],"sourceRoot":"/source/"}

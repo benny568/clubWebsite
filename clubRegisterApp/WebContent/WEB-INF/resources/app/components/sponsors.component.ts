@@ -2,7 +2,7 @@
  * Created by odalybr on 06/04/2016.
  */
 import {Component} from '@angular/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
+
 import {Slide} from './slide.component';
 import {Carousel} from './carousel.component';
 import { Sponsor } from '../dao/sponsor';
@@ -28,9 +28,7 @@ import { LoggerService }    from '../services/logger.service';
 			            </div> <!-- end panel-body -->
 			        <div class="panel-heading avenue-heading"></div>
 			    </div> <!-- end panel -->
-    `,
-    directives: [ Slide, Carousel, CORE_DIRECTIVES, FORM_DIRECTIVES ],
-    providers: [ LoggerService ]
+    `
 })
 
 export class SponsorsComponent {

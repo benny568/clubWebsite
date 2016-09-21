@@ -1,4 +1,4 @@
-import {Injectable, provide} from '@angular/core';
+import {Injectable } from '@angular/core';
 import {BaseRequestOptions, RequestOptions} from '@angular/http';
 
 @Injectable()

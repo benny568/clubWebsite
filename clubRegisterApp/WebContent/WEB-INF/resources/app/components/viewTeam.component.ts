@@ -117,9 +117,7 @@ import { LeagueRepublicTable } from "./leagueRepublicTable.component";
 					    	
 					</div> <!--  End of container t1 -->
 				</div>
-    `,
-    directives: [ LeagueRepublicTable ],
-    providers: [ LoggerService ]
+    `
 })
 
 export class ViewTeam {

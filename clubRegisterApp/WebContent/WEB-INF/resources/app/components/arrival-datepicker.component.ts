@@ -1,5 +1,4 @@
 import { Component }       from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common';
 
 import { Calendar }        from 'primeng/primeng';
 
@@ -23,8 +22,7 @@ import { BookingService }  from '../services/booking.service';
 			</p-calendar>
 		</ui-widget-content>
 	</ui-widget>	
-			`,
-	directives: [ FORM_DIRECTIVES, Calendar ]
+			`
 })
 
 
